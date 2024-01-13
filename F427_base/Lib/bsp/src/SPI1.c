@@ -49,7 +49,7 @@ void SPI1_Init(void)
   SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;
   SPI_InitStructure.SPI_CPHA = SPI_CPHA_2Edge;
   SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
-  SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_4;//168/4=42M  42/2=21M
+  SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_2;//168/4=42M  42/2=21M
   SPI_InitStructure.SPI_FirstBit = SPI_FirstBit_MSB;
   SPI_InitStructure.SPI_CRCPolynomial = 7;
 	SPI_InitStructure.SPI_Mode = SPI_Mode_Master;
@@ -71,7 +71,27 @@ void SPI1_Init(void)
 *******************************************************************************/
 void SPI1_GPIO_Init(void) 
 { 
-
+//  GPIO_InitTypeDef GPIO_InitStructure;
+//  RCC_APB2PeriphClockCmd(RCC_APB2Periph_GPIOA|RCC_APB2Periph_AFIO, ENABLE);
+//  /* Configure SPI1 pins: SCK, MISO and MOSI ---------------------------------*/ 
+//  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_5  | GPIO_Pin_6 | GPIO_Pin_7; 
+//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF_PP;       
+//  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+//  GPIO_Init(GPIOA, &GPIO_InitStructure); 
+//  /* CS */
+//  GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_4;
+//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_Out_PP;		 
+//  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+//  GPIO_Init(GPIOA, &GPIO_InitStructure);
+//  /* IRQ */
+//  GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_3 ;
+//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IPU ;
+//  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+//  GPIO_Init(GPIOA, &GPIO_InitStructure);
+//  
+//  SPI1_Init(); 
+//	
+	
 	
 	GPIO_InitTypeDef GPIO_InitStructure;
 
@@ -112,15 +132,22 @@ void SPI1_GPIO_Init(void)
  
  
   /* Enable GPIO clocks */
-  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOA, ENABLE);
-
+  RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOB, ENABLE);
+ 
   /* CS */
-  GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_4; 
+  GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_12; 
   GPIO_InitStructure.GPIO_Mode = GPIO_Mode_OUT;
   GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
   GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
   GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_UP;
-  GPIO_Init(GPIOA, &GPIO_InitStructure);
+  GPIO_Init(GPIOB, &GPIO_InitStructure);
+	
+//  /* IRQ */
+//  GPIO_InitStructure.GPIO_Pin =  GPIO_Pin_3; 
+//  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+//  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+//  GPIO_InitStructure.GPIO_PuPd  = GPIO_PuPd_NOPULL;
+//  GPIO_Init(GPIOE, &GPIO_InitStructure);
 	
 	SPI1_Init(); 
   
@@ -138,16 +165,16 @@ void SPI1_GPIO_Init(void)
 *******************************************************************************/
  uint8_t WR_CMD (uint8_t cmd)  
 { 
-	uint8_t temp; 
+	 uint8_t temp; 
 
   /* Wait for SPI1 Tx buffer empty */ 
-  while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET); 
+  while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET); 
   /* Send SPI1 data */ 
-  SPI_I2S_SendData(SPI1,cmd); 
+  SPI_I2S_SendData(SPI2,cmd); 
   /* Wait for SPI1 data reception */ 
-  while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET); 
+  while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET); 
   /* Read SPI1 received data */ 
-	temp =  SPI_I2S_ReceiveData(SPI1); 
+	temp =  SPI_I2S_ReceiveData(SPI2); 
 	return temp;
 	
 } 

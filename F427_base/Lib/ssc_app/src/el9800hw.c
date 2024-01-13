@@ -132,8 +132,8 @@ UALEVENT;
 -----------------------------------------------------------------------------------------*/
 #if AL_EVENT_ENABLED
 #define    INIT_ESC_INT           EXTI8_Configuration();					
-#define    EcatIsr                EXTI3_IRQHandler
-#define    ACK_ESC_INT         		EXTI_ClearITPendingBit(EXTI_Line3);  
+#define    EcatIsr                EXTI9_5_IRQHandler
+#define    ACK_ESC_INT         		EXTI_ClearITPendingBit(EXTI_Line8);  
 
 #endif //#if AL_EVENT_ENABLED
 
@@ -143,20 +143,20 @@ UALEVENT;
 ------
 -----------------------------------------------------------------------------------------*/
 #if DC_SUPPORTED && _STM32_IO8
-#define    INIT_SYNC0_INT                  EXTI1_Configuration();		//EXTI1_Configuration--EXTI0_Configuration
-#define    Sync0Isr                        				EXTI1_IRQHandler // primary interrupt vector name
-#define    DISABLE_SYNC0_INT             NVIC_DisableIRQ(EXTI1_IRQn);	  // {(_INT3IE)=0;}//disable interrupt source INT3
-#define    ENABLE_SYNC0_INT               NVIC_EnableIRQ(EXTI1_IRQn);	// {(_INT3IE) = 1;} //enable interrupt source INT3
-#define    ACK_SYNC0_INT                  EXTI_ClearITPendingBit(EXTI_Line1);//  {(SYNC0_INT_REQ) = 0;}
+#define    INIT_SYNC0_INT                  EXTI0_Configuration();		//EXTI1_Configuration--EXTI0_Configuration
+#define    Sync0Isr                        				EXTI0_IRQHandler // primary interrupt vector name
+#define    DISABLE_SYNC0_INT             NVIC_DisableIRQ(EXTI0_IRQn);	  // {(_INT3IE)=0;}//disable interrupt source INT3
+#define    ENABLE_SYNC0_INT               NVIC_EnableIRQ(EXTI0_IRQn);	// {(_INT3IE) = 1;} //enable interrupt source INT3
+#define    ACK_SYNC0_INT                  EXTI_ClearITPendingBit(EXTI_Line0);//  {(SYNC0_INT_REQ) = 0;}
 
 
 /*ECATCHANGE_START(V5.10) HW3*/
 
-#define    INIT_SYNC1_INT                  EXTI0_Configuration();
-#define    Sync1Isr                        						EXTI0_IRQHandler
-#define    DISABLE_SYNC1_INT                 NVIC_DisableIRQ(EXTI0_IRQn);// {(_INT4IE)=0;}//disable interrupt source INT4
-#define    ENABLE_SYNC1_INT                 NVIC_EnableIRQ(EXTI0_IRQn); //{(_INT4IE) = 1;} //enable interrupt source INT4
-#define    ACK_SYNC1_INT                  	 EXTI_ClearITPendingBit(EXTI_Line0);// {(SYNC1_INT_REQ) = 0;}
+#define    INIT_SYNC1_INT                  EXTI1_Configuration();
+#define    Sync1Isr                        						EXTI1_IRQHandler
+#define    DISABLE_SYNC1_INT                 NVIC_DisableIRQ(EXTI1_IRQn);// {(_INT4IE)=0;}//disable interrupt source INT4
+#define    ENABLE_SYNC1_INT                 NVIC_EnableIRQ(EXTI1_IRQn); //{(_INT4IE) = 1;} //enable interrupt source INT4
+#define    ACK_SYNC1_INT                  	 EXTI_ClearITPendingBit(EXTI_Line1);// {(SYNC1_INT_REQ) = 0;}
 
 /*ECATCHANGE_END(V5.10) HW3*/
 

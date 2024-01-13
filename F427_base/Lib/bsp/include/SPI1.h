@@ -14,30 +14,30 @@
 #include "stm32f4xx.h"
 
 
-  #define SPIx                           SPI1
-  #define SPIx_CLK                       RCC_APB2Periph_SPI1
-  #define SPIx_CLK_INIT                  RCC_APB2PeriphClockCmd
+  #define SPIx                           SPI2
+  #define SPIx_CLK                       RCC_APB1Periph_SPI2
+  #define SPIx_CLK_INIT                  RCC_APB1PeriphClockCmd
 
-  #define SPIx_SCK_PIN                   GPIO_Pin_5
-  #define SPIx_SCK_GPIO_PORT             GPIOA
-  #define SPIx_SCK_GPIO_CLK              RCC_AHB1Periph_GPIOA
-  #define SPIx_SCK_SOURCE                GPIO_PinSource5
-  #define SPIx_SCK_AF                    GPIO_AF_SPI1
+  #define SPIx_SCK_PIN                   GPIO_Pin_10
+  #define SPIx_SCK_GPIO_PORT             GPIOB
+  #define SPIx_SCK_GPIO_CLK              RCC_AHB1Periph_GPIOB
+  #define SPIx_SCK_SOURCE                GPIO_PinSource10
+  #define SPIx_SCK_AF                    GPIO_AF_SPI2
 
-  #define SPIx_MISO_PIN                  GPIO_Pin_6
-  #define SPIx_MISO_GPIO_PORT            GPIOA
-  #define SPIx_MISO_GPIO_CLK             RCC_AHB1Periph_GPIOA
-  #define SPIx_MISO_SOURCE               GPIO_PinSource6
-  #define SPIx_MISO_AF                   GPIO_AF_SPI1
+  #define SPIx_MISO_PIN                  GPIO_Pin_2
+  #define SPIx_MISO_GPIO_PORT            GPIOC
+  #define SPIx_MISO_GPIO_CLK             RCC_AHB1Periph_GPIOC
+  #define SPIx_MISO_SOURCE               GPIO_PinSource2
+  #define SPIx_MISO_AF                   GPIO_AF_SPI2
 
-  #define SPIx_MOSI_PIN                  GPIO_Pin_7
-  #define SPIx_MOSI_GPIO_PORT            GPIOA
-  #define SPIx_MOSI_GPIO_CLK             RCC_AHB1Periph_GPIOA
-  #define SPIx_MOSI_SOURCE               GPIO_PinSource7
-  #define SPIx_MOSI_AF                   GPIO_AF_SPI1
+  #define SPIx_MOSI_PIN                  GPIO_Pin_3
+  #define SPIx_MOSI_GPIO_PORT            GPIOC
+  #define SPIx_MOSI_GPIO_CLK             RCC_AHB1Periph_GPIOC
+  #define SPIx_MOSI_SOURCE               GPIO_PinSource3
+  #define SPIx_MOSI_AF                   GPIO_AF_SPI2
 
-	#define DESELECT_SPI GPIO_SetBits(GPIOA,GPIO_Pin_4) 
-	#define SELECT_SPI GPIO_ResetBits(GPIOA,GPIO_Pin_4) 
+	#define DESELECT_SPI GPIO_SetBits(GPIOB,GPIO_Pin_12) 
+	#define SELECT_SPI GPIO_ResetBits(GPIOB,GPIO_Pin_12) 
 
 
 

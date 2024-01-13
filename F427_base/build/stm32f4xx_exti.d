@@ -16,6 +16,7 @@ build/stm32f4xx_exti.o: \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_iwdg.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_pwr.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h \
+ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rng.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rtc.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_sdio.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_spi.h \
@@ -26,7 +27,6 @@ build/stm32f4xx_exti.o: \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/misc.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_cryp.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_hash.h \
- Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rng.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_can.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dac.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dcmi.h \
@@ -51,6 +51,7 @@ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_i2c.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_iwdg.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_pwr.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h:
+Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rng.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rtc.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_sdio.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_spi.h:
@@ -61,7 +62,6 @@ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_wwdg.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/misc.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_cryp.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_hash.h:
-Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rng.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_can.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dac.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dcmi.h:

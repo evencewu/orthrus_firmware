@@ -453,30 +453,32 @@ void APPL_OutputMapping(UINT16 *pData)
 
 void APPL_Application(void)
 {
-    if (sDOOutputs.bLED1 != 0)
-    {
-        GPIO_SetBits(GPIOB, GPIO_Pin_15);
-    }
-    else
-    {
-        GPIO_ResetBits(GPIOB, GPIO_Pin_15);
-    }
-    if (sDOOutputs.bLED2 != 0)
-    {
-        GPIO_SetBits(GPIOB, GPIO_Pin_14);
-    }
-    else
-    {
-        GPIO_ResetBits(GPIOB, GPIO_Pin_14);
-    }
-    if (sDOOutputs.bLED3 != 0)
-    {
-        GPIO_SetBits(GPIOB, GPIO_Pin_13);
-    }
-    else
-    {
-        GPIO_ResetBits(GPIOB, GPIO_Pin_13);
-    }
+    //if (sDOOutputs.bLED1 != 0)
+    //{
+    //    GPIO_SetBits(GPIOB, GPIO_Pin_15);
+    //}
+    //else
+    //{
+    //    GPIO_ResetBits(GPIOB, GPIO_Pin_15);
+    //}
+
+    //if (sDOOutputs.bLED2 != 0)
+    //{
+    //    GPIO_SetBits(GPIOB, GPIO_Pin_14);
+    //}
+    //else
+    //{
+    //    GPIO_ResetBits(GPIOB, GPIO_Pin_14);
+    //}
+//
+    //if (sDOOutputs.bLED3 != 0)
+    //{
+    //    GPIO_SetBits(GPIOB, GPIO_Pin_13);
+    //}
+    //else
+    //{
+    //    GPIO_ResetBits(GPIOB, GPIO_Pin_13);
+    //}
 
     Can1_TxMessage.StdId = sDOOutputs.can1_h0;
     Can1_TxMessage.ExtId = sDOOutputs.can1_h1;
@@ -653,6 +655,9 @@ int main(void)
 void main(void)
 #endif
 {
+    RCC_ClocksTypeDef rcc;    
+    RCC_GetClocksFreq(&rcc); 
+
     /* initialize the Hardware and the EtherCAT Slave Controller */
     HW_Init();
 
