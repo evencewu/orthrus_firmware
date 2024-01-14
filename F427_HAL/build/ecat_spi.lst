@@ -1,0 +1,103 @@
+ARM GAS  /tmp/ccSazBxG.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"ecat_spi.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.WR_CMD,"ax",%progbits
+  20              		.align	1
+  21              		.global	WR_CMD
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	WR_CMD:
+  27              	.LVL0:
+  28              	.LFB134:
+  29              		.file 1 "Lib/ecat_bsp/src/ecat_spi.c"
+   1:Lib/ecat_bsp/src/ecat_spi.c **** #include "ecat_spi.h"
+   2:Lib/ecat_bsp/src/ecat_spi.c **** 
+   3:Lib/ecat_bsp/src/ecat_spi.c **** extern SPI_HandleTypeDef hspi2;
+   4:Lib/ecat_bsp/src/ecat_spi.c **** 
+   5:Lib/ecat_bsp/src/ecat_spi.c **** uint8_t WR_CMD(uint8_t cmd)
+   6:Lib/ecat_bsp/src/ecat_spi.c **** {
+  30              		.loc 1 6 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 6 1 is_stmt 0 view .LVU1
+  35 0000 10B5     		push	{r4, lr}
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 4, -8
+  38              		.cfi_offset 14, -4
+  39 0002 82B0     		sub	sp, sp, #8
+  40              		.cfi_def_cfa_offset 16
+  41 0004 0146     		mov	r1, r0
+  42 0006 0024     		movs	r4, #0
+   7:Lib/ecat_bsp/src/ecat_spi.c ****     uint8_t temp;
+  43              		.loc 1 7 5 is_stmt 1 view .LVU2
+   8:Lib/ecat_bsp/src/ecat_spi.c **** 
+   9:Lib/ecat_bsp/src/ecat_spi.c ****     HAL_SPI_TransmitReceive(&hspi2, (uint8_t *)cmd, (uint8_t *)temp, 1, 100);
+  44              		.loc 1 9 5 view .LVU3
+  45 0008 6423     		movs	r3, #100
+  46 000a 0093     		str	r3, [sp]
+  47 000c 0123     		movs	r3, #1
+  48 000e 2246     		mov	r2, r4
+  49 0010 0248     		ldr	r0, .L3
+ARM GAS  /tmp/ccSazBxG.s 			page 2
+
+
+  50              	.LVL1:
+  51              		.loc 1 9 5 is_stmt 0 view .LVU4
+  52 0012 FFF7FEFF 		bl	HAL_SPI_TransmitReceive
+  53              	.LVL2:
+  10:Lib/ecat_bsp/src/ecat_spi.c **** 
+  11:Lib/ecat_bsp/src/ecat_spi.c ****     return temp;
+  54              		.loc 1 11 5 is_stmt 1 view .LVU5
+  12:Lib/ecat_bsp/src/ecat_spi.c **** }...
+  55              		.loc 1 12 1 is_stmt 0 view .LVU6
+  56 0016 2046     		mov	r0, r4
+  57 0018 02B0     		add	sp, sp, #8
+  58              		.cfi_def_cfa_offset 8
+  59              		@ sp needed
+  60 001a 10BD     		pop	{r4, pc}
+  61              	.L4:
+  62              		.align	2
+  63              	.L3:
+  64 001c 00000000 		.word	hspi2
+  65              		.cfi_endproc
+  66              	.LFE134:
+  68              		.text
+  69              	.Letext0:
+  70              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+  71              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+  72              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h"
+  73              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+  74              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+  75              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ARM GAS  /tmp/ccSazBxG.s 			page 3
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ecat_spi.c
+     /tmp/ccSazBxG.s:20     .text.WR_CMD:0000000000000000 $t
+     /tmp/ccSazBxG.s:26     .text.WR_CMD:0000000000000000 WR_CMD
+     /tmp/ccSazBxG.s:64     .text.WR_CMD:000000000000001c $d
+
+UNDEFINED SYMBOLS
+HAL_SPI_TransmitReceive
+hspi2
