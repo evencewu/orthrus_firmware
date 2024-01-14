@@ -393,7 +393,20 @@ void APPL_InputMapping(UINT16 *pData)
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[25]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[26]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[27]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[28]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[28]);//
+            
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[29]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[30]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[31]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[32]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[33]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[34]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[35]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[36]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[37]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[38]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[39]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[40]);
             break;
         }
     }
@@ -451,34 +464,40 @@ void APPL_OutputMapping(UINT16 *pData)
 */
 ///////////////////////////////////////////////////////////////////////////////////////
 
+#include <stdint.h>
+#include "bsp_usart.h"
+//#include "motor_msg.h"
+//#include "unitreeA1_cmd.h"
+//#include "A1_control.h"
+
 void APPL_Application(void)
 {
-    //if (sDOOutputs.bLED1 != 0)
-    //{
-    //    GPIO_SetBits(GPIOB, GPIO_Pin_15);
-    //}
-    //else
-    //{
-    //    GPIO_ResetBits(GPIOB, GPIO_Pin_15);
-    //}
+    if (sDOOutputs.bLED1 != 0)
+    {
+        GPIO_SetBits(GPIOB, GPIO_Pin_15);
+    }
+    else
+    {
+        GPIO_ResetBits(GPIOB, GPIO_Pin_15);
+    }
 
-    //if (sDOOutputs.bLED2 != 0)
-    //{
-    //    GPIO_SetBits(GPIOB, GPIO_Pin_14);
-    //}
-    //else
-    //{
-    //    GPIO_ResetBits(GPIOB, GPIO_Pin_14);
-    //}
-//
-    //if (sDOOutputs.bLED3 != 0)
-    //{
-    //    GPIO_SetBits(GPIOB, GPIO_Pin_13);
-    //}
-    //else
-    //{
-    //    GPIO_ResetBits(GPIOB, GPIO_Pin_13);
-    //}
+    if (sDOOutputs.bLED2 != 0)
+    {
+        GPIO_SetBits(GPIOB, GPIO_Pin_14);
+    }
+    else
+    {
+        GPIO_ResetBits(GPIOB, GPIO_Pin_14);
+    }
+
+    if (sDOOutputs.bLED3 != 0)
+    {
+        GPIO_SetBits(GPIOB, GPIO_Pin_13);
+    }
+    else
+    {
+        GPIO_ResetBits(GPIOB, GPIO_Pin_13);
+    }
 
     Can1_TxMessage.StdId = sDOOutputs.can1_h0;
     Can1_TxMessage.ExtId = sDOOutputs.can1_h1;
@@ -557,6 +576,10 @@ void APPL_Application(void)
     sAIInputs.can2_d5 = Can2_RxMessage.Data[5];
     sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
     sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
+
+    //modfiy_cmd();
+    //unitreeA1_rxtx(&huart1);
+    
 
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
     sAIInputs.bTxPDOToggle ^= 1;
@@ -655,8 +678,8 @@ int main(void)
 void main(void)
 #endif
 {
-    RCC_ClocksTypeDef rcc;    
-    RCC_GetClocksFreq(&rcc); 
+    //RCC_ClocksTypeDef rcc;    
+    //RCC_GetClocksFreq(&rcc); 
 
     /* initialize the Hardware and the EtherCAT Slave Controller */
     HW_Init();

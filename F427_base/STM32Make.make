@@ -84,6 +84,7 @@ Lib/bsp/src/SPI1.c \
 Lib/bsp/src/Timer.c \
 Lib/bsp/src/bsp_can.c \
 Lib/bsp/src/bsp_led.c \
+Lib/bsp/src/bsp_usart.c \
 Lib/bsp/src/system_stm32f4xx.c \
 Lib/ssc/src/bootmode.c \
 Lib/ssc/src/diag.c \
@@ -182,7 +183,8 @@ C_INCLUDES =  \
 -IDrivers/STM32F4xx_StdPeriph_Driver/inc \
 -ILib/bsp/include \
 -ILib/ssc/include \
--ILib/ssc_app/include
+-ILib/ssc_app/include \
+-ILib/unitree_a1/include
 
 
 

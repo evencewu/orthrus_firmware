@@ -380,6 +380,7 @@ void Sync1_Isr(void)
 #include "RST.h"
 #include "bsp_can.h"
 #include "bsp_led.h"
+#include "bsp_usart.h"
 
 UINT16 MainInit(void)
 {
@@ -403,6 +404,8 @@ UINT16 MainInit(void)
     led_setup();
     CAN1_Config();
 	CAN2_Config();
+
+    init_usart();
 
 
     /*Timer initialization*/
