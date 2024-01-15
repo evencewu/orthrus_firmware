@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccQztDHN.s 			page 1
+ARM GAS  /tmp/ccYsNjvW.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -37,66 +37,65 @@ ARM GAS  /tmp/ccQztDHN.s 			page 1
    6:Lib/ecat_bsp/src/ecat_spi.c **** {
   30              		.loc 1 6 1 view -0
   31              		.cfi_startproc
-  32              		@ args = 0, pretend = 0, frame = 0
+  32              		@ args = 0, pretend = 0, frame = 16
   33              		@ frame_needed = 0, uses_anonymous_args = 0
   34              		.loc 1 6 1 is_stmt 0 view .LVU1
-  35 0000 10B5     		push	{r4, lr}
-  36              		.cfi_def_cfa_offset 8
-  37              		.cfi_offset 4, -8
-  38              		.cfi_offset 14, -4
-  39 0002 82B0     		sub	sp, sp, #8
-  40              		.cfi_def_cfa_offset 16
-  41 0004 0146     		mov	r1, r0
-  42 0006 0024     		movs	r4, #0
+  35 0000 00B5     		push	{lr}
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 14, -4
+  38 0002 87B0     		sub	sp, sp, #28
+  39              		.cfi_def_cfa_offset 32
+  40 0004 8DF80F00 		strb	r0, [sp, #15]
    7:Lib/ecat_bsp/src/ecat_spi.c ****     uint8_t temp;
-  43              		.loc 1 7 5 is_stmt 1 view .LVU2
+  41              		.loc 1 7 5 is_stmt 1 view .LVU2
    8:Lib/ecat_bsp/src/ecat_spi.c **** 
-   9:Lib/ecat_bsp/src/ecat_spi.c ****     HAL_SPI_TransmitReceive(&hspi2, (uint8_t *)cmd, (uint8_t *)temp, 1, 100);
-  44              		.loc 1 9 5 view .LVU3
-  45 0008 6423     		movs	r3, #100
-  46 000a 0093     		str	r3, [sp]
-  47 000c 0123     		movs	r3, #1
-  48 000e 2246     		mov	r2, r4
-  49 0010 0248     		ldr	r0, .L3
-ARM GAS  /tmp/ccQztDHN.s 			page 2
+   9:Lib/ecat_bsp/src/ecat_spi.c ****     HAL_SPI_TransmitReceive(&hspi2, &cmd, &temp, 1, 100);
+  42              		.loc 1 9 5 view .LVU3
+  43 0008 6423     		movs	r3, #100
+  44 000a 0093     		str	r3, [sp]
+  45 000c 0123     		movs	r3, #1
+  46 000e 0DF11702 		add	r2, sp, #23
+  47 0012 0DF10F01 		add	r1, sp, #15
+  48 0016 0448     		ldr	r0, .L3
+  49              	.LVL1:
+ARM GAS  /tmp/ccYsNjvW.s 			page 2
 
 
-  50              	.LVL1:
-  51              		.loc 1 9 5 is_stmt 0 view .LVU4
-  52 0012 FFF7FEFF 		bl	HAL_SPI_TransmitReceive
-  53              	.LVL2:
+  50              		.loc 1 9 5 is_stmt 0 view .LVU4
+  51 0018 FFF7FEFF 		bl	HAL_SPI_TransmitReceive
+  52              	.LVL2:
   10:Lib/ecat_bsp/src/ecat_spi.c **** 
   11:Lib/ecat_bsp/src/ecat_spi.c ****     return temp;
-  54              		.loc 1 11 5 is_stmt 1 view .LVU5
+  53              		.loc 1 11 5 is_stmt 1 view .LVU5
   12:Lib/ecat_bsp/src/ecat_spi.c **** }...
-  55              		.loc 1 12 1 is_stmt 0 view .LVU6
-  56 0016 2046     		mov	r0, r4
-  57 0018 02B0     		add	sp, sp, #8
-  58              		.cfi_def_cfa_offset 8
-  59              		@ sp needed
-  60 001a 10BD     		pop	{r4, pc}
-  61              	.L4:
-  62              		.align	2
-  63              	.L3:
-  64 001c 00000000 		.word	hspi2
-  65              		.cfi_endproc
-  66              	.LFE134:
-  68              		.text
-  69              	.Letext0:
-  70              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
-  71              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
-  72              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h"
-  73              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
-  74              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
-  75              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
-ARM GAS  /tmp/ccQztDHN.s 			page 3
+  54              		.loc 1 12 1 is_stmt 0 view .LVU6
+  55 001c 9DF81700 		ldrb	r0, [sp, #23]	@ zero_extendqisi2
+  56 0020 07B0     		add	sp, sp, #28
+  57              		.cfi_def_cfa_offset 4
+  58              		@ sp needed
+  59 0022 5DF804FB 		ldr	pc, [sp], #4
+  60              	.L4:
+  61 0026 00BF     		.align	2
+  62              	.L3:
+  63 0028 00000000 		.word	hspi2
+  64              		.cfi_endproc
+  65              	.LFE134:
+  67              		.text
+  68              	.Letext0:
+  69              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+  70              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+  71              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h"
+  72              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+  73              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+  74              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ARM GAS  /tmp/ccYsNjvW.s 			page 3
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ecat_spi.c
-     /tmp/ccQztDHN.s:20     .text.WR_CMD:0000000000000000 $t
-     /tmp/ccQztDHN.s:26     .text.WR_CMD:0000000000000000 WR_CMD
-     /tmp/ccQztDHN.s:64     .text.WR_CMD:000000000000001c $d
+     /tmp/ccYsNjvW.s:20     .text.WR_CMD:0000000000000000 $t
+     /tmp/ccYsNjvW.s:26     .text.WR_CMD:0000000000000000 WR_CMD
+     /tmp/ccYsNjvW.s:63     .text.WR_CMD:0000000000000028 $d
 
 UNDEFINED SYMBOLS
 HAL_SPI_TransmitReceive

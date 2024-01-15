@@ -42,8 +42,7 @@ build/ecatappl.o: Lib/ssc_app/src/ecatappl.c Lib/ssc/include/ecatslv.h \
  Lib/ssc/include/objdef.h Lib/ssc_app/include/el9800appl.h \
  Lib/ssc_app/include/ecatappl.h Lib/bsp/include/RST.h \
  Lib/bsp/include/stm32f4xx_conf.h Lib/bsp/include/bsp_can.h \
- Lib/bsp/include/bsp_led.h Lib/bsp/include/bsp_usart.h \
- Lib/unitree_a1/include/motor_msg.h Lib/unitree_a1/include/motor_msg.h
+ Lib/bsp/include/bsp_led.h
 Lib/ssc/include/ecatslv.h:
 Lib/ssc/include/ecat_def.h:
 Lib/ssc/include/el9800hw.h:
@@ -100,6 +99,3 @@ Lib/bsp/include/RST.h:
 Lib/bsp/include/stm32f4xx_conf.h:
 Lib/bsp/include/bsp_can.h:
 Lib/bsp/include/bsp_led.h:
-Lib/bsp/include/bsp_usart.h:
-Lib/unitree_a1/include/motor_msg.h:
-Lib/unitree_a1/include/motor_msg.h:

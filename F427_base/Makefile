@@ -79,7 +79,6 @@ Drivers/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_flash.c \
 Drivers/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_fmpi2c.c \
 Drivers/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_fmc.c \
 Core/Src/stm32f4xx_it.c \
-Lib/bsp/src/bsp_usart.c \
 Lib/bsp/src/bsp_can.c \
 Lib/bsp/src/bsp_led.c \
 Lib/bsp/src/RST.c \
@@ -106,9 +105,7 @@ Lib/ssc_app/src/coeappl.c \
 Lib/ssc_app/src/ecatappl.c \
 Lib/ssc_app/src/el9800appl.c \
 Lib/ssc_app/src/el9800hw.c \
-Lib/ssc_app/src/foeappl.c 
-# Lib/unitree_a1/src/A1_control.c 
-# Lib/unitree_a1/src/unitreeA1_cmd.c 
+Lib/ssc_app/src/foeappl.c
 
 # ASM sources
 ASM_SOURCES =  \
@@ -170,8 +167,7 @@ C_INCLUDES =  \
 -IDrivers/STM32F4xx_StdPeriph_Driver/inc \
 -ILib/ssc_app/include \
 -ILib/ssc/include \
--ILib/bsp/include \
--ILib/unitree_a1/include
+-ILib/bsp/include
 
 
 # compile gcc flags

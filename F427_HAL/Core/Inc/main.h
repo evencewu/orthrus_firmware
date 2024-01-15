@@ -67,6 +67,12 @@ void Error_Handler(void);
 #define ECAT_RST_GPIO_Port GPIOA
 #define ECAT_SPI_NSS_Pin GPIO_PIN_12
 #define ECAT_SPI_NSS_GPIO_Port GPIOB
+#define LED3_Pin GPIO_PIN_13
+#define LED3_GPIO_Port GPIOB
+#define LED2_Pin GPIO_PIN_14
+#define LED2_GPIO_Port GPIOB
+#define LED1_Pin GPIO_PIN_15
+#define LED1_GPIO_Port GPIOB
 #define ECAT_SPI_IRQ_Pin GPIO_PIN_8
 #define ECAT_SPI_IRQ_GPIO_Port GPIOA
 #define ECAT_SPI_IRQ_EXTI_IRQn EXTI9_5_IRQn

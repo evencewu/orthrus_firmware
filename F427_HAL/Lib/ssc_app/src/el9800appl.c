@@ -37,6 +37,7 @@ V4.30 : create file
 ------
 -----------------------------------------------------------------------------------------*/
 #include "ecat_def.h"
+#include "main.h"
 
 #if EL9800_APPLICATION
 
@@ -473,34 +474,37 @@ void APPL_OutputMapping(UINT16 *pData)
 
 void APPL_Application(void)
 {
-    /*
+    
     if (sDOOutputs.bLED1 != 0)
     {
-        GPIO_SetBits(GPIOB, GPIO_Pin_15);
+        HAL_GPIO_WritePin(LED1_GPIO_Port,LED1_Pin,GPIO_PIN_SET);
     }
     else
     {
-        GPIO_ResetBits(GPIOB, GPIO_Pin_15);
+        HAL_GPIO_WritePin(LED1_GPIO_Port,LED1_Pin,GPIO_PIN_RESET);
     }
+
 
     if (sDOOutputs.bLED2 != 0)
     {
-        GPIO_SetBits(GPIOB, GPIO_Pin_14);
+        HAL_GPIO_WritePin(LED2_GPIO_Port,LED2_Pin,GPIO_PIN_SET);
     }
     else
     {
-        GPIO_ResetBits(GPIOB, GPIO_Pin_14);
+        HAL_GPIO_WritePin(LED2_GPIO_Port,LED2_Pin,GPIO_PIN_RESET);
     }
+
 
     if (sDOOutputs.bLED3 != 0)
     {
-        GPIO_SetBits(GPIOB, GPIO_Pin_13);
+        HAL_GPIO_WritePin(LED3_GPIO_Port,LED3_Pin,GPIO_PIN_SET);
     }
     else
     {
-        GPIO_ResetBits(GPIOB, GPIO_Pin_13);
+        HAL_GPIO_WritePin(LED3_GPIO_Port,LED3_Pin,GPIO_PIN_RESET);
     }
 
+    /*
     Can1_TxMessage.StdId = sDOOutputs.can1_h0;
     Can1_TxMessage.ExtId = sDOOutputs.can1_h1;
     Can1_TxMessage.IDE = sDOOutputs.can1_h2;

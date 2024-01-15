@@ -241,10 +241,21 @@ void CAN2_Config(void)
 /********************************************************************/
 void CAN1_RX0_IRQHandler(void)
 {
+
+    /*从邮箱中读出报文*/
     CAN_Receive(CAN1, CAN_FIFO0, &Can1_RxMessage);
+    //GPIO_ToggleBits(GPIOB, GPIO_Pin_13);
+
+    GPIO_ToggleBits(GPIOB, GPIO_Pin_14);
+    //if (Can1_RxMessage.StdId == 0x205)
+    //{
+    //    can1_rx_flag = 1;
+    //}
 }
 
 void CAN2_RX0_IRQHandler(void)
 {
+    /*从邮箱中读出报文*/
+    GPIO_ToggleBits(GPIOB, GPIO_Pin_13);
     CAN_Receive(CAN2, CAN_FIFO0, &Can2_RxMessage);
 }

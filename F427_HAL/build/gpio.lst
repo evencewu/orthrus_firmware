@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccMpBlYp.s 			page 1
+ARM GAS  /tmp/ccae0Zgr.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccMpBlYp.s 			page 1
   28:Core/Src/gpio.c **** /*----------------------------------------------------------------------------*/
   29:Core/Src/gpio.c **** /* Configure GPIO                                                             */
   30:Core/Src/gpio.c **** /*----------------------------------------------------------------------------*/
-ARM GAS  /tmp/ccMpBlYp.s 			page 2
+ARM GAS  /tmp/ccae0Zgr.s 			page 2
 
 
   31:Core/Src/gpio.c **** /* USER CODE BEGIN 1 */
@@ -105,7 +105,7 @@ ARM GAS  /tmp/ccMpBlYp.s 			page 1
   52              		.loc 1 48 3 view .LVU4
   53 0010 0194     		str	r4, [sp, #4]
   54              		.loc 1 48 3 view .LVU5
-  55 0012 374B     		ldr	r3, .L3
+  55 0012 3C4B     		ldr	r3, .L3
   56 0014 1A6B     		ldr	r2, [r3, #48]
   57 0016 42F08002 		orr	r2, r2, #128
   58 001a 1A63     		str	r2, [r3, #48]
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccMpBlYp.s 			page 1
   65              	.LBE2:
   66              		.loc 1 48 3 view .LVU8
   49:Core/Src/gpio.c ****   __HAL_RCC_GPIOC_CLK_ENABLE();
-ARM GAS  /tmp/ccMpBlYp.s 			page 3
+ARM GAS  /tmp/ccae0Zgr.s 			page 3
 
 
   67              		.loc 1 49 3 view .LVU9
@@ -175,23 +175,23 @@ ARM GAS  /tmp/ccMpBlYp.s 			page 1
   53:Core/Src/gpio.c ****   /*Configure GPIO pin Output Level */
   54:Core/Src/gpio.c ****   HAL_GPIO_WritePin(ECAT_RST_GPIO_Port, ECAT_RST_Pin, GPIO_PIN_SET);
  115              		.loc 1 54 3 view .LVU27
- 116 0062 244E     		ldr	r6, .L3+4
+ 116 0062 294F     		ldr	r7, .L3+4
  117 0064 0122     		movs	r2, #1
  118 0066 0421     		movs	r1, #4
-ARM GAS  /tmp/ccMpBlYp.s 			page 4
+ARM GAS  /tmp/ccae0Zgr.s 			page 4
 
 
- 119 0068 3046     		mov	r0, r6
+ 119 0068 3846     		mov	r0, r7
  120 006a FFF7FEFF 		bl	HAL_GPIO_WritePin
  121              	.LVL0:
   55:Core/Src/gpio.c **** 
   56:Core/Src/gpio.c ****   /*Configure GPIO pin Output Level */
-  57:Core/Src/gpio.c ****   HAL_GPIO_WritePin(ECAT_SPI_NSS_GPIO_Port, ECAT_SPI_NSS_Pin, GPIO_PIN_RESET);
+  57:Core/Src/gpio.c ****   HAL_GPIO_WritePin(GPIOB, ECAT_SPI_NSS_Pin|LED3_Pin|LED2_Pin|LED1_Pin, GPIO_PIN_RESET);
  122              		.loc 1 57 3 view .LVU28
- 123 006e 224F     		ldr	r7, .L3+8
+ 123 006e 274E     		ldr	r6, .L3+8
  124 0070 2246     		mov	r2, r4
- 125 0072 4FF48051 		mov	r1, #4096
- 126 0076 3846     		mov	r0, r7
+ 125 0072 4FF47041 		mov	r1, #61440
+ 126 0076 3046     		mov	r0, r6
  127 0078 FFF7FEFF 		bl	HAL_GPIO_WritePin
  128              	.LVL1:
   58:Core/Src/gpio.c **** 
@@ -213,7 +213,7 @@ ARM GAS  /tmp/ccMpBlYp.s 			page 1
   63:Core/Src/gpio.c ****   HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
  140              		.loc 1 63 3 is_stmt 1 view .LVU35
  141 008a 05A9     		add	r1, sp, #20
- 142 008c 3046     		mov	r0, r6
+ 142 008c 3846     		mov	r0, r7
  143 008e FFF7FEFF 		bl	HAL_GPIO_Init
  144              	.LVL2:
   64:Core/Src/gpio.c **** 
@@ -238,11 +238,11 @@ ARM GAS  /tmp/ccMpBlYp.s 			page 1
  158 009c 0894     		str	r4, [sp, #32]
   70:Core/Src/gpio.c ****   HAL_GPIO_Init(ECAT_RST_GPIO_Port, &GPIO_InitStruct);
  159              		.loc 1 70 3 is_stmt 1 view .LVU44
-ARM GAS  /tmp/ccMpBlYp.s 			page 5
+ARM GAS  /tmp/ccae0Zgr.s 			page 5
 
 
  160 009e 05A9     		add	r1, sp, #20
- 161 00a0 3046     		mov	r0, r6
+ 161 00a0 3846     		mov	r0, r7
  162 00a2 FFF7FEFF 		bl	HAL_GPIO_Init
  163              	.LVL3:
   71:Core/Src/gpio.c **** 
@@ -267,82 +267,111 @@ ARM GAS  /tmp/ccMpBlYp.s 			page 1
   77:Core/Src/gpio.c ****   HAL_GPIO_Init(ECAT_SPI_NSS_GPIO_Port, &GPIO_InitStruct);
  177              		.loc 1 77 3 is_stmt 1 view .LVU53
  178 00b2 05A9     		add	r1, sp, #20
- 179 00b4 3846     		mov	r0, r7
+ 179 00b4 3046     		mov	r0, r6
  180 00b6 FFF7FEFF 		bl	HAL_GPIO_Init
  181              	.LVL4:
   78:Core/Src/gpio.c **** 
-  79:Core/Src/gpio.c ****   /* EXTI interrupt init*/
-  80:Core/Src/gpio.c ****   HAL_NVIC_SetPriority(EXTI0_IRQn, 1, 1);
+  79:Core/Src/gpio.c ****   /*Configure GPIO pins : PBPin PBPin PBPin */
+  80:Core/Src/gpio.c ****   GPIO_InitStruct.Pin = LED3_Pin|LED2_Pin|LED1_Pin;
  182              		.loc 1 80 3 view .LVU54
- 183 00ba 2A46     		mov	r2, r5
- 184 00bc 2946     		mov	r1, r5
- 185 00be 0620     		movs	r0, #6
- 186 00c0 FFF7FEFF 		bl	HAL_NVIC_SetPriority
- 187              	.LVL5:
-  81:Core/Src/gpio.c ****   HAL_NVIC_EnableIRQ(EXTI0_IRQn);
- 188              		.loc 1 81 3 view .LVU55
- 189 00c4 0620     		movs	r0, #6
- 190 00c6 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
- 191              	.LVL6:
-  82:Core/Src/gpio.c **** 
-  83:Core/Src/gpio.c ****   HAL_NVIC_SetPriority(EXTI1_IRQn, 1, 1);
- 192              		.loc 1 83 3 view .LVU56
- 193 00ca 2A46     		mov	r2, r5
- 194 00cc 2946     		mov	r1, r5
- 195 00ce 0720     		movs	r0, #7
- 196 00d0 FFF7FEFF 		bl	HAL_NVIC_SetPriority
- 197              	.LVL7:
-  84:Core/Src/gpio.c ****   HAL_NVIC_EnableIRQ(EXTI1_IRQn);
- 198              		.loc 1 84 3 view .LVU57
- 199 00d4 0720     		movs	r0, #7
- 200 00d6 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
- 201              	.LVL8:
+ 183              		.loc 1 80 23 is_stmt 0 view .LVU55
+ 184 00ba 4FF46043 		mov	r3, #57344
+ 185 00be 0593     		str	r3, [sp, #20]
+  81:Core/Src/gpio.c ****   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+ 186              		.loc 1 81 3 is_stmt 1 view .LVU56
+ 187              		.loc 1 81 24 is_stmt 0 view .LVU57
+ 188 00c0 0695     		str	r5, [sp, #24]
+  82:Core/Src/gpio.c ****   GPIO_InitStruct.Pull = GPIO_PULLDOWN;
+ 189              		.loc 1 82 3 is_stmt 1 view .LVU58
+ 190              		.loc 1 82 24 is_stmt 0 view .LVU59
+ 191 00c2 0223     		movs	r3, #2
+ 192 00c4 0793     		str	r3, [sp, #28]
+  83:Core/Src/gpio.c ****   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+ 193              		.loc 1 83 3 is_stmt 1 view .LVU60
+ 194              		.loc 1 83 25 is_stmt 0 view .LVU61
+ 195 00c6 0894     		str	r4, [sp, #32]
+  84:Core/Src/gpio.c ****   HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+ 196              		.loc 1 84 3 is_stmt 1 view .LVU62
+ 197 00c8 05A9     		add	r1, sp, #20
+ 198 00ca 3046     		mov	r0, r6
+ 199 00cc FFF7FEFF 		bl	HAL_GPIO_Init
+ 200              	.LVL5:
   85:Core/Src/gpio.c **** 
-ARM GAS  /tmp/ccMpBlYp.s 			page 6
+  86:Core/Src/gpio.c ****   /* EXTI interrupt init*/
+ARM GAS  /tmp/ccae0Zgr.s 			page 6
 
 
-  86:Core/Src/gpio.c ****   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
- 202              		.loc 1 86 3 view .LVU58
- 203 00da 2246     		mov	r2, r4
- 204 00dc 2146     		mov	r1, r4
- 205 00de 1720     		movs	r0, #23
- 206 00e0 FFF7FEFF 		bl	HAL_NVIC_SetPriority
- 207              	.LVL9:
-  87:Core/Src/gpio.c ****   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
- 208              		.loc 1 87 3 view .LVU59
- 209 00e4 1720     		movs	r0, #23
- 210 00e6 FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
- 211              	.LVL10:
-  88:Core/Src/gpio.c **** 
-  89:Core/Src/gpio.c **** }
- 212              		.loc 1 89 1 is_stmt 0 view .LVU60
- 213 00ea 0BB0     		add	sp, sp, #44
- 214              		.cfi_def_cfa_offset 20
- 215              		@ sp needed
- 216 00ec F0BD     		pop	{r4, r5, r6, r7, pc}
- 217              	.L4:
- 218 00ee 00BF     		.align	2
- 219              	.L3:
- 220 00f0 00380240 		.word	1073887232
- 221 00f4 00000240 		.word	1073872896
- 222 00f8 00040240 		.word	1073873920
- 223              		.cfi_endproc
- 224              	.LFE134:
- 226              		.text
- 227              	.Letext0:
- 228              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
- 229              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
- 230              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h"
- 231              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
- 232              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h"
-ARM GAS  /tmp/ccMpBlYp.s 			page 7
+  87:Core/Src/gpio.c ****   HAL_NVIC_SetPriority(EXTI0_IRQn, 1, 1);
+ 201              		.loc 1 87 3 view .LVU63
+ 202 00d0 2A46     		mov	r2, r5
+ 203 00d2 2946     		mov	r1, r5
+ 204 00d4 0620     		movs	r0, #6
+ 205 00d6 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 206              	.LVL6:
+  88:Core/Src/gpio.c ****   HAL_NVIC_EnableIRQ(EXTI0_IRQn);
+ 207              		.loc 1 88 3 view .LVU64
+ 208 00da 0620     		movs	r0, #6
+ 209 00dc FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 210              	.LVL7:
+  89:Core/Src/gpio.c **** 
+  90:Core/Src/gpio.c ****   HAL_NVIC_SetPriority(EXTI1_IRQn, 1, 1);
+ 211              		.loc 1 90 3 view .LVU65
+ 212 00e0 2A46     		mov	r2, r5
+ 213 00e2 2946     		mov	r1, r5
+ 214 00e4 0720     		movs	r0, #7
+ 215 00e6 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 216              	.LVL8:
+  91:Core/Src/gpio.c ****   HAL_NVIC_EnableIRQ(EXTI1_IRQn);
+ 217              		.loc 1 91 3 view .LVU66
+ 218 00ea 0720     		movs	r0, #7
+ 219 00ec FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 220              	.LVL9:
+  92:Core/Src/gpio.c **** 
+  93:Core/Src/gpio.c ****   HAL_NVIC_SetPriority(EXTI9_5_IRQn, 0, 0);
+ 221              		.loc 1 93 3 view .LVU67
+ 222 00f0 2246     		mov	r2, r4
+ 223 00f2 2146     		mov	r1, r4
+ 224 00f4 1720     		movs	r0, #23
+ 225 00f6 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 226              	.LVL10:
+  94:Core/Src/gpio.c ****   HAL_NVIC_EnableIRQ(EXTI9_5_IRQn);
+ 227              		.loc 1 94 3 view .LVU68
+ 228 00fa 1720     		movs	r0, #23
+ 229 00fc FFF7FEFF 		bl	HAL_NVIC_EnableIRQ
+ 230              	.LVL11:
+  95:Core/Src/gpio.c **** 
+  96:Core/Src/gpio.c **** }
+ 231              		.loc 1 96 1 is_stmt 0 view .LVU69
+ 232 0100 0BB0     		add	sp, sp, #44
+ 233              		.cfi_def_cfa_offset 20
+ 234              		@ sp needed
+ 235 0102 F0BD     		pop	{r4, r5, r6, r7, pc}
+ 236              	.L4:
+ 237              		.align	2
+ 238              	.L3:
+ 239 0104 00380240 		.word	1073887232
+ 240 0108 00000240 		.word	1073872896
+ 241 010c 00040240 		.word	1073873920
+ 242              		.cfi_endproc
+ 243              	.LFE134:
+ 245              		.text
+ 246              	.Letext0:
+ 247              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 248              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ARM GAS  /tmp/ccae0Zgr.s 			page 7
+
+
+ 249              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f427xx.h"
+ 250              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 251              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_cortex.h"
+ARM GAS  /tmp/ccae0Zgr.s 			page 8
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 gpio.c
-     /tmp/ccMpBlYp.s:20     .text.MX_GPIO_Init:0000000000000000 $t
-     /tmp/ccMpBlYp.s:26     .text.MX_GPIO_Init:0000000000000000 MX_GPIO_Init
-     /tmp/ccMpBlYp.s:220    .text.MX_GPIO_Init:00000000000000f0 $d
+     /tmp/ccae0Zgr.s:20     .text.MX_GPIO_Init:0000000000000000 $t
+     /tmp/ccae0Zgr.s:26     .text.MX_GPIO_Init:0000000000000000 MX_GPIO_Init
+     /tmp/ccae0Zgr.s:239    .text.MX_GPIO_Init:0000000000000104 $d
 
 UNDEFINED SYMBOLS
 HAL_GPIO_WritePin

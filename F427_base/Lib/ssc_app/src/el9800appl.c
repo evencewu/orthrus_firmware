@@ -393,8 +393,8 @@ void APPL_InputMapping(UINT16 *pData)
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[25]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[26]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[27]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[28]);//
-            
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[28]);
+
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[29]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[30]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[31]);
@@ -463,12 +463,6 @@ void APPL_OutputMapping(UINT16 *pData)
             or from the mainloop if no synchronisation is supported
 */
 ///////////////////////////////////////////////////////////////////////////////////////
-
-#include <stdint.h>
-#include "bsp_usart.h"
-//#include "motor_msg.h"
-//#include "unitreeA1_cmd.h"
-//#include "A1_control.h"
 
 void APPL_Application(void)
 {
@@ -577,10 +571,6 @@ void APPL_Application(void)
     sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
     sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
 
-    //modfiy_cmd();
-    //unitreeA1_rxtx(&huart1);
-    
-
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
     sAIInputs.bTxPDOToggle ^= 1;
 
@@ -678,8 +668,8 @@ int main(void)
 void main(void)
 #endif
 {
-    //RCC_ClocksTypeDef rcc;    
-    //RCC_GetClocksFreq(&rcc); 
+    RCC_ClocksTypeDef rcc;    
+    RCC_GetClocksFreq(&rcc); 
 
     /* initialize the Hardware and the EtherCAT Slave Controller */
     HW_Init();
