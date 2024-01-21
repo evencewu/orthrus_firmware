@@ -13,6 +13,7 @@
 
 #include "ecat_spi.h"
 #include "main.h"
+#include "stm32f4xx_it.h"
 
 extern TIM_HandleTypeDef htim2;
 
@@ -60,8 +61,8 @@ typedef union
 ------
 -----------------------------------------------------------------------------------------*/
 #if AL_EVENT_ENABLED
-#define INIT_ESC_INT NULL
-#define EcatIsr EXTI9_5_IRQHandler
+#define INIT_ESC_INT 
+#define EcatIsr EXTI9_5_IRQHandler_null
 #define ACK_ESC_INT HAL_GPIO_EXTI_IRQHandler(ECAT_SPI_IRQ_Pin);
 
 #endif // #if AL_EVENT_ENABLED
@@ -72,8 +73,8 @@ typedef union
 ------
 -----------------------------------------------------------------------------------------*/
 #if DC_SUPPORTED && _STM32_IO8
-#define INIT_SYNC0_INT                              // EXTI1_Configuration--EXTI0_Configuration
-#define Sync0Isr EXTI0_IRQHandler                         // primary interrupt vector name
+#define INIT_SYNC0_INT                  // EXTI1_Configuration--EXTI0_Configuration
+#define Sync0Isr EXTI0_IRQHandler_null                        // primary interrupt vector name
 #define DISABLE_SYNC0_INT HAL_NVIC_DisableIRQ(EXTI0_IRQn);    // {(_INT3IE)=0;}//disable interrupt source INT3
 #define ENABLE_SYNC0_INT HAL_NVIC_EnableIRQ(EXTI0_IRQn);      // {(_INT3IE) = 1;} //enable interrupt source INT3
 #define ACK_SYNC0_INT HAL_GPIO_EXTI_IRQHandler(ECAT_SYNC0_Pin); //  {(SYNC0_INT_REQ) = 0;}
@@ -81,7 +82,7 @@ typedef union
 /*ECATCHANGE_START(V5.10) HW3*/
 
 #define INIT_SYNC1_INT 
-#define Sync1Isr EXTI1_IRQHandler
+#define Sync1Isr EXTI1_IRQHandler_null
 #define DISABLE_SYNC1_INT HAL_NVIC_DisableIRQ(EXTI1_IRQn);    // {(_INT4IE)=0;}//disable interrupt source INT4
 #define ENABLE_SYNC1_INT HAL_NVIC_EnableIRQ(EXTI1_IRQn);      //{(_INT4IE) = 1;} //enable interrupt source INT4
 #define ACK_SYNC1_INT HAL_GPIO_EXTI_IRQHandler(ECAT_SYNC1_Pin); // {(SYNC1_INT_REQ) = 0;}
@@ -100,7 +101,7 @@ typedef union
 #if ECAT_TIMER_INT
 #define ECAT_TIMER_INT_STATE
 #define ECAT_TIMER_ACK_INT HAL_TIM_IRQHandler(&htim2);
-#define TimerIsr TIM2_IRQHandler                           //	SysTick_Handler//
+#define TimerIsr TIM2_IRQHandler_null                           //	SysTick_Handler//
 #define ENABLE_ECAT_TIMER_INT HAL_NVIC_EnableIRQ(TIM2_IRQn);   // SysTick->CTRL |= SysTick_CTRL_TICKINT_Msk;//NVIC_EnableIRQ(TIM2_IRQn) ;
 #define DISABLE_ECAT_TIMER_INT HAL_NVIC_DisableIRQ(TIM2_IRQn); // SysTick->CTRL &= ~SysTick_CTRL_TICKINT_Msk;//NVIC_DisableIRQ(SysTick_IRQn/*TIM2_IRQn*/) ;
 

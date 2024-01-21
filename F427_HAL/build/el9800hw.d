@@ -28,7 +28,7 @@ build/el9800hw.o: Lib/ssc_app/src/el9800hw.c Lib/ssc/include/ecat_def.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim_ex.h \
  Lib/ssc/include/el9800hw.h Lib/ssc_app/include/ecatappl.h \
- Lib/ecat_bsp/include/ecat_spi.h Core/Inc/main.h
+ Lib/ecat_bsp/include/ecat_spi.h Core/Inc/main.h Core/Inc/stm32f4xx_it.h
 Lib/ssc/include/ecat_def.h:
 Lib/ssc/include/ecatslv.h:
 Lib/ssc/include/ecat_def.h:
@@ -66,3 +66,4 @@ Lib/ssc/include/el9800hw.h:
 Lib/ssc_app/include/ecatappl.h:
 Lib/ecat_bsp/include/ecat_spi.h:
 Core/Inc/main.h:
+Core/Inc/stm32f4xx_it.h:

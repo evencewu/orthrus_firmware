@@ -339,7 +339,7 @@ CAN1_SCE_IRQHandler
 
         PUBWEAK EXTI9_5_IRQHandler
         SECTION .text:CODE:REORDER:NOROOT(1)
-EXTI9_5_IRQHandler  
+  
         B EXTI9_5_IRQHandler
 
         PUBWEAK TIM1_BRK_TIM9_IRQHandler

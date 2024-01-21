@@ -415,11 +415,8 @@ UINT16 MainInit(void)
 void MainLoop(void)
 {
     /*return if initialization not finished */
-    if(bInitFinished == FALSE)
-        return;
-
-
-
+    if(bInitFinished == FALSE)  return;
+    
         /* FreeRun-Mode:  bEscIntEnabled = FALSE, bDcSyncActive = FALSE
            Synchron-Mode: bEscIntEnabled = TRUE, bDcSyncActive = FALSE
            DC-Mode:       bEscIntEnabled = TRUE, bDcSyncActive = TRUE */

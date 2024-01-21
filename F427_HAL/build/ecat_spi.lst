@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccYsNjvW.s 			page 1
+ARM GAS  /tmp/cc8Awlqz.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -49,33 +49,33 @@ ARM GAS  /tmp/ccYsNjvW.s 			page 1
    7:Lib/ecat_bsp/src/ecat_spi.c ****     uint8_t temp;
   41              		.loc 1 7 5 is_stmt 1 view .LVU2
    8:Lib/ecat_bsp/src/ecat_spi.c **** 
-   9:Lib/ecat_bsp/src/ecat_spi.c ****     HAL_SPI_TransmitReceive(&hspi2, &cmd, &temp, 1, 100);
+   9:Lib/ecat_bsp/src/ecat_spi.c ****     HAL_SPI_TransmitReceive(&hspi2, &cmd, &temp, 1, 1000);
   42              		.loc 1 9 5 view .LVU3
-  43 0008 6423     		movs	r3, #100
-  44 000a 0093     		str	r3, [sp]
-  45 000c 0123     		movs	r3, #1
-  46 000e 0DF11702 		add	r2, sp, #23
-  47 0012 0DF10F01 		add	r1, sp, #15
-  48 0016 0448     		ldr	r0, .L3
+  43 0008 4FF47A73 		mov	r3, #1000
+  44 000c 0093     		str	r3, [sp]
+  45 000e 0123     		movs	r3, #1
+  46 0010 0DF11702 		add	r2, sp, #23
+  47 0014 0DF10F01 		add	r1, sp, #15
+  48 0018 0348     		ldr	r0, .L3
   49              	.LVL1:
-ARM GAS  /tmp/ccYsNjvW.s 			page 2
+ARM GAS  /tmp/cc8Awlqz.s 			page 2
 
 
   50              		.loc 1 9 5 is_stmt 0 view .LVU4
-  51 0018 FFF7FEFF 		bl	HAL_SPI_TransmitReceive
+  51 001a FFF7FEFF 		bl	HAL_SPI_TransmitReceive
   52              	.LVL2:
   10:Lib/ecat_bsp/src/ecat_spi.c **** 
   11:Lib/ecat_bsp/src/ecat_spi.c ****     return temp;
   53              		.loc 1 11 5 is_stmt 1 view .LVU5
   12:Lib/ecat_bsp/src/ecat_spi.c **** }...
   54              		.loc 1 12 1 is_stmt 0 view .LVU6
-  55 001c 9DF81700 		ldrb	r0, [sp, #23]	@ zero_extendqisi2
-  56 0020 07B0     		add	sp, sp, #28
+  55 001e 9DF81700 		ldrb	r0, [sp, #23]	@ zero_extendqisi2
+  56 0022 07B0     		add	sp, sp, #28
   57              		.cfi_def_cfa_offset 4
   58              		@ sp needed
-  59 0022 5DF804FB 		ldr	pc, [sp], #4
+  59 0024 5DF804FB 		ldr	pc, [sp], #4
   60              	.L4:
-  61 0026 00BF     		.align	2
+  61              		.align	2
   62              	.L3:
   63 0028 00000000 		.word	hspi2
   64              		.cfi_endproc
@@ -88,14 +88,14 @@ ARM GAS  /tmp/ccYsNjvW.s 			page 1
   72              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
   73              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
   74              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
-ARM GAS  /tmp/ccYsNjvW.s 			page 3
+ARM GAS  /tmp/cc8Awlqz.s 			page 3
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 ecat_spi.c
-     /tmp/ccYsNjvW.s:20     .text.WR_CMD:0000000000000000 $t
-     /tmp/ccYsNjvW.s:26     .text.WR_CMD:0000000000000000 WR_CMD
-     /tmp/ccYsNjvW.s:63     .text.WR_CMD:0000000000000028 $d
+     /tmp/cc8Awlqz.s:20     .text.WR_CMD:0000000000000000 $t
+     /tmp/cc8Awlqz.s:26     .text.WR_CMD:0000000000000000 WR_CMD
+     /tmp/cc8Awlqz.s:63     .text.WR_CMD:0000000000000028 $d
 
 UNDEFINED SYMBOLS
 HAL_SPI_TransmitReceive

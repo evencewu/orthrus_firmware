@@ -209,7 +209,6 @@ UINT16 APPL_StopOutputHandler(void)
 {
     /*ECATCHANGE_START(V5.11) EL9800 1*/
 
-    /*
     sDOOutputs.bLED1 = 0;
     sDOOutputs.bLED2 = 0;
     sDOOutputs.bLED3 = 0;
@@ -218,7 +217,7 @@ UINT16 APPL_StopOutputHandler(void)
     sDOOutputs.bLED7 = 0;
     sDOOutputs.bLED6 = 0;
     sDOOutputs.bLED8 = 0;
-
+/*
     Can1_TxMessage.StdId = 0;
     Can1_TxMessage.ExtId = 0;
     Can1_TxMessage.IDE = 0;
@@ -467,10 +466,6 @@ void APPL_OutputMapping(UINT16 *pData)
 ///////////////////////////////////////////////////////////////////////////////////////
 
 #include <stdint.h>
-//#include "bsp_usart.h"
-//#include "motor_msg.h"
-//#include "unitreeA1_cmd.h"
-//#include "A1_control.h"
 
 void APPL_Application(void)
 {

@@ -55,10 +55,10 @@ extern	uint16_t uhADCxConvertedValue;
 -----------------------------------------------*/
 
 #ifndef DISABLE_ESC_INT
-#define    DISABLE_ESC_INT()           NVIC_DisableIRQ(EXTI9_5_IRQn)		// {(_INT1IE)=0;} /**< \brief Disable interrupt source INT1*/
+#define    DISABLE_ESC_INT()           HAL_NVIC_DisableIRQ(EXTI9_5_IRQn)		// {(_INT1IE)=0;} /**< \brief Disable interrupt source INT1*/
 #endif
 #ifndef ENABLE_ESC_INT
-#define    ENABLE_ESC_INT()           NVIC_EnableIRQ(EXTI9_5_IRQn)			// {(_INT1IE)=1;} /**< \brief Enable interrupt source INT1*/
+#define    ENABLE_ESC_INT()           HAL_NVIC_EnableIRQ(EXTI9_5_IRQn)			// {(_INT1IE)=1;} /**< \brief Enable interrupt source INT1*/
 #endif
 
 #ifndef HW_GetTimer
