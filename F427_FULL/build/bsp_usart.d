@@ -32,7 +32,8 @@ build/bsp_usart.o: Lib/bsp/src/bsp_usart.c Lib/bsp/include/bsp_usart.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dcmi.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma2d.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_fmc.h \
- Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_sai.h
+ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_sai.h \
+ Lib/motor_app/include/unitreeA1_cmd.h Lib/motor_app/include/motor_msg.h
 Lib/bsp/include/bsp_usart.h:
 Lib/bsp/include/stm32f4xx_conf.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_adc.h:
@@ -70,3 +71,5 @@ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dcmi.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma2d.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_fmc.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_sai.h:
+Lib/motor_app/include/unitreeA1_cmd.h:
+Lib/motor_app/include/motor_msg.h:

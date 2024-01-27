@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccF2EKYc.s 			page 1
+ARM GAS  /tmp/ccfUKThx.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccF2EKYc.s 			page 1
   34              		.loc 1 22 1 is_stmt 0 view .LVU1
   35 0000 30B5     		push	{r4, r5, lr}
   36              		.cfi_def_cfa_offset 12
-ARM GAS  /tmp/ccF2EKYc.s 			page 2
+ARM GAS  /tmp/ccfUKThx.s 			page 2
 
 
   37              		.cfi_offset 4, -12
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccF2EKYc.s 			page 1
   45:Lib/motor_app/src/unitreeA1_cmd.c ****             xbit >>= 1;
   68              		.loc 1 45 13 is_stmt 1 discriminator 2 view .LVU16
   69              		.loc 1 45 18 is_stmt 0 discriminator 2 view .LVU17
-ARM GAS  /tmp/ccF2EKYc.s 			page 3
+ARM GAS  /tmp/ccfUKThx.s 			page 3
 
 
   70 0018 5208     		lsrs	r2, r2, #1
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccF2EKYc.s 			page 1
  108 003a EDE7     		b	.L6
  109              	.L10:
   29:Lib/motor_app/src/unitreeA1_cmd.c ****     {
-ARM GAS  /tmp/ccF2EKYc.s 			page 4
+ARM GAS  /tmp/ccfUKThx.s 			page 4
 
 
  110              		.loc 1 29 26 is_stmt 1 discriminator 2 view .LVU34
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccF2EKYc.s 			page 1
  151              		.global	modfiy_cmd
  152              		.syntax unified
  153              		.thumb
-ARM GAS  /tmp/ccF2EKYc.s 			page 5
+ARM GAS  /tmp/ccfUKThx.s 			page 5
 
 
  154              		.thumb_func
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccF2EKYc.s 			page 1
  198              	.LVL19:
  199              		.loc 1 60 34 view .LVU62
  200 003c 08A3     		adr	r3, .L17
-ARM GAS  /tmp/ccF2EKYc.s 			page 6
+ARM GAS  /tmp/ccfUKThx.s 			page 6
 
 
  201 003e D3E90023 		ldrd	r2, [r3]
@@ -330,21 +330,21 @@ ARM GAS  /tmp/ccF2EKYc.s 			page 1
  223 0064 AB965C40 		.word	1079809707
  224              		.cfi_endproc
  225              	.LFE127:
- 227              		.section	.text.unitreeA1_rxtx,"ax",%progbits
+ 227              		.section	.text.unitreeA1_tx,"ax",%progbits
  228              		.align	1
- 229              		.global	unitreeA1_rxtx
+ 229              		.global	unitreeA1_tx
  230              		.syntax unified
  231              		.thumb
  232              		.thumb_func
- 234              	unitreeA1_rxtx:
+ 234              	unitreeA1_tx:
  235              	.LVL23:
  236              	.LFB128:
   64:Lib/motor_app/src/unitreeA1_cmd.c **** 
-  65:Lib/motor_app/src/unitreeA1_cmd.c **** void unitreeA1_rxtx(int leg_id)
+  65:Lib/motor_app/src/unitreeA1_cmd.c **** void unitreeA1_tx(int leg_id)
   66:Lib/motor_app/src/unitreeA1_cmd.c **** {
  237              		.loc 1 66 1 is_stmt 1 view -0
  238              		.cfi_startproc
- 239              		@ args = 0, pretend = 0, frame = 120
+ 239              		@ args = 0, pretend = 0, frame = 40
  240              		@ frame_needed = 0, uses_anonymous_args = 0
  241              		.loc 1 66 1 is_stmt 0 view .LVU71
  242 0000 70B5     		push	{r4, r5, r6, lr}
@@ -353,415 +353,491 @@ ARM GAS  /tmp/ccF2EKYc.s 			page 1
  245              		.cfi_offset 5, -12
  246              		.cfi_offset 6, -8
  247              		.cfi_offset 14, -4
- 248 0002 9EB0     		sub	sp, sp, #120
- 249              		.cfi_def_cfa_offset 136
+ 248 0002 8AB0     		sub	sp, sp, #40
+ 249              		.cfi_def_cfa_offset 56
  250 0004 0546     		mov	r5, r0
-  67:Lib/motor_app/src/unitreeA1_cmd.c ****     uint8_t Data[78];
- 251              		.loc 1 67 5 is_stmt 1 view .LVU72
-ARM GAS  /tmp/ccF2EKYc.s 			page 7
+  67:Lib/motor_app/src/unitreeA1_cmd.c ****     /*———————————————————————————————
+  68:Lib/motor_app/src/unitreeA1_cmd.c ****     uint8_t A1cmd[34];
+ARM GAS  /tmp/ccfUKThx.s 			page 7
 
 
-  68:Lib/motor_app/src/unitreeA1_cmd.c ****     /*———————————————————————————————
-  69:Lib/motor_app/src/unitreeA1_cmd.c ****     uint8_t A1cmd[34];
- 252              		.loc 1 69 5 view .LVU73
-  70:Lib/motor_app/src/unitreeA1_cmd.c **** 
-  71:Lib/motor_app/src/unitreeA1_cmd.c ****     // 此处为左腿电机结构体//
-  72:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.head.start[0] = 0xFE;
- 253              		.loc 1 72 5 view .LVU74
- 254              		.loc 1 72 51 is_stmt 0 view .LVU75
- 255 0006 674B     		ldr	r3, .L26
- 256 0008 00EB4012 		add	r2, r0, r0, lsl #5
- 257 000c 03EB4204 		add	r4, r3, r2, lsl #1
- 258 0010 FE21     		movs	r1, #254
- 259 0012 03F81210 		strb	r1, [r3, r2, lsl #1]
-  73:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.head.start[1] = 0xEE;
- 260              		.loc 1 73 5 is_stmt 1 view .LVU76
- 261              		.loc 1 73 51 is_stmt 0 view .LVU77
- 262 0016 EE23     		movs	r3, #238
- 263 0018 6370     		strb	r3, [r4, #1]
-  74:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.head.motorID = cmd_leg[leg_id].id;
- 264              		.loc 1 74 5 is_stmt 1 view .LVU78
- 265              		.loc 1 74 67 is_stmt 0 view .LVU79
- 266 001a E38C     		ldrh	r3, [r4, #38]
- 267              		.loc 1 74 50 view .LVU80
- 268 001c A370     		strb	r3, [r4, #2]
-  75:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.head.reserved = 0x00;
- 269              		.loc 1 75 5 is_stmt 1 view .LVU81
- 270              		.loc 1 75 51 is_stmt 0 view .LVU82
- 271 001e 0023     		movs	r3, #0
- 272 0020 E370     		strb	r3, [r4, #3]
-  76:Lib/motor_app/src/unitreeA1_cmd.c **** 
-  77:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.mode = cmd_leg[leg_id].mode;
- 273              		.loc 1 77 5 is_stmt 1 view .LVU83
- 274              		.loc 1 77 65 is_stmt 0 view .LVU84
- 275 0022 228D     		ldrh	r2, [r4, #40]
- 276              		.loc 1 77 48 view .LVU85
- 277 0024 2271     		strb	r2, [r4, #4]
-  78:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.ModifyBit = 0xFF;
- 278              		.loc 1 78 5 is_stmt 1 view .LVU86
- 279              		.loc 1 78 53 is_stmt 0 view .LVU87
- 280 0026 FF22     		movs	r2, #255
- 281 0028 6271     		strb	r2, [r4, #5]
-  79:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.ReadBit = 0x00;
- 282              		.loc 1 79 5 is_stmt 1 view .LVU88
- 283              		.loc 1 79 51 is_stmt 0 view .LVU89
- 284 002a A371     		strb	r3, [r4, #6]
-  80:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.reserved = 0x00;
- 285              		.loc 1 80 5 is_stmt 1 view .LVU90
- 286              		.loc 1 80 52 is_stmt 0 view .LVU91
- 287 002c E371     		strb	r3, [r4, #7]
-  81:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.Modify.F = 0;
- 288              		.loc 1 81 5 is_stmt 1 view .LVU92
- 289              		.loc 1 81 52 is_stmt 0 view .LVU93
- 290 002e 0022     		movs	r2, #0
- 291 0030 A260     		str	r2, [r4, #8]	@ unaligned
-  82:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.T = cmd_leg[leg_id].T * 256;
- 292              		.loc 1 82 5 is_stmt 1 view .LVU94
- 293              		.loc 1 82 62 is_stmt 0 view .LVU95
-ARM GAS  /tmp/ccF2EKYc.s 			page 8
+ 251              		.loc 1 68 5 is_stmt 1 view .LVU72
+  69:Lib/motor_app/src/unitreeA1_cmd.c **** 
+  70:Lib/motor_app/src/unitreeA1_cmd.c ****     // 此处为左腿电机结构体//
+  71:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.head.start[0] = 0xFE;
+ 252              		.loc 1 71 5 view .LVU73
+ 253              		.loc 1 71 51 is_stmt 0 view .LVU74
+ 254 0006 394B     		ldr	r3, .L24
+ 255 0008 00EB4012 		add	r2, r0, r0, lsl #5
+ 256 000c 03EB4204 		add	r4, r3, r2, lsl #1
+ 257 0010 FE21     		movs	r1, #254
+ 258 0012 03F81210 		strb	r1, [r3, r2, lsl #1]
+  72:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.head.start[1] = 0xEE;
+ 259              		.loc 1 72 5 is_stmt 1 view .LVU75
+ 260              		.loc 1 72 51 is_stmt 0 view .LVU76
+ 261 0016 EE23     		movs	r3, #238
+ 262 0018 6370     		strb	r3, [r4, #1]
+  73:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.head.motorID = cmd_leg[leg_id].id;
+ 263              		.loc 1 73 5 is_stmt 1 view .LVU77
+ 264              		.loc 1 73 67 is_stmt 0 view .LVU78
+ 265 001a E38C     		ldrh	r3, [r4, #38]
+ 266              		.loc 1 73 50 view .LVU79
+ 267 001c A370     		strb	r3, [r4, #2]
+  74:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.head.reserved = 0x00;
+ 268              		.loc 1 74 5 is_stmt 1 view .LVU80
+ 269              		.loc 1 74 51 is_stmt 0 view .LVU81
+ 270 001e 0023     		movs	r3, #0
+ 271 0020 E370     		strb	r3, [r4, #3]
+  75:Lib/motor_app/src/unitreeA1_cmd.c **** 
+  76:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.mode = cmd_leg[leg_id].mode;
+ 272              		.loc 1 76 5 is_stmt 1 view .LVU82
+ 273              		.loc 1 76 65 is_stmt 0 view .LVU83
+ 274 0022 228D     		ldrh	r2, [r4, #40]
+ 275              		.loc 1 76 48 view .LVU84
+ 276 0024 2271     		strb	r2, [r4, #4]
+  77:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.ModifyBit = 0xFF;
+ 277              		.loc 1 77 5 is_stmt 1 view .LVU85
+ 278              		.loc 1 77 53 is_stmt 0 view .LVU86
+ 279 0026 FF22     		movs	r2, #255
+ 280 0028 6271     		strb	r2, [r4, #5]
+  78:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.ReadBit = 0x00;
+ 281              		.loc 1 78 5 is_stmt 1 view .LVU87
+ 282              		.loc 1 78 51 is_stmt 0 view .LVU88
+ 283 002a A371     		strb	r3, [r4, #6]
+  79:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.reserved = 0x00;
+ 284              		.loc 1 79 5 is_stmt 1 view .LVU89
+ 285              		.loc 1 79 52 is_stmt 0 view .LVU90
+ 286 002c E371     		strb	r3, [r4, #7]
+  80:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.Modify.F = 0;
+ 287              		.loc 1 80 5 is_stmt 1 view .LVU91
+ 288              		.loc 1 80 52 is_stmt 0 view .LVU92
+ 289 002e 0022     		movs	r2, #0
+ 290 0030 A260     		str	r2, [r4, #8]	@ unaligned
+  81:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.T = cmd_leg[leg_id].T * 256;
+ 291              		.loc 1 81 5 is_stmt 1 view .LVU93
+ 292              		.loc 1 81 62 is_stmt 0 view .LVU94
+ 293 0032 D4F82A20 		ldr	r2, [r4, #42]	@ unaligned
+ 294              		.loc 1 81 45 view .LVU95
+ARM GAS  /tmp/ccfUKThx.s 			page 8
 
 
- 294 0032 D4F82A20 		ldr	r2, [r4, #42]	@ unaligned
- 295              		.loc 1 82 45 view .LVU96
- 296 0036 07EE902A 		vmov	s15, r2
- 297 003a FEEECC7A 		vcvt.s32.f32	s15, s15, #8
- 298 003e 17EE902A 		vmov	r2, s15	@ int
- 299 0042 A281     		strh	r2, [r4, #12]	@ movhi
-  83:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.W = cmd_leg[leg_id].W * 128;
- 300              		.loc 1 83 5 is_stmt 1 view .LVU97
- 301              		.loc 1 83 62 is_stmt 0 view .LVU98
- 302 0044 D4F82E20 		ldr	r2, [r4, #46]	@ unaligned
- 303              		.loc 1 83 45 view .LVU99
- 304 0048 07EE902A 		vmov	s15, r2
- 305 004c FEEEEC7A 		vcvt.s32.f32	s15, s15, #7
- 306 0050 17EE902A 		vmov	r2, s15	@ int
- 307 0054 E281     		strh	r2, [r4, #14]	@ movhi
-  84:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.Pos = (int)((cmd_leg[leg_id].Pos / 6.2832f) * 16384.0f);
- 308              		.loc 1 84 5 is_stmt 1 view .LVU100
- 309              		.loc 1 84 71 is_stmt 0 view .LVU101
- 310 0056 D4F83220 		ldr	r2, [r4, #50]	@ unaligned
- 311              		.loc 1 84 76 view .LVU102
- 312 005a 9FED537A 		vldr.32	s14, .L26+4
- 313 005e 07EE902A 		vmov	s15, r2
- 314 0062 C7EE877A 		vdiv.f32	s15, s15, s14
- 315              		.loc 1 84 49 view .LVU103
- 316 0066 FEEEC97A 		vcvt.s32.f32	s15, s15, #14
- 317              		.loc 1 84 47 view .LVU104
- 318 006a 17EE902A 		vmov	r2, s15	@ int
- 319 006e 2261     		str	r2, [r4, #16]	@ unaligned
-  85:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.K_P = cmd_leg[leg_id].K_P * 2048;
- 320              		.loc 1 85 5 is_stmt 1 view .LVU105
- 321              		.loc 1 85 64 is_stmt 0 view .LVU106
- 322 0070 D4F83620 		ldr	r2, [r4, #54]	@ unaligned
- 323              		.loc 1 85 47 view .LVU107
- 324 0074 07EE902A 		vmov	s15, r2
- 325 0078 FEEEEA7A 		vcvt.s32.f32	s15, s15, #11
- 326 007c 17EE902A 		vmov	r2, s15	@ int
- 327 0080 A282     		strh	r2, [r4, #20]	@ movhi
-  86:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.K_W = cmd_leg[leg_id].K_W * 1024;
- 328              		.loc 1 86 5 is_stmt 1 view .LVU108
- 329              		.loc 1 86 64 is_stmt 0 view .LVU109
- 330 0082 D4F83A20 		ldr	r2, [r4, #58]	@ unaligned
- 331              		.loc 1 86 47 view .LVU110
- 332 0086 07EE902A 		vmov	s15, r2
- 333 008a FEEECB7A 		vcvt.s32.f32	s15, s15, #10
- 334 008e 17EE902A 		vmov	r2, s15	@ int
- 335 0092 E282     		strh	r2, [r4, #22]	@ movhi
-  87:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.LowHzMotorCmdIndex = 0;
- 336              		.loc 1 87 5 is_stmt 1 view .LVU111
- 337              		.loc 1 87 62 is_stmt 0 view .LVU112
- 338 0094 2376     		strb	r3, [r4, #24]
-  88:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.LowHzMotorCmdByte = 0;
- 339              		.loc 1 88 5 is_stmt 1 view .LVU113
- 340              		.loc 1 88 61 is_stmt 0 view .LVU114
- 341 0096 6376     		strb	r3, [r4, #25]
-  89:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.Res[0] = cmd_leg[leg_id].Res;
- 342              		.loc 1 89 5 is_stmt 1 view .LVU115
- 343              		.loc 1 89 50 is_stmt 0 view .LVU116
-ARM GAS  /tmp/ccF2EKYc.s 			page 9
+ 295 0036 07EE902A 		vmov	s15, r2
+ 296 003a FEEECC7A 		vcvt.s32.f32	s15, s15, #8
+ 297 003e 17EE902A 		vmov	r2, s15	@ int
+ 298 0042 A281     		strh	r2, [r4, #12]	@ movhi
+  82:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.W = cmd_leg[leg_id].W * 128;
+ 299              		.loc 1 82 5 is_stmt 1 view .LVU96
+ 300              		.loc 1 82 62 is_stmt 0 view .LVU97
+ 301 0044 D4F82E20 		ldr	r2, [r4, #46]	@ unaligned
+ 302              		.loc 1 82 45 view .LVU98
+ 303 0048 07EE902A 		vmov	s15, r2
+ 304 004c FEEEEC7A 		vcvt.s32.f32	s15, s15, #7
+ 305 0050 17EE902A 		vmov	r2, s15	@ int
+ 306 0054 E281     		strh	r2, [r4, #14]	@ movhi
+  83:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.Pos = (int)((cmd_leg[leg_id].Pos / 6.2832f) * 16384.0f);
+ 307              		.loc 1 83 5 is_stmt 1 view .LVU99
+ 308              		.loc 1 83 71 is_stmt 0 view .LVU100
+ 309 0056 D4F83220 		ldr	r2, [r4, #50]	@ unaligned
+ 310              		.loc 1 83 76 view .LVU101
+ 311 005a 9FED257A 		vldr.32	s14, .L24+4
+ 312 005e 07EE902A 		vmov	s15, r2
+ 313 0062 C7EE877A 		vdiv.f32	s15, s15, s14
+ 314              		.loc 1 83 49 view .LVU102
+ 315 0066 FEEEC97A 		vcvt.s32.f32	s15, s15, #14
+ 316              		.loc 1 83 47 view .LVU103
+ 317 006a 17EE902A 		vmov	r2, s15	@ int
+ 318 006e 2261     		str	r2, [r4, #16]	@ unaligned
+  84:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.K_P = cmd_leg[leg_id].K_P * 2048;
+ 319              		.loc 1 84 5 is_stmt 1 view .LVU104
+ 320              		.loc 1 84 64 is_stmt 0 view .LVU105
+ 321 0070 D4F83620 		ldr	r2, [r4, #54]	@ unaligned
+ 322              		.loc 1 84 47 view .LVU106
+ 323 0074 07EE902A 		vmov	s15, r2
+ 324 0078 FEEEEA7A 		vcvt.s32.f32	s15, s15, #11
+ 325 007c 17EE902A 		vmov	r2, s15	@ int
+ 326 0080 A282     		strh	r2, [r4, #20]	@ movhi
+  85:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.K_W = cmd_leg[leg_id].K_W * 1024;
+ 327              		.loc 1 85 5 is_stmt 1 view .LVU107
+ 328              		.loc 1 85 64 is_stmt 0 view .LVU108
+ 329 0082 D4F83A20 		ldr	r2, [r4, #58]	@ unaligned
+ 330              		.loc 1 85 47 view .LVU109
+ 331 0086 07EE902A 		vmov	s15, r2
+ 332 008a FEEECB7A 		vcvt.s32.f32	s15, s15, #10
+ 333 008e 17EE902A 		vmov	r2, s15	@ int
+ 334 0092 E282     		strh	r2, [r4, #22]	@ movhi
+  86:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.LowHzMotorCmdIndex = 0;
+ 335              		.loc 1 86 5 is_stmt 1 view .LVU110
+ 336              		.loc 1 86 62 is_stmt 0 view .LVU111
+ 337 0094 2376     		strb	r3, [r4, #24]
+  87:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.LowHzMotorCmdByte = 0;
+ 338              		.loc 1 87 5 is_stmt 1 view .LVU112
+ 339              		.loc 1 87 61 is_stmt 0 view .LVU113
+ 340 0096 6376     		strb	r3, [r4, #25]
+  88:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.Mdata.Res[0] = cmd_leg[leg_id].Res;
+ 341              		.loc 1 88 5 is_stmt 1 view .LVU114
+ 342              		.loc 1 88 50 is_stmt 0 view .LVU115
+ 343 0098 D4F83E30 		ldr	r3, [r4, #62]	@ unaligned
+ 344 009c C4F81A30 		str	r3, [r4, #26]	@ unaligned
+ARM GAS  /tmp/ccfUKThx.s 			page 9
 
 
- 344 0098 D4F83E30 		ldr	r3, [r4, #62]	@ unaligned
- 345 009c C4F81A30 		str	r3, [r4, #26]	@ unaligned
-  90:Lib/motor_app/src/unitreeA1_cmd.c **** 
-  91:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.CRCdata.u32 = crc32_core((uint32_t *)(&cmd_leg[leg_id].motor_se
- 346              		.loc 1 91 5 is_stmt 1 view .LVU117
- 347              		.loc 1 91 51 is_stmt 0 view .LVU118
- 348 00a0 0721     		movs	r1, #7
- 349 00a2 2046     		mov	r0, r4
- 350              	.LVL24:
- 351              		.loc 1 91 51 view .LVU119
- 352 00a4 FFF7FEFF 		bl	crc32_core
- 353              	.LVL25:
- 354              		.loc 1 91 49 view .LVU120
- 355 00a8 C4F81E00 		str	r0, [r4, #30]	@ unaligned
-  92:Lib/motor_app/src/unitreeA1_cmd.c **** 
-  93:Lib/motor_app/src/unitreeA1_cmd.c ****     memcpy(A1cmd, &cmd_leg[leg_id].motor_send_data, 34);
- 356              		.loc 1 93 5 is_stmt 1 view .LVU121
- 357 00ac A446     		mov	ip, r4
- 358 00ae 01AE     		add	r6, sp, #4
- 359 00b0 2034     		adds	r4, r4, #32
- 360              	.L20:
- 361 00b2 B646     		mov	lr, r6
- 362 00b4 DCF80000 		ldr	r0, [ip]	@ unaligned
- 363 00b8 DCF80410 		ldr	r1, [ip, #4]	@ unaligned
- 364 00bc DCF80820 		ldr	r2, [ip, #8]	@ unaligned
- 365 00c0 DCF80C30 		ldr	r3, [ip, #12]	@ unaligned
- 366 00c4 AEE80F00 		stmia	lr!, {r0, r1, r2, r3}
- 367 00c8 0CF1100C 		add	ip, ip, #16
- 368 00cc 7646     		mov	r6, lr
- 369 00ce A445     		cmp	ip, r4
- 370 00d0 EFD1     		bne	.L20
- 371 00d2 BCF80030 		ldrh	r3, [ip]	@ unaligned
- 372 00d6 AEF80030 		strh	r3, [lr]	@ unaligned
-  94:Lib/motor_app/src/unitreeA1_cmd.c **** 
-  95:Lib/motor_app/src/unitreeA1_cmd.c ****     switch (leg_id)
- 373              		.loc 1 95 5 view .LVU122
- 374 00da 032D     		cmp	r5, #3
- 375 00dc 59D0     		beq	.L24
- 376              	.L21:
-  96:Lib/motor_app/src/unitreeA1_cmd.c ****     {
-  97:Lib/motor_app/src/unitreeA1_cmd.c ****     case 0:
-  98:Lib/motor_app/src/unitreeA1_cmd.c ****         //Usart_SendData(USART6, A1cmd, 34);
-  99:Lib/motor_app/src/unitreeA1_cmd.c ****         break;
- 100:Lib/motor_app/src/unitreeA1_cmd.c ****     case 1:
- 101:Lib/motor_app/src/unitreeA1_cmd.c ****         //Usart_SendData(USART6, A1cmd, 34);
- 102:Lib/motor_app/src/unitreeA1_cmd.c ****         break;
- 103:Lib/motor_app/src/unitreeA1_cmd.c ****     case 2:
- 104:Lib/motor_app/src/unitreeA1_cmd.c ****         //Usart_SendData(USART6, A1cmd, 34);
- 105:Lib/motor_app/src/unitreeA1_cmd.c ****         break;
- 106:Lib/motor_app/src/unitreeA1_cmd.c ****     case 3:
- 107:Lib/motor_app/src/unitreeA1_cmd.c ****         Usart_SendData(USART6, A1cmd, 34);
- 108:Lib/motor_app/src/unitreeA1_cmd.c ****         break;
- 109:Lib/motor_app/src/unitreeA1_cmd.c ****     }
- 110:Lib/motor_app/src/unitreeA1_cmd.c **** 
- 111:Lib/motor_app/src/unitreeA1_cmd.c ****     //DMA_ClearFlag(DMA2_Stream6,DMA_FLAG_TCIF6);
- 112:Lib/motor_app/src/unitreeA1_cmd.c ****     //memcpy(usart6TxBuffer, A1cmd, 34);
- 113:Lib/motor_app/src/unitreeA1_cmd.c ****     //USART_DMACmd(USART6, USART_DMAReq_Tx, ENABLE);
-ARM GAS  /tmp/ccF2EKYc.s 			page 10
-
-
- 114:Lib/motor_app/src/unitreeA1_cmd.c **** 
- 115:Lib/motor_app/src/unitreeA1_cmd.c ****     //Delay_ms(1);
- 116:Lib/motor_app/src/unitreeA1_cmd.c ****     // HAL_UART_Receive_DMA(&huart1, Date, 78);
- 117:Lib/motor_app/src/unitreeA1_cmd.c **** 
- 118:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].motor_recv_data.head.motorID = Data[2];
- 377              		.loc 1 118 5 view .LVU123
- 378              		.loc 1 118 57 is_stmt 0 view .LVU124
- 379 00de 9DF82A20 		ldrb	r2, [sp, #42]	@ zero_extendqisi2
- 380              		.loc 1 118 51 view .LVU125
- 381 00e2 05EB0511 		add	r1, r5, r5, lsl #4
- 382 00e6 314B     		ldr	r3, .L26+8
- 383 00e8 03EBC101 		add	r1, r3, r1, lsl #3
- 384 00ec 8A70     		strb	r2, [r1, #2]
- 119:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = Data[7];
- 385              		.loc 1 119 5 is_stmt 1 view .LVU126
- 386              		.loc 1 119 57 is_stmt 0 view .LVU127
- 387 00ee 9DF82F40 		ldrb	r4, [sp, #47]	@ zero_extendqisi2
- 388              		.loc 1 119 51 view .LVU128
- 389 00f2 CC71     		strb	r4, [r1, #7]
- 120:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].motor_recv_data.Mdata.T = Data[12] << 8 | Data[13];
- 390              		.loc 1 120 5 is_stmt 1 view .LVU129
- 391              		.loc 1 120 52 is_stmt 0 view .LVU130
- 392 00f4 9DF83430 		ldrb	r3, [sp, #52]	@ zero_extendqisi2
- 393              		.loc 1 120 68 view .LVU131
- 394 00f8 9DF83500 		ldrb	r0, [sp, #53]	@ zero_extendqisi2
- 395              		.loc 1 120 62 view .LVU132
- 396 00fc 40EA0320 		orr	r0, r0, r3, lsl #8
- 397 0100 00B2     		sxth	r0, r0
- 398              		.loc 1 120 46 view .LVU133
- 399 0102 8881     		strh	r0, [r1, #12]	@ movhi
- 121:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].motor_recv_data.Mdata.Pos = Data[30] << 24 | Data[31] << 16 | Data[32] << 8 | 
- 400              		.loc 1 121 5 is_stmt 1 view .LVU134
- 401              		.loc 1 121 54 is_stmt 0 view .LVU135
- 402 0104 9DF84660 		ldrb	r6, [sp, #70]	@ zero_extendqisi2
- 403              		.loc 1 121 71 view .LVU136
- 404 0108 9DF84730 		ldrb	r3, [sp, #71]	@ zero_extendqisi2
- 405              		.loc 1 121 76 view .LVU137
- 406 010c 1B04     		lsls	r3, r3, #16
- 407              		.loc 1 121 65 view .LVU138
- 408 010e 43EA0663 		orr	r3, r3, r6, lsl #24
- 409              		.loc 1 121 88 view .LVU139
- 410 0112 9DF84860 		ldrb	r6, [sp, #72]	@ zero_extendqisi2
- 411              		.loc 1 121 82 view .LVU140
- 412 0116 43EA0623 		orr	r3, r3, r6, lsl #8
- 413              		.loc 1 121 104 view .LVU141
- 414 011a 9DF84960 		ldrb	r6, [sp, #73]	@ zero_extendqisi2
- 415              		.loc 1 121 98 view .LVU142
- 416 011e 3343     		orrs	r3, r3, r6
- 417              		.loc 1 121 48 view .LVU143
- 418 0120 C1F81E30 		str	r3, [r1, #30]	@ unaligned
- 122:Lib/motor_app/src/unitreeA1_cmd.c **** 
- 123:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
- 419              		.loc 1 123 5 is_stmt 1 view .LVU144
- 420              		.loc 1 123 31 is_stmt 0 view .LVU145
- 421 0124 81F85220 		strb	r2, [r1, #82]
- 124:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
- 422              		.loc 1 124 5 is_stmt 1 view .LVU146
-ARM GAS  /tmp/ccF2EKYc.s 			page 11
-
-
- 423              		.loc 1 124 29 is_stmt 0 view .LVU147
- 424 0128 8C65     		str	r4, [r1, #88]
- 125:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].T = data_leg[leg_id].motor_recv_data.Mdata.T / 256;
- 425              		.loc 1 125 5 is_stmt 1 view .LVU148
- 426              		.loc 1 125 24 is_stmt 0 view .LVU149
- 427 012a 0146     		mov	r1, r0
- 428 012c 0028     		cmp	r0, #0
- 429 012e 36DB     		blt	.L25
- 430              	.L22:
- 431 0130 0912     		asrs	r1, r1, #8
- 432 0132 07EE901A 		vmov	s15, r1	@ int
- 433 0136 B8EEE77A 		vcvt.f32.s32	s14, s15
- 434 013a 05EB0510 		add	r0, r5, r5, lsl #4
- 435 013e 1B49     		ldr	r1, .L26+8
- 436 0140 01EBC001 		add	r1, r1, r0, lsl #3
- 437 0144 81ED177A 		vstr.32	s14, [r1, #92]
- 126:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].Pos = (int)((data_leg[leg_id].motor_recv_data.Mdata.Pos / 16384.0f) * 6.2832f)
- 438              		.loc 1 126 5 is_stmt 1 view .LVU150
- 439              		.loc 1 126 78 is_stmt 0 view .LVU151
- 440 0148 07EE903A 		vmov	s15, r3	@ int
- 441 014c F8EEE77A 		vcvt.f32.s32	s15, s15
- 442 0150 DFED176A 		vldr.32	s13, .L26+12
- 443 0154 67EEA67A 		vmul.f32	s15, s15, s13
- 444              		.loc 1 126 90 view .LVU152
- 445 0158 DFED136A 		vldr.32	s13, .L26+4
- 446 015c 67EEA67A 		vmul.f32	s15, s15, s13
- 447              		.loc 1 126 28 view .LVU153
- 448 0160 FDEEE77A 		vcvt.s32.f32	s15, s15
- 449              		.loc 1 126 26 view .LVU154
- 450 0164 F8EEE77A 		vcvt.f32.s32	s15, s15
- 451 0168 C1ED197A 		vstr.32	s15, [r1, #100]
- 127:Lib/motor_app/src/unitreeA1_cmd.c **** 
- 128:Lib/motor_app/src/unitreeA1_cmd.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].motor_id = data_leg[leg_id].motor_id;
- 452              		.loc 1 128 5 is_stmt 1 view .LVU155
- 453              		.loc 1 128 60 is_stmt 0 view .LVU156
- 454 016c 1149     		ldr	r1, .L26+16
- 455 016e 02EB0213 		add	r3, r2, r2, lsl #4
- 456 0172 4FF4CC70 		mov	r0, #408
- 457 0176 00FB05F5 		mul	r5, r0, r5
- 458              	.LVL26:
- 459              		.loc 1 128 60 view .LVU157
- 460 017a 05EBC303 		add	r3, r5, r3, lsl #3
- 461 017e 0B44     		add	r3, r3, r1
- 462 0180 83F85220 		strb	r2, [r3, #82]
- 129:Lib/motor_app/src/unitreeA1_cmd.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].MError = data_leg[leg_id].MError;
- 463              		.loc 1 129 5 is_stmt 1 view .LVU158
- 464              		.loc 1 129 58 is_stmt 0 view .LVU159
- 465 0184 9C65     		str	r4, [r3, #88]
- 130:Lib/motor_app/src/unitreeA1_cmd.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].T = data_leg[leg_id].T;
- 466              		.loc 1 130 5 is_stmt 1 view .LVU160
- 467              		.loc 1 130 53 is_stmt 0 view .LVU161
- 468 0186 83ED177A 		vstr.32	s14, [r3, #92]
- 131:Lib/motor_app/src/unitreeA1_cmd.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].Pos = data_leg[leg_id].Pos;
- 469              		.loc 1 131 5 is_stmt 1 view .LVU162
- 470              		.loc 1 131 55 is_stmt 0 view .LVU163
- 471 018a C3ED197A 		vstr.32	s15, [r3, #100]
- 132:Lib/motor_app/src/unitreeA1_cmd.c **** }
-ARM GAS  /tmp/ccF2EKYc.s 			page 12
-
-
- 472              		.loc 1 132 1 view .LVU164
- 473 018e 1EB0     		add	sp, sp, #120
- 474              		.cfi_remember_state
- 475              		.cfi_def_cfa_offset 16
- 476              		@ sp needed
- 477 0190 70BD     		pop	{r4, r5, r6, pc}
- 478              	.LVL27:
- 479              	.L24:
- 480              		.cfi_restore_state
- 481              	.LBB2:
+  89:Lib/motor_app/src/unitreeA1_cmd.c **** 
+  90:Lib/motor_app/src/unitreeA1_cmd.c ****     cmd_leg[leg_id].motor_send_data.CRCdata.u32 = crc32_core((uint32_t *)(&cmd_leg[leg_id].motor_se
+ 345              		.loc 1 90 5 is_stmt 1 view .LVU116
+ 346              		.loc 1 90 51 is_stmt 0 view .LVU117
+ 347 00a0 0721     		movs	r1, #7
+ 348 00a2 2046     		mov	r0, r4
+ 349              	.LVL24:
+ 350              		.loc 1 90 51 view .LVU118
+ 351 00a4 FFF7FEFF 		bl	crc32_core
+ 352              	.LVL25:
+ 353              		.loc 1 90 49 view .LVU119
+ 354 00a8 C4F81E00 		str	r0, [r4, #30]	@ unaligned
+  91:Lib/motor_app/src/unitreeA1_cmd.c **** 
+  92:Lib/motor_app/src/unitreeA1_cmd.c ****     memcpy(A1cmd, &cmd_leg[leg_id].motor_send_data, 34);
+ 355              		.loc 1 92 5 is_stmt 1 view .LVU120
+ 356 00ac A446     		mov	ip, r4
+ 357 00ae 01AE     		add	r6, sp, #4
+ 358 00b0 2034     		adds	r4, r4, #32
+ 359              	.L20:
+ 360 00b2 B646     		mov	lr, r6
+ 361 00b4 DCF80000 		ldr	r0, [ip]	@ unaligned
+ 362 00b8 DCF80410 		ldr	r1, [ip, #4]	@ unaligned
+ 363 00bc DCF80820 		ldr	r2, [ip, #8]	@ unaligned
+ 364 00c0 DCF80C30 		ldr	r3, [ip, #12]	@ unaligned
+ 365 00c4 AEE80F00 		stmia	lr!, {r0, r1, r2, r3}
+ 366 00c8 0CF1100C 		add	ip, ip, #16
+ 367 00cc 7646     		mov	r6, lr
+ 368 00ce A445     		cmp	ip, r4
+ 369 00d0 EFD1     		bne	.L20
+ 370 00d2 BCF80030 		ldrh	r3, [ip]	@ unaligned
+ 371 00d6 AEF80030 		strh	r3, [lr]	@ unaligned
+  93:Lib/motor_app/src/unitreeA1_cmd.c **** 
+  94:Lib/motor_app/src/unitreeA1_cmd.c ****     switch (leg_id)
+ 372              		.loc 1 94 5 view .LVU121
+ 373 00da 032D     		cmp	r5, #3
+ 374 00dc 01D0     		beq	.L23
+ 375              	.L19:
+  95:Lib/motor_app/src/unitreeA1_cmd.c ****     {
+  96:Lib/motor_app/src/unitreeA1_cmd.c ****     case 0:
+  97:Lib/motor_app/src/unitreeA1_cmd.c ****         //Usart_SendData(USART6, A1cmd, 34);
+  98:Lib/motor_app/src/unitreeA1_cmd.c ****         break;
+  99:Lib/motor_app/src/unitreeA1_cmd.c ****     case 1:
+ 100:Lib/motor_app/src/unitreeA1_cmd.c ****         //Usart_SendData(USART6, A1cmd, 34);
+ 101:Lib/motor_app/src/unitreeA1_cmd.c ****         break;
+ 102:Lib/motor_app/src/unitreeA1_cmd.c ****     case 2:
+ 103:Lib/motor_app/src/unitreeA1_cmd.c ****         //Usart_SendData(USART6, A1cmd, 34);
+ 104:Lib/motor_app/src/unitreeA1_cmd.c ****         break;
+ 105:Lib/motor_app/src/unitreeA1_cmd.c ****     case 3:
+ 106:Lib/motor_app/src/unitreeA1_cmd.c ****         USART6_SendData(A1cmd, 34);
  107:Lib/motor_app/src/unitreeA1_cmd.c ****         break;
- 482              		.loc 1 107 9 is_stmt 1 view .LVU165
- 483 0192 2222     		movs	r2, #34
- 484 0194 01A9     		add	r1, sp, #4
- 485 0196 0848     		ldr	r0, .L26+20
- 486 0198 FFF7FEFF 		bl	Usart_SendData
- 487              	.LVL28:
  108:Lib/motor_app/src/unitreeA1_cmd.c ****     }
- 488              		.loc 1 108 9 view .LVU166
- 489 019c 9FE7     		b	.L21
- 490              	.L25:
- 108:Lib/motor_app/src/unitreeA1_cmd.c ****     }
- 491              		.loc 1 108 9 is_stmt 0 view .LVU167
- 492              	.LBE2:
- 125:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].Pos = (int)((data_leg[leg_id].motor_recv_data.Mdata.Pos / 16384.0f) * 6.2832f)
- 493              		.loc 1 125 24 view .LVU168
- 494 019e 00F1FF01 		add	r1, r0, #255
- 495 01a2 C5E7     		b	.L22
- 496              	.L27:
- 497              		.align	2
- 498              	.L26:
- 499 01a4 00000000 		.word	.LANCHOR0
- 500 01a8 F90FC940 		.word	1086918649
- 501 01ac 00000000 		.word	.LANCHOR1
- 502 01b0 00008038 		.word	947912704
- 503 01b4 00000000 		.word	.LANCHOR2
- 504 01b8 00140140 		.word	1073812480
- 505              		.cfi_endproc
- 506              	.LFE128:
- 508              		.global	data_motor
- 509              		.global	data_leg
- 510              		.global	cmd_leg
- 511              		.section	.bss.cmd_leg,"aw",%nobits
- 512              		.align	2
- 513              		.set	.LANCHOR0,. + 0
- 516              	cmd_leg:
- 517 0000 00000000 		.space	264
- 517      00000000 
- 517      00000000 
- 517      00000000 
- 517      00000000 
- 518              		.section	.bss.data_leg,"aw",%nobits
- 519              		.align	2
- 520              		.set	.LANCHOR1,. + 0
- 523              	data_leg:
- 524 0000 00000000 		.space	544
- 524      00000000 
-ARM GAS  /tmp/ccF2EKYc.s 			page 13
+ 109:Lib/motor_app/src/unitreeA1_cmd.c **** }
+ 376              		.loc 1 109 1 is_stmt 0 view .LVU122
+ 377 00de 0AB0     		add	sp, sp, #40
+ 378              		.cfi_remember_state
+ 379              		.cfi_def_cfa_offset 16
+ 380              		@ sp needed
+ARM GAS  /tmp/ccfUKThx.s 			page 10
 
 
- 524      00000000 
- 524      00000000 
- 524      00000000 
- 525              		.section	.bss.data_motor,"aw",%nobits
- 526              		.align	2
- 527              		.set	.LANCHOR2,. + 0
- 530              	data_motor:
- 531 0000 00000000 		.space	1632
- 531      00000000 
- 531      00000000 
- 531      00000000 
- 531      00000000 
- 532              		.text
- 533              	.Letext0:
- 534              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
- 535              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
- 536              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
- 537              		.file 5 "Lib/motor_app/include/motor_msg.h"
-ARM GAS  /tmp/ccF2EKYc.s 			page 14
+ 381 00e0 70BD     		pop	{r4, r5, r6, pc}
+ 382              	.LVL26:
+ 383              	.L23:
+ 384              		.cfi_restore_state
+ 106:Lib/motor_app/src/unitreeA1_cmd.c ****         break;
+ 385              		.loc 1 106 9 is_stmt 1 view .LVU123
+ 386 00e2 2221     		movs	r1, #34
+ 387 00e4 01A8     		add	r0, sp, #4
+ 388 00e6 FFF7FEFF 		bl	USART6_SendData
+ 389              	.LVL27:
+ 107:Lib/motor_app/src/unitreeA1_cmd.c ****     }
+ 390              		.loc 1 107 9 view .LVU124
+ 391              		.loc 1 109 1 is_stmt 0 view .LVU125
+ 392 00ea F8E7     		b	.L19
+ 393              	.L25:
+ 394              		.align	2
+ 395              	.L24:
+ 396 00ec 00000000 		.word	.LANCHOR0
+ 397 00f0 F90FC940 		.word	1086918649
+ 398              		.cfi_endproc
+ 399              	.LFE128:
+ 401              		.section	.text.unitreeA1_rx,"ax",%progbits
+ 402              		.align	1
+ 403              		.global	unitreeA1_rx
+ 404              		.syntax unified
+ 405              		.thumb
+ 406              		.thumb_func
+ 408              	unitreeA1_rx:
+ 409              	.LVL28:
+ 410              	.LFB129:
+ 110:Lib/motor_app/src/unitreeA1_cmd.c **** 
+ 111:Lib/motor_app/src/unitreeA1_cmd.c **** void unitreeA1_rx(int leg_id)
+ 112:Lib/motor_app/src/unitreeA1_cmd.c **** {
+ 411              		.loc 1 112 1 is_stmt 1 view -0
+ 412              		.cfi_startproc
+ 413              		@ args = 0, pretend = 0, frame = 80
+ 414              		@ frame_needed = 0, uses_anonymous_args = 0
+ 415              		.loc 1 112 1 is_stmt 0 view .LVU127
+ 416 0000 30B5     		push	{r4, r5, lr}
+ 417              		.cfi_def_cfa_offset 12
+ 418              		.cfi_offset 4, -12
+ 419              		.cfi_offset 5, -8
+ 420              		.cfi_offset 14, -4
+ 421 0002 95B0     		sub	sp, sp, #84
+ 422              		.cfi_def_cfa_offset 96
+ 423 0004 0446     		mov	r4, r0
+ 113:Lib/motor_app/src/unitreeA1_cmd.c ****     uint8_t Data[78];
+ 424              		.loc 1 113 5 is_stmt 1 view .LVU128
+ 114:Lib/motor_app/src/unitreeA1_cmd.c **** 
+ 115:Lib/motor_app/src/unitreeA1_cmd.c ****     memcpy(Data,usart6RxBuffer,78);
+ 425              		.loc 1 115 5 view .LVU129
+ 426 0006 4E22     		movs	r2, #78
+ 427 0008 3C49     		ldr	r1, .L32
+ 428 000a 6846     		mov	r0, sp
+ 429              	.LVL29:
+ 430              		.loc 1 115 5 is_stmt 0 view .LVU130
+ 431 000c FFF7FEFF 		bl	memcpy
+ARM GAS  /tmp/ccfUKThx.s 			page 11
+
+
+ 432              	.LVL30:
+ 116:Lib/motor_app/src/unitreeA1_cmd.c **** 
+ 117:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].motor_recv_data.head.motorID = Data[2];
+ 433              		.loc 1 117 5 is_stmt 1 view .LVU131
+ 434              		.loc 1 117 57 is_stmt 0 view .LVU132
+ 435 0010 9DF80220 		ldrb	r2, [sp, #2]	@ zero_extendqisi2
+ 436              		.loc 1 117 51 view .LVU133
+ 437 0014 04EB0413 		add	r3, r4, r4, lsl #4
+ 438 0018 3949     		ldr	r1, .L32+4
+ 439 001a 01EBC301 		add	r1, r1, r3, lsl #3
+ 440 001e 8A70     		strb	r2, [r1, #2]
+ 118:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = Data[7];
+ 441              		.loc 1 118 5 is_stmt 1 view .LVU134
+ 442              		.loc 1 118 57 is_stmt 0 view .LVU135
+ 443 0020 9DF80750 		ldrb	r5, [sp, #7]	@ zero_extendqisi2
+ 444              		.loc 1 118 51 view .LVU136
+ 445 0024 CD71     		strb	r5, [r1, #7]
+ 119:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].motor_recv_data.Mdata.T = Data[12] << 8 | Data[13];
+ 446              		.loc 1 119 5 is_stmt 1 view .LVU137
+ 447              		.loc 1 119 52 is_stmt 0 view .LVU138
+ 448 0026 9DF80C30 		ldrb	r3, [sp, #12]	@ zero_extendqisi2
+ 449              		.loc 1 119 68 view .LVU139
+ 450 002a 9DF80D00 		ldrb	r0, [sp, #13]	@ zero_extendqisi2
+ 451              		.loc 1 119 62 view .LVU140
+ 452 002e 40EA0320 		orr	r0, r0, r3, lsl #8
+ 453 0032 00B2     		sxth	r0, r0
+ 454              		.loc 1 119 46 view .LVU141
+ 455 0034 8881     		strh	r0, [r1, #12]	@ movhi
+ 120:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].motor_recv_data.Mdata.Pos = Data[30] << 24 | Data[31] << 16 | Data[32] << 8 | 
+ 456              		.loc 1 120 5 is_stmt 1 view .LVU142
+ 457              		.loc 1 120 54 is_stmt 0 view .LVU143
+ 458 0036 9DF81EC0 		ldrb	ip, [sp, #30]	@ zero_extendqisi2
+ 459              		.loc 1 120 71 view .LVU144
+ 460 003a 9DF81F30 		ldrb	r3, [sp, #31]	@ zero_extendqisi2
+ 461              		.loc 1 120 76 view .LVU145
+ 462 003e 1B04     		lsls	r3, r3, #16
+ 463              		.loc 1 120 65 view .LVU146
+ 464 0040 43EA0C63 		orr	r3, r3, ip, lsl #24
+ 465              		.loc 1 120 88 view .LVU147
+ 466 0044 9DF820C0 		ldrb	ip, [sp, #32]	@ zero_extendqisi2
+ 467              		.loc 1 120 82 view .LVU148
+ 468 0048 43EA0C23 		orr	r3, r3, ip, lsl #8
+ 469              		.loc 1 120 104 view .LVU149
+ 470 004c 9DF821C0 		ldrb	ip, [sp, #33]	@ zero_extendqisi2
+ 471              		.loc 1 120 98 view .LVU150
+ 472 0050 43EA0C03 		orr	r3, r3, ip
+ 473              		.loc 1 120 48 view .LVU151
+ 474 0054 C1F81E30 		str	r3, [r1, #30]	@ unaligned
+ 121:Lib/motor_app/src/unitreeA1_cmd.c **** 
+ 122:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
+ 475              		.loc 1 122 5 is_stmt 1 view .LVU152
+ 476              		.loc 1 122 31 is_stmt 0 view .LVU153
+ 477 0058 81F85220 		strb	r2, [r1, #82]
+ 123:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
+ 478              		.loc 1 123 5 is_stmt 1 view .LVU154
+ 479              		.loc 1 123 29 is_stmt 0 view .LVU155
+ 480 005c 8D65     		str	r5, [r1, #88]
+ARM GAS  /tmp/ccfUKThx.s 			page 12
+
+
+ 124:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].T = data_leg[leg_id].motor_recv_data.Mdata.T / 256;
+ 481              		.loc 1 124 5 is_stmt 1 view .LVU156
+ 482              		.loc 1 124 24 is_stmt 0 view .LVU157
+ 483 005e 0146     		mov	r1, r0
+ 484 0060 0028     		cmp	r0, #0
+ 485 0062 45DB     		blt	.L30
+ 486              	.L27:
+ 487 0064 0912     		asrs	r1, r1, #8
+ 488 0066 07EE901A 		vmov	s15, r1	@ int
+ 489 006a B8EEE77A 		vcvt.f32.s32	s14, s15
+ 490 006e 04EB0410 		add	r0, r4, r4, lsl #4
+ 491 0072 2349     		ldr	r1, .L32+4
+ 492 0074 01EBC000 		add	r0, r1, r0, lsl #3
+ 493 0078 80ED177A 		vstr.32	s14, [r0, #92]
+ 125:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].W = data_leg[leg_id].motor_recv_data.Mdata.W / 128;
+ 494              		.loc 1 125 5 is_stmt 1 view .LVU158
+ 495              		.loc 1 125 64 is_stmt 0 view .LVU159
+ 496 007c B0F90EC0 		ldrsh	ip, [r0, #14]
+ 497              		.loc 1 125 24 view .LVU160
+ 498 0080 6146     		mov	r1, ip
+ 499 0082 BCF1000F 		cmp	ip, #0
+ 500 0086 36DB     		blt	.L31
+ 501              	.L28:
+ 502 0088 C911     		asrs	r1, r1, #7
+ 503 008a 07EE901A 		vmov	s15, r1	@ int
+ 504 008e F8EEE77A 		vcvt.f32.s32	s15, s15
+ 505 0092 C0ED187A 		vstr.32	s15, [r0, #96]
+ 126:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].Acc = data_leg[leg_id].motor_recv_data.Mdata.Acc;
+ 506              		.loc 1 126 5 is_stmt 1 view .LVU161
+ 507              		.loc 1 126 66 is_stmt 0 view .LVU162
+ 508 0096 04EB0410 		add	r0, r4, r4, lsl #4
+ 509 009a 1949     		ldr	r1, .L32+4
+ 510 009c 01EBC001 		add	r1, r1, r0, lsl #3
+ 511 00a0 B1F91A00 		ldrsh	r0, [r1, #26]
+ 512              		.loc 1 126 26 view .LVU163
+ 513 00a4 C866     		str	r0, [r1, #108]
+ 127:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].Pos = (int)((data_leg[leg_id].motor_recv_data.Mdata.Pos / 16384.0f) * 6.2832f)
+ 514              		.loc 1 127 5 is_stmt 1 view .LVU164
+ 515              		.loc 1 127 78 is_stmt 0 view .LVU165
+ 516 00a6 07EE903A 		vmov	s15, r3	@ int
+ 517 00aa F8EEE77A 		vcvt.f32.s32	s15, s15
+ 518 00ae DFED156A 		vldr.32	s13, .L32+8
+ 519 00b2 67EEA67A 		vmul.f32	s15, s15, s13
+ 520              		.loc 1 127 90 view .LVU166
+ 521 00b6 DFED146A 		vldr.32	s13, .L32+12
+ 522 00ba 67EEA67A 		vmul.f32	s15, s15, s13
+ 523              		.loc 1 127 28 view .LVU167
+ 524 00be FDEEE77A 		vcvt.s32.f32	s15, s15
+ 525              		.loc 1 127 26 view .LVU168
+ 526 00c2 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 527 00c6 C1ED197A 		vstr.32	s15, [r1, #100]
+ 128:Lib/motor_app/src/unitreeA1_cmd.c **** 
+ 129:Lib/motor_app/src/unitreeA1_cmd.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].motor_id = data_leg[leg_id].motor_id;
+ 528              		.loc 1 129 5 is_stmt 1 view .LVU169
+ 529              		.loc 1 129 60 is_stmt 0 view .LVU170
+ 530 00ca 1049     		ldr	r1, .L32+16
+ 531 00cc 02EB0213 		add	r3, r2, r2, lsl #4
+ARM GAS  /tmp/ccfUKThx.s 			page 13
+
+
+ 532 00d0 4FF4CC70 		mov	r0, #408
+ 533 00d4 00FB04F4 		mul	r4, r0, r4
+ 534              	.LVL31:
+ 535              		.loc 1 129 60 view .LVU171
+ 536 00d8 04EBC303 		add	r3, r4, r3, lsl #3
+ 537 00dc 0B44     		add	r3, r3, r1
+ 538 00de 83F85220 		strb	r2, [r3, #82]
+ 130:Lib/motor_app/src/unitreeA1_cmd.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].MError = data_leg[leg_id].MError;
+ 539              		.loc 1 130 5 is_stmt 1 view .LVU172
+ 540              		.loc 1 130 58 is_stmt 0 view .LVU173
+ 541 00e2 9D65     		str	r5, [r3, #88]
+ 131:Lib/motor_app/src/unitreeA1_cmd.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].T = data_leg[leg_id].T;
+ 542              		.loc 1 131 5 is_stmt 1 view .LVU174
+ 543              		.loc 1 131 53 is_stmt 0 view .LVU175
+ 544 00e4 83ED177A 		vstr.32	s14, [r3, #92]
+ 132:Lib/motor_app/src/unitreeA1_cmd.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].Pos = data_leg[leg_id].Pos;
+ 545              		.loc 1 132 5 is_stmt 1 view .LVU176
+ 546              		.loc 1 132 55 is_stmt 0 view .LVU177
+ 547 00e8 C3ED197A 		vstr.32	s15, [r3, #100]
+ 133:Lib/motor_app/src/unitreeA1_cmd.c **** }
+ 548              		.loc 1 133 1 view .LVU178
+ 549 00ec 15B0     		add	sp, sp, #84
+ 550              		.cfi_remember_state
+ 551              		.cfi_def_cfa_offset 12
+ 552              		@ sp needed
+ 553 00ee 30BD     		pop	{r4, r5, pc}
+ 554              	.LVL32:
+ 555              	.L30:
+ 556              		.cfi_restore_state
+ 124:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].W = data_leg[leg_id].motor_recv_data.Mdata.W / 128;
+ 557              		.loc 1 124 24 view .LVU179
+ 558 00f0 00F1FF01 		add	r1, r0, #255
+ 559 00f4 B6E7     		b	.L27
+ 560              	.L31:
+ 125:Lib/motor_app/src/unitreeA1_cmd.c ****     data_leg[leg_id].Acc = data_leg[leg_id].motor_recv_data.Mdata.Acc;
+ 561              		.loc 1 125 24 view .LVU180
+ 562 00f6 0CF17F01 		add	r1, ip, #127
+ 563 00fa C5E7     		b	.L28
+ 564              	.L33:
+ 565              		.align	2
+ 566              	.L32:
+ 567 00fc 00000000 		.word	usart6RxBuffer
+ 568 0100 00000000 		.word	.LANCHOR1
+ 569 0104 00008038 		.word	947912704
+ 570 0108 F90FC940 		.word	1086918649
+ 571 010c 00000000 		.word	.LANCHOR2
+ 572              		.cfi_endproc
+ 573              	.LFE129:
+ 575              		.global	data_motor
+ 576              		.global	data_leg
+ 577              		.global	cmd_leg
+ 578              		.section	.bss.cmd_leg,"aw",%nobits
+ 579              		.align	2
+ 580              		.set	.LANCHOR0,. + 0
+ 583              	cmd_leg:
+ 584 0000 00000000 		.space	264
+ 584      00000000 
+ARM GAS  /tmp/ccfUKThx.s 			page 14
+
+
+ 584      00000000 
+ 584      00000000 
+ 584      00000000 
+ 585              		.section	.bss.data_leg,"aw",%nobits
+ 586              		.align	2
+ 587              		.set	.LANCHOR1,. + 0
+ 590              	data_leg:
+ 591 0000 00000000 		.space	544
+ 591      00000000 
+ 591      00000000 
+ 591      00000000 
+ 591      00000000 
+ 592              		.section	.bss.data_motor,"aw",%nobits
+ 593              		.align	2
+ 594              		.set	.LANCHOR2,. + 0
+ 597              	data_motor:
+ 598 0000 00000000 		.space	1632
+ 598      00000000 
+ 598      00000000 
+ 598      00000000 
+ 598      00000000 
+ 599              		.text
+ 600              	.Letext0:
+ 601              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 602              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 603              		.file 4 "Lib/motor_app/include/motor_msg.h"
+ 604              		.file 5 "Lib/bsp/include/bsp_usart.h"
+ 605              		.file 6 "Lib/motor_app/include/unitreeA1_cmd.h"
+ 606              		.file 7 "<built-in>"
+ARM GAS  /tmp/ccfUKThx.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 unitreeA1_cmd.c
-     /tmp/ccF2EKYc.s:20     .text.crc32_core:0000000000000000 $t
-     /tmp/ccF2EKYc.s:26     .text.crc32_core:0000000000000000 crc32_core
-     /tmp/ccF2EKYc.s:142    .text.crc32_core:0000000000000054 $d
-     /tmp/ccF2EKYc.s:150    .text.modfiy_cmd:0000000000000000 $t
-     /tmp/ccF2EKYc.s:156    .text.modfiy_cmd:0000000000000000 modfiy_cmd
-     /tmp/ccF2EKYc.s:222    .text.modfiy_cmd:0000000000000060 $d
-     /tmp/ccF2EKYc.s:228    .text.unitreeA1_rxtx:0000000000000000 $t
-     /tmp/ccF2EKYc.s:234    .text.unitreeA1_rxtx:0000000000000000 unitreeA1_rxtx
-     /tmp/ccF2EKYc.s:499    .text.unitreeA1_rxtx:00000000000001a4 $d
-     /tmp/ccF2EKYc.s:530    .bss.data_motor:0000000000000000 data_motor
-     /tmp/ccF2EKYc.s:523    .bss.data_leg:0000000000000000 data_leg
-     /tmp/ccF2EKYc.s:516    .bss.cmd_leg:0000000000000000 cmd_leg
-     /tmp/ccF2EKYc.s:512    .bss.cmd_leg:0000000000000000 $d
-     /tmp/ccF2EKYc.s:519    .bss.data_leg:0000000000000000 $d
-     /tmp/ccF2EKYc.s:526    .bss.data_motor:0000000000000000 $d
+     /tmp/ccfUKThx.s:20     .text.crc32_core:0000000000000000 $t
+     /tmp/ccfUKThx.s:26     .text.crc32_core:0000000000000000 crc32_core
+     /tmp/ccfUKThx.s:142    .text.crc32_core:0000000000000054 $d
+     /tmp/ccfUKThx.s:150    .text.modfiy_cmd:0000000000000000 $t
+     /tmp/ccfUKThx.s:156    .text.modfiy_cmd:0000000000000000 modfiy_cmd
+     /tmp/ccfUKThx.s:222    .text.modfiy_cmd:0000000000000060 $d
+     /tmp/ccfUKThx.s:228    .text.unitreeA1_tx:0000000000000000 $t
+     /tmp/ccfUKThx.s:234    .text.unitreeA1_tx:0000000000000000 unitreeA1_tx
+     /tmp/ccfUKThx.s:396    .text.unitreeA1_tx:00000000000000ec $d
+     /tmp/ccfUKThx.s:402    .text.unitreeA1_rx:0000000000000000 $t
+     /tmp/ccfUKThx.s:408    .text.unitreeA1_rx:0000000000000000 unitreeA1_rx
+     /tmp/ccfUKThx.s:567    .text.unitreeA1_rx:00000000000000fc $d
+     /tmp/ccfUKThx.s:597    .bss.data_motor:0000000000000000 data_motor
+     /tmp/ccfUKThx.s:590    .bss.data_leg:0000000000000000 data_leg
+     /tmp/ccfUKThx.s:583    .bss.cmd_leg:0000000000000000 cmd_leg
+     /tmp/ccfUKThx.s:579    .bss.cmd_leg:0000000000000000 $d
+     /tmp/ccfUKThx.s:586    .bss.data_leg:0000000000000000 $d
+     /tmp/ccfUKThx.s:593    .bss.data_motor:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 __aeabi_f2d
 __aeabi_dmul
 __aeabi_d2f
-Usart_SendData
+USART6_SendData
+memcpy
+usart6RxBuffer

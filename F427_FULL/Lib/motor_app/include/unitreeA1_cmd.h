@@ -5,18 +5,11 @@
 #include "motor_msg.h"
 #include "bsp_usart.h"
 
-extern motor_send_t cmd_left;  // 左腿一号电机数据体
-extern motor_send_t cmd_right; // 右腿一号电机数据体
+extern motor_send_t cmd_leg[4];
+extern motor_recv_t data_leg[4];
 
-extern motor_recv_t Date_left;        // 左腿电机接收数据体
-extern motor_recv_t id00_left_date; // 左腿00号电机接收数据体
-extern motor_recv_t id01_left_date; // 左腿01号电机接收数据体
-extern motor_recv_t id02_left_date; // 左腿02号电机接收数据体
+extern motor_recv_t data_motor[4][3];
 
-extern motor_recv_t Date_right;        // 右腿电机接收数据体
-extern motor_recv_t id00_right_date; // 右腿00号电机接收数据体
-extern motor_recv_t id01_right_date; // 右腿01号电机接收数据体
-extern motor_recv_t id02_right_date; // 右腿02号电机接收数据体
 
 /**
  @brief 对应电机参数修改
@@ -31,7 +24,8 @@ void modfiy_cmd(motor_send_t *send,uint8_t id, float Pos, float KP, float KW,flo
 /// @brief 用来和电机通讯的代码，将获取的数据存入对应结构体中
 /// @param huart 需要使用的串口，huart1为左侧，6为右侧
 
-void unitreeA1_rxtx(int leg_id);
+void unitreeA1_tx(int leg_id);
+void unitreeA1_rx(int leg_id);
 
 uint32_t crc32_core(uint32_t *ptr, uint32_t len);
 

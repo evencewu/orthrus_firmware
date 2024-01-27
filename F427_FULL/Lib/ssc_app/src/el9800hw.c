@@ -401,11 +401,11 @@ void GPIO_Config(void)
   GPIO_Init(GPIOB, &GPIO_InitStructure);
 	
 	  /* Configure PG6 and PG8 in output pushpull mode */
-  GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6|GPIO_Pin_7 | GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_11|GPIO_Pin_12;//INPUT6-0
-  GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
-  GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
-  GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
-  GPIO_Init(GPIOC, &GPIO_InitStructure);
+  //GPIO_InitStructure.GPIO_Pin = GPIO_Pin_8|GPIO_Pin_9|GPIO_Pin_10|GPIO_Pin_11|GPIO_Pin_12;//INPUT6-0
+  //GPIO_InitStructure.GPIO_Mode = GPIO_Mode_IN;
+  //GPIO_InitStructure.GPIO_Speed = GPIO_Speed_50MHz;
+  //GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_DOWN;
+  //GPIO_Init(GPIOC, &GPIO_InitStructure);
 	
 	//GPIO_SetBits(GPIOB,GPIO_Pin_14);
 	

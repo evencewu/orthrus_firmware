@@ -13,7 +13,8 @@ extern uint8_t usart6RxBuffer[78];
 void USART6_GPIO_Init();
 void USART6_Init();
 void USART6_DMA_Init();
-void USART6_SendData(USART_TypeDef *pUSARTx, uint8_t *data, int length);
+void USART6_SendData(uint8_t *data, int length);
+void USART6_DMA_SendData(uint8_t *data, int length);
 
 void Usart_init();
 

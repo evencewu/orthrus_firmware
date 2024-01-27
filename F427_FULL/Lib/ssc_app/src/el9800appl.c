@@ -471,6 +471,7 @@ extern motor_recv_t data_leg[4];
 
 extern motor_recv_t data_motor[4][3];
 
+int send = 0;
 void APPL_Application(void)
 {
     if (sDOOutputs.bLED1 != 0)
@@ -543,9 +544,21 @@ void APPL_Application(void)
     sDIInputs.bSwitch7 = 0;
     sDIInputs.bSwitch8 = 0;
 
+    // usart
 
-    /* start the conversion of the A/D converter */
-    //		while(!(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)==SET));
+    modfiy_cmd(&cmd_leg[3], 1, 0, 0, 0, 0, 0);
+
+    if (send >= 4)
+    {
+        send == 0;
+        unitreeA1_tx(3);
+    }
+    else
+    {
+        send++;
+    }
+
+    //
 
     sAIInputs.i16Analoginput = 0;
 
@@ -578,6 +591,10 @@ void APPL_Application(void)
     sAIInputs.can2_d5 = Can2_RxMessage.Data[5];
     sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
     sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
+
+    sAIInputs.motor1_T = data_motor[3][0].T;
+    sAIInputs.motor1_Pos = data_motor[3][0].Pos;
+    sAIInputs.motor1_W = 10;
 
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
     sAIInputs.bTxPDOToggle ^= 1;
@@ -676,8 +693,8 @@ int main(void)
 void main(void)
 #endif
 {
-    RCC_ClocksTypeDef rcc;    
-    RCC_GetClocksFreq(&rcc); 
+    RCC_ClocksTypeDef rcc;
+    RCC_GetClocksFreq(&rcc);
 
     /* initialize the Hardware and the EtherCAT Slave Controller */
     HW_Init();
@@ -687,14 +704,12 @@ void main(void)
     bRunApplication = TRUE;
     do
     {
-        modfiy_cmd(&cmd_leg[3],2, 0, 0, 0, 0, 0);
-        unitreeA1_rxtx(3);
 
-        //Usart_SendByte(USART6, 15);
-        //Usart_SendByte(USART1, 15);
-        //Usart_SendString(DEBUG_USART,"STM32F407\n");
-        //printf("STM32F407\n");
-        //USART6_SendData_test();
+        // Usart_SendByte(USART6, 15);
+        // Usart_SendByte(USART1, 15);
+        // Usart_SendString(DEBUG_USART,"STM32F407\n");
+        // printf("STM32F407\n");
+        // USART6_SendData_test();
         MainLoop();
 
     } while (bRunApplication == TRUE);

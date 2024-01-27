@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccughKNY.s 			page 1
+ARM GAS  /tmp/cc6XKabG.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -29,13 +29,17 @@ ARM GAS  /tmp/ccughKNY.s 			page 1
   27              	.LFB126:
   28              		.file 1 "Lib/bsp/src/bsp_usart.c"
    1:Lib/bsp/src/bsp_usart.c **** #include "bsp_usart.h"
-   2:Lib/bsp/src/bsp_usart.c **** 
-   3:Lib/bsp/src/bsp_usart.c **** uint8_t usart6TxBuffer[34];
-   4:Lib/bsp/src/bsp_usart.c **** uint8_t usart6RxBuffer[78];
-   5:Lib/bsp/src/bsp_usart.c **** 
-   6:Lib/bsp/src/bsp_usart.c **** void USART6_GPIO_Init()
-   7:Lib/bsp/src/bsp_usart.c **** {
-  29              		.loc 1 7 1 view -0
+   2:Lib/bsp/src/bsp_usart.c **** #include "unitreeA1_cmd.h"
+   3:Lib/bsp/src/bsp_usart.c **** 
+   4:Lib/bsp/src/bsp_usart.c **** #define USART6_DMA_RX_BUFFER_MAX_LENGTH (255)
+   5:Lib/bsp/src/bsp_usart.c **** #define USART6_DMA_TX_BUFFER_MAX_LENGTH (255)
+   6:Lib/bsp/src/bsp_usart.c **** 
+   7:Lib/bsp/src/bsp_usart.c **** uint8_t usart6TxBuffer[34];
+   8:Lib/bsp/src/bsp_usart.c **** uint8_t usart6RxBuffer[78];
+   9:Lib/bsp/src/bsp_usart.c **** 
+  10:Lib/bsp/src/bsp_usart.c **** void USART6_GPIO_Init()
+  11:Lib/bsp/src/bsp_usart.c **** {
+  29              		.loc 1 11 1 view -0
   30              		.cfi_startproc
   31              		@ args = 0, pretend = 0, frame = 8
   32              		@ frame_needed = 0, uses_anonymous_args = 0
@@ -46,88 +50,88 @@ ARM GAS  /tmp/ccughKNY.s 			page 1
   37              		.cfi_offset 14, -4
   38 0002 83B0     		sub	sp, sp, #12
   39              		.cfi_def_cfa_offset 24
-   8:Lib/bsp/src/bsp_usart.c ****     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
-  40              		.loc 1 8 5 view .LVU1
+  12:Lib/bsp/src/bsp_usart.c ****     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
+  40              		.loc 1 12 5 view .LVU1
   41 0004 0121     		movs	r1, #1
   42 0006 0420     		movs	r0, #4
   43 0008 FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
   44              	.LVL0:
-   9:Lib/bsp/src/bsp_usart.c **** 
-  10:Lib/bsp/src/bsp_usart.c ****     GPIO_InitTypeDef GPIO_InitStructure;
-  45              		.loc 1 10 5 view .LVU2
-  11:Lib/bsp/src/bsp_usart.c **** 
-  12:Lib/bsp/src/bsp_usart.c ****     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
-  46              		.loc 1 12 5 view .LVU3
-ARM GAS  /tmp/ccughKNY.s 			page 2
+  13:Lib/bsp/src/bsp_usart.c **** 
+  14:Lib/bsp/src/bsp_usart.c ****     GPIO_InitTypeDef GPIO_InitStructure;
+ARM GAS  /tmp/cc6XKabG.s 			page 2
 
 
-  47              		.loc 1 12 35 is_stmt 0 view .LVU4
+  45              		.loc 1 14 5 view .LVU2
+  15:Lib/bsp/src/bsp_usart.c **** 
+  16:Lib/bsp/src/bsp_usart.c ****     GPIO_InitStructure.GPIO_OType = GPIO_OType_PP;
+  46              		.loc 1 16 5 view .LVU3
+  47              		.loc 1 16 35 is_stmt 0 view .LVU4
   48 000c 0023     		movs	r3, #0
   49 000e 8DF80630 		strb	r3, [sp, #6]
-  13:Lib/bsp/src/bsp_usart.c ****     GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
-  50              		.loc 1 13 5 is_stmt 1 view .LVU5
-  51              		.loc 1 13 34 is_stmt 0 view .LVU6
+  17:Lib/bsp/src/bsp_usart.c ****     GPIO_InitStructure.GPIO_PuPd = GPIO_PuPd_UP;
+  50              		.loc 1 17 5 is_stmt 1 view .LVU5
+  51              		.loc 1 17 34 is_stmt 0 view .LVU6
   52 0012 0123     		movs	r3, #1
   53 0014 8DF80730 		strb	r3, [sp, #7]
-  14:Lib/bsp/src/bsp_usart.c ****     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
-  54              		.loc 1 14 5 is_stmt 1 view .LVU7
-  55              		.loc 1 14 35 is_stmt 0 view .LVU8
+  18:Lib/bsp/src/bsp_usart.c ****     GPIO_InitStructure.GPIO_Speed = GPIO_Speed_100MHz;
+  54              		.loc 1 18 5 is_stmt 1 view .LVU7
+  55              		.loc 1 18 35 is_stmt 0 view .LVU8
   56 0018 0323     		movs	r3, #3
   57 001a 8DF80530 		strb	r3, [sp, #5]
-  15:Lib/bsp/src/bsp_usart.c **** 
-  16:Lib/bsp/src/bsp_usart.c ****     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  58              		.loc 1 16 5 is_stmt 1 view .LVU9
-  59              		.loc 1 16 34 is_stmt 0 view .LVU10
+  19:Lib/bsp/src/bsp_usart.c **** 
+  20:Lib/bsp/src/bsp_usart.c ****     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  58              		.loc 1 20 5 is_stmt 1 view .LVU9
+  59              		.loc 1 20 34 is_stmt 0 view .LVU10
   60 001e 0225     		movs	r5, #2
   61 0020 8DF80450 		strb	r5, [sp, #4]
-  17:Lib/bsp/src/bsp_usart.c ****     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
-  62              		.loc 1 17 5 is_stmt 1 view .LVU11
-  63              		.loc 1 17 33 is_stmt 0 view .LVU12
+  21:Lib/bsp/src/bsp_usart.c ****     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_6;
+  62              		.loc 1 21 5 is_stmt 1 view .LVU11
+  63              		.loc 1 21 33 is_stmt 0 view .LVU12
   64 0024 4023     		movs	r3, #64
   65 0026 0093     		str	r3, [sp]
-  18:Lib/bsp/src/bsp_usart.c ****     GPIO_Init(GPIOC, &GPIO_InitStructure);
-  66              		.loc 1 18 5 is_stmt 1 view .LVU13
+  22:Lib/bsp/src/bsp_usart.c ****     GPIO_Init(GPIOC, &GPIO_InitStructure);
+  66              		.loc 1 22 5 is_stmt 1 view .LVU13
   67 0028 0C4C     		ldr	r4, .L3
   68 002a 6946     		mov	r1, sp
   69 002c 2046     		mov	r0, r4
   70 002e FFF7FEFF 		bl	GPIO_Init
   71              	.LVL1:
-  19:Lib/bsp/src/bsp_usart.c **** 
-  20:Lib/bsp/src/bsp_usart.c ****     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
-  72              		.loc 1 20 5 view .LVU14
-  73              		.loc 1 20 34 is_stmt 0 view .LVU15
+  23:Lib/bsp/src/bsp_usart.c **** 
+  24:Lib/bsp/src/bsp_usart.c ****     GPIO_InitStructure.GPIO_Mode = GPIO_Mode_AF;
+  72              		.loc 1 24 5 view .LVU14
+  73              		.loc 1 24 34 is_stmt 0 view .LVU15
   74 0032 8DF80450 		strb	r5, [sp, #4]
-  21:Lib/bsp/src/bsp_usart.c ****     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
-  75              		.loc 1 21 5 is_stmt 1 view .LVU16
-  76              		.loc 1 21 33 is_stmt 0 view .LVU17
+  25:Lib/bsp/src/bsp_usart.c ****     GPIO_InitStructure.GPIO_Pin = GPIO_Pin_7;
+  75              		.loc 1 25 5 is_stmt 1 view .LVU16
+  76              		.loc 1 25 33 is_stmt 0 view .LVU17
   77 0036 8023     		movs	r3, #128
   78 0038 0093     		str	r3, [sp]
-  22:Lib/bsp/src/bsp_usart.c ****     GPIO_Init(GPIOC, &GPIO_InitStructure);
-  79              		.loc 1 22 5 is_stmt 1 view .LVU18
+  26:Lib/bsp/src/bsp_usart.c ****     GPIO_Init(GPIOC, &GPIO_InitStructure);
+  79              		.loc 1 26 5 is_stmt 1 view .LVU18
   80 003a 6946     		mov	r1, sp
   81 003c 2046     		mov	r0, r4
   82 003e FFF7FEFF 		bl	GPIO_Init
   83              	.LVL2:
-  23:Lib/bsp/src/bsp_usart.c **** 
-  24:Lib/bsp/src/bsp_usart.c ****     GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_USART6);
-  84              		.loc 1 24 5 view .LVU19
+  27:Lib/bsp/src/bsp_usart.c **** 
+  28:Lib/bsp/src/bsp_usart.c ****     GPIO_PinAFConfig(GPIOC, GPIO_PinSource6, GPIO_AF_USART6);
+  84              		.loc 1 28 5 view .LVU19
   85 0042 0822     		movs	r2, #8
   86 0044 0621     		movs	r1, #6
   87 0046 2046     		mov	r0, r4
+ARM GAS  /tmp/cc6XKabG.s 			page 3
+
+
   88 0048 FFF7FEFF 		bl	GPIO_PinAFConfig
   89              	.LVL3:
-  25:Lib/bsp/src/bsp_usart.c ****     GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_USART6);
-  90              		.loc 1 25 5 view .LVU20
-ARM GAS  /tmp/ccughKNY.s 			page 3
-
-
+  29:Lib/bsp/src/bsp_usart.c ****     GPIO_PinAFConfig(GPIOC, GPIO_PinSource7, GPIO_AF_USART6);
+  90              		.loc 1 29 5 view .LVU20
   91 004c 0822     		movs	r2, #8
   92 004e 0721     		movs	r1, #7
   93 0050 2046     		mov	r0, r4
   94 0052 FFF7FEFF 		bl	GPIO_PinAFConfig
   95              	.LVL4:
-  26:Lib/bsp/src/bsp_usart.c **** }
-  96              		.loc 1 26 1 is_stmt 0 view .LVU21
+  30:Lib/bsp/src/bsp_usart.c **** }
+  96              		.loc 1 30 1 is_stmt 0 view .LVU21
   97 0056 03B0     		add	sp, sp, #12
   98              		.cfi_def_cfa_offset 12
   99              		@ sp needed
@@ -138,619 +142,1131 @@ ARM GAS  /tmp/ccughKNY.s 			page 1
  104 005c 00080240 		.word	1073874944
  105              		.cfi_endproc
  106              	.LFE126:
- 108              		.section	.text.USART6_DMA_Init,"ax",%progbits
+ 108              		.section	.text.USART6_TX_DMA_Init,"ax",%progbits
  109              		.align	1
- 110              		.global	USART6_DMA_Init
+ 110              		.global	USART6_TX_DMA_Init
  111              		.syntax unified
  112              		.thumb
  113              		.thumb_func
- 115              	USART6_DMA_Init:
+ 115              	USART6_TX_DMA_Init:
  116              	.LFB127:
-  27:Lib/bsp/src/bsp_usart.c **** 
-  28:Lib/bsp/src/bsp_usart.c **** void USART6_DMA_Init()
-  29:Lib/bsp/src/bsp_usart.c **** {
- 117              		.loc 1 29 1 is_stmt 1 view -0
+  31:Lib/bsp/src/bsp_usart.c **** 
+  32:Lib/bsp/src/bsp_usart.c **** void USART6_TX_DMA_Init()
+  33:Lib/bsp/src/bsp_usart.c **** {
+ 117              		.loc 1 33 1 is_stmt 1 view -0
  118              		.cfi_startproc
  119              		@ args = 0, pretend = 0, frame = 64
  120              		@ frame_needed = 0, uses_anonymous_args = 0
- 121 0000 10B5     		push	{r4, lr}
- 122              		.cfi_def_cfa_offset 8
- 123              		.cfi_offset 4, -8
- 124              		.cfi_offset 14, -4
- 125 0002 90B0     		sub	sp, sp, #64
- 126              		.cfi_def_cfa_offset 72
-  30:Lib/bsp/src/bsp_usart.c ****     DMA_InitTypeDef DMA_InitStructure;
- 127              		.loc 1 30 5 view .LVU23
-  31:Lib/bsp/src/bsp_usart.c **** 
-  32:Lib/bsp/src/bsp_usart.c ****     /*����DMAʱ��*/
-  33:Lib/bsp/src/bsp_usart.c ****     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2, ENABLE);
- 128              		.loc 1 33 5 view .LVU24
- 129 0004 0121     		movs	r1, #1
- 130 0006 4FF48000 		mov	r0, #4194304
- 131 000a FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
- 132              	.LVL5:
+ 121 0000 00B5     		push	{lr}
+ 122              		.cfi_def_cfa_offset 4
+ 123              		.cfi_offset 14, -4
+ 124 0002 91B0     		sub	sp, sp, #68
+ 125              		.cfi_def_cfa_offset 72
   34:Lib/bsp/src/bsp_usart.c **** 
-  35:Lib/bsp/src/bsp_usart.c ****     /* ��λ��ʼ��DMA������ */
-  36:Lib/bsp/src/bsp_usart.c ****     DMA_DeInit(DMA2_Stream6);
- 133              		.loc 1 36 5 view .LVU25
- 134 000e 1948     		ldr	r0, .L9
- 135 0010 FFF7FEFF 		bl	DMA_DeInit
- 136              	.LVL6:
-  37:Lib/bsp/src/bsp_usart.c **** 
-  38:Lib/bsp/src/bsp_usart.c ****     /* ȷ��DMA��������λ��� */
-ARM GAS  /tmp/ccughKNY.s 			page 4
-
-
+  35:Lib/bsp/src/bsp_usart.c ****     DMA_InitTypeDef DMA_InitStructure;
+ 126              		.loc 1 35 5 view .LVU23
+  36:Lib/bsp/src/bsp_usart.c **** 
+  37:Lib/bsp/src/bsp_usart.c ****     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2, ENABLE); // DMA2时钟使能
+ 127              		.loc 1 37 5 view .LVU24
+ 128 0004 0121     		movs	r1, #1
+ 129 0006 4FF48000 		mov	r0, #4194304
+ 130 000a FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
+ 131              	.LVL5:
+  38:Lib/bsp/src/bsp_usart.c ****     DMA_DeInit(DMA2_Stream6);
+ 132              		.loc 1 38 5 view .LVU25
+ 133 000e 1548     		ldr	r0, .L8
+ 134 0010 FFF7FEFF 		bl	DMA_DeInit
+ 135              	.LVL6:
   39:Lib/bsp/src/bsp_usart.c ****     while (DMA_GetCmdStatus(DMA2_Stream6) != DISABLE)
- 137              		.loc 1 39 5 view .LVU26
- 138              	.L6:
-  40:Lib/bsp/src/bsp_usart.c ****     {
-  41:Lib/bsp/src/bsp_usart.c ****     }
- 139              		.loc 1 41 5 discriminator 1 view .LVU27
-  39:Lib/bsp/src/bsp_usart.c ****     {
- 140              		.loc 1 39 11 discriminator 1 view .LVU28
-  39:Lib/bsp/src/bsp_usart.c ****     {
- 141              		.loc 1 39 12 is_stmt 0 discriminator 1 view .LVU29
- 142 0014 1748     		ldr	r0, .L9
- 143 0016 FFF7FEFF 		bl	DMA_GetCmdStatus
- 144              	.LVL7:
-  39:Lib/bsp/src/bsp_usart.c ****     {
- 145              		.loc 1 39 11 discriminator 1 view .LVU30
- 146 001a 0028     		cmp	r0, #0
- 147 001c FAD1     		bne	.L6
-  42:Lib/bsp/src/bsp_usart.c **** 
-  43:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_Channel = DMA_Channel_5;
- 148              		.loc 1 43 5 is_stmt 1 view .LVU31
- 149              		.loc 1 43 35 is_stmt 0 view .LVU32
- 150 001e 4FF02063 		mov	r3, #167772160
- 151 0022 0193     		str	r3, [sp, #4]
-  44:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_PeripheralBaseAddr = ((u32)&USART6->DR);
- 152              		.loc 1 44 5 is_stmt 1 view .LVU33
- 153              		.loc 1 44 46 is_stmt 0 view .LVU34
- 154 0024 144B     		ldr	r3, .L9+4
- 155 0026 0293     		str	r3, [sp, #8]
-  45:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_Memory0BaseAddr = (u32)usart6TxBuffer;
- 156              		.loc 1 45 5 is_stmt 1 view .LVU35
- 157              		.loc 1 45 45 is_stmt 0 view .LVU36
- 158 0028 144B     		ldr	r3, .L9+8
- 159              		.loc 1 45 43 view .LVU37
- 160 002a 0393     		str	r3, [sp, #12]
-  46:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_DIR = DMA_DIR_MemoryToPeripheral;
- 161              		.loc 1 46 5 is_stmt 1 view .LVU38
- 162              		.loc 1 46 31 is_stmt 0 view .LVU39
- 163 002c 4023     		movs	r3, #64
- 164 002e 0493     		str	r3, [sp, #16]
-  47:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_BufferSize = sizeof(usart6TxBuffer);
- 165              		.loc 1 47 5 is_stmt 1 view .LVU40
- 166              		.loc 1 47 38 is_stmt 0 view .LVU41
- 167 0030 2223     		movs	r3, #34
- 168 0032 0593     		str	r3, [sp, #20]
-  48:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;
- 169              		.loc 1 48 5 is_stmt 1 view .LVU42
- 170              		.loc 1 48 41 is_stmt 0 view .LVU43
- 171 0034 0023     		movs	r3, #0
- 172 0036 0693     		str	r3, [sp, #24]
-  49:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;
- 173              		.loc 1 49 5 is_stmt 1 view .LVU44
- 174              		.loc 1 49 37 is_stmt 0 view .LVU45
- 175 0038 4FF48062 		mov	r2, #1024
- 176 003c 0792     		str	r2, [sp, #28]
-  50:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte;
- 177              		.loc 1 50 5 is_stmt 1 view .LVU46
- 178              		.loc 1 50 46 is_stmt 0 view .LVU47
-ARM GAS  /tmp/ccughKNY.s 			page 5
+ARM GAS  /tmp/cc6XKabG.s 			page 4
 
 
- 179 003e 0893     		str	r3, [sp, #32]
-  51:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;
- 180              		.loc 1 51 5 is_stmt 1 view .LVU48
- 181              		.loc 1 51 42 is_stmt 0 view .LVU49
- 182 0040 0993     		str	r3, [sp, #36]
-  52:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;
- 183              		.loc 1 52 5 is_stmt 1 view .LVU50
- 184              		.loc 1 52 32 is_stmt 0 view .LVU51
- 185 0042 0A93     		str	r3, [sp, #40]
-  53:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;
- 186              		.loc 1 53 5 is_stmt 1 view .LVU52
- 187              		.loc 1 53 36 is_stmt 0 view .LVU53
- 188 0044 4FF48032 		mov	r2, #65536
- 189 0048 0B92     		str	r2, [sp, #44]
-  54:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;
- 190              		.loc 1 54 5 is_stmt 1 view .LVU54
- 191              		.loc 1 54 36 is_stmt 0 view .LVU55
- 192 004a 0C93     		str	r3, [sp, #48]
-  55:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
- 193              		.loc 1 55 5 is_stmt 1 view .LVU56
- 194              		.loc 1 55 41 is_stmt 0 view .LVU57
- 195 004c 0322     		movs	r2, #3
- 196 004e 0D92     		str	r2, [sp, #52]
-  56:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;
- 197              		.loc 1 56 5 is_stmt 1 view .LVU58
- 198              		.loc 1 56 39 is_stmt 0 view .LVU59
- 199 0050 0E93     		str	r3, [sp, #56]
-  57:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;
- 200              		.loc 1 57 5 is_stmt 1 view .LVU60
- 201              		.loc 1 57 43 is_stmt 0 view .LVU61
- 202 0052 0F93     		str	r3, [sp, #60]
-  58:Lib/bsp/src/bsp_usart.c ****     DMA_Init(DMA2_Stream6, &DMA_InitStructure);
- 203              		.loc 1 58 5 is_stmt 1 view .LVU62
- 204 0054 074C     		ldr	r4, .L9
- 205 0056 01A9     		add	r1, sp, #4
- 206 0058 2046     		mov	r0, r4
- 207 005a FFF7FEFF 		bl	DMA_Init
- 208              	.LVL8:
+ 136              		.loc 1 39 5 view .LVU26
+ 137              	.L6:
+  40:Lib/bsp/src/bsp_usart.c ****         ;                                                                   // 等待DMA可配置
+ 138              		.loc 1 40 9 discriminator 1 view .LVU27
+  39:Lib/bsp/src/bsp_usart.c ****     while (DMA_GetCmdStatus(DMA2_Stream6) != DISABLE)
+ 139              		.loc 1 39 11 discriminator 1 view .LVU28
+  39:Lib/bsp/src/bsp_usart.c ****     while (DMA_GetCmdStatus(DMA2_Stream6) != DISABLE)
+ 140              		.loc 1 39 12 is_stmt 0 discriminator 1 view .LVU29
+ 141 0014 1348     		ldr	r0, .L8
+ 142 0016 FFF7FEFF 		bl	DMA_GetCmdStatus
+ 143              	.LVL7:
+  39:Lib/bsp/src/bsp_usart.c ****     while (DMA_GetCmdStatus(DMA2_Stream6) != DISABLE)
+ 144              		.loc 1 39 11 discriminator 1 view .LVU30
+ 145 001a 0028     		cmp	r0, #0
+ 146 001c FAD1     		bne	.L6
+  41:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_Channel = DMA_Channel_5;                          // DMA通道配置
+ 147              		.loc 1 41 5 is_stmt 1 view .LVU31
+ 148              		.loc 1 41 35 is_stmt 0 view .LVU32
+ 149 001e 4FF02063 		mov	r3, #167772160
+ 150 0022 0193     		str	r3, [sp, #4]
+  42:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&USART6->DR;       // DMA外设地址
+ 151              		.loc 1 42 5 is_stmt 1 view .LVU33
+ 152              		.loc 1 42 46 is_stmt 0 view .LVU34
+ 153 0024 104B     		ldr	r3, .L8+4
+ 154 0026 0293     		str	r3, [sp, #8]
+  43:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)usart6TxBuffer;       // 发送缓存指针
+ 155              		.loc 1 43 5 is_stmt 1 view .LVU35
+ 156              		.loc 1 43 45 is_stmt 0 view .LVU36
+ 157 0028 104B     		ldr	r3, .L8+8
+ 158              		.loc 1 43 43 view .LVU37
+ 159 002a 0393     		str	r3, [sp, #12]
+  44:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_DIR = DMA_DIR_MemoryToPeripheral;                 // DMA传输方向：�
+ 160              		.loc 1 44 5 is_stmt 1 view .LVU38
+ 161              		.loc 1 44 31 is_stmt 0 view .LVU39
+ 162 002c 4023     		movs	r3, #64
+ 163 002e 0493     		str	r3, [sp, #16]
+  45:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_BufferSize = sizeof(usart6TxBuffer);              // 数据传输字节�
+ 164              		.loc 1 45 5 is_stmt 1 view .LVU40
+ 165              		.loc 1 45 38 is_stmt 0 view .LVU41
+ 166 0030 2223     		movs	r3, #34
+ 167 0032 0593     		str	r3, [sp, #20]
+  46:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;        // 外设非增量模�
+ 168              		.loc 1 46 5 is_stmt 1 view .LVU42
+ 169              		.loc 1 46 41 is_stmt 0 view .LVU43
+ 170 0034 0023     		movs	r3, #0
+ 171 0036 0693     		str	r3, [sp, #24]
+  47:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;                 // 存储器增量模�
+ 172              		.loc 1 47 5 is_stmt 1 view .LVU44
+ 173              		.loc 1 47 37 is_stmt 0 view .LVU45
+ 174 0038 4FF48062 		mov	r2, #1024
+ 175 003c 0792     		str	r2, [sp, #28]
+  48:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte; // 外设数据长度:8
+ 176              		.loc 1 48 5 is_stmt 1 view .LVU46
+ 177              		.loc 1 48 46 is_stmt 0 view .LVU47
+ 178 003e 0893     		str	r3, [sp, #32]
+  49:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;         // 存储器数据长�
+ 179              		.loc 1 49 5 is_stmt 1 view .LVU48
+ARM GAS  /tmp/cc6XKabG.s 			page 5
+
+
+ 180              		.loc 1 49 42 is_stmt 0 view .LVU49
+ 181 0040 0993     		str	r3, [sp, #36]
+  50:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;                           // 使用普通模式
+ 182              		.loc 1 50 5 is_stmt 1 view .LVU50
+ 183              		.loc 1 50 32 is_stmt 0 view .LVU51
+ 184 0042 0A93     		str	r3, [sp, #40]
+  51:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_Priority = DMA_Priority_Medium;                   // 中等优先级 DMA_
+ 185              		.loc 1 51 5 is_stmt 1 view .LVU52
+ 186              		.loc 1 51 36 is_stmt 0 view .LVU53
+ 187 0044 4FF48032 		mov	r2, #65536
+ 188 0048 0B92     		str	r2, [sp, #44]
+  52:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;
+ 189              		.loc 1 52 5 is_stmt 1 view .LVU54
+ 190              		.loc 1 52 36 is_stmt 0 view .LVU55
+ 191 004a 0C93     		str	r3, [sp, #48]
+  53:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;
+ 192              		.loc 1 53 5 is_stmt 1 view .LVU56
+ 193              		.loc 1 53 41 is_stmt 0 view .LVU57
+ 194 004c 0322     		movs	r2, #3
+ 195 004e 0D92     		str	r2, [sp, #52]
+  54:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;         // 存储器突发单次传
+ 196              		.loc 1 54 5 is_stmt 1 view .LVU58
+ 197              		.loc 1 54 39 is_stmt 0 view .LVU59
+ 198 0050 0E93     		str	r3, [sp, #56]
+  55:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single; // 外设突发单次传输
+ 199              		.loc 1 55 5 is_stmt 1 view .LVU60
+ 200              		.loc 1 55 43 is_stmt 0 view .LVU61
+ 201 0052 0F93     		str	r3, [sp, #60]
+  56:Lib/bsp/src/bsp_usart.c ****     DMA_Init(DMA2_Stream6, &DMA_InitStructure);                         // 初始化DMA Stream
+ 202              		.loc 1 56 5 is_stmt 1 view .LVU62
+ 203 0054 01A9     		add	r1, sp, #4
+ 204 0056 0348     		ldr	r0, .L8
+ 205 0058 FFF7FEFF 		bl	DMA_Init
+ 206              	.LVL8:
+  57:Lib/bsp/src/bsp_usart.c ****     // DMA_Cmd(DMA2_Stream6, DISABLE);                                     // 开启DMA传输
+  58:Lib/bsp/src/bsp_usart.c **** }
+ 207              		.loc 1 58 1 is_stmt 0 view .LVU63
+ 208 005c 11B0     		add	sp, sp, #68
+ 209              		.cfi_def_cfa_offset 4
+ 210              		@ sp needed
+ 211 005e 5DF804FB 		ldr	pc, [sp], #4
+ 212              	.L9:
+ 213 0062 00BF     		.align	2
+ 214              	.L8:
+ 215 0064 A0640240 		.word	1073898656
+ 216 0068 04140140 		.word	1073812484
+ 217 006c 00000000 		.word	.LANCHOR0
+ 218              		.cfi_endproc
+ 219              	.LFE127:
+ 221              		.section	.text.USART6_RX_DMA_Init,"ax",%progbits
+ 222              		.align	1
+ 223              		.global	USART6_RX_DMA_Init
+ 224              		.syntax unified
+ 225              		.thumb
+ 226              		.thumb_func
+ 228              	USART6_RX_DMA_Init:
+ 229              	.LFB128:
+ARM GAS  /tmp/cc6XKabG.s 			page 6
+
+
   59:Lib/bsp/src/bsp_usart.c **** 
-  60:Lib/bsp/src/bsp_usart.c ****     DMA_Cmd(DMA2_Stream6, ENABLE);
- 209              		.loc 1 60 5 view .LVU63
- 210 005e 0121     		movs	r1, #1
- 211 0060 2046     		mov	r0, r4
- 212 0062 FFF7FEFF 		bl	DMA_Cmd
- 213              	.LVL9:
-  61:Lib/bsp/src/bsp_usart.c **** 
-  62:Lib/bsp/src/bsp_usart.c ****     while (DMA_GetCmdStatus(DMA2_Stream6) != ENABLE)
- 214              		.loc 1 62 5 view .LVU64
- 215              	.L7:
-  63:Lib/bsp/src/bsp_usart.c ****     {
-  64:Lib/bsp/src/bsp_usart.c ****     }
- 216              		.loc 1 64 5 discriminator 1 view .LVU65
-  62:Lib/bsp/src/bsp_usart.c ****     {
- 217              		.loc 1 62 11 discriminator 1 view .LVU66
-  62:Lib/bsp/src/bsp_usart.c ****     {
- 218              		.loc 1 62 12 is_stmt 0 discriminator 1 view .LVU67
- 219 0066 0348     		ldr	r0, .L9
-ARM GAS  /tmp/ccughKNY.s 			page 6
-
-
- 220 0068 FFF7FEFF 		bl	DMA_GetCmdStatus
- 221              	.LVL10:
-  62:Lib/bsp/src/bsp_usart.c ****     {
- 222              		.loc 1 62 11 discriminator 1 view .LVU68
- 223 006c 0128     		cmp	r0, #1
- 224 006e FAD1     		bne	.L7
-  65:Lib/bsp/src/bsp_usart.c **** }
- 225              		.loc 1 65 1 view .LVU69
- 226 0070 10B0     		add	sp, sp, #64
- 227              		.cfi_def_cfa_offset 8
- 228              		@ sp needed
- 229 0072 10BD     		pop	{r4, pc}
- 230              	.L10:
- 231              		.align	2
- 232              	.L9:
- 233 0074 A0640240 		.word	1073898656
- 234 0078 04140140 		.word	1073812484
- 235 007c 00000000 		.word	.LANCHOR0
- 236              		.cfi_endproc
- 237              	.LFE127:
- 239              		.section	.text.USART6_Init,"ax",%progbits
- 240              		.align	1
- 241              		.global	USART6_Init
- 242              		.syntax unified
- 243              		.thumb
- 244              		.thumb_func
- 246              	USART6_Init:
- 247              	.LFB128:
+  60:Lib/bsp/src/bsp_usart.c **** void USART6_RX_DMA_Init()
+  61:Lib/bsp/src/bsp_usart.c **** {
+ 230              		.loc 1 61 1 is_stmt 1 view -0
+ 231              		.cfi_startproc
+ 232              		@ args = 0, pretend = 0, frame = 64
+ 233              		@ frame_needed = 0, uses_anonymous_args = 0
+ 234 0000 10B5     		push	{r4, lr}
+ 235              		.cfi_def_cfa_offset 8
+ 236              		.cfi_offset 4, -8
+ 237              		.cfi_offset 14, -4
+ 238 0002 90B0     		sub	sp, sp, #64
+ 239              		.cfi_def_cfa_offset 72
+  62:Lib/bsp/src/bsp_usart.c ****     DMA_InitTypeDef DMA_InitStructure;
+ 240              		.loc 1 62 5 view .LVU65
+  63:Lib/bsp/src/bsp_usart.c **** 
+  64:Lib/bsp/src/bsp_usart.c ****     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_DMA2, ENABLE);
+ 241              		.loc 1 64 5 view .LVU66
+ 242 0004 0121     		movs	r1, #1
+ 243 0006 4FF48000 		mov	r0, #4194304
+ 244 000a FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
+ 245              	.LVL9:
+  65:Lib/bsp/src/bsp_usart.c ****     DMA_DeInit(DMA2_Stream2);
+ 246              		.loc 1 65 5 view .LVU67
+ 247 000e 1648     		ldr	r0, .L13
+ 248 0010 FFF7FEFF 		bl	DMA_DeInit
+ 249              	.LVL10:
   66:Lib/bsp/src/bsp_usart.c **** 
-  67:Lib/bsp/src/bsp_usart.c **** void USART6_Init()
-  68:Lib/bsp/src/bsp_usart.c **** {
- 248              		.loc 1 68 1 is_stmt 1 view -0
- 249              		.cfi_startproc
- 250              		@ args = 0, pretend = 0, frame = 16
- 251              		@ frame_needed = 0, uses_anonymous_args = 0
- 252 0000 10B5     		push	{r4, lr}
- 253              		.cfi_def_cfa_offset 8
- 254              		.cfi_offset 4, -8
- 255              		.cfi_offset 14, -4
- 256 0002 84B0     		sub	sp, sp, #16
- 257              		.cfi_def_cfa_offset 24
-  69:Lib/bsp/src/bsp_usart.c ****     USART6_GPIO_Init();
- 258              		.loc 1 69 5 view .LVU71
- 259 0004 FFF7FEFF 		bl	USART6_GPIO_Init
- 260              	.LVL11:
+  67:Lib/bsp/src/bsp_usart.c ****     while (DMA_GetCmdStatus(DMA2_Stream2) != DISABLE)
+ 250              		.loc 1 67 5 view .LVU68
+ 251              	.L11:
+  68:Lib/bsp/src/bsp_usart.c ****     {
+  69:Lib/bsp/src/bsp_usart.c ****     }
+ 252              		.loc 1 69 5 discriminator 1 view .LVU69
+  67:Lib/bsp/src/bsp_usart.c ****     {
+ 253              		.loc 1 67 11 discriminator 1 view .LVU70
+  67:Lib/bsp/src/bsp_usart.c ****     {
+ 254              		.loc 1 67 12 is_stmt 0 discriminator 1 view .LVU71
+ 255 0014 1448     		ldr	r0, .L13
+ 256 0016 FFF7FEFF 		bl	DMA_GetCmdStatus
+ 257              	.LVL11:
+  67:Lib/bsp/src/bsp_usart.c ****     {
+ 258              		.loc 1 67 11 discriminator 1 view .LVU72
+ 259 001a 0028     		cmp	r0, #0
+ 260 001c FAD1     		bne	.L11
   70:Lib/bsp/src/bsp_usart.c **** 
-  71:Lib/bsp/src/bsp_usart.c ****     RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART6, ENABLE);
- 261              		.loc 1 71 5 view .LVU72
- 262 0008 0121     		movs	r1, #1
- 263 000a 2020     		movs	r0, #32
- 264 000c FFF7FEFF 		bl	RCC_APB2PeriphClockCmd
- 265              	.LVL12:
-  72:Lib/bsp/src/bsp_usart.c **** 
-  73:Lib/bsp/src/bsp_usart.c ****     USART_InitTypeDef USART_InitStructure;
- 266              		.loc 1 73 5 view .LVU73
-  74:Lib/bsp/src/bsp_usart.c **** 
-  75:Lib/bsp/src/bsp_usart.c ****     USART_InitStructure.USART_BaudRate = 4800000;
-ARM GAS  /tmp/ccughKNY.s 			page 7
+  71:Lib/bsp/src/bsp_usart.c ****     /* Configure DMA Stream */
+  72:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_Channel = DMA_Channel_5;                          // DMA请求发出通�
+ 261              		.loc 1 72 5 is_stmt 1 view .LVU73
+ 262              		.loc 1 72 35 is_stmt 0 view .LVU74
+ 263 001e 4FF02063 		mov	r3, #167772160
+ 264 0022 0193     		str	r3, [sp, #4]
+  73:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_PeripheralBaseAddr = (uint32_t)&USART6->DR;       // 配置外设地址
+ 265              		.loc 1 73 5 is_stmt 1 view .LVU75
+ 266              		.loc 1 73 46 is_stmt 0 view .LVU76
+ 267 0024 114B     		ldr	r3, .L13+4
+ 268 0026 0293     		str	r3, [sp, #8]
+ARM GAS  /tmp/cc6XKabG.s 			page 7
 
 
- 267              		.loc 1 75 5 view .LVU74
- 268              		.loc 1 75 40 is_stmt 0 view .LVU75
- 269 0010 0F4B     		ldr	r3, .L13
- 270 0012 0093     		str	r3, [sp]
-  76:Lib/bsp/src/bsp_usart.c ****     USART_InitStructure.USART_WordLength = USART_WordLength_8b;
- 271              		.loc 1 76 5 is_stmt 1 view .LVU76
- 272              		.loc 1 76 42 is_stmt 0 view .LVU77
- 273 0014 0023     		movs	r3, #0
- 274 0016 ADF80430 		strh	r3, [sp, #4]	@ movhi
-  77:Lib/bsp/src/bsp_usart.c ****     USART_InitStructure.USART_StopBits = USART_StopBits_1;
- 275              		.loc 1 77 5 is_stmt 1 view .LVU78
- 276              		.loc 1 77 40 is_stmt 0 view .LVU79
- 277 001a ADF80630 		strh	r3, [sp, #6]	@ movhi
-  78:Lib/bsp/src/bsp_usart.c ****     USART_InitStructure.USART_Parity = USART_Parity_No;
- 278              		.loc 1 78 5 is_stmt 1 view .LVU80
- 279              		.loc 1 78 38 is_stmt 0 view .LVU81
- 280 001e ADF80830 		strh	r3, [sp, #8]	@ movhi
-  79:Lib/bsp/src/bsp_usart.c ****     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
- 281              		.loc 1 79 5 is_stmt 1 view .LVU82
- 282              		.loc 1 79 51 is_stmt 0 view .LVU83
- 283 0022 ADF80C30 		strh	r3, [sp, #12]	@ movhi
-  80:Lib/bsp/src/bsp_usart.c ****     USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
- 284              		.loc 1 80 5 is_stmt 1 view .LVU84
- 285              		.loc 1 80 36 is_stmt 0 view .LVU85
- 286 0026 0C23     		movs	r3, #12
- 287 0028 ADF80A30 		strh	r3, [sp, #10]	@ movhi
-  81:Lib/bsp/src/bsp_usart.c ****     USART_Init(USART6, &USART_InitStructure);
- 288              		.loc 1 81 5 is_stmt 1 view .LVU86
- 289 002c 094C     		ldr	r4, .L13+4
- 290 002e 6946     		mov	r1, sp
- 291 0030 2046     		mov	r0, r4
- 292 0032 FFF7FEFF 		bl	USART_Init
- 293              	.LVL13:
-  82:Lib/bsp/src/bsp_usart.c **** 
-  83:Lib/bsp/src/bsp_usart.c ****     USART_ITConfig(USART6, USART_IT_RXNE, ENABLE);
- 294              		.loc 1 83 5 view .LVU87
- 295 0036 0122     		movs	r2, #1
- 296 0038 40F22551 		movw	r1, #1317
- 297 003c 2046     		mov	r0, r4
- 298 003e FFF7FEFF 		bl	USART_ITConfig
- 299              	.LVL14:
-  84:Lib/bsp/src/bsp_usart.c **** 
-  85:Lib/bsp/src/bsp_usart.c ****     USART_Cmd(USART6, ENABLE);
- 300              		.loc 1 85 5 view .LVU88
- 301 0042 0121     		movs	r1, #1
- 302 0044 2046     		mov	r0, r4
- 303 0046 FFF7FEFF 		bl	USART_Cmd
- 304              	.LVL15:
-  86:Lib/bsp/src/bsp_usart.c **** }
- 305              		.loc 1 86 1 is_stmt 0 view .LVU89
- 306 004a 04B0     		add	sp, sp, #16
- 307              		.cfi_def_cfa_offset 8
- 308              		@ sp needed
- 309 004c 10BD     		pop	{r4, pc}
- 310              	.L14:
- 311 004e 00BF     		.align	2
- 312              	.L13:
-ARM GAS  /tmp/ccughKNY.s 			page 8
+  74:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_Memory0BaseAddr = (uint32_t)usart6RxBuffer;       // 配置存储器地�
+ 269              		.loc 1 74 5 is_stmt 1 view .LVU77
+ 270              		.loc 1 74 45 is_stmt 0 view .LVU78
+ 271 0028 114B     		ldr	r3, .L13+8
+ 272              		.loc 1 74 43 view .LVU79
+ 273 002a 0393     		str	r3, [sp, #12]
+  75:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_DIR = DMA_DIR_PeripheralToMemory;                 // 传输方向配置
+ 274              		.loc 1 75 5 is_stmt 1 view .LVU80
+ 275              		.loc 1 75 31 is_stmt 0 view .LVU81
+ 276 002c 0023     		movs	r3, #0
+ 277 002e 0493     		str	r3, [sp, #16]
+  76:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_BufferSize = sizeof(usart6RxBuffer);              // 传输大小
+ 278              		.loc 1 76 5 is_stmt 1 view .LVU82
+ 279              		.loc 1 76 38 is_stmt 0 view .LVU83
+ 280 0030 4E22     		movs	r2, #78
+ 281 0032 0592     		str	r2, [sp, #20]
+  77:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_PeripheralInc = DMA_PeripheralInc_Disable;        // 外设地址不变
+ 282              		.loc 1 77 5 is_stmt 1 view .LVU84
+ 283              		.loc 1 77 41 is_stmt 0 view .LVU85
+ 284 0034 0693     		str	r3, [sp, #24]
+  78:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_MemoryInc = DMA_MemoryInc_Enable;                 // memory地址自增
+ 285              		.loc 1 78 5 is_stmt 1 view .LVU86
+ 286              		.loc 1 78 37 is_stmt 0 view .LVU87
+ 287 0036 4FF48062 		mov	r2, #1024
+ 288 003a 0792     		str	r2, [sp, #28]
+  79:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_PeripheralDataSize = DMA_PeripheralDataSize_Byte; // 外设地址数据�
+ 289              		.loc 1 79 5 is_stmt 1 view .LVU88
+ 290              		.loc 1 79 46 is_stmt 0 view .LVU89
+ 291 003c 0893     		str	r3, [sp, #32]
+  80:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_MemoryDataSize = DMA_MemoryDataSize_Byte;         // memory地址数据�
+ 292              		.loc 1 80 5 is_stmt 1 view .LVU90
+ 293              		.loc 1 80 42 is_stmt 0 view .LVU91
+ 294 003e 0993     		str	r3, [sp, #36]
+  81:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_Mode = DMA_Mode_Normal;                           // DMA模式：正常�
+ 295              		.loc 1 81 5 is_stmt 1 view .LVU92
+ 296              		.loc 1 81 32 is_stmt 0 view .LVU93
+ 297 0040 0A93     		str	r3, [sp, #40]
+  82:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_Priority = DMA_Priority_High;                     // 优先级：高
+ 298              		.loc 1 82 5 is_stmt 1 view .LVU94
+ 299              		.loc 1 82 36 is_stmt 0 view .LVU95
+ 300 0042 4FF40032 		mov	r2, #131072
+ 301 0046 0B92     		str	r2, [sp, #44]
+  83:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_FIFOMode = DMA_FIFOMode_Disable;                  // FIFO 模式不使能
+ 302              		.loc 1 83 5 is_stmt 1 view .LVU96
+ 303              		.loc 1 83 36 is_stmt 0 view .LVU97
+ 304 0048 0C93     		str	r3, [sp, #48]
+  84:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_FIFOThreshold = DMA_FIFOThreshold_Full;           // FIFO 阈值选择
+ 305              		.loc 1 84 5 is_stmt 1 view .LVU98
+ 306              		.loc 1 84 41 is_stmt 0 view .LVU99
+ 307 004a 0322     		movs	r2, #3
+ 308 004c 0D92     		str	r2, [sp, #52]
+  85:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_MemoryBurst = DMA_MemoryBurst_Single;             // 存储器突发模�
+ 309              		.loc 1 85 5 is_stmt 1 view .LVU100
+ 310              		.loc 1 85 39 is_stmt 0 view .LVU101
+ 311 004e 0E93     		str	r3, [sp, #56]
+  86:Lib/bsp/src/bsp_usart.c ****     DMA_InitStructure.DMA_PeripheralBurst = DMA_PeripheralBurst_Single;     // 外设突发模式�
+ 312              		.loc 1 86 5 is_stmt 1 view .LVU102
+ARM GAS  /tmp/cc6XKabG.s 			page 8
 
 
- 313 0050 003E4900 		.word	4800000
- 314 0054 00140140 		.word	1073812480
- 315              		.cfi_endproc
- 316              	.LFE128:
- 318              		.section	.text.USART6_SendData,"ax",%progbits
- 319              		.align	1
- 320              		.global	USART6_SendData
- 321              		.syntax unified
- 322              		.thumb
- 323              		.thumb_func
- 325              	USART6_SendData:
- 326              	.LVL16:
- 327              	.LFB129:
-  87:Lib/bsp/src/bsp_usart.c **** 
-  88:Lib/bsp/src/bsp_usart.c **** void USART6_SendData(USART_TypeDef *pUSARTx, uint8_t *data, int length)
-  89:Lib/bsp/src/bsp_usart.c **** {
- 328              		.loc 1 89 1 is_stmt 1 view -0
- 329              		.cfi_startproc
- 330              		@ args = 0, pretend = 0, frame = 0
- 331              		@ frame_needed = 0, uses_anonymous_args = 0
- 332              		.loc 1 89 1 is_stmt 0 view .LVU91
- 333 0000 70B5     		push	{r4, r5, r6, lr}
- 334              		.cfi_def_cfa_offset 16
- 335              		.cfi_offset 4, -16
- 336              		.cfi_offset 5, -12
- 337              		.cfi_offset 6, -8
- 338              		.cfi_offset 14, -4
- 339 0002 0E46     		mov	r6, r1
- 340 0004 1546     		mov	r5, r2
-  90:Lib/bsp/src/bsp_usart.c ****     for (uint32_t i = 0; i < length; i++)
- 341              		.loc 1 90 5 is_stmt 1 view .LVU92
- 342              	.LBB2:
- 343              		.loc 1 90 10 view .LVU93
- 344              	.LVL17:
- 345              		.loc 1 90 19 is_stmt 0 view .LVU94
- 346 0006 0024     		movs	r4, #0
- 347              		.loc 1 90 5 view .LVU95
- 348 0008 0AE0     		b	.L16
- 349              	.LVL18:
- 350              	.L18:
-  91:Lib/bsp/src/bsp_usart.c ****     {
-  92:Lib/bsp/src/bsp_usart.c ****         USART_SendData(USART6, *(data + i)); // 向串▣发送数据
- 351              		.loc 1 92 9 is_stmt 1 view .LVU96
- 352 000a 315D     		ldrb	r1, [r6, r4]	@ zero_extendqisi2
- 353 000c 0948     		ldr	r0, .L21
- 354 000e FFF7FEFF 		bl	USART_SendData
- 355              	.LVL19:
-  93:Lib/bsp/src/bsp_usart.c ****         while (USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET)
- 356              		.loc 1 93 9 view .LVU97
- 357              	.L17:
-  94:Lib/bsp/src/bsp_usart.c ****             ;
- 358              		.loc 1 94 13 discriminator 1 view .LVU98
-  93:Lib/bsp/src/bsp_usart.c ****         while (USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET)
- 359              		.loc 1 93 15 discriminator 1 view .LVU99
-  93:Lib/bsp/src/bsp_usart.c ****         while (USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET)
- 360              		.loc 1 93 16 is_stmt 0 discriminator 1 view .LVU100
- 361 0012 8021     		movs	r1, #128
-ARM GAS  /tmp/ccughKNY.s 			page 9
+ 313              		.loc 1 86 43 is_stmt 0 view .LVU103
+ 314 0050 0F93     		str	r3, [sp, #60]
+  87:Lib/bsp/src/bsp_usart.c ****     DMA_Init(DMA2_Stream2, &DMA_InitStructure);
+ 315              		.loc 1 87 5 is_stmt 1 view .LVU104
+ 316 0052 054C     		ldr	r4, .L13
+ 317 0054 01A9     		add	r1, sp, #4
+ 318 0056 2046     		mov	r0, r4
+ 319 0058 FFF7FEFF 		bl	DMA_Init
+ 320              	.LVL12:
+  88:Lib/bsp/src/bsp_usart.c **** 
+  89:Lib/bsp/src/bsp_usart.c ****     /* DMA Stream enable */
+  90:Lib/bsp/src/bsp_usart.c ****     DMA_Cmd(DMA2_Stream2, ENABLE);
+ 321              		.loc 1 90 5 view .LVU105
+ 322 005c 0121     		movs	r1, #1
+ 323 005e 2046     		mov	r0, r4
+ 324 0060 FFF7FEFF 		bl	DMA_Cmd
+ 325              	.LVL13:
+  91:Lib/bsp/src/bsp_usart.c **** }
+ 326              		.loc 1 91 1 is_stmt 0 view .LVU106
+ 327 0064 10B0     		add	sp, sp, #64
+ 328              		.cfi_def_cfa_offset 8
+ 329              		@ sp needed
+ 330 0066 10BD     		pop	{r4, pc}
+ 331              	.L14:
+ 332              		.align	2
+ 333              	.L13:
+ 334 0068 40640240 		.word	1073898560
+ 335 006c 04140140 		.word	1073812484
+ 336 0070 00000000 		.word	.LANCHOR1
+ 337              		.cfi_endproc
+ 338              	.LFE128:
+ 340              		.section	.text.USART6_Init,"ax",%progbits
+ 341              		.align	1
+ 342              		.global	USART6_Init
+ 343              		.syntax unified
+ 344              		.thumb
+ 345              		.thumb_func
+ 347              	USART6_Init:
+ 348              	.LFB129:
+  92:Lib/bsp/src/bsp_usart.c **** 
+  93:Lib/bsp/src/bsp_usart.c **** void USART6_Init()
+  94:Lib/bsp/src/bsp_usart.c **** {
+ 349              		.loc 1 94 1 is_stmt 1 view -0
+ 350              		.cfi_startproc
+ 351              		@ args = 0, pretend = 0, frame = 24
+ 352              		@ frame_needed = 0, uses_anonymous_args = 0
+ 353 0000 30B5     		push	{r4, r5, lr}
+ 354              		.cfi_def_cfa_offset 12
+ 355              		.cfi_offset 4, -12
+ 356              		.cfi_offset 5, -8
+ 357              		.cfi_offset 14, -4
+ 358 0002 87B0     		sub	sp, sp, #28
+ 359              		.cfi_def_cfa_offset 40
+  95:Lib/bsp/src/bsp_usart.c ****     USART6_GPIO_Init();
+ 360              		.loc 1 95 5 view .LVU108
+ 361 0004 FFF7FEFF 		bl	USART6_GPIO_Init
+ 362              	.LVL14:
+ARM GAS  /tmp/cc6XKabG.s 			page 9
 
 
- 362 0014 0748     		ldr	r0, .L21
- 363 0016 FFF7FEFF 		bl	USART_GetFlagStatus
- 364              	.LVL20:
-  93:Lib/bsp/src/bsp_usart.c ****         while (USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET)
- 365              		.loc 1 93 15 discriminator 1 view .LVU101
- 366 001a 0028     		cmp	r0, #0
- 367 001c F9D0     		beq	.L17
-  90:Lib/bsp/src/bsp_usart.c ****     {
- 368              		.loc 1 90 38 is_stmt 1 discriminator 2 view .LVU102
-  90:Lib/bsp/src/bsp_usart.c ****     {
- 369              		.loc 1 90 39 is_stmt 0 discriminator 2 view .LVU103
- 370 001e 0134     		adds	r4, r4, #1
- 371              	.LVL21:
- 372              	.L16:
-  90:Lib/bsp/src/bsp_usart.c ****     {
- 373              		.loc 1 90 26 is_stmt 1 discriminator 1 view .LVU104
-  90:Lib/bsp/src/bsp_usart.c ****     {
- 374              		.loc 1 90 5 is_stmt 0 discriminator 1 view .LVU105
- 375 0020 A542     		cmp	r5, r4
- 376 0022 F2D8     		bhi	.L18
- 377              	.L19:
- 378              	.LBE2:
-  95:Lib/bsp/src/bsp_usart.c ****     }
   96:Lib/bsp/src/bsp_usart.c **** 
-  97:Lib/bsp/src/bsp_usart.c ****     while (USART_GetFlagStatus(USART6, USART_FLAG_TC) == RESET)
-  98:Lib/bsp/src/bsp_usart.c ****         ;
- 379              		.loc 1 98 9 is_stmt 1 discriminator 1 view .LVU106
-  97:Lib/bsp/src/bsp_usart.c ****         ;
- 380              		.loc 1 97 11 discriminator 1 view .LVU107
-  97:Lib/bsp/src/bsp_usart.c ****         ;
- 381              		.loc 1 97 12 is_stmt 0 discriminator 1 view .LVU108
- 382 0024 4021     		movs	r1, #64
- 383 0026 0348     		ldr	r0, .L21
- 384 0028 FFF7FEFF 		bl	USART_GetFlagStatus
- 385              	.LVL22:
-  97:Lib/bsp/src/bsp_usart.c ****         ;
- 386              		.loc 1 97 11 discriminator 1 view .LVU109
- 387 002c 0028     		cmp	r0, #0
- 388 002e F9D0     		beq	.L19
-  99:Lib/bsp/src/bsp_usart.c **** }
- 389              		.loc 1 99 1 view .LVU110
- 390 0030 70BD     		pop	{r4, r5, r6, pc}
- 391              	.LVL23:
- 392              	.L22:
- 393              		.loc 1 99 1 view .LVU111
- 394 0032 00BF     		.align	2
- 395              	.L21:
- 396 0034 00140140 		.word	1073812480
- 397              		.cfi_endproc
- 398              	.LFE129:
- 400              		.section	.text.Usart_init,"ax",%progbits
- 401              		.align	1
- 402              		.global	Usart_init
- 403              		.syntax unified
- 404              		.thumb
- 405              		.thumb_func
- 407              	Usart_init:
-ARM GAS  /tmp/ccughKNY.s 			page 10
-
-
- 408              	.LFB130:
+  97:Lib/bsp/src/bsp_usart.c ****     RCC_APB2PeriphClockCmd(RCC_APB2Periph_USART6, ENABLE);
+ 363              		.loc 1 97 5 view .LVU109
+ 364 0008 0121     		movs	r1, #1
+ 365 000a 2020     		movs	r0, #32
+ 366 000c FFF7FEFF 		bl	RCC_APB2PeriphClockCmd
+ 367              	.LVL15:
+  98:Lib/bsp/src/bsp_usart.c **** 
+  99:Lib/bsp/src/bsp_usart.c ****     USART_InitTypeDef USART_InitStructure;
+ 368              		.loc 1 99 5 view .LVU110
  100:Lib/bsp/src/bsp_usart.c **** 
- 101:Lib/bsp/src/bsp_usart.c **** void Usart_init()
- 102:Lib/bsp/src/bsp_usart.c **** {
- 409              		.loc 1 102 1 is_stmt 1 view -0
- 410              		.cfi_startproc
- 411              		@ args = 0, pretend = 0, frame = 0
- 412              		@ frame_needed = 0, uses_anonymous_args = 0
- 413 0000 08B5     		push	{r3, lr}
- 414              		.cfi_def_cfa_offset 8
- 415              		.cfi_offset 3, -8
- 416              		.cfi_offset 14, -4
- 103:Lib/bsp/src/bsp_usart.c ****     USART6_Init();
- 417              		.loc 1 103 5 view .LVU113
- 418 0002 FFF7FEFF 		bl	USART6_Init
- 419              	.LVL24:
- 104:Lib/bsp/src/bsp_usart.c ****     USART6_DMA_Init();
- 420              		.loc 1 104 5 view .LVU114
- 421 0006 FFF7FEFF 		bl	USART6_DMA_Init
- 422              	.LVL25:
- 105:Lib/bsp/src/bsp_usart.c **** }
- 423              		.loc 1 105 1 is_stmt 0 view .LVU115
- 424 000a 08BD     		pop	{r3, pc}
- 425              		.cfi_endproc
- 426              	.LFE130:
- 428              		.section	.text.Usart_SendByte,"ax",%progbits
- 429              		.align	1
- 430              		.global	Usart_SendByte
- 431              		.syntax unified
- 432              		.thumb
- 433              		.thumb_func
- 435              	Usart_SendByte:
- 436              	.LVL26:
- 437              	.LFB131:
- 106:Lib/bsp/src/bsp_usart.c **** 
- 107:Lib/bsp/src/bsp_usart.c **** /*****************  ����һ���ַ� **********************/
- 108:Lib/bsp/src/bsp_usart.c **** void Usart_SendByte(USART_TypeDef *pUSARTx, uint8_t ch)
- 109:Lib/bsp/src/bsp_usart.c **** {
- 438              		.loc 1 109 1 is_stmt 1 view -0
- 439              		.cfi_startproc
- 440              		@ args = 0, pretend = 0, frame = 0
- 441              		@ frame_needed = 0, uses_anonymous_args = 0
- 442              		.loc 1 109 1 is_stmt 0 view .LVU117
- 443 0000 10B5     		push	{r4, lr}
- 444              		.cfi_def_cfa_offset 8
- 445              		.cfi_offset 4, -8
- 446              		.cfi_offset 14, -4
- 447 0002 0446     		mov	r4, r0
- 110:Lib/bsp/src/bsp_usart.c ****     /* ����һ���ֽ����ݵ�USART */
- 111:Lib/bsp/src/bsp_usart.c ****     USART_SendData(pUSARTx, ch);
- 448              		.loc 1 111 5 is_stmt 1 view .LVU118
- 449 0004 FFF7FEFF 		bl	USART_SendData
- 450              	.LVL27:
- 112:Lib/bsp/src/bsp_usart.c **** 
- 113:Lib/bsp/src/bsp_usart.c ****     /* �ȴ��������ݼĴ���Ϊ�� */
- 114:Lib/bsp/src/bsp_usart.c ****     while (USART_GetFlagStatus(pUSARTx, USART_FLAG_TXE) == RESET)
- 451              		.loc 1 114 5 view .LVU119
-ARM GAS  /tmp/ccughKNY.s 			page 11
+ 101:Lib/bsp/src/bsp_usart.c ****     USART_InitStructure.USART_BaudRate = 4800000; // 4800000
+ 369              		.loc 1 101 5 view .LVU111
+ 370              		.loc 1 101 40 is_stmt 0 view .LVU112
+ 371 0010 1E4B     		ldr	r3, .L18
+ 372 0012 0293     		str	r3, [sp, #8]
+ 102:Lib/bsp/src/bsp_usart.c ****     USART_InitStructure.USART_WordLength = USART_WordLength_8b;
+ 373              		.loc 1 102 5 is_stmt 1 view .LVU113
+ 374              		.loc 1 102 42 is_stmt 0 view .LVU114
+ 375 0014 0024     		movs	r4, #0
+ 376 0016 ADF80C40 		strh	r4, [sp, #12]	@ movhi
+ 103:Lib/bsp/src/bsp_usart.c ****     USART_InitStructure.USART_StopBits = USART_StopBits_1;
+ 377              		.loc 1 103 5 is_stmt 1 view .LVU115
+ 378              		.loc 1 103 40 is_stmt 0 view .LVU116
+ 379 001a ADF80E40 		strh	r4, [sp, #14]	@ movhi
+ 104:Lib/bsp/src/bsp_usart.c ****     USART_InitStructure.USART_Parity = USART_Parity_No;
+ 380              		.loc 1 104 5 is_stmt 1 view .LVU117
+ 381              		.loc 1 104 38 is_stmt 0 view .LVU118
+ 382 001e ADF81040 		strh	r4, [sp, #16]	@ movhi
+ 105:Lib/bsp/src/bsp_usart.c ****     USART_InitStructure.USART_HardwareFlowControl = USART_HardwareFlowControl_None;
+ 383              		.loc 1 105 5 is_stmt 1 view .LVU119
+ 384              		.loc 1 105 51 is_stmt 0 view .LVU120
+ 385 0022 ADF81440 		strh	r4, [sp, #20]	@ movhi
+ 106:Lib/bsp/src/bsp_usart.c ****     USART_InitStructure.USART_Mode = USART_Mode_Rx | USART_Mode_Tx;
+ 386              		.loc 1 106 5 is_stmt 1 view .LVU121
+ 387              		.loc 1 106 36 is_stmt 0 view .LVU122
+ 388 0026 0C23     		movs	r3, #12
+ 389 0028 ADF81230 		strh	r3, [sp, #18]	@ movhi
+ 107:Lib/bsp/src/bsp_usart.c ****     USART_Init(USART6, &USART_InitStructure);
+ 390              		.loc 1 107 5 is_stmt 1 view .LVU123
+ 391 002c 184D     		ldr	r5, .L18+4
+ 392 002e 02A9     		add	r1, sp, #8
+ 393 0030 2846     		mov	r0, r5
+ 394 0032 FFF7FEFF 		bl	USART_Init
+ 395              	.LVL16:
+ 108:Lib/bsp/src/bsp_usart.c **** 
+ 109:Lib/bsp/src/bsp_usart.c ****     //USART_ITConfig(USART6, USART_IT_IDLE, ENABLE); // 串口空闲中断
+ 110:Lib/bsp/src/bsp_usart.c **** 
+ 111:Lib/bsp/src/bsp_usart.c ****     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_1);
+ 396              		.loc 1 111 5 view .LVU124
+ 397 0036 4FF4C060 		mov	r0, #1536
+ 398 003a FFF7FEFF 		bl	NVIC_PriorityGroupConfig
+ 399              	.LVL17:
+ 112:Lib/bsp/src/bsp_usart.c ****     NVIC_InitTypeDef NVIC_InitStructure;
+ 400              		.loc 1 112 5 view .LVU125
+ 113:Lib/bsp/src/bsp_usart.c ****     //NVIC_InitStructure.NVIC_IRQChannel = USART6_IRQn;
+ 114:Lib/bsp/src/bsp_usart.c ****     //NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+ARM GAS  /tmp/cc6XKabG.s 			page 10
 
 
- 452              	.L26:
- 115:Lib/bsp/src/bsp_usart.c ****         ;
- 453              		.loc 1 115 9 discriminator 1 view .LVU120
- 114:Lib/bsp/src/bsp_usart.c ****         ;
- 454              		.loc 1 114 11 discriminator 1 view .LVU121
- 114:Lib/bsp/src/bsp_usart.c ****         ;
- 455              		.loc 1 114 12 is_stmt 0 discriminator 1 view .LVU122
- 456 0008 8021     		movs	r1, #128
- 457 000a 2046     		mov	r0, r4
- 458 000c FFF7FEFF 		bl	USART_GetFlagStatus
- 459              	.LVL28:
- 114:Lib/bsp/src/bsp_usart.c ****         ;
- 460              		.loc 1 114 11 discriminator 1 view .LVU123
- 461 0010 0028     		cmp	r0, #0
- 462 0012 F9D0     		beq	.L26
- 116:Lib/bsp/src/bsp_usart.c **** }
- 463              		.loc 1 116 1 view .LVU124
- 464 0014 10BD     		pop	{r4, pc}
- 465              		.loc 1 116 1 view .LVU125
- 466              		.cfi_endproc
- 467              	.LFE131:
- 469              		.section	.text.Usart_SendData,"ax",%progbits
- 470              		.align	1
- 471              		.global	Usart_SendData
- 472              		.syntax unified
- 473              		.thumb
- 474              		.thumb_func
- 476              	Usart_SendData:
- 477              	.LVL29:
- 478              	.LFB132:
- 117:Lib/bsp/src/bsp_usart.c **** 
- 118:Lib/bsp/src/bsp_usart.c **** void Usart_SendData(USART_TypeDef *pUSARTx, uint8_t *data, uint8_t length)
- 119:Lib/bsp/src/bsp_usart.c **** {
- 479              		.loc 1 119 1 is_stmt 1 view -0
- 480              		.cfi_startproc
- 481              		@ args = 0, pretend = 0, frame = 0
- 482              		@ frame_needed = 0, uses_anonymous_args = 0
- 483              		.loc 1 119 1 is_stmt 0 view .LVU127
- 484 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
- 485              		.cfi_def_cfa_offset 24
- 486              		.cfi_offset 3, -24
- 487              		.cfi_offset 4, -20
- 488              		.cfi_offset 5, -16
- 489              		.cfi_offset 6, -12
- 490              		.cfi_offset 7, -8
- 491              		.cfi_offset 14, -4
- 492 0002 0746     		mov	r7, r0
- 493 0004 0E46     		mov	r6, r1
- 494 0006 1546     		mov	r5, r2
- 120:Lib/bsp/src/bsp_usart.c ****     for (int i = 0; i <= length; i++)
- 495              		.loc 1 120 5 is_stmt 1 view .LVU128
- 496              	.LBB3:
- 497              		.loc 1 120 10 view .LVU129
- 498              	.LVL30:
- 499              		.loc 1 120 14 is_stmt 0 view .LVU130
- 500 0008 0024     		movs	r4, #0
- 501              		.loc 1 120 5 view .LVU131
-ARM GAS  /tmp/ccughKNY.s 			page 12
+ 115:Lib/bsp/src/bsp_usart.c ****     //NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+ 116:Lib/bsp/src/bsp_usart.c ****     //NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+ 117:Lib/bsp/src/bsp_usart.c ****     //NVIC_Init(&NVIC_InitStructure);
+ 118:Lib/bsp/src/bsp_usart.c **** 
+ 119:Lib/bsp/src/bsp_usart.c ****     NVIC_InitStructure.NVIC_IRQChannel = DMA2_Stream2_IRQn;
+ 401              		.loc 1 119 5 view .LVU126
+ 402              		.loc 1 119 40 is_stmt 0 view .LVU127
+ 403 003e 3A23     		movs	r3, #58
+ 404 0040 8DF80430 		strb	r3, [sp, #4]
+ 120:Lib/bsp/src/bsp_usart.c ****     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+ 405              		.loc 1 120 5 is_stmt 1 view .LVU128
+ 406              		.loc 1 120 58 is_stmt 0 view .LVU129
+ 407 0044 8DF80540 		strb	r4, [sp, #5]
+ 121:Lib/bsp/src/bsp_usart.c ****     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+ 408              		.loc 1 121 5 is_stmt 1 view .LVU130
+ 409              		.loc 1 121 51 is_stmt 0 view .LVU131
+ 410 0048 8DF80640 		strb	r4, [sp, #6]
+ 122:Lib/bsp/src/bsp_usart.c ****     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+ 411              		.loc 1 122 5 is_stmt 1 view .LVU132
+ 412              		.loc 1 122 43 is_stmt 0 view .LVU133
+ 413 004c 0124     		movs	r4, #1
+ 414 004e 8DF80740 		strb	r4, [sp, #7]
+ 123:Lib/bsp/src/bsp_usart.c ****     NVIC_Init(&NVIC_InitStructure);
+ 415              		.loc 1 123 5 is_stmt 1 view .LVU134
+ 416 0052 01A8     		add	r0, sp, #4
+ 417 0054 FFF7FEFF 		bl	NVIC_Init
+ 418              	.LVL18:
+ 124:Lib/bsp/src/bsp_usart.c **** 
+ 125:Lib/bsp/src/bsp_usart.c ****     // USART_ITConfig(USART6, USART_IT_RXNE, DISABLE);				//禁止USART1接收不为空中断
+ 126:Lib/bsp/src/bsp_usart.c ****     // USART_ITConfig(USART6, USART_IT_TXE, DISABLE);				//禁止USART1发送空中断
+ 127:Lib/bsp/src/bsp_usart.c ****     // USART_ITConfig(USART6, USART_IT_IDLE, ENABLE);				//开启USART1空闲中断
+ 128:Lib/bsp/src/bsp_usart.c ****     // USART_ITConfig(USART6, USART_IT_TC, ENABLE);				//开启USART1传输完成中断
+ 129:Lib/bsp/src/bsp_usart.c **** 
+ 130:Lib/bsp/src/bsp_usart.c ****     // USART_DMACmd(USART6, USART_DMAReq_Tx, ENABLE);
+ 131:Lib/bsp/src/bsp_usart.c ****     USART_DMACmd(USART6, USART_DMAReq_Rx, ENABLE);
+ 419              		.loc 1 131 5 view .LVU135
+ 420 0058 2246     		mov	r2, r4
+ 421 005a 4021     		movs	r1, #64
+ 422 005c 2846     		mov	r0, r5
+ 423 005e FFF7FEFF 		bl	USART_DMACmd
+ 424              	.LVL19:
+ 132:Lib/bsp/src/bsp_usart.c **** 
+ 133:Lib/bsp/src/bsp_usart.c ****     USART_Cmd(USART6, ENABLE);
+ 425              		.loc 1 133 5 view .LVU136
+ 426 0062 2146     		mov	r1, r4
+ 427 0064 2846     		mov	r0, r5
+ 428 0066 FFF7FEFF 		bl	USART_Cmd
+ 429              	.LVL20:
+ 134:Lib/bsp/src/bsp_usart.c **** 
+ 135:Lib/bsp/src/bsp_usart.c ****     USART_ClearFlag(USART6, USART_FLAG_TC);
+ 430              		.loc 1 135 5 view .LVU137
+ 431 006a 4021     		movs	r1, #64
+ 432 006c 2846     		mov	r0, r5
+ 433 006e FFF7FEFF 		bl	USART_ClearFlag
+ 434              	.LVL21:
+ 136:Lib/bsp/src/bsp_usart.c ****     while (USART_GetFlagStatus(USART6, USART_FLAG_TC) == RESET)
+ 435              		.loc 1 136 5 view .LVU138
+ARM GAS  /tmp/cc6XKabG.s 			page 11
 
 
- 502 000a 04E0     		b	.L29
- 503              	.LVL31:
- 504              	.L30:
- 121:Lib/bsp/src/bsp_usart.c ****     {
- 122:Lib/bsp/src/bsp_usart.c ****         Usart_SendByte(pUSARTx, *(data + i));
- 505              		.loc 1 122 9 is_stmt 1 discriminator 3 view .LVU132
- 506 000c 315D     		ldrb	r1, [r6, r4]	@ zero_extendqisi2
- 507 000e 3846     		mov	r0, r7
- 508 0010 FFF7FEFF 		bl	Usart_SendByte
- 509              	.LVL32:
- 120:Lib/bsp/src/bsp_usart.c ****     for (int i = 0; i <= length; i++)
- 510              		.loc 1 120 34 discriminator 3 view .LVU133
- 120:Lib/bsp/src/bsp_usart.c ****     for (int i = 0; i <= length; i++)
- 511              		.loc 1 120 35 is_stmt 0 discriminator 3 view .LVU134
- 512 0014 0134     		adds	r4, r4, #1
- 513              	.LVL33:
- 514              	.L29:
- 120:Lib/bsp/src/bsp_usart.c ****     for (int i = 0; i <= length; i++)
- 515              		.loc 1 120 21 is_stmt 1 discriminator 1 view .LVU135
- 120:Lib/bsp/src/bsp_usart.c ****     for (int i = 0; i <= length; i++)
- 516              		.loc 1 120 5 is_stmt 0 discriminator 1 view .LVU136
- 517 0016 A542     		cmp	r5, r4
- 518 0018 F8DA     		bge	.L30
- 519              	.LBE3:
- 123:Lib/bsp/src/bsp_usart.c ****     }
- 124:Lib/bsp/src/bsp_usart.c **** }...
- 520              		.loc 1 124 1 view .LVU137
- 521 001a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
- 522              		.loc 1 124 1 view .LVU138
- 523              		.cfi_endproc
- 524              	.LFE132:
- 526              		.global	usart6RxBuffer
- 527              		.global	usart6TxBuffer
- 528              		.section	.bss.usart6RxBuffer,"aw",%nobits
- 529              		.align	2
- 532              	usart6RxBuffer:
- 533 0000 00000000 		.space	78
- 533      00000000 
- 533      00000000 
- 533      00000000 
- 533      00000000 
- 534              		.section	.bss.usart6TxBuffer,"aw",%nobits
- 535              		.align	2
- 536              		.set	.LANCHOR0,. + 0
- 539              	usart6TxBuffer:
- 540 0000 00000000 		.space	34
- 540      00000000 
- 540      00000000 
- 540      00000000 
- 540      00000000 
- 541              		.text
- 542              	.Letext0:
- 543              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
- 544              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
- 545              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
- 546              		.file 5 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma.h"
- 547              		.file 6 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
-ARM GAS  /tmp/ccughKNY.s 			page 13
+ 436              	.L16:
+ 137:Lib/bsp/src/bsp_usart.c ****         ;
+ 437              		.loc 1 137 9 discriminator 1 view .LVU139
+ 136:Lib/bsp/src/bsp_usart.c ****     while (USART_GetFlagStatus(USART6, USART_FLAG_TC) == RESET)
+ 438              		.loc 1 136 11 discriminator 1 view .LVU140
+ 136:Lib/bsp/src/bsp_usart.c ****     while (USART_GetFlagStatus(USART6, USART_FLAG_TC) == RESET)
+ 439              		.loc 1 136 12 is_stmt 0 discriminator 1 view .LVU141
+ 440 0072 4021     		movs	r1, #64
+ 441 0074 0648     		ldr	r0, .L18+4
+ 442 0076 FFF7FEFF 		bl	USART_GetFlagStatus
+ 443              	.LVL22:
+ 136:Lib/bsp/src/bsp_usart.c ****     while (USART_GetFlagStatus(USART6, USART_FLAG_TC) == RESET)
+ 444              		.loc 1 136 11 discriminator 1 view .LVU142
+ 445 007a 0028     		cmp	r0, #0
+ 446 007c F9D0     		beq	.L16
+ 138:Lib/bsp/src/bsp_usart.c ****     USART_ClearFlag(USART6, USART_FLAG_TC);
+ 447              		.loc 1 138 5 is_stmt 1 view .LVU143
+ 448 007e 4021     		movs	r1, #64
+ 449 0080 0348     		ldr	r0, .L18+4
+ 450 0082 FFF7FEFF 		bl	USART_ClearFlag
+ 451              	.LVL23:
+ 139:Lib/bsp/src/bsp_usart.c **** }
+ 452              		.loc 1 139 1 is_stmt 0 view .LVU144
+ 453 0086 07B0     		add	sp, sp, #28
+ 454              		.cfi_def_cfa_offset 12
+ 455              		@ sp needed
+ 456 0088 30BD     		pop	{r4, r5, pc}
+ 457              	.L19:
+ 458 008a 00BF     		.align	2
+ 459              	.L18:
+ 460 008c 003E4900 		.word	4800000
+ 461 0090 00140140 		.word	1073812480
+ 462              		.cfi_endproc
+ 463              	.LFE129:
+ 465              		.section	.text.USART6_SendData,"ax",%progbits
+ 466              		.align	1
+ 467              		.global	USART6_SendData
+ 468              		.syntax unified
+ 469              		.thumb
+ 470              		.thumb_func
+ 472              	USART6_SendData:
+ 473              	.LVL24:
+ 474              	.LFB130:
+ 140:Lib/bsp/src/bsp_usart.c **** 
+ 141:Lib/bsp/src/bsp_usart.c **** void USART6_SendData(uint8_t *data, int length)
+ 142:Lib/bsp/src/bsp_usart.c **** {
+ 475              		.loc 1 142 1 is_stmt 1 view -0
+ 476              		.cfi_startproc
+ 477              		@ args = 0, pretend = 0, frame = 0
+ 478              		@ frame_needed = 0, uses_anonymous_args = 0
+ 479              		.loc 1 142 1 is_stmt 0 view .LVU146
+ 480 0000 70B5     		push	{r4, r5, r6, lr}
+ 481              		.cfi_def_cfa_offset 16
+ 482              		.cfi_offset 4, -16
+ 483              		.cfi_offset 5, -12
+ 484              		.cfi_offset 6, -8
+ 485              		.cfi_offset 14, -4
+ARM GAS  /tmp/cc6XKabG.s 			page 12
 
 
- 548              		.file 7 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_usart.h"
- 549              		.file 8 "Lib/bsp/include/bsp_usart.h"
- 550              		.file 9 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h"
-ARM GAS  /tmp/ccughKNY.s 			page 14
+ 486 0002 0646     		mov	r6, r0
+ 487 0004 0D46     		mov	r5, r1
+ 143:Lib/bsp/src/bsp_usart.c ****     for (uint32_t i = 0; i < length; i++)
+ 488              		.loc 1 143 5 is_stmt 1 view .LVU147
+ 489              	.LBB2:
+ 490              		.loc 1 143 10 view .LVU148
+ 491              	.LVL25:
+ 492              		.loc 1 143 19 is_stmt 0 view .LVU149
+ 493 0006 0024     		movs	r4, #0
+ 494              		.loc 1 143 5 view .LVU150
+ 495 0008 0AE0     		b	.L21
+ 496              	.LVL26:
+ 497              	.L23:
+ 144:Lib/bsp/src/bsp_usart.c ****     {
+ 145:Lib/bsp/src/bsp_usart.c ****         USART_SendData(USART6, *(data + i)); // 向串▣发送数据
+ 498              		.loc 1 145 9 is_stmt 1 view .LVU151
+ 499 000a 315D     		ldrb	r1, [r6, r4]	@ zero_extendqisi2
+ 500 000c 0948     		ldr	r0, .L26
+ 501 000e FFF7FEFF 		bl	USART_SendData
+ 502              	.LVL27:
+ 146:Lib/bsp/src/bsp_usart.c ****         while (USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET)
+ 503              		.loc 1 146 9 view .LVU152
+ 504              	.L22:
+ 147:Lib/bsp/src/bsp_usart.c ****             ;
+ 505              		.loc 1 147 13 discriminator 1 view .LVU153
+ 146:Lib/bsp/src/bsp_usart.c ****         while (USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET)
+ 506              		.loc 1 146 15 discriminator 1 view .LVU154
+ 146:Lib/bsp/src/bsp_usart.c ****         while (USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET)
+ 507              		.loc 1 146 16 is_stmt 0 discriminator 1 view .LVU155
+ 508 0012 8021     		movs	r1, #128
+ 509 0014 0748     		ldr	r0, .L26
+ 510 0016 FFF7FEFF 		bl	USART_GetFlagStatus
+ 511              	.LVL28:
+ 146:Lib/bsp/src/bsp_usart.c ****         while (USART_GetFlagStatus(USART6, USART_FLAG_TXE) == RESET)
+ 512              		.loc 1 146 15 discriminator 1 view .LVU156
+ 513 001a 0028     		cmp	r0, #0
+ 514 001c F9D0     		beq	.L22
+ 143:Lib/bsp/src/bsp_usart.c ****     {
+ 515              		.loc 1 143 38 is_stmt 1 discriminator 2 view .LVU157
+ 143:Lib/bsp/src/bsp_usart.c ****     {
+ 516              		.loc 1 143 39 is_stmt 0 discriminator 2 view .LVU158
+ 517 001e 0134     		adds	r4, r4, #1
+ 518              	.LVL29:
+ 519              	.L21:
+ 143:Lib/bsp/src/bsp_usart.c ****     {
+ 520              		.loc 1 143 26 is_stmt 1 discriminator 1 view .LVU159
+ 143:Lib/bsp/src/bsp_usart.c ****     {
+ 521              		.loc 1 143 5 is_stmt 0 discriminator 1 view .LVU160
+ 522 0020 A542     		cmp	r5, r4
+ 523 0022 F2D8     		bhi	.L23
+ 524              	.L24:
+ 525              	.LBE2:
+ 148:Lib/bsp/src/bsp_usart.c ****     }
+ 149:Lib/bsp/src/bsp_usart.c **** 
+ 150:Lib/bsp/src/bsp_usart.c ****     while (USART_GetFlagStatus(USART6, USART_FLAG_TC) == RESET)
+ 151:Lib/bsp/src/bsp_usart.c ****         ;
+ 526              		.loc 1 151 9 is_stmt 1 discriminator 1 view .LVU161
+ARM GAS  /tmp/cc6XKabG.s 			page 13
+
+
+ 150:Lib/bsp/src/bsp_usart.c ****         ;
+ 527              		.loc 1 150 11 discriminator 1 view .LVU162
+ 150:Lib/bsp/src/bsp_usart.c ****         ;
+ 528              		.loc 1 150 12 is_stmt 0 discriminator 1 view .LVU163
+ 529 0024 4021     		movs	r1, #64
+ 530 0026 0348     		ldr	r0, .L26
+ 531 0028 FFF7FEFF 		bl	USART_GetFlagStatus
+ 532              	.LVL30:
+ 150:Lib/bsp/src/bsp_usart.c ****         ;
+ 533              		.loc 1 150 11 discriminator 1 view .LVU164
+ 534 002c 0028     		cmp	r0, #0
+ 535 002e F9D0     		beq	.L24
+ 152:Lib/bsp/src/bsp_usart.c **** }
+ 536              		.loc 1 152 1 view .LVU165
+ 537 0030 70BD     		pop	{r4, r5, r6, pc}
+ 538              	.LVL31:
+ 539              	.L27:
+ 540              		.loc 1 152 1 view .LVU166
+ 541 0032 00BF     		.align	2
+ 542              	.L26:
+ 543 0034 00140140 		.word	1073812480
+ 544              		.cfi_endproc
+ 545              	.LFE130:
+ 547              		.section	.text.USART6_DMA_SendData,"ax",%progbits
+ 548              		.align	1
+ 549              		.global	USART6_DMA_SendData
+ 550              		.syntax unified
+ 551              		.thumb
+ 552              		.thumb_func
+ 554              	USART6_DMA_SendData:
+ 555              	.LVL32:
+ 556              	.LFB131:
+ 153:Lib/bsp/src/bsp_usart.c **** 
+ 154:Lib/bsp/src/bsp_usart.c **** void USART6_DMA_SendData(uint8_t *data, int length)
+ 155:Lib/bsp/src/bsp_usart.c **** {
+ 557              		.loc 1 155 1 is_stmt 1 view -0
+ 558              		.cfi_startproc
+ 559              		@ args = 0, pretend = 0, frame = 0
+ 560              		@ frame_needed = 0, uses_anonymous_args = 0
+ 156:Lib/bsp/src/bsp_usart.c ****     if (length < USART6_DMA_TX_BUFFER_MAX_LENGTH)
+ 561              		.loc 1 156 5 view .LVU168
+ 562              		.loc 1 156 8 is_stmt 0 view .LVU169
+ 563 0000 FE29     		cmp	r1, #254
+ 564 0002 00DD     		ble	.L35
+ 565 0004 7047     		bx	lr
+ 566              	.L35:
+ 155:Lib/bsp/src/bsp_usart.c ****     if (length < USART6_DMA_TX_BUFFER_MAX_LENGTH)
+ 567              		.loc 1 155 1 view .LVU170
+ 568 0006 38B5     		push	{r3, r4, r5, lr}
+ 569              		.cfi_def_cfa_offset 16
+ 570              		.cfi_offset 3, -16
+ 571              		.cfi_offset 4, -12
+ 572              		.cfi_offset 5, -8
+ 573              		.cfi_offset 14, -4
+ 574 0008 0C46     		mov	r4, r1
+ 157:Lib/bsp/src/bsp_usart.c ****     {
+ 158:Lib/bsp/src/bsp_usart.c ****         memcpy(usart6TxBuffer, data, length);
+ARM GAS  /tmp/cc6XKabG.s 			page 14
+
+
+ 575              		.loc 1 158 9 is_stmt 1 view .LVU171
+ 576 000a 0A46     		mov	r2, r1
+ 577 000c 0146     		mov	r1, r0
+ 578              	.LVL33:
+ 579              		.loc 1 158 9 is_stmt 0 view .LVU172
+ 580 000e 0B48     		ldr	r0, .L36
+ 581              	.LVL34:
+ 582              		.loc 1 158 9 view .LVU173
+ 583 0010 FFF7FEFF 		bl	memcpy
+ 584              	.LVL35:
+ 159:Lib/bsp/src/bsp_usart.c ****         DMA_Cmd(DMA2_Stream6, DISABLE); // 关闭DMA传输
+ 585              		.loc 1 159 9 is_stmt 1 view .LVU174
+ 586 0014 0021     		movs	r1, #0
+ 587 0016 0A48     		ldr	r0, .L36+4
+ 588 0018 FFF7FEFF 		bl	DMA_Cmd
+ 589              	.LVL36:
+ 160:Lib/bsp/src/bsp_usart.c ****         // USART_DMACmd(USART6, USART_DMAReq_Tx, DISABLE);
+ 161:Lib/bsp/src/bsp_usart.c ****         while (DMA_GetCmdStatus(DMA2_Stream6) != DISABLE)
+ 590              		.loc 1 161 9 view .LVU175
+ 591              	.L30:
+ 162:Lib/bsp/src/bsp_usart.c ****             ;                                         // 确保DMA可以被设置
+ 592              		.loc 1 162 13 discriminator 1 view .LVU176
+ 161:Lib/bsp/src/bsp_usart.c ****             ;                                         // 确保DMA可以被设置
+ 593              		.loc 1 161 15 discriminator 1 view .LVU177
+ 161:Lib/bsp/src/bsp_usart.c ****             ;                                         // 确保DMA可以被设置
+ 594              		.loc 1 161 16 is_stmt 0 discriminator 1 view .LVU178
+ 595 001c 0848     		ldr	r0, .L36+4
+ 596 001e FFF7FEFF 		bl	DMA_GetCmdStatus
+ 597              	.LVL37:
+ 161:Lib/bsp/src/bsp_usart.c ****             ;                                         // 确保DMA可以被设置
+ 598              		.loc 1 161 15 discriminator 1 view .LVU179
+ 599 0022 0028     		cmp	r0, #0
+ 600 0024 FAD1     		bne	.L30
+ 163:Lib/bsp/src/bsp_usart.c ****         DMA_SetCurrDataCounter(DMA2_Stream6, length); // 数据传输量
+ 601              		.loc 1 163 9 is_stmt 1 view .LVU180
+ 602 0026 064D     		ldr	r5, .L36+4
+ 603 0028 A1B2     		uxth	r1, r4
+ 604 002a 2846     		mov	r0, r5
+ 605 002c FFF7FEFF 		bl	DMA_SetCurrDataCounter
+ 606              	.LVL38:
+ 164:Lib/bsp/src/bsp_usart.c ****         // USART_DMACmd(USART6, USART_DMAReq_Tx, ENABLE);
+ 165:Lib/bsp/src/bsp_usart.c ****         DMA_Cmd(DMA2_Stream6, ENABLE); // 开启DMA传输
+ 607              		.loc 1 165 9 view .LVU181
+ 608 0030 0121     		movs	r1, #1
+ 609 0032 2846     		mov	r0, r5
+ 610 0034 FFF7FEFF 		bl	DMA_Cmd
+ 611              	.LVL39:
+ 166:Lib/bsp/src/bsp_usart.c ****     }
+ 167:Lib/bsp/src/bsp_usart.c **** }
+ 612              		.loc 1 167 1 is_stmt 0 view .LVU182
+ 613 0038 38BD     		pop	{r3, r4, r5, pc}
+ 614              	.LVL40:
+ 615              	.L37:
+ 616              		.loc 1 167 1 view .LVU183
+ 617 003a 00BF     		.align	2
+ 618              	.L36:
+ 619 003c 00000000 		.word	.LANCHOR0
+ARM GAS  /tmp/cc6XKabG.s 			page 15
+
+
+ 620 0040 A0640240 		.word	1073898656
+ 621              		.cfi_endproc
+ 622              	.LFE131:
+ 624              		.section	.text.Usart_init,"ax",%progbits
+ 625              		.align	1
+ 626              		.global	Usart_init
+ 627              		.syntax unified
+ 628              		.thumb
+ 629              		.thumb_func
+ 631              	Usart_init:
+ 632              	.LFB132:
+ 168:Lib/bsp/src/bsp_usart.c **** 
+ 169:Lib/bsp/src/bsp_usart.c **** void Usart_init()
+ 170:Lib/bsp/src/bsp_usart.c **** {
+ 633              		.loc 1 170 1 is_stmt 1 view -0
+ 634              		.cfi_startproc
+ 635              		@ args = 0, pretend = 0, frame = 0
+ 636              		@ frame_needed = 0, uses_anonymous_args = 0
+ 637 0000 08B5     		push	{r3, lr}
+ 638              		.cfi_def_cfa_offset 8
+ 639              		.cfi_offset 3, -8
+ 640              		.cfi_offset 14, -4
+ 171:Lib/bsp/src/bsp_usart.c ****     USART6_Init();
+ 641              		.loc 1 171 5 view .LVU185
+ 642 0002 FFF7FEFF 		bl	USART6_Init
+ 643              	.LVL41:
+ 172:Lib/bsp/src/bsp_usart.c ****     USART6_TX_DMA_Init();
+ 644              		.loc 1 172 5 view .LVU186
+ 645 0006 FFF7FEFF 		bl	USART6_TX_DMA_Init
+ 646              	.LVL42:
+ 173:Lib/bsp/src/bsp_usart.c ****     USART6_RX_DMA_Init();
+ 647              		.loc 1 173 5 view .LVU187
+ 648 000a FFF7FEFF 		bl	USART6_RX_DMA_Init
+ 649              	.LVL43:
+ 174:Lib/bsp/src/bsp_usart.c **** }
+ 650              		.loc 1 174 1 is_stmt 0 view .LVU188
+ 651 000e 08BD     		pop	{r3, pc}
+ 652              		.cfi_endproc
+ 653              	.LFE132:
+ 655              		.section	.text.Usart_SendByte,"ax",%progbits
+ 656              		.align	1
+ 657              		.global	Usart_SendByte
+ 658              		.syntax unified
+ 659              		.thumb
+ 660              		.thumb_func
+ 662              	Usart_SendByte:
+ 663              	.LVL44:
+ 664              	.LFB133:
+ 175:Lib/bsp/src/bsp_usart.c **** 
+ 176:Lib/bsp/src/bsp_usart.c **** //----------------------------------------------------------
+ 177:Lib/bsp/src/bsp_usart.c **** void Usart_SendByte(USART_TypeDef *pUSARTx, uint8_t ch)
+ 178:Lib/bsp/src/bsp_usart.c **** {
+ 665              		.loc 1 178 1 is_stmt 1 view -0
+ 666              		.cfi_startproc
+ 667              		@ args = 0, pretend = 0, frame = 0
+ 668              		@ frame_needed = 0, uses_anonymous_args = 0
+ 669              		.loc 1 178 1 is_stmt 0 view .LVU190
+ARM GAS  /tmp/cc6XKabG.s 			page 16
+
+
+ 670 0000 10B5     		push	{r4, lr}
+ 671              		.cfi_def_cfa_offset 8
+ 672              		.cfi_offset 4, -8
+ 673              		.cfi_offset 14, -4
+ 674 0002 0446     		mov	r4, r0
+ 179:Lib/bsp/src/bsp_usart.c ****     /* ����һ���ֽ����ݵ�USART */
+ 180:Lib/bsp/src/bsp_usart.c ****     USART_SendData(pUSARTx, ch);
+ 675              		.loc 1 180 5 is_stmt 1 view .LVU191
+ 676 0004 FFF7FEFF 		bl	USART_SendData
+ 677              	.LVL45:
+ 181:Lib/bsp/src/bsp_usart.c **** 
+ 182:Lib/bsp/src/bsp_usart.c ****     /* �ȴ��������ݼĴ���Ϊ�� */
+ 183:Lib/bsp/src/bsp_usart.c ****     while (USART_GetFlagStatus(pUSARTx, USART_FLAG_TXE) == RESET)
+ 678              		.loc 1 183 5 view .LVU192
+ 679              	.L41:
+ 184:Lib/bsp/src/bsp_usart.c ****         ;
+ 680              		.loc 1 184 9 discriminator 1 view .LVU193
+ 183:Lib/bsp/src/bsp_usart.c ****         ;
+ 681              		.loc 1 183 11 discriminator 1 view .LVU194
+ 183:Lib/bsp/src/bsp_usart.c ****         ;
+ 682              		.loc 1 183 12 is_stmt 0 discriminator 1 view .LVU195
+ 683 0008 8021     		movs	r1, #128
+ 684 000a 2046     		mov	r0, r4
+ 685 000c FFF7FEFF 		bl	USART_GetFlagStatus
+ 686              	.LVL46:
+ 183:Lib/bsp/src/bsp_usart.c ****         ;
+ 687              		.loc 1 183 11 discriminator 1 view .LVU196
+ 688 0010 0028     		cmp	r0, #0
+ 689 0012 F9D0     		beq	.L41
+ 185:Lib/bsp/src/bsp_usart.c **** }
+ 690              		.loc 1 185 1 view .LVU197
+ 691 0014 10BD     		pop	{r4, pc}
+ 692              		.loc 1 185 1 view .LVU198
+ 693              		.cfi_endproc
+ 694              	.LFE133:
+ 696              		.section	.text.Usart_SendData,"ax",%progbits
+ 697              		.align	1
+ 698              		.global	Usart_SendData
+ 699              		.syntax unified
+ 700              		.thumb
+ 701              		.thumb_func
+ 703              	Usart_SendData:
+ 704              	.LVL47:
+ 705              	.LFB134:
+ 186:Lib/bsp/src/bsp_usart.c **** 
+ 187:Lib/bsp/src/bsp_usart.c **** void Usart_SendData(USART_TypeDef *pUSARTx, uint8_t *data, uint8_t length)
+ 188:Lib/bsp/src/bsp_usart.c **** {
+ 706              		.loc 1 188 1 is_stmt 1 view -0
+ 707              		.cfi_startproc
+ 708              		@ args = 0, pretend = 0, frame = 0
+ 709              		@ frame_needed = 0, uses_anonymous_args = 0
+ 710              		.loc 1 188 1 is_stmt 0 view .LVU200
+ 711 0000 F8B5     		push	{r3, r4, r5, r6, r7, lr}
+ 712              		.cfi_def_cfa_offset 24
+ 713              		.cfi_offset 3, -24
+ 714              		.cfi_offset 4, -20
+ 715              		.cfi_offset 5, -16
+ARM GAS  /tmp/cc6XKabG.s 			page 17
+
+
+ 716              		.cfi_offset 6, -12
+ 717              		.cfi_offset 7, -8
+ 718              		.cfi_offset 14, -4
+ 719 0002 0746     		mov	r7, r0
+ 720 0004 0E46     		mov	r6, r1
+ 721 0006 1546     		mov	r5, r2
+ 189:Lib/bsp/src/bsp_usart.c ****     for (int i = 0; i <= length; i++)
+ 722              		.loc 1 189 5 is_stmt 1 view .LVU201
+ 723              	.LBB3:
+ 724              		.loc 1 189 10 view .LVU202
+ 725              	.LVL48:
+ 726              		.loc 1 189 14 is_stmt 0 view .LVU203
+ 727 0008 0024     		movs	r4, #0
+ 728              		.loc 1 189 5 view .LVU204
+ 729 000a 04E0     		b	.L44
+ 730              	.LVL49:
+ 731              	.L45:
+ 190:Lib/bsp/src/bsp_usart.c ****     {
+ 191:Lib/bsp/src/bsp_usart.c ****         Usart_SendByte(pUSARTx, *(data + i));
+ 732              		.loc 1 191 9 is_stmt 1 discriminator 3 view .LVU205
+ 733 000c 315D     		ldrb	r1, [r6, r4]	@ zero_extendqisi2
+ 734 000e 3846     		mov	r0, r7
+ 735 0010 FFF7FEFF 		bl	Usart_SendByte
+ 736              	.LVL50:
+ 189:Lib/bsp/src/bsp_usart.c ****     for (int i = 0; i <= length; i++)
+ 737              		.loc 1 189 34 discriminator 3 view .LVU206
+ 189:Lib/bsp/src/bsp_usart.c ****     for (int i = 0; i <= length; i++)
+ 738              		.loc 1 189 35 is_stmt 0 discriminator 3 view .LVU207
+ 739 0014 0134     		adds	r4, r4, #1
+ 740              	.LVL51:
+ 741              	.L44:
+ 189:Lib/bsp/src/bsp_usart.c ****     for (int i = 0; i <= length; i++)
+ 742              		.loc 1 189 21 is_stmt 1 discriminator 1 view .LVU208
+ 189:Lib/bsp/src/bsp_usart.c ****     for (int i = 0; i <= length; i++)
+ 743              		.loc 1 189 5 is_stmt 0 discriminator 1 view .LVU209
+ 744 0016 A542     		cmp	r5, r4
+ 745 0018 F8DA     		bge	.L45
+ 746              	.LBE3:
+ 192:Lib/bsp/src/bsp_usart.c ****     }
+ 193:Lib/bsp/src/bsp_usart.c **** }
+ 747              		.loc 1 193 1 view .LVU210
+ 748 001a F8BD     		pop	{r3, r4, r5, r6, r7, pc}
+ 749              		.loc 1 193 1 view .LVU211
+ 750              		.cfi_endproc
+ 751              	.LFE134:
+ 753              		.section	.text.USART6_IRQHandler,"ax",%progbits
+ 754              		.align	1
+ 755              		.global	USART6_IRQHandler
+ 756              		.syntax unified
+ 757              		.thumb
+ 758              		.thumb_func
+ 760              	USART6_IRQHandler:
+ 761              	.LFB135:
+ 194:Lib/bsp/src/bsp_usart.c **** //----------------------------------------------------------
+ 195:Lib/bsp/src/bsp_usart.c **** 
+ 196:Lib/bsp/src/bsp_usart.c **** void USART6_IRQHandler(void)
+ 197:Lib/bsp/src/bsp_usart.c **** {
+ARM GAS  /tmp/cc6XKabG.s 			page 18
+
+
+ 762              		.loc 1 197 1 is_stmt 1 view -0
+ 763              		.cfi_startproc
+ 764              		@ args = 0, pretend = 0, frame = 0
+ 765              		@ frame_needed = 0, uses_anonymous_args = 0
+ 766 0000 38B5     		push	{r3, r4, r5, lr}
+ 767              		.cfi_def_cfa_offset 16
+ 768              		.cfi_offset 3, -16
+ 769              		.cfi_offset 4, -12
+ 770              		.cfi_offset 5, -8
+ 771              		.cfi_offset 14, -4
+ 198:Lib/bsp/src/bsp_usart.c ****     
+ 199:Lib/bsp/src/bsp_usart.c ****     //if (USART_GetITStatus(USART6, USART_IT_RXNE) != RESET) // 接收中断
+ 200:Lib/bsp/src/bsp_usart.c ****     //{
+ 201:Lib/bsp/src/bsp_usart.c ****     //    USART_ClearFlag(USART6, USART_IT_RXNE);
+ 202:Lib/bsp/src/bsp_usart.c ****     //}
+ 203:Lib/bsp/src/bsp_usart.c **** 
+ 204:Lib/bsp/src/bsp_usart.c ****     uint8_t temp;
+ 772              		.loc 1 204 5 view .LVU213
+ 205:Lib/bsp/src/bsp_usart.c ****     if (USART_GetFlagStatus(USART6, USART_FLAG_IDLE) == SET)
+ 773              		.loc 1 205 5 view .LVU214
+ 774              		.loc 1 205 9 is_stmt 0 view .LVU215
+ 775 0002 1021     		movs	r1, #16
+ 776 0004 1148     		ldr	r0, .L51
+ 777 0006 FFF7FEFF 		bl	USART_GetFlagStatus
+ 778              	.LVL52:
+ 779              		.loc 1 205 8 view .LVU216
+ 780 000a 0128     		cmp	r0, #1
+ 781 000c 00D0     		beq	.L50
+ 782              	.L47:
+ 206:Lib/bsp/src/bsp_usart.c ****     {
+ 207:Lib/bsp/src/bsp_usart.c ****         DMA_Cmd(DMA2_Stream2, DISABLE);
+ 208:Lib/bsp/src/bsp_usart.c ****         USART_DMACmd(USART6, USART_DMAReq_Rx, DISABLE);
+ 209:Lib/bsp/src/bsp_usart.c ****         unitreeA1_rx(3);
+ 210:Lib/bsp/src/bsp_usart.c ****         USART_DMACmd(USART6, USART_DMAReq_Rx, ENABLE);
+ 211:Lib/bsp/src/bsp_usart.c ****         DMA_Cmd(DMA2_Stream2, ENABLE);
+ 212:Lib/bsp/src/bsp_usart.c **** 
+ 213:Lib/bsp/src/bsp_usart.c ****         USART_ClearFlag(USART6, USART_FLAG_IDLE);
+ 214:Lib/bsp/src/bsp_usart.c ****         temp = USART6->SR;
+ 215:Lib/bsp/src/bsp_usart.c ****         temp = USART6->DR; // 清USART_IT_IDLE标志
+ 216:Lib/bsp/src/bsp_usart.c ****     }
+ 217:Lib/bsp/src/bsp_usart.c **** }
+ 783              		.loc 1 217 1 view .LVU217
+ 784 000e 38BD     		pop	{r3, r4, r5, pc}
+ 785              	.L50:
+ 207:Lib/bsp/src/bsp_usart.c ****         USART_DMACmd(USART6, USART_DMAReq_Rx, DISABLE);
+ 786              		.loc 1 207 9 is_stmt 1 view .LVU218
+ 787 0010 0F4D     		ldr	r5, .L51+4
+ 788 0012 0021     		movs	r1, #0
+ 789 0014 2846     		mov	r0, r5
+ 790 0016 FFF7FEFF 		bl	DMA_Cmd
+ 791              	.LVL53:
+ 208:Lib/bsp/src/bsp_usart.c ****         unitreeA1_rx(3);
+ 792              		.loc 1 208 9 view .LVU219
+ 793 001a 0C4C     		ldr	r4, .L51
+ 794 001c 0022     		movs	r2, #0
+ 795 001e 4021     		movs	r1, #64
+ 796 0020 2046     		mov	r0, r4
+ARM GAS  /tmp/cc6XKabG.s 			page 19
+
+
+ 797 0022 FFF7FEFF 		bl	USART_DMACmd
+ 798              	.LVL54:
+ 209:Lib/bsp/src/bsp_usart.c ****         USART_DMACmd(USART6, USART_DMAReq_Rx, ENABLE);
+ 799              		.loc 1 209 9 view .LVU220
+ 800 0026 0320     		movs	r0, #3
+ 801 0028 FFF7FEFF 		bl	unitreeA1_rx
+ 802              	.LVL55:
+ 210:Lib/bsp/src/bsp_usart.c ****         DMA_Cmd(DMA2_Stream2, ENABLE);
+ 803              		.loc 1 210 9 view .LVU221
+ 804 002c 0122     		movs	r2, #1
+ 805 002e 4021     		movs	r1, #64
+ 806 0030 2046     		mov	r0, r4
+ 807 0032 FFF7FEFF 		bl	USART_DMACmd
+ 808              	.LVL56:
+ 211:Lib/bsp/src/bsp_usart.c **** 
+ 809              		.loc 1 211 9 view .LVU222
+ 810 0036 0121     		movs	r1, #1
+ 811 0038 2846     		mov	r0, r5
+ 812 003a FFF7FEFF 		bl	DMA_Cmd
+ 813              	.LVL57:
+ 213:Lib/bsp/src/bsp_usart.c ****         temp = USART6->SR;
+ 814              		.loc 1 213 9 view .LVU223
+ 815 003e 1021     		movs	r1, #16
+ 816 0040 2046     		mov	r0, r4
+ 817 0042 FFF7FEFF 		bl	USART_ClearFlag
+ 818              	.LVL58:
+ 214:Lib/bsp/src/bsp_usart.c ****         temp = USART6->DR; // 清USART_IT_IDLE标志
+ 819              		.loc 1 214 9 view .LVU224
+ 214:Lib/bsp/src/bsp_usart.c ****         temp = USART6->DR; // 清USART_IT_IDLE标志
+ 820              		.loc 1 214 22 is_stmt 0 view .LVU225
+ 821 0046 2388     		ldrh	r3, [r4]
+ 822              	.LVL59:
+ 215:Lib/bsp/src/bsp_usart.c ****     }
+ 823              		.loc 1 215 9 is_stmt 1 view .LVU226
+ 215:Lib/bsp/src/bsp_usart.c ****     }
+ 824              		.loc 1 215 22 is_stmt 0 view .LVU227
+ 825 0048 A388     		ldrh	r3, [r4, #4]
+ 826              		.loc 1 217 1 view .LVU228
+ 827 004a E0E7     		b	.L47
+ 828              	.L52:
+ 829              		.align	2
+ 830              	.L51:
+ 831 004c 00140140 		.word	1073812480
+ 832 0050 40640240 		.word	1073898560
+ 833              		.cfi_endproc
+ 834              	.LFE135:
+ 836              		.section	.text.DMA2_Stream2_IRQHandler,"ax",%progbits
+ 837              		.align	1
+ 838              		.global	DMA2_Stream2_IRQHandler
+ 839              		.syntax unified
+ 840              		.thumb
+ 841              		.thumb_func
+ 843              	DMA2_Stream2_IRQHandler:
+ 844              	.LFB136:
+ 218:Lib/bsp/src/bsp_usart.c **** // u8 c;
+ 219:Lib/bsp/src/bsp_usart.c **** 
+ 220:Lib/bsp/src/bsp_usart.c **** // if(USART_GetITStatus(USART2, USART_IT_RXNE) == SET)//接收中断
+ARM GAS  /tmp/cc6XKabG.s 			page 20
+
+
+ 221:Lib/bsp/src/bsp_usart.c **** //{
+ 222:Lib/bsp/src/bsp_usart.c **** // USART_ClearITPendingBit(USART2, USART_IT_RXNE);
+ 223:Lib/bsp/src/bsp_usart.c **** //
+ 224:Lib/bsp/src/bsp_usart.c **** // LED2 = !LED2;
+ 225:Lib/bsp/src/bsp_usart.c **** // c = USART_ReceiveData(USART2);//读取接收寄存器,读数据会清除中断
+ 226:Lib/bsp/src/bsp_usart.c **** // write_loop_2_buf(c);
+ 227:Lib/bsp/src/bsp_usart.c **** // }
+ 228:Lib/bsp/src/bsp_usart.c **** 
+ 229:Lib/bsp/src/bsp_usart.c **** void DMA2_Stream2_IRQHandler(void)
+ 230:Lib/bsp/src/bsp_usart.c **** {
+ 845              		.loc 1 230 1 is_stmt 1 view -0
+ 846              		.cfi_startproc
+ 847              		@ args = 0, pretend = 0, frame = 0
+ 848              		@ frame_needed = 0, uses_anonymous_args = 0
+ 849 0000 08B5     		push	{r3, lr}
+ 850              		.cfi_def_cfa_offset 8
+ 851              		.cfi_offset 3, -8
+ 852              		.cfi_offset 14, -4
+ 231:Lib/bsp/src/bsp_usart.c ****     /* Test on DMA Stream Transfer Complete interrupt */
+ 232:Lib/bsp/src/bsp_usart.c ****     if(DMA_GetITStatus(DMA2_Stream2, DMA_IT_TCIF2))
+ 853              		.loc 1 232 5 view .LVU230
+ 854              		.loc 1 232 8 is_stmt 0 view .LVU231
+ 855 0002 0549     		ldr	r1, .L57
+ 856 0004 0548     		ldr	r0, .L57+4
+ 857 0006 FFF7FEFF 		bl	DMA_GetITStatus
+ 858              	.LVL60:
+ 859              		.loc 1 232 7 view .LVU232
+ 860 000a 00B9     		cbnz	r0, .L56
+ 861              	.L53:
+ 233:Lib/bsp/src/bsp_usart.c ****     {
+ 234:Lib/bsp/src/bsp_usart.c ****         DMA_ClearITPendingBit(DMA2_Stream2, DMA_IT_TCIF2);
+ 235:Lib/bsp/src/bsp_usart.c ****     }
+ 236:Lib/bsp/src/bsp_usart.c **** }
+ 862              		.loc 1 236 1 view .LVU233
+ 863 000c 08BD     		pop	{r3, pc}
+ 864              	.L56:
+ 234:Lib/bsp/src/bsp_usart.c ****     }
+ 865              		.loc 1 234 9 is_stmt 1 view .LVU234
+ 866 000e 0249     		ldr	r1, .L57
+ 867 0010 0248     		ldr	r0, .L57+4
+ 868 0012 FFF7FEFF 		bl	DMA_ClearITPendingBit
+ 869              	.LVL61:
+ 870              		.loc 1 236 1 is_stmt 0 view .LVU235
+ 871 0016 F9E7     		b	.L53
+ 872              	.L58:
+ 873              		.align	2
+ 874              	.L57:
+ 875 0018 00802010 		.word	270565376
+ 876 001c 40640240 		.word	1073898560
+ 877              		.cfi_endproc
+ 878              	.LFE136:
+ 880              		.global	usart6RxBuffer
+ 881              		.global	usart6TxBuffer
+ 882              		.section	.bss.usart6RxBuffer,"aw",%nobits
+ 883              		.align	2
+ 884              		.set	.LANCHOR1,. + 0
+ 887              	usart6RxBuffer:
+ARM GAS  /tmp/cc6XKabG.s 			page 21
+
+
+ 888 0000 00000000 		.space	78
+ 888      00000000 
+ 888      00000000 
+ 888      00000000 
+ 888      00000000 
+ 889              		.section	.bss.usart6TxBuffer,"aw",%nobits
+ 890              		.align	2
+ 891              		.set	.LANCHOR0,. + 0
+ 894              	usart6TxBuffer:
+ 895 0000 00000000 		.space	34
+ 895      00000000 
+ 895      00000000 
+ 895      00000000 
+ 895      00000000 
+ 896              		.text
+ 897              	.Letext0:
+ 898              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 899              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 900              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 901              		.file 5 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma.h"
+ 902              		.file 6 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
+ 903              		.file 7 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_usart.h"
+ 904              		.file 8 "Drivers/STM32F4xx_StdPeriph_Driver/inc/misc.h"
+ 905              		.file 9 "Lib/bsp/include/bsp_usart.h"
+ 906              		.file 10 "Lib/motor_app/include/unitreeA1_cmd.h"
+ 907              		.file 11 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h"
+ 908              		.file 12 "<built-in>"
+ARM GAS  /tmp/cc6XKabG.s 			page 22
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 bsp_usart.c
-     /tmp/ccughKNY.s:20     .text.USART6_GPIO_Init:0000000000000000 $t
-     /tmp/ccughKNY.s:26     .text.USART6_GPIO_Init:0000000000000000 USART6_GPIO_Init
-     /tmp/ccughKNY.s:104    .text.USART6_GPIO_Init:000000000000005c $d
-     /tmp/ccughKNY.s:109    .text.USART6_DMA_Init:0000000000000000 $t
-     /tmp/ccughKNY.s:115    .text.USART6_DMA_Init:0000000000000000 USART6_DMA_Init
-     /tmp/ccughKNY.s:233    .text.USART6_DMA_Init:0000000000000074 $d
-     /tmp/ccughKNY.s:240    .text.USART6_Init:0000000000000000 $t
-     /tmp/ccughKNY.s:246    .text.USART6_Init:0000000000000000 USART6_Init
-     /tmp/ccughKNY.s:313    .text.USART6_Init:0000000000000050 $d
-     /tmp/ccughKNY.s:319    .text.USART6_SendData:0000000000000000 $t
-     /tmp/ccughKNY.s:325    .text.USART6_SendData:0000000000000000 USART6_SendData
-     /tmp/ccughKNY.s:396    .text.USART6_SendData:0000000000000034 $d
-     /tmp/ccughKNY.s:401    .text.Usart_init:0000000000000000 $t
-     /tmp/ccughKNY.s:407    .text.Usart_init:0000000000000000 Usart_init
-     /tmp/ccughKNY.s:429    .text.Usart_SendByte:0000000000000000 $t
-     /tmp/ccughKNY.s:435    .text.Usart_SendByte:0000000000000000 Usart_SendByte
-     /tmp/ccughKNY.s:470    .text.Usart_SendData:0000000000000000 $t
-     /tmp/ccughKNY.s:476    .text.Usart_SendData:0000000000000000 Usart_SendData
-     /tmp/ccughKNY.s:532    .bss.usart6RxBuffer:0000000000000000 usart6RxBuffer
-     /tmp/ccughKNY.s:539    .bss.usart6TxBuffer:0000000000000000 usart6TxBuffer
-     /tmp/ccughKNY.s:529    .bss.usart6RxBuffer:0000000000000000 $d
-     /tmp/ccughKNY.s:535    .bss.usart6TxBuffer:0000000000000000 $d
+     /tmp/cc6XKabG.s:20     .text.USART6_GPIO_Init:0000000000000000 $t
+     /tmp/cc6XKabG.s:26     .text.USART6_GPIO_Init:0000000000000000 USART6_GPIO_Init
+     /tmp/cc6XKabG.s:104    .text.USART6_GPIO_Init:000000000000005c $d
+     /tmp/cc6XKabG.s:109    .text.USART6_TX_DMA_Init:0000000000000000 $t
+     /tmp/cc6XKabG.s:115    .text.USART6_TX_DMA_Init:0000000000000000 USART6_TX_DMA_Init
+     /tmp/cc6XKabG.s:215    .text.USART6_TX_DMA_Init:0000000000000064 $d
+     /tmp/cc6XKabG.s:222    .text.USART6_RX_DMA_Init:0000000000000000 $t
+     /tmp/cc6XKabG.s:228    .text.USART6_RX_DMA_Init:0000000000000000 USART6_RX_DMA_Init
+     /tmp/cc6XKabG.s:334    .text.USART6_RX_DMA_Init:0000000000000068 $d
+     /tmp/cc6XKabG.s:341    .text.USART6_Init:0000000000000000 $t
+     /tmp/cc6XKabG.s:347    .text.USART6_Init:0000000000000000 USART6_Init
+     /tmp/cc6XKabG.s:460    .text.USART6_Init:000000000000008c $d
+     /tmp/cc6XKabG.s:466    .text.USART6_SendData:0000000000000000 $t
+     /tmp/cc6XKabG.s:472    .text.USART6_SendData:0000000000000000 USART6_SendData
+     /tmp/cc6XKabG.s:543    .text.USART6_SendData:0000000000000034 $d
+     /tmp/cc6XKabG.s:548    .text.USART6_DMA_SendData:0000000000000000 $t
+     /tmp/cc6XKabG.s:554    .text.USART6_DMA_SendData:0000000000000000 USART6_DMA_SendData
+     /tmp/cc6XKabG.s:619    .text.USART6_DMA_SendData:000000000000003c $d
+     /tmp/cc6XKabG.s:625    .text.Usart_init:0000000000000000 $t
+     /tmp/cc6XKabG.s:631    .text.Usart_init:0000000000000000 Usart_init
+     /tmp/cc6XKabG.s:656    .text.Usart_SendByte:0000000000000000 $t
+     /tmp/cc6XKabG.s:662    .text.Usart_SendByte:0000000000000000 Usart_SendByte
+     /tmp/cc6XKabG.s:697    .text.Usart_SendData:0000000000000000 $t
+     /tmp/cc6XKabG.s:703    .text.Usart_SendData:0000000000000000 Usart_SendData
+     /tmp/cc6XKabG.s:754    .text.USART6_IRQHandler:0000000000000000 $t
+     /tmp/cc6XKabG.s:760    .text.USART6_IRQHandler:0000000000000000 USART6_IRQHandler
+     /tmp/cc6XKabG.s:831    .text.USART6_IRQHandler:000000000000004c $d
+     /tmp/cc6XKabG.s:837    .text.DMA2_Stream2_IRQHandler:0000000000000000 $t
+     /tmp/cc6XKabG.s:843    .text.DMA2_Stream2_IRQHandler:0000000000000000 DMA2_Stream2_IRQHandler
+     /tmp/cc6XKabG.s:875    .text.DMA2_Stream2_IRQHandler:0000000000000018 $d
+     /tmp/cc6XKabG.s:887    .bss.usart6RxBuffer:0000000000000000 usart6RxBuffer
+     /tmp/cc6XKabG.s:894    .bss.usart6TxBuffer:0000000000000000 usart6TxBuffer
+     /tmp/cc6XKabG.s:883    .bss.usart6RxBuffer:0000000000000000 $d
+     /tmp/cc6XKabG.s:890    .bss.usart6TxBuffer:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 RCC_AHB1PeriphClockCmd
@@ -762,7 +1278,18 @@ DMA_Init
 DMA_Cmd
 RCC_APB2PeriphClockCmd
 USART_Init
-USART_ITConfig
+NVIC_PriorityGroupConfig
+NVIC_Init
+USART_DMACmd
 USART_Cmd
-USART_SendData
+USART_ClearFlag
 USART_GetFlagStatus
+USART_SendData
+memcpy
+DMA_SetCurrDataCounter
+unitreeA1_rx
+ARM GAS  /tmp/cc6XKabG.s 			page 23
+
+
+DMA_GetITStatus
+DMA_ClearITPendingBit

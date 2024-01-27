@@ -62,9 +62,8 @@ void modfiy_cmd(motor_send_t *send, uint8_t id, float Pos, float KP, float KW, f
     send->T = 0.0;
 }
 
-void unitreeA1_rxtx(int leg_id)
+void unitreeA1_tx(int leg_id)
 {
-    uint8_t Data[78];
     /*—————————————————————————————————————————左前腿代码范围————————————————————————————————————————————————*/
     uint8_t A1cmd[34];
 
@@ -104,16 +103,16 @@ void unitreeA1_rxtx(int leg_id)
         //Usart_SendData(USART6, A1cmd, 34);
         break;
     case 3:
-        Usart_SendData(USART6, A1cmd, 34);
+        USART6_SendData(A1cmd, 34);
         break;
     }
+}
 
-    //DMA_ClearFlag(DMA2_Stream6,DMA_FLAG_TCIF6);
-    //memcpy(usart6TxBuffer, A1cmd, 34);
-    //USART_DMACmd(USART6, USART_DMAReq_Tx, ENABLE);
+void unitreeA1_rx(int leg_id)
+{
+    uint8_t Data[78];
 
-    //Delay_ms(1);
-    // HAL_UART_Receive_DMA(&huart1, Date, 78);
+    memcpy(Data,usart6RxBuffer,78);
 
     data_leg[leg_id].motor_recv_data.head.motorID = Data[2];
     data_leg[leg_id].motor_recv_data.Mdata.MError = Data[7];
@@ -123,6 +122,8 @@ void unitreeA1_rxtx(int leg_id)
     data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
     data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
     data_leg[leg_id].T = data_leg[leg_id].motor_recv_data.Mdata.T / 256;
+    data_leg[leg_id].W = data_leg[leg_id].motor_recv_data.Mdata.W / 128;
+    data_leg[leg_id].Acc = data_leg[leg_id].motor_recv_data.Mdata.Acc;
     data_leg[leg_id].Pos = (int)((data_leg[leg_id].motor_recv_data.Mdata.Pos / 16384.0f) * 6.2832f);
 
     data_motor[leg_id][data_leg[leg_id].motor_id].motor_id = data_leg[leg_id].motor_id;
@@ -130,3 +131,4 @@ void unitreeA1_rxtx(int leg_id)
     data_motor[leg_id][data_leg[leg_id].motor_id].T = data_leg[leg_id].T;
     data_motor[leg_id][data_leg[leg_id].motor_id].Pos = data_leg[leg_id].Pos;
 }
+
