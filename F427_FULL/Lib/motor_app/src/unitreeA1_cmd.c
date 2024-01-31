@@ -110,14 +110,14 @@ void unitreeA1_tx(int leg_id)
 
 void unitreeA1_rx(int leg_id)
 {
-    uint8_t Data[78];
+    //uint8_t Data[78];
 
-    memcpy(Data,usart6RxBuffer,78);
+    //memcpy(Data,usart6RxBuffer,78);
 
-    data_leg[leg_id].motor_recv_data.head.motorID = Data[2];
-    data_leg[leg_id].motor_recv_data.Mdata.MError = Data[7];
-    data_leg[leg_id].motor_recv_data.Mdata.T = Data[12] << 8 | Data[13];
-    data_leg[leg_id].motor_recv_data.Mdata.Pos = Data[30] << 24 | Data[31] << 16 | Data[32] << 8 | Data[33];
+    data_leg[leg_id].motor_recv_data.head.motorID = usart6RxBuffer[2];
+    data_leg[leg_id].motor_recv_data.Mdata.MError = usart6RxBuffer[7];
+    data_leg[leg_id].motor_recv_data.Mdata.T = usart6RxBuffer[12] << 8 | usart6RxBuffer[13];
+    data_leg[leg_id].motor_recv_data.Mdata.Pos = usart6RxBuffer[30] << 24 | usart6RxBuffer[31] << 16 | usart6RxBuffer[32] << 8 | usart6RxBuffer[33];
 
     data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
     data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;

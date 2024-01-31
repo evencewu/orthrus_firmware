@@ -558,6 +558,8 @@ void APPL_Application(void)
         send++;
     }
 
+    //unitreeA1_rx(3);
+
     //
 
     sAIInputs.i16Analoginput = 0;
@@ -592,8 +594,8 @@ void APPL_Application(void)
     sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
     sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
 
-    sAIInputs.motor1_T = data_motor[3][0].T;
-    sAIInputs.motor1_Pos = data_motor[3][0].Pos;
+    sAIInputs.motor1_T = data_motor[3][1].T;
+    sAIInputs.motor1_Pos = data_motor[3][1].Pos;
     sAIInputs.motor1_W = 10;
 
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
@@ -704,7 +706,7 @@ void main(void)
     bRunApplication = TRUE;
     do
     {
-
+        
         // Usart_SendByte(USART6, 15);
         // Usart_SendByte(USART1, 15);
         // Usart_SendString(DEBUG_USART,"STM32F407\n");
