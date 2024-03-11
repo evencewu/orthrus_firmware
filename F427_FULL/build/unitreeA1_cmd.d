@@ -1,5 +1,7 @@
 build/unitreeA1_cmd.o: Lib/motor_app/src/unitreeA1_cmd.c \
- Lib/bsp/include/bsp_usart.h Lib/bsp/include/stm32f4xx_conf.h \
+ Lib/motor_app/include/motor_msg.h Lib/motor_app/include/motor_msg.h \
+ Lib/motor_app/include/unitreeA1_cmd.h Lib/bsp/include/bsp_usart.h \
+ Lib/bsp/include/stm32f4xx_conf.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_adc.h \
  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
  Drivers/CMSIS/Include/core_cm4.h Drivers/CMSIS/Include/core_cmInstr.h \
@@ -32,9 +34,10 @@ build/unitreeA1_cmd.o: Lib/motor_app/src/unitreeA1_cmd.c \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dcmi.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma2d.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_fmc.h \
- Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_sai.h \
- Lib/motor_app/include/motor_msg.h Lib/motor_app/include/motor_msg.h \
- Lib/motor_app/include/unitreeA1_cmd.h Lib/bsp/include/bsp_delay.h
+ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_sai.h
+Lib/motor_app/include/motor_msg.h:
+Lib/motor_app/include/motor_msg.h:
+Lib/motor_app/include/unitreeA1_cmd.h:
 Lib/bsp/include/bsp_usart.h:
 Lib/bsp/include/stm32f4xx_conf.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_adc.h:
@@ -72,7 +75,3 @@ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dcmi.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma2d.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_fmc.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_sai.h:
-Lib/motor_app/include/motor_msg.h:
-Lib/motor_app/include/motor_msg.h:
-Lib/motor_app/include/unitreeA1_cmd.h:
-Lib/bsp/include/bsp_delay.h:

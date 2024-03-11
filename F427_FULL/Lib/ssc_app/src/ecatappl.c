@@ -407,8 +407,8 @@ UINT16 MainInit(void)
 	CAN2_Config();
     SysTick_Init();
 
-    Usart_init();
-
+    //usart
+    remote_control_init();
 
     /*Timer initialization*/
     u16BusCycleCntMs = 0;

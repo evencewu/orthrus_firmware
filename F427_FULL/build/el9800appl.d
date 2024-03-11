@@ -41,8 +41,7 @@ build/el9800appl.o: Lib/ssc_app/src/el9800appl.c \
  Lib/ssc_app/include/el9800appl.h Lib/ssc_app/include/ecatappl.h \
  Lib/ssc/include/el9800hw.h Lib/bsp/include/bsp_led.h \
  Lib/bsp/include/stm32f4xx_conf.h Lib/motor_app/include/motor_msg.h \
- Lib/motor_app/include/motor_msg.h Lib/motor_app/include/unitreeA1_cmd.h \
- Lib/bsp/include/bsp_usart.h
+ Lib/motor_app/include/motor_msg.h Lib/motor_app/include/unitreeA1_cmd.h
 Lib/ssc/include/ecat_def.h:
 Lib/ssc/include/applInterface.h:
 Lib/ssc/include/ecat_def.h:
@@ -98,4 +97,3 @@ Lib/bsp/include/stm32f4xx_conf.h:
 Lib/motor_app/include/motor_msg.h:
 Lib/motor_app/include/motor_msg.h:
 Lib/motor_app/include/unitreeA1_cmd.h:
-Lib/bsp/include/bsp_usart.h:

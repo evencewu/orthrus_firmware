@@ -547,20 +547,7 @@ void APPL_Application(void)
     // usart
 
     modfiy_cmd(&cmd_leg[3], 1, 0, 0, 0, 0, 0);
-
-    if (send >= 4)
-    {
-        send == 0;
-        unitreeA1_tx(3);
-    }
-    else
-    {
-        send++;
-    }
-
-    //unitreeA1_rx(3);
-
-    //
+    unitreeA1_tx(3);
 
     sAIInputs.i16Analoginput = 0;
 
