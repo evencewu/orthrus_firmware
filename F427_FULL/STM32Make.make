@@ -85,6 +85,7 @@ Lib/bsp/src/Timer.c \
 Lib/bsp/src/bsp_can.c \
 Lib/bsp/src/bsp_delay.c \
 Lib/bsp/src/bsp_led.c \
+Lib/bsp/src/bsp_tim.c \
 Lib/bsp/src/bsp_usart.c \
 Lib/bsp/src/system_stm32f4xx.c \
 Lib/motor_app/src/unitreeA1_cmd.c \

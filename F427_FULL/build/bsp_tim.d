@@ -1,12 +1,11 @@
-build/ecatappl.o: Lib/ssc_app/src/ecatappl.c Lib/ssc/include/ecatslv.h \
- Lib/ssc/include/ecat_def.h Lib/ssc/include/el9800hw.h \
- Lib/ssc/include/esc.h \
+build/bsp_tim.o: Lib/bsp/src/bsp_tim.c Lib/bsp/include/bsp_tim.h \
+ Lib/bsp/include/stm32f4xx_conf.h \
+ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_adc.h \
  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
  Drivers/CMSIS/Include/core_cm4.h Drivers/CMSIS/Include/core_cmInstr.h \
  Drivers/CMSIS/Include/core_cmFunc.h Drivers/CMSIS/Include/core_cmSimd.h \
  Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h \
  Lib/bsp/include/stm32f4xx_conf.h \
- Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_adc.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_crc.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dbgmcu.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma.h \
@@ -34,22 +33,11 @@ build/ecatappl.o: Lib/ssc_app/src/ecatappl.c Lib/ssc/include/ecatslv.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma2d.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_fmc.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_sai.h \
- Lib/bsp/include/system.h Lib/ssc_app/include/ecatappl.h \
- Lib/ssc/include/ecat_def.h Lib/ssc_app/include/coeappl.h \
- Lib/ssc/include/objdef.h Lib/ssc/include/sdoserv.h \
- Lib/ssc/include/ecatcoe.h Lib/ssc/include/mailbox.h \
- Lib/ssc/include/applInterface.h Lib/ssc/include/ecatslv.h \
- Lib/ssc/include/objdef.h Lib/ssc_app/include/el9800appl.h \
- Lib/ssc_app/include/ecatappl.h Lib/bsp/include/RST.h \
- Lib/bsp/include/stm32f4xx_conf.h Lib/bsp/include/bsp_can.h \
- Lib/bsp/include/bsp_led.h Lib/bsp/include/bsp_usart.h \
- Lib/bsp/include/bsp_delay.h Lib/bsp/include/bsp_tim.h \
  Lib/motor_app/include/motor_msg.h Lib/motor_app/include/motor_msg.h \
  Lib/motor_app/include/unitreeA1_cmd.h
-Lib/ssc/include/ecatslv.h:
-Lib/ssc/include/ecat_def.h:
-Lib/ssc/include/el9800hw.h:
-Lib/ssc/include/esc.h:
+Lib/bsp/include/bsp_tim.h:
+Lib/bsp/include/stm32f4xx_conf.h:
+Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_adc.h:
 Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:
 Drivers/CMSIS/Include/core_cm4.h:
 Drivers/CMSIS/Include/core_cmInstr.h:
@@ -57,7 +45,6 @@ Drivers/CMSIS/Include/core_cmFunc.h:
 Drivers/CMSIS/Include/core_cmSimd.h:
 Drivers/CMSIS/Device/ST/STM32F4xx/Include/system_stm32f4xx.h:
 Lib/bsp/include/stm32f4xx_conf.h:
-Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_adc.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_crc.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dbgmcu.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma.h:
@@ -85,26 +72,6 @@ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dcmi.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma2d.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_fmc.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_sai.h:
-Lib/bsp/include/system.h:
-Lib/ssc_app/include/ecatappl.h:
-Lib/ssc/include/ecat_def.h:
-Lib/ssc_app/include/coeappl.h:
-Lib/ssc/include/objdef.h:
-Lib/ssc/include/sdoserv.h:
-Lib/ssc/include/ecatcoe.h:
-Lib/ssc/include/mailbox.h:
-Lib/ssc/include/applInterface.h:
-Lib/ssc/include/ecatslv.h:
-Lib/ssc/include/objdef.h:
-Lib/ssc_app/include/el9800appl.h:
-Lib/ssc_app/include/ecatappl.h:
-Lib/bsp/include/RST.h:
-Lib/bsp/include/stm32f4xx_conf.h:
-Lib/bsp/include/bsp_can.h:
-Lib/bsp/include/bsp_led.h:
-Lib/bsp/include/bsp_usart.h:
-Lib/bsp/include/bsp_delay.h:
-Lib/bsp/include/bsp_tim.h:
 Lib/motor_app/include/motor_msg.h:
 Lib/motor_app/include/motor_msg.h:
 Lib/motor_app/include/unitreeA1_cmd.h:

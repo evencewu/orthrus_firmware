@@ -468,7 +468,7 @@ void RC1_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
 
 
     NVIC_InitStructure.NVIC_IRQChannel = USART1_IRQn;         // 通道设置为串口中�?
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // 中断占先等级
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; // 中断占先等级
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;        // 中断响应优先�?
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;           // 打开中断
     NVIC_Init(&NVIC_InitStructure);
@@ -572,7 +572,7 @@ void RC2_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
 
 
     NVIC_InitStructure.NVIC_IRQChannel = USART2_IRQn;         // 通道设置为串口中�?
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // 中断占先等级
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; // 中断占先等级
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;        // 中断响应优先�?
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;           // 打开中断
     NVIC_Init(&NVIC_InitStructure);
@@ -674,7 +674,7 @@ void RC3_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
 
 
     NVIC_InitStructure.NVIC_IRQChannel = USART3_IRQn;         // 通道设置为串口中�?
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // 中断占先等级
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; // 中断占先等级
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;        // 中断响应优先�?
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;           // 打开中断
     NVIC_Init(&NVIC_InitStructure);
@@ -781,7 +781,7 @@ void RC6_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
 
 
     NVIC_InitStructure.NVIC_IRQChannel = USART6_IRQn;         // 通道设置为串口中�?
-    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 2; // 中断占先等级
+    NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0; // 中断占先等级
     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 2;        // 中断响应优先�?
     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;           // 打开中断
     NVIC_Init(&NVIC_InitStructure);
@@ -872,7 +872,6 @@ void Usart_SendByte(USART_TypeDef *pUSARTx, uint8_t ch)
     
     USART_SendData(pUSARTx, ch);
 
-   
     while (USART_GetFlagStatus(pUSARTx, USART_FLAG_TXE) == RESET)
         ;
 }

@@ -382,6 +382,7 @@ void Sync1_Isr(void)
 #include "bsp_led.h"
 #include "bsp_usart.h"
 #include "bsp_delay.h"
+#include "bsp_tim.h"
 
 UINT16 MainInit(void)
 {
@@ -409,6 +410,9 @@ UINT16 MainInit(void)
 
     //usart
     remote_control_init();
+
+    //timer
+    TIMx_Configuration();
 
     /*Timer initialization*/
     u16BusCycleCntMs = 0;

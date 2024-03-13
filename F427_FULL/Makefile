@@ -82,6 +82,7 @@ Core/Src/stm32f4xx_it.c \
 Lib/bsp/src/bsp_can.c \
 Lib/bsp/src/bsp_led.c \
 Lib/bsp/src/bsp_delay.c \
+Lib/bsp/src/bsp_tim.c \
 Lib/bsp/src/RST.c \
 Lib/bsp/src/EXIT.c \
 Lib/bsp/src/SPI1.c \
