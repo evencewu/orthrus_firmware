@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccfHcTtC.s 			page 1
+ARM GAS  /tmp/ccR0d1do.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccfHcTtC.s 			page 1
   11:Lib/bsp/src/bsp_tim.c ****     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
   46              		.loc 1 11 5 is_stmt 1 view .LVU5
   47              		.loc 1 11 58 is_stmt 0 view .LVU6
-ARM GAS  /tmp/ccfHcTtC.s 			page 2
+ARM GAS  /tmp/ccR0d1do.s 			page 2
 
 
   48 0012 0023     		movs	r3, #0
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccfHcTtC.s 			page 1
   92              	.LVL2:
   24:Lib/bsp/src/bsp_tim.c **** 
   25:Lib/bsp/src/bsp_tim.c ****     /* 累计 TIM_Period个后产生一个更新或者中断*/
-ARM GAS  /tmp/ccfHcTtC.s 			page 3
+ARM GAS  /tmp/ccR0d1do.s 			page 3
 
 
   26:Lib/bsp/src/bsp_tim.c ****     // 当定时器从0计数到4999，即为5000次，为一个定时周期
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccfHcTtC.s 			page 1
  123              		.loc 1 49 1 is_stmt 0 view .LVU24
  124 003e 04B0     		add	sp, sp, #16
  125              		.cfi_def_cfa_offset 8
-ARM GAS  /tmp/ccfHcTtC.s 			page 4
+ARM GAS  /tmp/ccR0d1do.s 			page 4
 
 
  126              		@ sp needed
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccfHcTtC.s 			page 1
  175              		@ frame_needed = 0, uses_anonymous_args = 0
  176 0000 08B5     		push	{r3, lr}
  177              		.cfi_def_cfa_offset 8
-ARM GAS  /tmp/ccfHcTtC.s 			page 5
+ARM GAS  /tmp/ccR0d1do.s 			page 5
 
 
  178              		.cfi_offset 3, -8
@@ -255,20 +255,20 @@ ARM GAS  /tmp/ccfHcTtC.s 			page 1
  188              	.L9:
   60:Lib/bsp/src/bsp_tim.c ****     {
   61:Lib/bsp/src/bsp_tim.c ****         TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
-  62:Lib/bsp/src/bsp_tim.c ****         modfiy_cmd(&cmd_leg[3], 1, 0, 0, 0, 0, 0);
-  63:Lib/bsp/src/bsp_tim.c ****         unitreeA1_tx(3);
+  62:Lib/bsp/src/bsp_tim.c ****         modfiy_cmd(&cmd_leg[2], 1, 0, 0, 0, 0, 0);
+  63:Lib/bsp/src/bsp_tim.c ****         unitreeA1_tx(2);
   64:Lib/bsp/src/bsp_tim.c ****     }
   65:Lib/bsp/src/bsp_tim.c **** }
  189              		.loc 1 65 1 view .LVU33
  190 000c 08BD     		pop	{r3, pc}
  191              	.L12:
-  61:Lib/bsp/src/bsp_tim.c ****         modfiy_cmd(&cmd_leg[3], 1, 0, 0, 0, 0, 0);
+  61:Lib/bsp/src/bsp_tim.c ****         modfiy_cmd(&cmd_leg[2], 1, 0, 0, 0, 0, 0);
  192              		.loc 1 61 9 is_stmt 1 view .LVU34
  193 000e 0121     		movs	r1, #1
  194 0010 0A48     		ldr	r0, .L13
  195 0012 FFF7FEFF 		bl	TIM_ClearITPendingBit
  196              	.LVL10:
-  62:Lib/bsp/src/bsp_tim.c ****         unitreeA1_tx(3);
+  62:Lib/bsp/src/bsp_tim.c ****         unitreeA1_tx(2);
  197              		.loc 1 62 9 view .LVU35
  198 0016 9FED0A0A 		vldr.32	s0, .L13+4
  199 001a B0EE402A 		vmov.f32	s4, s0
@@ -281,7 +281,7 @@ ARM GAS  /tmp/ccfHcTtC.s 			page 1
  206              	.LVL11:
   63:Lib/bsp/src/bsp_tim.c ****     }
  207              		.loc 1 63 9 view .LVU36
- 208 0032 0320     		movs	r0, #3
+ 208 0032 0220     		movs	r0, #2
  209 0034 FFF7FEFF 		bl	unitreeA1_tx
  210              	.LVL12:
  211              		.loc 1 65 1 is_stmt 0 view .LVU37
@@ -291,14 +291,14 @@ ARM GAS  /tmp/ccfHcTtC.s 			page 1
  215              	.L13:
  216 003c 00100040 		.word	1073745920
  217 0040 00000000 		.word	0
- 218 0044 C6000000 		.word	cmd_leg+198
+ 218 0044 84000000 		.word	cmd_leg+132
  219              		.cfi_endproc
  220              	.LFE126:
  222              		.text
  223              	.Letext0:
  224              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
  225              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
-ARM GAS  /tmp/ccfHcTtC.s 			page 6
+ARM GAS  /tmp/ccR0d1do.s 			page 6
 
 
  226              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
@@ -307,21 +307,21 @@ ARM GAS  /tmp/ccfHcTtC.s 			page 1
  229              		.file 7 "Lib/motor_app/include/motor_msg.h"
  230              		.file 8 "Lib/motor_app/include/unitreeA1_cmd.h"
  231              		.file 9 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h"
-ARM GAS  /tmp/ccfHcTtC.s 			page 7
+ARM GAS  /tmp/ccR0d1do.s 			page 7
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 bsp_tim.c
-     /tmp/ccfHcTtC.s:20     .text.TIMx_NVIC_Configuration:0000000000000000 $t
-     /tmp/ccfHcTtC.s:25     .text.TIMx_NVIC_Configuration:0000000000000000 TIMx_NVIC_Configuration
-     /tmp/ccfHcTtC.s:70     .text.TIM_Mode_Config:0000000000000000 $t
-     /tmp/ccfHcTtC.s:75     .text.TIM_Mode_Config:0000000000000000 TIM_Mode_Config
-     /tmp/ccfHcTtC.s:131    .text.TIM_Mode_Config:0000000000000044 $d
-     /tmp/ccfHcTtC.s:136    .text.TIMx_Configuration:0000000000000000 $t
-     /tmp/ccfHcTtC.s:142    .text.TIMx_Configuration:0000000000000000 TIMx_Configuration
-     /tmp/ccfHcTtC.s:164    .text.TIM6_DAC_IRQHandler:0000000000000000 $t
-     /tmp/ccfHcTtC.s:170    .text.TIM6_DAC_IRQHandler:0000000000000000 TIM6_DAC_IRQHandler
-     /tmp/ccfHcTtC.s:216    .text.TIM6_DAC_IRQHandler:000000000000003c $d
+     /tmp/ccR0d1do.s:20     .text.TIMx_NVIC_Configuration:0000000000000000 $t
+     /tmp/ccR0d1do.s:25     .text.TIMx_NVIC_Configuration:0000000000000000 TIMx_NVIC_Configuration
+     /tmp/ccR0d1do.s:70     .text.TIM_Mode_Config:0000000000000000 $t
+     /tmp/ccR0d1do.s:75     .text.TIM_Mode_Config:0000000000000000 TIM_Mode_Config
+     /tmp/ccR0d1do.s:131    .text.TIM_Mode_Config:0000000000000044 $d
+     /tmp/ccR0d1do.s:136    .text.TIMx_Configuration:0000000000000000 $t
+     /tmp/ccR0d1do.s:142    .text.TIMx_Configuration:0000000000000000 TIMx_Configuration
+     /tmp/ccR0d1do.s:164    .text.TIM6_DAC_IRQHandler:0000000000000000 $t
+     /tmp/ccR0d1do.s:170    .text.TIM6_DAC_IRQHandler:0000000000000000 TIM6_DAC_IRQHandler
+     /tmp/ccR0d1do.s:216    .text.TIM6_DAC_IRQHandler:000000000000003c $d
 
 UNDEFINED SYMBOLS
 NVIC_PriorityGroupConfig

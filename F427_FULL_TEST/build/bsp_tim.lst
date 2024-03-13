@@ -1,0 +1,338 @@
+ARM GAS  /tmp/ccxq6WQw.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"bsp_tim.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.TIMx_NVIC_Configuration,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	TIMx_NVIC_Configuration:
+  26              	.LFB123:
+  27              		.file 1 "Lib/bsp/src/bsp_tim.c"
+   1:Lib/bsp/src/bsp_tim.c **** #include "bsp_tim.h"
+   2:Lib/bsp/src/bsp_tim.c **** 
+   3:Lib/bsp/src/bsp_tim.c **** static void TIMx_NVIC_Configuration(void)
+   4:Lib/bsp/src/bsp_tim.c **** {
+  28              		.loc 1 4 1 view -0
+  29              		.cfi_startproc
+  30              		@ args = 0, pretend = 0, frame = 8
+  31              		@ frame_needed = 0, uses_anonymous_args = 0
+  32 0000 00B5     		push	{lr}
+  33              		.cfi_def_cfa_offset 4
+  34              		.cfi_offset 14, -4
+  35 0002 83B0     		sub	sp, sp, #12
+  36              		.cfi_def_cfa_offset 16
+   5:Lib/bsp/src/bsp_tim.c ****     NVIC_InitTypeDef NVIC_InitStructure;
+  37              		.loc 1 5 5 view .LVU1
+   6:Lib/bsp/src/bsp_tim.c ****     // 设置中断组为0
+   7:Lib/bsp/src/bsp_tim.c ****     NVIC_PriorityGroupConfig(NVIC_PriorityGroup_0);
+  38              		.loc 1 7 5 view .LVU2
+  39 0004 4FF4E060 		mov	r0, #1792
+  40 0008 FFF7FEFF 		bl	NVIC_PriorityGroupConfig
+  41              	.LVL0:
+   8:Lib/bsp/src/bsp_tim.c ****     // 设置中断来源
+   9:Lib/bsp/src/bsp_tim.c ****     NVIC_InitStructure.NVIC_IRQChannel = BASIC_TIM_IRQn;
+  42              		.loc 1 9 5 view .LVU3
+  43              		.loc 1 9 40 is_stmt 0 view .LVU4
+  44 000c 3623     		movs	r3, #54
+  45 000e 8DF80430 		strb	r3, [sp, #4]
+  10:Lib/bsp/src/bsp_tim.c ****     // 设置抢占优先级
+  11:Lib/bsp/src/bsp_tim.c ****     NVIC_InitStructure.NVIC_IRQChannelPreemptionPriority = 0;
+  46              		.loc 1 11 5 is_stmt 1 view .LVU5
+  47              		.loc 1 11 58 is_stmt 0 view .LVU6
+ARM GAS  /tmp/ccxq6WQw.s 			page 2
+
+
+  48 0012 0023     		movs	r3, #0
+  49 0014 8DF80530 		strb	r3, [sp, #5]
+  12:Lib/bsp/src/bsp_tim.c ****     // 设置子优先级
+  13:Lib/bsp/src/bsp_tim.c ****     NVIC_InitStructure.NVIC_IRQChannelSubPriority = 0;
+  50              		.loc 1 13 5 is_stmt 1 view .LVU7
+  51              		.loc 1 13 51 is_stmt 0 view .LVU8
+  52 0018 8DF80630 		strb	r3, [sp, #6]
+  14:Lib/bsp/src/bsp_tim.c ****     NVIC_InitStructure.NVIC_IRQChannelCmd = ENABLE;
+  53              		.loc 1 14 5 is_stmt 1 view .LVU9
+  54              		.loc 1 14 43 is_stmt 0 view .LVU10
+  55 001c 0123     		movs	r3, #1
+  56 001e 8DF80730 		strb	r3, [sp, #7]
+  15:Lib/bsp/src/bsp_tim.c ****     NVIC_Init(&NVIC_InitStructure);
+  57              		.loc 1 15 5 is_stmt 1 view .LVU11
+  58 0022 01A8     		add	r0, sp, #4
+  59 0024 FFF7FEFF 		bl	NVIC_Init
+  60              	.LVL1:
+  16:Lib/bsp/src/bsp_tim.c **** }
+  61              		.loc 1 16 1 is_stmt 0 view .LVU12
+  62 0028 03B0     		add	sp, sp, #12
+  63              		.cfi_def_cfa_offset 4
+  64              		@ sp needed
+  65 002a 5DF804FB 		ldr	pc, [sp], #4
+  66              		.cfi_endproc
+  67              	.LFE123:
+  69              		.section	.text.TIM_Mode_Config,"ax",%progbits
+  70              		.align	1
+  71              		.syntax unified
+  72              		.thumb
+  73              		.thumb_func
+  75              	TIM_Mode_Config:
+  76              	.LFB124:
+  17:Lib/bsp/src/bsp_tim.c **** 
+  18:Lib/bsp/src/bsp_tim.c **** static void TIM_Mode_Config(void)
+  19:Lib/bsp/src/bsp_tim.c **** {
+  77              		.loc 1 19 1 is_stmt 1 view -0
+  78              		.cfi_startproc
+  79              		@ args = 0, pretend = 0, frame = 16
+  80              		@ frame_needed = 0, uses_anonymous_args = 0
+  81 0000 10B5     		push	{r4, lr}
+  82              		.cfi_def_cfa_offset 8
+  83              		.cfi_offset 4, -8
+  84              		.cfi_offset 14, -4
+  85 0002 84B0     		sub	sp, sp, #16
+  86              		.cfi_def_cfa_offset 24
+  20:Lib/bsp/src/bsp_tim.c ****     TIM_TimeBaseInitTypeDef TIM_TimeBaseStructure;
+  87              		.loc 1 20 5 view .LVU14
+  21:Lib/bsp/src/bsp_tim.c **** 
+  22:Lib/bsp/src/bsp_tim.c ****     // 开启TIMx_CLK,x[6,7]
+  23:Lib/bsp/src/bsp_tim.c ****     RCC_APB1PeriphClockCmd(BASIC_TIM_CLK, ENABLE);
+  88              		.loc 1 23 5 view .LVU15
+  89 0004 0121     		movs	r1, #1
+  90 0006 1020     		movs	r0, #16
+  91 0008 FFF7FEFF 		bl	RCC_APB1PeriphClockCmd
+  92              	.LVL2:
+  24:Lib/bsp/src/bsp_tim.c **** 
+  25:Lib/bsp/src/bsp_tim.c ****     /* 累计 TIM_Period个后产生一个更新或者中断*/
+ARM GAS  /tmp/ccxq6WQw.s 			page 3
+
+
+  26:Lib/bsp/src/bsp_tim.c ****     // 当定时器从0计数到4999，即为5000次，为一个定时周期
+  27:Lib/bsp/src/bsp_tim.c ****     TIM_TimeBaseStructure.TIM_Period = 1000 - 1;
+  93              		.loc 1 27 5 view .LVU16
+  94              		.loc 1 27 38 is_stmt 0 view .LVU17
+  95 000c 40F2E733 		movw	r3, #999
+  96 0010 0293     		str	r3, [sp, #8]
+  28:Lib/bsp/src/bsp_tim.c **** 
+  29:Lib/bsp/src/bsp_tim.c ****     // 定时器时钟源TIMxCLK = 2 * PCLK1
+  30:Lib/bsp/src/bsp_tim.c ****     //         PCLK1 = HCLK / 4
+  31:Lib/bsp/src/bsp_tim.c ****     //         =>
+  32:Lib/bsp/src/bsp_tim.c ****     //  TIMxCLK=HCLK/2=SystemCoreClock/2=84000000Hz
+  33:Lib/bsp/src/bsp_tim.c ****     //  设定定时器频率为=TIMxCLK/(TIM_Prescaler+1)=100000Hz
+  34:Lib/bsp/src/bsp_tim.c ****     TIM_TimeBaseStructure.TIM_Prescaler = 840 - 1;
+  97              		.loc 1 34 5 is_stmt 1 view .LVU18
+  98              		.loc 1 34 41 is_stmt 0 view .LVU19
+  99 0012 40F24733 		movw	r3, #839
+ 100 0016 ADF80430 		strh	r3, [sp, #4]	@ movhi
+  35:Lib/bsp/src/bsp_tim.c **** 
+  36:Lib/bsp/src/bsp_tim.c ****     //callback 频率 100000Hz/(TIM_Period+1) = 1000hz
+  37:Lib/bsp/src/bsp_tim.c **** 
+  38:Lib/bsp/src/bsp_tim.c ****     // 初始化定时器TIMx, x[2,3,4,5]
+  39:Lib/bsp/src/bsp_tim.c ****     TIM_TimeBaseInit(BASIC_TIM, &TIM_TimeBaseStructure);
+ 101              		.loc 1 39 5 is_stmt 1 view .LVU20
+ 102 001a 0A4C     		ldr	r4, .L5
+ 103 001c 01A9     		add	r1, sp, #4
+ 104 001e 2046     		mov	r0, r4
+ 105 0020 FFF7FEFF 		bl	TIM_TimeBaseInit
+ 106              	.LVL3:
+  40:Lib/bsp/src/bsp_tim.c **** 
+  41:Lib/bsp/src/bsp_tim.c ****     // 清除定时器更新中断标志位
+  42:Lib/bsp/src/bsp_tim.c ****     TIM_ClearFlag(BASIC_TIM, TIM_FLAG_Update);
+ 107              		.loc 1 42 5 view .LVU21
+ 108 0024 0121     		movs	r1, #1
+ 109 0026 2046     		mov	r0, r4
+ 110 0028 FFF7FEFF 		bl	TIM_ClearFlag
+ 111              	.LVL4:
+  43:Lib/bsp/src/bsp_tim.c **** 
+  44:Lib/bsp/src/bsp_tim.c ****     // 开启定时器更新中断
+  45:Lib/bsp/src/bsp_tim.c ****     TIM_ITConfig(BASIC_TIM, TIM_IT_Update, ENABLE);
+ 112              		.loc 1 45 5 view .LVU22
+ 113 002c 0122     		movs	r2, #1
+ 114 002e 1146     		mov	r1, r2
+ 115 0030 2046     		mov	r0, r4
+ 116 0032 FFF7FEFF 		bl	TIM_ITConfig
+ 117              	.LVL5:
+  46:Lib/bsp/src/bsp_tim.c **** 
+  47:Lib/bsp/src/bsp_tim.c ****     // 使能定时器
+  48:Lib/bsp/src/bsp_tim.c ****     TIM_Cmd(BASIC_TIM, ENABLE);
+ 118              		.loc 1 48 5 view .LVU23
+ 119 0036 0121     		movs	r1, #1
+ 120 0038 2046     		mov	r0, r4
+ 121 003a FFF7FEFF 		bl	TIM_Cmd
+ 122              	.LVL6:
+  49:Lib/bsp/src/bsp_tim.c **** }
+ 123              		.loc 1 49 1 is_stmt 0 view .LVU24
+ 124 003e 04B0     		add	sp, sp, #16
+ 125              		.cfi_def_cfa_offset 8
+ARM GAS  /tmp/ccxq6WQw.s 			page 4
+
+
+ 126              		@ sp needed
+ 127 0040 10BD     		pop	{r4, pc}
+ 128              	.L6:
+ 129 0042 00BF     		.align	2
+ 130              	.L5:
+ 131 0044 00100040 		.word	1073745920
+ 132              		.cfi_endproc
+ 133              	.LFE124:
+ 135              		.section	.text.TIMx_Configuration,"ax",%progbits
+ 136              		.align	1
+ 137              		.global	TIMx_Configuration
+ 138              		.syntax unified
+ 139              		.thumb
+ 140              		.thumb_func
+ 142              	TIMx_Configuration:
+ 143              	.LFB125:
+  50:Lib/bsp/src/bsp_tim.c **** 
+  51:Lib/bsp/src/bsp_tim.c **** void TIMx_Configuration()
+  52:Lib/bsp/src/bsp_tim.c **** {
+ 144              		.loc 1 52 1 is_stmt 1 view -0
+ 145              		.cfi_startproc
+ 146              		@ args = 0, pretend = 0, frame = 0
+ 147              		@ frame_needed = 0, uses_anonymous_args = 0
+ 148 0000 08B5     		push	{r3, lr}
+ 149              		.cfi_def_cfa_offset 8
+ 150              		.cfi_offset 3, -8
+ 151              		.cfi_offset 14, -4
+  53:Lib/bsp/src/bsp_tim.c ****     TIMx_NVIC_Configuration();
+ 152              		.loc 1 53 5 view .LVU26
+ 153 0002 FFF7FEFF 		bl	TIMx_NVIC_Configuration
+ 154              	.LVL7:
+  54:Lib/bsp/src/bsp_tim.c ****     TIM_Mode_Config();
+ 155              		.loc 1 54 5 view .LVU27
+ 156 0006 FFF7FEFF 		bl	TIM_Mode_Config
+ 157              	.LVL8:
+  55:Lib/bsp/src/bsp_tim.c **** }
+ 158              		.loc 1 55 1 is_stmt 0 view .LVU28
+ 159 000a 08BD     		pop	{r3, pc}
+ 160              		.cfi_endproc
+ 161              	.LFE125:
+ 163              		.section	.text.TIM6_DAC_IRQHandler,"ax",%progbits
+ 164              		.align	1
+ 165              		.global	TIM6_DAC_IRQHandler
+ 166              		.syntax unified
+ 167              		.thumb
+ 168              		.thumb_func
+ 170              	TIM6_DAC_IRQHandler:
+ 171              	.LFB126:
+  56:Lib/bsp/src/bsp_tim.c **** 
+  57:Lib/bsp/src/bsp_tim.c **** void TIM6_DAC_IRQHandler(void)
+  58:Lib/bsp/src/bsp_tim.c **** {
+ 172              		.loc 1 58 1 is_stmt 1 view -0
+ 173              		.cfi_startproc
+ 174              		@ args = 0, pretend = 0, frame = 0
+ 175              		@ frame_needed = 0, uses_anonymous_args = 0
+ 176 0000 08B5     		push	{r3, lr}
+ 177              		.cfi_def_cfa_offset 8
+ARM GAS  /tmp/ccxq6WQw.s 			page 5
+
+
+ 178              		.cfi_offset 3, -8
+ 179              		.cfi_offset 14, -4
+  59:Lib/bsp/src/bsp_tim.c ****     if (TIM_GetITStatus(TIM6, TIM_IT_Update) != RESET)
+ 180              		.loc 1 59 5 view .LVU30
+ 181              		.loc 1 59 9 is_stmt 0 view .LVU31
+ 182 0002 0121     		movs	r1, #1
+ 183 0004 0D48     		ldr	r0, .L13
+ 184 0006 FFF7FEFF 		bl	TIM_GetITStatus
+ 185              	.LVL9:
+ 186              		.loc 1 59 8 view .LVU32
+ 187 000a 00B9     		cbnz	r0, .L12
+ 188              	.L9:
+  60:Lib/bsp/src/bsp_tim.c ****     {
+  61:Lib/bsp/src/bsp_tim.c ****         TIM_ClearITPendingBit(TIM6, TIM_IT_Update);
+  62:Lib/bsp/src/bsp_tim.c ****         modfiy_cmd(&cmd_leg[2], 1, 0, 0, 0, 0, 0);
+  63:Lib/bsp/src/bsp_tim.c ****         unitreeA1_tx(2);
+  64:Lib/bsp/src/bsp_tim.c ****     }
+  65:Lib/bsp/src/bsp_tim.c **** }
+ 189              		.loc 1 65 1 view .LVU33
+ 190 000c 08BD     		pop	{r3, pc}
+ 191              	.L12:
+  61:Lib/bsp/src/bsp_tim.c ****         modfiy_cmd(&cmd_leg[2], 1, 0, 0, 0, 0, 0);
+ 192              		.loc 1 61 9 is_stmt 1 view .LVU34
+ 193 000e 0121     		movs	r1, #1
+ 194 0010 0A48     		ldr	r0, .L13
+ 195 0012 FFF7FEFF 		bl	TIM_ClearITPendingBit
+ 196              	.LVL10:
+  62:Lib/bsp/src/bsp_tim.c ****         unitreeA1_tx(2);
+ 197              		.loc 1 62 9 view .LVU35
+ 198 0016 9FED0A0A 		vldr.32	s0, .L13+4
+ 199 001a B0EE402A 		vmov.f32	s4, s0
+ 200 001e F0EE401A 		vmov.f32	s3, s0
+ 201 0022 B0EE401A 		vmov.f32	s2, s0
+ 202 0026 F0EE400A 		vmov.f32	s1, s0
+ 203 002a 0121     		movs	r1, #1
+ 204 002c 0548     		ldr	r0, .L13+8
+ 205 002e FFF7FEFF 		bl	modfiy_cmd
+ 206              	.LVL11:
+  63:Lib/bsp/src/bsp_tim.c ****     }
+ 207              		.loc 1 63 9 view .LVU36
+ 208 0032 0220     		movs	r0, #2
+ 209 0034 FFF7FEFF 		bl	unitreeA1_tx
+ 210              	.LVL12:
+ 211              		.loc 1 65 1 is_stmt 0 view .LVU37
+ 212 0038 E8E7     		b	.L9
+ 213              	.L14:
+ 214 003a 00BF     		.align	2
+ 215              	.L13:
+ 216 003c 00100040 		.word	1073745920
+ 217 0040 00000000 		.word	0
+ 218 0044 84000000 		.word	cmd_leg+132
+ 219              		.cfi_endproc
+ 220              	.LFE126:
+ 222              		.text
+ 223              	.Letext0:
+ 224              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 225              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ARM GAS  /tmp/ccxq6WQw.s 			page 6
+
+
+ 226              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 227              		.file 5 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_tim.h"
+ 228              		.file 6 "Drivers/STM32F4xx_StdPeriph_Driver/inc/misc.h"
+ 229              		.file 7 "Lib/motor_app/include/motor_msg.h"
+ 230              		.file 8 "Lib/motor_app/include/unitreeA1_cmd.h"
+ 231              		.file 9 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h"
+ARM GAS  /tmp/ccxq6WQw.s 			page 7
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 bsp_tim.c
+     /tmp/ccxq6WQw.s:20     .text.TIMx_NVIC_Configuration:0000000000000000 $t
+     /tmp/ccxq6WQw.s:25     .text.TIMx_NVIC_Configuration:0000000000000000 TIMx_NVIC_Configuration
+     /tmp/ccxq6WQw.s:70     .text.TIM_Mode_Config:0000000000000000 $t
+     /tmp/ccxq6WQw.s:75     .text.TIM_Mode_Config:0000000000000000 TIM_Mode_Config
+     /tmp/ccxq6WQw.s:131    .text.TIM_Mode_Config:0000000000000044 $d
+     /tmp/ccxq6WQw.s:136    .text.TIMx_Configuration:0000000000000000 $t
+     /tmp/ccxq6WQw.s:142    .text.TIMx_Configuration:0000000000000000 TIMx_Configuration
+     /tmp/ccxq6WQw.s:164    .text.TIM6_DAC_IRQHandler:0000000000000000 $t
+     /tmp/ccxq6WQw.s:170    .text.TIM6_DAC_IRQHandler:0000000000000000 TIM6_DAC_IRQHandler
+     /tmp/ccxq6WQw.s:216    .text.TIM6_DAC_IRQHandler:000000000000003c $d
+
+UNDEFINED SYMBOLS
+NVIC_PriorityGroupConfig
+NVIC_Init
+RCC_APB1PeriphClockCmd
+TIM_TimeBaseInit
+TIM_ClearFlag
+TIM_ITConfig
+TIM_Cmd
+TIM_GetITStatus
+TIM_ClearITPendingBit
+modfiy_cmd
+unitreeA1_tx
+cmd_leg

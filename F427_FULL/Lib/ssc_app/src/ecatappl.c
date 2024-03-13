@@ -406,13 +406,16 @@ UINT16 MainInit(void)
     led_setup();
     CAN1_Config();
 	CAN2_Config();
-    SysTick_Init();
-
+    
     //usart
     remote_control_init();
 
     //timer
     TIMx_Configuration();
+    
+    SysTick_Init();
+
+
 
     /*Timer initialization*/
     u16BusCycleCntMs = 0;
