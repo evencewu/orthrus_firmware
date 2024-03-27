@@ -1,0 +1,1629 @@
+ARM GAS  /tmp/ccbfPfxf.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"RC.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.sbus_to_rc,"ax",%progbits
+  20              		.align	1
+  21              		.syntax unified
+  22              		.thumb
+  23              		.thumb_func
+  25              	sbus_to_rc:
+  26              	.LVL0:
+  27              	.LFB134:
+  28              		.file 1 "Lib/app/src/RC.c"
+   1:Lib/app/src/RC.c **** #include "main.h"
+   2:Lib/app/src/RC.c **** #include "RC.h"
+   3:Lib/app/src/RC.c **** #include "unitreeA1_cmd.h"
+   4:Lib/app/src/RC.c **** #include "bsp_dma.h"
+   5:Lib/app/src/RC.c **** #include "tim.h"
+   6:Lib/app/src/RC.c **** #include "bsp_can.h"
+   7:Lib/app/src/RC.c **** 
+   8:Lib/app/src/RC.c **** #define L 0
+   9:Lib/app/src/RC.c **** #define R 1
+  10:Lib/app/src/RC.c **** 
+  11:Lib/app/src/RC.c **** extern UART_HandleTypeDef huart1;
+  12:Lib/app/src/RC.c **** extern UART_HandleTypeDef huart6;
+  13:Lib/app/src/RC.c **** 
+  14:Lib/app/src/RC.c **** extern DMA_HandleTypeDef hdma_usart1_rx;
+  15:Lib/app/src/RC.c **** extern DMA_HandleTypeDef hdma_usart6_rx;
+  16:Lib/app/src/RC.c **** 
+  17:Lib/app/src/RC.c **** extern motor_recv_t data_leg[2];
+  18:Lib/app/src/RC.c **** extern motor_recv_t data_motor[2][3];
+  19:Lib/app/src/RC.c **** 
+  20:Lib/app/src/RC.c **** Leg leg[2];
+  21:Lib/app/src/RC.c **** 
+  22:Lib/app/src/RC.c **** static void sbus_to_rc(volatile const uint8_t *sbus_buf, A1_buf *a1_buf);
+  23:Lib/app/src/RC.c **** 
+  24:Lib/app/src/RC.c **** static uint8_t sbus_rx_buf[2][SBUS_RX_BUF_NUM]; // 128字节,防越界
+  25:Lib/app/src/RC.c **** 
+  26:Lib/app/src/RC.c **** void remote_control_init(void)
+  27:Lib/app/src/RC.c **** {
+  28:Lib/app/src/RC.c ****     RC1_init(sbus_rx_buf[0], sbus_rx_buf[1], SBUS_RX_BUF_NUM);
+  29:Lib/app/src/RC.c ****     RC6_init(sbus_rx_buf[0], sbus_rx_buf[1], SBUS_RX_BUF_NUM);
+  30:Lib/app/src/RC.c **** }
+ARM GAS  /tmp/ccbfPfxf.s 			page 2
+
+
+  31:Lib/app/src/RC.c **** 
+  32:Lib/app/src/RC.c **** void USART1_IRQHandler(void)
+  33:Lib/app/src/RC.c **** {
+  34:Lib/app/src/RC.c ****     extern uint8_t usart1RxBuffer[78];
+  35:Lib/app/src/RC.c ****     if (huart1.Instance->SR & UART_FLAG_RXNE) // 接收到数据
+  36:Lib/app/src/RC.c ****     {
+  37:Lib/app/src/RC.c ****         __HAL_UART_CLEAR_PEFLAG(&huart1);
+  38:Lib/app/src/RC.c ****     }
+  39:Lib/app/src/RC.c ****     else if (USART1->SR & UART_FLAG_IDLE)
+  40:Lib/app/src/RC.c ****     {
+  41:Lib/app/src/RC.c ****         static uint16_t this_time_rx_len = 0;
+  42:Lib/app/src/RC.c **** 
+  43:Lib/app/src/RC.c ****         __HAL_UART_CLEAR_PEFLAG(&huart1);
+  44:Lib/app/src/RC.c **** 
+  45:Lib/app/src/RC.c ****         if ((hdma_usart1_rx.Instance->CR & DMA_SxCR_CT) == RESET)
+  46:Lib/app/src/RC.c ****         {
+  47:Lib/app/src/RC.c ****             /* Current memory buffer used is Memory 0 */
+  48:Lib/app/src/RC.c **** 
+  49:Lib/app/src/RC.c ****             // disable DMA
+  50:Lib/app/src/RC.c ****             // 失效DMA
+  51:Lib/app/src/RC.c ****             __HAL_DMA_DISABLE(&hdma_usart1_rx);
+  52:Lib/app/src/RC.c **** 
+  53:Lib/app/src/RC.c ****             // get receive data length, length = set_data_length - remain_length
+  54:Lib/app/src/RC.c ****             // 获取接收数据长度,长度 = 设定长度 - 剩余长度
+  55:Lib/app/src/RC.c ****             this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart1_rx.Instance->NDTR;
+  56:Lib/app/src/RC.c **** 
+  57:Lib/app/src/RC.c ****             // reset set_data_lenght
+  58:Lib/app/src/RC.c ****             // 重新设定数据长度
+  59:Lib/app/src/RC.c ****             hdma_usart1_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
+  60:Lib/app/src/RC.c **** 
+  61:Lib/app/src/RC.c ****             // set memory buffer 1
+  62:Lib/app/src/RC.c ****             // 设定缓冲区1
+  63:Lib/app/src/RC.c ****             hdma_usart1_rx.Instance->CR |= DMA_SxCR_CT;
+  64:Lib/app/src/RC.c **** 
+  65:Lib/app/src/RC.c ****             // enable DMA
+  66:Lib/app/src/RC.c ****             // 使能DMA
+  67:Lib/app/src/RC.c ****             __HAL_DMA_ENABLE(&hdma_usart1_rx);
+  68:Lib/app/src/RC.c **** 
+  69:Lib/app/src/RC.c ****             if (this_time_rx_len == RC_FRAME_LENGTH)
+  70:Lib/app/src/RC.c ****             {
+  71:Lib/app/src/RC.c ****                 uint8_t byte[8];
+  72:Lib/app/src/RC.c ****                 sbus_to_rc(sbus_rx_buf[0], &leg[L].a1_buf);
+  73:Lib/app/src/RC.c ****                 unitreeA1_rx(0);
+  74:Lib/app/src/RC.c ****             }
+  75:Lib/app/src/RC.c ****         }
+  76:Lib/app/src/RC.c ****         else
+  77:Lib/app/src/RC.c ****         {
+  78:Lib/app/src/RC.c ****             /* Current memory buffer used is Memory 1 */
+  79:Lib/app/src/RC.c ****             // disable DMA
+  80:Lib/app/src/RC.c ****             // 失效DMA
+  81:Lib/app/src/RC.c ****             __HAL_DMA_DISABLE(&hdma_usart1_rx);
+  82:Lib/app/src/RC.c **** 
+  83:Lib/app/src/RC.c ****             // get receive data length, length = set_data_length - remain_length
+  84:Lib/app/src/RC.c ****             // 获取接收数据长度,长度 = 设定长度 - 剩余长度
+  85:Lib/app/src/RC.c ****             this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart1_rx.Instance->NDTR;
+  86:Lib/app/src/RC.c **** 
+  87:Lib/app/src/RC.c ****             // reset set_data_lenght
+ARM GAS  /tmp/ccbfPfxf.s 			page 3
+
+
+  88:Lib/app/src/RC.c ****             // 重新设定数据长度
+  89:Lib/app/src/RC.c ****             hdma_usart1_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
+  90:Lib/app/src/RC.c **** 
+  91:Lib/app/src/RC.c ****             // set memory buffer 0
+  92:Lib/app/src/RC.c ****             // 设定缓冲区0
+  93:Lib/app/src/RC.c ****             DMA2_Stream2->CR &= ~(DMA_SxCR_CT);
+  94:Lib/app/src/RC.c **** 
+  95:Lib/app/src/RC.c ****             // enable DMA
+  96:Lib/app/src/RC.c ****             // 使能DMA
+  97:Lib/app/src/RC.c ****             __HAL_DMA_ENABLE(&hdma_usart1_rx);
+  98:Lib/app/src/RC.c **** 
+  99:Lib/app/src/RC.c ****             if (this_time_rx_len == RC_FRAME_LENGTH)
+ 100:Lib/app/src/RC.c ****             {
+ 101:Lib/app/src/RC.c ****                 // 处理数据
+ 102:Lib/app/src/RC.c ****                 uint8_t byte[8];
+ 103:Lib/app/src/RC.c ****                 sbus_to_rc(sbus_rx_buf[1], &leg[L].a1_buf);
+ 104:Lib/app/src/RC.c ****                 unitreeA1_rx(0);
+ 105:Lib/app/src/RC.c ****             }
+ 106:Lib/app/src/RC.c ****         }
+ 107:Lib/app/src/RC.c ****     }
+ 108:Lib/app/src/RC.c **** }
+ 109:Lib/app/src/RC.c **** 
+ 110:Lib/app/src/RC.c **** void USART6_IRQHandler(void)
+ 111:Lib/app/src/RC.c **** {
+ 112:Lib/app/src/RC.c ****     extern uint8_t usart6RxBuffer[78];
+ 113:Lib/app/src/RC.c ****     if (huart6.Instance->SR & UART_FLAG_RXNE) // 接收到数据
+ 114:Lib/app/src/RC.c ****     {
+ 115:Lib/app/src/RC.c ****         __HAL_UART_CLEAR_PEFLAG(&huart6);
+ 116:Lib/app/src/RC.c ****     }
+ 117:Lib/app/src/RC.c ****     else if (USART6->SR & UART_FLAG_IDLE)
+ 118:Lib/app/src/RC.c ****     {
+ 119:Lib/app/src/RC.c ****         static uint16_t this_time_rx_len = 0;
+ 120:Lib/app/src/RC.c **** 
+ 121:Lib/app/src/RC.c ****         __HAL_UART_CLEAR_PEFLAG(&huart6);
+ 122:Lib/app/src/RC.c **** 
+ 123:Lib/app/src/RC.c ****         if ((hdma_usart6_rx.Instance->CR & DMA_SxCR_CT) == RESET)
+ 124:Lib/app/src/RC.c ****         {
+ 125:Lib/app/src/RC.c ****             /* Current memory buffer used is Memory 0 */
+ 126:Lib/app/src/RC.c **** 
+ 127:Lib/app/src/RC.c ****             // disable DMA
+ 128:Lib/app/src/RC.c ****             // 失效DMA
+ 129:Lib/app/src/RC.c ****             __HAL_DMA_DISABLE(&hdma_usart6_rx);
+ 130:Lib/app/src/RC.c **** 
+ 131:Lib/app/src/RC.c ****             // get receive data length, length = set_data_length - remain_length
+ 132:Lib/app/src/RC.c ****             // 获取接收数据长度,长度 = 设定长度 - 剩余长度
+ 133:Lib/app/src/RC.c ****             this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart6_rx.Instance->NDTR;
+ 134:Lib/app/src/RC.c **** 
+ 135:Lib/app/src/RC.c ****             // reset set_data_lenght
+ 136:Lib/app/src/RC.c ****             // 重新设定数据长度
+ 137:Lib/app/src/RC.c ****             hdma_usart6_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
+ 138:Lib/app/src/RC.c **** 
+ 139:Lib/app/src/RC.c ****             // set memory buffer 1
+ 140:Lib/app/src/RC.c ****             // 设定缓冲区1
+ 141:Lib/app/src/RC.c ****             hdma_usart6_rx.Instance->CR |= DMA_SxCR_CT;
+ 142:Lib/app/src/RC.c **** 
+ 143:Lib/app/src/RC.c ****             // enable DMA
+ 144:Lib/app/src/RC.c ****             // 使能DMA
+ARM GAS  /tmp/ccbfPfxf.s 			page 4
+
+
+ 145:Lib/app/src/RC.c ****             __HAL_DMA_ENABLE(&hdma_usart6_rx);
+ 146:Lib/app/src/RC.c **** 
+ 147:Lib/app/src/RC.c ****             if (this_time_rx_len == RC_FRAME_LENGTH)
+ 148:Lib/app/src/RC.c ****             {
+ 149:Lib/app/src/RC.c ****                 uint8_t byte[8];
+ 150:Lib/app/src/RC.c ****                 sbus_to_rc(sbus_rx_buf[0], &leg[R].a1_buf);
+ 151:Lib/app/src/RC.c ****                 unitreeA1_rx(1);
+ 152:Lib/app/src/RC.c ****             }
+ 153:Lib/app/src/RC.c ****         }
+ 154:Lib/app/src/RC.c ****         else
+ 155:Lib/app/src/RC.c ****         {
+ 156:Lib/app/src/RC.c ****             /* Current memory buffer used is Memory 1 */
+ 157:Lib/app/src/RC.c ****             // disable DMA
+ 158:Lib/app/src/RC.c ****             // 失效DMA
+ 159:Lib/app/src/RC.c ****             __HAL_DMA_DISABLE(&hdma_usart6_rx);
+ 160:Lib/app/src/RC.c **** 
+ 161:Lib/app/src/RC.c ****             // get receive data length, length = set_data_length - remain_length
+ 162:Lib/app/src/RC.c ****             // 获取接收数据长度,长度 = 设定长度 - 剩余长度
+ 163:Lib/app/src/RC.c ****             this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart6_rx.Instance->NDTR;
+ 164:Lib/app/src/RC.c **** 
+ 165:Lib/app/src/RC.c ****             // reset set_data_lenght
+ 166:Lib/app/src/RC.c ****             // 重新设定数据长度
+ 167:Lib/app/src/RC.c ****             hdma_usart6_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
+ 168:Lib/app/src/RC.c **** 
+ 169:Lib/app/src/RC.c ****             // set memory buffer 0
+ 170:Lib/app/src/RC.c ****             // 设定缓冲区0
+ 171:Lib/app/src/RC.c ****             DMA2_Stream1->CR &= ~(DMA_SxCR_CT);
+ 172:Lib/app/src/RC.c **** 
+ 173:Lib/app/src/RC.c ****             // enable DMA
+ 174:Lib/app/src/RC.c ****             // 使能DMA
+ 175:Lib/app/src/RC.c ****             __HAL_DMA_ENABLE(&hdma_usart6_rx);
+ 176:Lib/app/src/RC.c **** 
+ 177:Lib/app/src/RC.c ****             if (this_time_rx_len == RC_FRAME_LENGTH)
+ 178:Lib/app/src/RC.c ****             {
+ 179:Lib/app/src/RC.c ****                 // 处理数据
+ 180:Lib/app/src/RC.c ****                 uint8_t byte[8];
+ 181:Lib/app/src/RC.c ****                 sbus_to_rc(sbus_rx_buf[1], &leg[R].a1_buf);
+ 182:Lib/app/src/RC.c ****                 unitreeA1_rx(1);
+ 183:Lib/app/src/RC.c ****             }
+ 184:Lib/app/src/RC.c ****         }
+ 185:Lib/app/src/RC.c ****     }
+ 186:Lib/app/src/RC.c **** }
+ 187:Lib/app/src/RC.c **** 
+ 188:Lib/app/src/RC.c **** void unitreeA1_rx(int leg_id)
+ 189:Lib/app/src/RC.c **** {
+ 190:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.head.motorID = leg[leg_id].a1_buf.motorID;
+ 191:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
+ 192:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.T = leg[leg_id].a1_buf.T;
+ 193:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.W = leg[leg_id].a1_buf.W;
+ 194:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
+ 195:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
+ 196:Lib/app/src/RC.c **** 
+ 197:Lib/app/src/RC.c ****     data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
+ 198:Lib/app/src/RC.c ****     data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
+ 199:Lib/app/src/RC.c ****     data_leg[leg_id].T = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.T / 256.0f);
+ 200:Lib/app/src/RC.c ****     data_leg[leg_id].W = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.W / 128.0f);
+ 201:Lib/app/src/RC.c ****     data_leg[leg_id].Acc = (float)data_leg[leg_id].motor_recv_data.Mdata.Acc;
+ARM GAS  /tmp/ccbfPfxf.s 			page 5
+
+
+ 202:Lib/app/src/RC.c ****     data_leg[leg_id].Pos = (float)((data_leg[leg_id].motor_recv_data.Mdata.Pos / 16384.0f) * 6.2832
+ 203:Lib/app/src/RC.c **** 
+ 204:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].motor_id = data_leg[leg_id].motor_id;
+ 205:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].MError = data_leg[leg_id].MError;
+ 206:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].T = data_leg[leg_id].T;
+ 207:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].W = data_leg[leg_id].W;
+ 208:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].Acc = data_leg[leg_id].Acc;
+ 209:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].Pos = data_leg[leg_id].Pos;
+ 210:Lib/app/src/RC.c **** }
+ 211:Lib/app/src/RC.c **** 
+ 212:Lib/app/src/RC.c **** // dma接收赋值函数
+ 213:Lib/app/src/RC.c **** static void sbus_to_rc(volatile const uint8_t *sbus_buf, A1_buf *a1_buf)
+ 214:Lib/app/src/RC.c **** {
+  29              		.loc 1 214 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+ 215:Lib/app/src/RC.c ****     if (sbus_buf == NULL || a1_buf == NULL)
+  34              		.loc 1 215 5 view .LVU1
+  35              		.loc 1 215 8 is_stmt 0 view .LVU2
+  36 0000 0346     		mov	r3, r0
+  37 0002 00B3     		cbz	r0, .L1
+  38              		.loc 1 215 26 discriminator 1 view .LVU3
+  39 0004 F9B1     		cbz	r1, .L1
+ 216:Lib/app/src/RC.c ****     {
+ 217:Lib/app/src/RC.c ****         return;
+ 218:Lib/app/src/RC.c ****     }
+ 219:Lib/app/src/RC.c **** 
+ 220:Lib/app/src/RC.c ****     a1_buf->motorID = sbus_buf[2];
+  40              		.loc 1 220 5 is_stmt 1 view .LVU4
+  41              		.loc 1 220 21 is_stmt 0 view .LVU5
+  42 0006 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+  43 0008 0A70     		strb	r2, [r1]
+ 221:Lib/app/src/RC.c ****     a1_buf->MError = sbus_buf[7];
+  44              		.loc 1 221 5 is_stmt 1 view .LVU6
+  45              		.loc 1 221 20 is_stmt 0 view .LVU7
+  46 000a C279     		ldrb	r2, [r0, #7]	@ zero_extendqisi2
+  47 000c 4A70     		strb	r2, [r1, #1]
+ 222:Lib/app/src/RC.c ****     a1_buf->T = sbus_buf[13] << 8 | sbus_buf[12];
+  48              		.loc 1 222 5 is_stmt 1 view .LVU8
+  49              		.loc 1 222 25 is_stmt 0 view .LVU9
+  50 000e 407B     		ldrb	r0, [r0, #13]	@ zero_extendqisi2
+  51              	.LVL1:
+  52              		.loc 1 222 45 view .LVU10
+  53 0010 1A7B     		ldrb	r2, [r3, #12]	@ zero_extendqisi2
+  54              		.loc 1 222 35 view .LVU11
+  55 0012 42EA0022 		orr	r2, r2, r0, lsl #8
+  56              		.loc 1 222 15 view .LVU12
+  57 0016 4A80     		strh	r2, [r1, #2]	@ movhi
+ 223:Lib/app/src/RC.c ****     a1_buf->W = sbus_buf[15] << 8 | sbus_buf[14];
+  58              		.loc 1 223 5 is_stmt 1 view .LVU13
+  59              		.loc 1 223 25 is_stmt 0 view .LVU14
+  60 0018 D87B     		ldrb	r0, [r3, #15]	@ zero_extendqisi2
+  61              		.loc 1 223 45 view .LVU15
+  62 001a 9A7B     		ldrb	r2, [r3, #14]	@ zero_extendqisi2
+  63              		.loc 1 223 35 view .LVU16
+ARM GAS  /tmp/ccbfPfxf.s 			page 6
+
+
+  64 001c 42EA0022 		orr	r2, r2, r0, lsl #8
+  65              		.loc 1 223 15 view .LVU17
+  66 0020 8A80     		strh	r2, [r1, #4]	@ movhi
+ 224:Lib/app/src/RC.c ****     a1_buf->Acc = sbus_buf[28] << 8 | sbus_buf[27];
+  67              		.loc 1 224 5 is_stmt 1 view .LVU18
+  68              		.loc 1 224 27 is_stmt 0 view .LVU19
+  69 0022 187F     		ldrb	r0, [r3, #28]	@ zero_extendqisi2
+  70              		.loc 1 224 47 view .LVU20
+  71 0024 DA7E     		ldrb	r2, [r3, #27]	@ zero_extendqisi2
+  72              		.loc 1 224 37 view .LVU21
+  73 0026 42EA0022 		orr	r2, r2, r0, lsl #8
+  74              		.loc 1 224 17 view .LVU22
+  75 002a CA80     		strh	r2, [r1, #6]	@ movhi
+ 225:Lib/app/src/RC.c ****     a1_buf->Pos = sbus_buf[33] << 24 | sbus_buf[32] << 16 | sbus_buf[31] << 8 | sbus_buf[30];
+  76              		.loc 1 225 5 is_stmt 1 view .LVU23
+  77              		.loc 1 225 27 is_stmt 0 view .LVU24
+  78 002c 93F82100 		ldrb	r0, [r3, #33]	@ zero_extendqisi2
+  79              		.loc 1 225 48 view .LVU25
+  80 0030 93F82020 		ldrb	r2, [r3, #32]	@ zero_extendqisi2
+  81              		.loc 1 225 53 view .LVU26
+  82 0034 1204     		lsls	r2, r2, #16
+  83              		.loc 1 225 38 view .LVU27
+  84 0036 42EA0062 		orr	r2, r2, r0, lsl #24
+  85              		.loc 1 225 69 view .LVU28
+  86 003a D87F     		ldrb	r0, [r3, #31]	@ zero_extendqisi2
+  87              		.loc 1 225 59 view .LVU29
+  88 003c 42EA0022 		orr	r2, r2, r0, lsl #8
+  89              		.loc 1 225 89 view .LVU30
+  90 0040 9B7F     		ldrb	r3, [r3, #30]	@ zero_extendqisi2
+  91              	.LVL2:
+  92              		.loc 1 225 79 view .LVU31
+  93 0042 1A43     		orrs	r2, r2, r3
+  94              		.loc 1 225 17 view .LVU32
+  95 0044 8A60     		str	r2, [r1, #8]
+  96              	.L1:
+ 226:Lib/app/src/RC.c **** }
+  97              		.loc 1 226 1 view .LVU33
+  98 0046 7047     		bx	lr
+  99              		.cfi_endproc
+ 100              	.LFE134:
+ 102              		.section	.text.remote_control_init,"ax",%progbits
+ 103              		.align	1
+ 104              		.global	remote_control_init
+ 105              		.syntax unified
+ 106              		.thumb
+ 107              		.thumb_func
+ 109              	remote_control_init:
+ 110              	.LFB130:
+  27:Lib/app/src/RC.c ****     RC1_init(sbus_rx_buf[0], sbus_rx_buf[1], SBUS_RX_BUF_NUM);
+ 111              		.loc 1 27 1 is_stmt 1 view -0
+ 112              		.cfi_startproc
+ 113              		@ args = 0, pretend = 0, frame = 0
+ 114              		@ frame_needed = 0, uses_anonymous_args = 0
+ 115 0000 38B5     		push	{r3, r4, r5, lr}
+ 116              		.cfi_def_cfa_offset 16
+ 117              		.cfi_offset 3, -16
+ 118              		.cfi_offset 4, -12
+ARM GAS  /tmp/ccbfPfxf.s 			page 7
+
+
+ 119              		.cfi_offset 5, -8
+ 120              		.cfi_offset 14, -4
+  28:Lib/app/src/RC.c ****     RC6_init(sbus_rx_buf[0], sbus_rx_buf[1], SBUS_RX_BUF_NUM);
+ 121              		.loc 1 28 5 view .LVU35
+ 122 0002 074C     		ldr	r4, .L5
+ 123 0004 04F18005 		add	r5, r4, #128
+ 124 0008 8022     		movs	r2, #128
+ 125 000a 2946     		mov	r1, r5
+ 126 000c 2046     		mov	r0, r4
+ 127 000e FFF7FEFF 		bl	RC1_init
+ 128              	.LVL3:
+  29:Lib/app/src/RC.c **** }
+ 129              		.loc 1 29 5 view .LVU36
+ 130 0012 8022     		movs	r2, #128
+ 131 0014 2946     		mov	r1, r5
+ 132 0016 2046     		mov	r0, r4
+ 133 0018 FFF7FEFF 		bl	RC6_init
+ 134              	.LVL4:
+  30:Lib/app/src/RC.c **** 
+ 135              		.loc 1 30 1 is_stmt 0 view .LVU37
+ 136 001c 38BD     		pop	{r3, r4, r5, pc}
+ 137              	.L6:
+ 138 001e 00BF     		.align	2
+ 139              	.L5:
+ 140 0020 00000000 		.word	.LANCHOR0
+ 141              		.cfi_endproc
+ 142              	.LFE130:
+ 144              		.section	.text.unitreeA1_rx,"ax",%progbits
+ 145              		.align	1
+ 146              		.global	unitreeA1_rx
+ 147              		.syntax unified
+ 148              		.thumb
+ 149              		.thumb_func
+ 151              	unitreeA1_rx:
+ 152              	.LVL5:
+ 153              	.LFB133:
+ 189:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.head.motorID = leg[leg_id].a1_buf.motorID;
+ 154              		.loc 1 189 1 is_stmt 1 view -0
+ 155              		.cfi_startproc
+ 156              		@ args = 0, pretend = 0, frame = 0
+ 157              		@ frame_needed = 0, uses_anonymous_args = 0
+ 189:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.head.motorID = leg[leg_id].a1_buf.motorID;
+ 158              		.loc 1 189 1 is_stmt 0 view .LVU39
+ 159 0000 70B5     		push	{r4, r5, r6, lr}
+ 160              		.cfi_def_cfa_offset 16
+ 161              		.cfi_offset 4, -16
+ 162              		.cfi_offset 5, -12
+ 163              		.cfi_offset 6, -8
+ 164              		.cfi_offset 14, -4
+ 190:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
+ 165              		.loc 1 190 5 is_stmt 1 view .LVU40
+ 190:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
+ 166              		.loc 1 190 71 is_stmt 0 view .LVU41
+ 167 0002 304A     		ldr	r2, .L9
+ 168 0004 4FF4D273 		mov	r3, #420
+ 169 0008 03FB0022 		mla	r2, r3, r0, r2
+ 170 000c 92F89811 		ldrb	r1, [r2, #408]	@ zero_extendqisi2
+ARM GAS  /tmp/ccbfPfxf.s 			page 8
+
+
+ 190:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
+ 171              		.loc 1 190 51 view .LVU42
+ 172 0010 00EB0014 		add	r4, r0, r0, lsl #4
+ 173 0014 2C4B     		ldr	r3, .L9+4
+ 174 0016 03EBC403 		add	r3, r3, r4, lsl #3
+ 175 001a 9970     		strb	r1, [r3, #2]
+ 191:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.T = leg[leg_id].a1_buf.T;
+ 176              		.loc 1 191 5 is_stmt 1 view .LVU43
+ 191:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.T = leg[leg_id].a1_buf.T;
+ 177              		.loc 1 191 71 is_stmt 0 view .LVU44
+ 178 001c 92F89961 		ldrb	r6, [r2, #409]	@ zero_extendqisi2
+ 191:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.T = leg[leg_id].a1_buf.T;
+ 179              		.loc 1 191 51 view .LVU45
+ 180 0020 DE71     		strb	r6, [r3, #7]
+ 192:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.W = leg[leg_id].a1_buf.W;
+ 181              		.loc 1 192 5 is_stmt 1 view .LVU46
+ 192:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.W = leg[leg_id].a1_buf.W;
+ 182              		.loc 1 192 66 is_stmt 0 view .LVU47
+ 183 0022 B2F99AE1 		ldrsh	lr, [r2, #410]
+ 192:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.W = leg[leg_id].a1_buf.W;
+ 184              		.loc 1 192 46 view .LVU48
+ 185 0026 A3F80CE0 		strh	lr, [r3, #12]	@ unaligned
+ 193:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
+ 186              		.loc 1 193 5 is_stmt 1 view .LVU49
+ 193:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
+ 187              		.loc 1 193 66 is_stmt 0 view .LVU50
+ 188 002a B2F99CC1 		ldrsh	ip, [r2, #412]
+ 193:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
+ 189              		.loc 1 193 46 view .LVU51
+ 190 002e A3F80EC0 		strh	ip, [r3, #14]	@ unaligned
+ 194:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
+ 191              		.loc 1 194 5 is_stmt 1 view .LVU52
+ 194:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
+ 192              		.loc 1 194 68 is_stmt 0 view .LVU53
+ 193 0032 B2F99E41 		ldrsh	r4, [r2, #414]
+ 194:Lib/app/src/RC.c ****     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
+ 194              		.loc 1 194 48 view .LVU54
+ 195 0036 5C83     		strh	r4, [r3, #26]	@ unaligned
+ 195:Lib/app/src/RC.c **** 
+ 196              		.loc 1 195 5 is_stmt 1 view .LVU55
+ 195:Lib/app/src/RC.c **** 
+ 197              		.loc 1 195 68 is_stmt 0 view .LVU56
+ 198 0038 D2F8A021 		ldr	r2, [r2, #416]
+ 195:Lib/app/src/RC.c **** 
+ 199              		.loc 1 195 48 view .LVU57
+ 200 003c C3F81E20 		str	r2, [r3, #30]	@ unaligned
+ 197:Lib/app/src/RC.c ****     data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
+ 201              		.loc 1 197 5 is_stmt 1 view .LVU58
+ 197:Lib/app/src/RC.c ****     data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
+ 202              		.loc 1 197 31 is_stmt 0 view .LVU59
+ 203 0040 83F85210 		strb	r1, [r3, #82]
+ 198:Lib/app/src/RC.c ****     data_leg[leg_id].T = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.T / 256.0f);
+ 204              		.loc 1 198 5 is_stmt 1 view .LVU60
+ 198:Lib/app/src/RC.c ****     data_leg[leg_id].T = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.T / 256.0f);
+ 205              		.loc 1 198 29 is_stmt 0 view .LVU61
+ 206 0044 9E65     		str	r6, [r3, #88]	@ unaligned
+ 199:Lib/app/src/RC.c ****     data_leg[leg_id].W = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.W / 128.0f);
+ARM GAS  /tmp/ccbfPfxf.s 			page 9
+
+
+ 207              		.loc 1 199 5 is_stmt 1 view .LVU62
+ 199:Lib/app/src/RC.c ****     data_leg[leg_id].W = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.W / 128.0f);
+ 208              		.loc 1 199 26 is_stmt 0 view .LVU63
+ 209 0046 07EE90EA 		vmov	s15, lr	@ int
+ 210 004a F8EEE76A 		vcvt.f32.s32	s13, s15
+ 211 004e DFED1F7A 		vldr.32	s15, .L9+8
+ 212 0052 66EEA76A 		vmul.f32	s13, s13, s15
+ 199:Lib/app/src/RC.c ****     data_leg[leg_id].W = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.W / 128.0f);
+ 213              		.loc 1 199 24 view .LVU64
+ 214 0056 16EE905A 		vmov	r5, s13
+ 215 005a DD65     		str	r5, [r3, #92]	@ unaligned
+ 200:Lib/app/src/RC.c ****     data_leg[leg_id].Acc = (float)data_leg[leg_id].motor_recv_data.Mdata.Acc;
+ 216              		.loc 1 200 5 is_stmt 1 view .LVU65
+ 200:Lib/app/src/RC.c ****     data_leg[leg_id].Acc = (float)data_leg[leg_id].motor_recv_data.Mdata.Acc;
+ 217              		.loc 1 200 26 is_stmt 0 view .LVU66
+ 218 005c 07EE90CA 		vmov	s15, ip	@ int
+ 219 0060 B8EEE77A 		vcvt.f32.s32	s14, s15
+ 220 0064 DFED1A7A 		vldr.32	s15, .L9+12
+ 221 0068 27EE277A 		vmul.f32	s14, s14, s15
+ 200:Lib/app/src/RC.c ****     data_leg[leg_id].Acc = (float)data_leg[leg_id].motor_recv_data.Mdata.Acc;
+ 222              		.loc 1 200 24 view .LVU67
+ 223 006c 17EE105A 		vmov	r5, s14
+ 224 0070 1D66     		str	r5, [r3, #96]	@ unaligned
+ 201:Lib/app/src/RC.c ****     data_leg[leg_id].Pos = (float)((data_leg[leg_id].motor_recv_data.Mdata.Pos / 16384.0f) * 6.2832
+ 225              		.loc 1 201 5 is_stmt 1 view .LVU68
+ 201:Lib/app/src/RC.c ****     data_leg[leg_id].Pos = (float)((data_leg[leg_id].motor_recv_data.Mdata.Pos / 16384.0f) * 6.2832
+ 226              		.loc 1 201 26 is_stmt 0 view .LVU69
+ 227 0072 DC66     		str	r4, [r3, #108]	@ unaligned
+ 202:Lib/app/src/RC.c **** 
+ 228              		.loc 1 202 5 is_stmt 1 view .LVU70
+ 202:Lib/app/src/RC.c **** 
+ 229              		.loc 1 202 80 is_stmt 0 view .LVU71
+ 230 0074 07EE902A 		vmov	s15, r2	@ int
+ 231 0078 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 232 007c 9FED156A 		vldr.32	s12, .L9+16
+ 233 0080 67EE867A 		vmul.f32	s15, s15, s12
+ 202:Lib/app/src/RC.c **** 
+ 234              		.loc 1 202 28 view .LVU72
+ 235 0084 9FED146A 		vldr.32	s12, .L9+20
+ 236 0088 67EE867A 		vmul.f32	s15, s15, s12
+ 202:Lib/app/src/RC.c **** 
+ 237              		.loc 1 202 26 view .LVU73
+ 238 008c 17EE902A 		vmov	r2, s15
+ 239 0090 5A66     		str	r2, [r3, #100]	@ unaligned
+ 204:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].MError = data_leg[leg_id].MError;
+ 240              		.loc 1 204 5 is_stmt 1 view .LVU74
+ 204:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].MError = data_leg[leg_id].MError;
+ 241              		.loc 1 204 60 is_stmt 0 view .LVU75
+ 242 0092 124D     		ldr	r5, .L9+24
+ 243 0094 01EB0113 		add	r3, r1, r1, lsl #4
+ 244 0098 4FF4CC72 		mov	r2, #408
+ 245 009c 02FB00F0 		mul	r0, r2, r0
+ 246              	.LVL6:
+ 204:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].MError = data_leg[leg_id].MError;
+ 247              		.loc 1 204 60 view .LVU76
+ 248 00a0 00EBC303 		add	r3, r0, r3, lsl #3
+ 249 00a4 2B44     		add	r3, r3, r5
+ARM GAS  /tmp/ccbfPfxf.s 			page 10
+
+
+ 250 00a6 83F85210 		strb	r1, [r3, #82]
+ 205:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].T = data_leg[leg_id].T;
+ 251              		.loc 1 205 5 is_stmt 1 view .LVU77
+ 205:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].T = data_leg[leg_id].T;
+ 252              		.loc 1 205 58 is_stmt 0 view .LVU78
+ 253 00aa 9E65     		str	r6, [r3, #88]	@ unaligned
+ 206:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].W = data_leg[leg_id].W;
+ 254              		.loc 1 206 5 is_stmt 1 view .LVU79
+ 206:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].W = data_leg[leg_id].W;
+ 255              		.loc 1 206 53 is_stmt 0 view .LVU80
+ 256 00ac 16EE902A 		vmov	r2, s13
+ 257 00b0 DA65     		str	r2, [r3, #92]	@ unaligned
+ 207:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].Acc = data_leg[leg_id].Acc;
+ 258              		.loc 1 207 5 is_stmt 1 view .LVU81
+ 207:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].Acc = data_leg[leg_id].Acc;
+ 259              		.loc 1 207 53 is_stmt 0 view .LVU82
+ 260 00b2 17EE102A 		vmov	r2, s14
+ 261 00b6 1A66     		str	r2, [r3, #96]	@ unaligned
+ 208:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].Pos = data_leg[leg_id].Pos;
+ 262              		.loc 1 208 5 is_stmt 1 view .LVU83
+ 208:Lib/app/src/RC.c ****     data_motor[leg_id][data_leg[leg_id].motor_id].Pos = data_leg[leg_id].Pos;
+ 263              		.loc 1 208 55 is_stmt 0 view .LVU84
+ 264 00b8 DC66     		str	r4, [r3, #108]	@ unaligned
+ 209:Lib/app/src/RC.c **** }
+ 265              		.loc 1 209 5 is_stmt 1 view .LVU85
+ 209:Lib/app/src/RC.c **** }
+ 266              		.loc 1 209 55 is_stmt 0 view .LVU86
+ 267 00ba 1846     		mov	r0, r3
+ 268 00bc 17EE903A 		vmov	r3, s15
+ 269 00c0 4366     		str	r3, [r0, #100]	@ unaligned
+ 210:Lib/app/src/RC.c **** 
+ 270              		.loc 1 210 1 view .LVU87
+ 271 00c2 70BD     		pop	{r4, r5, r6, pc}
+ 272              	.L10:
+ 273              		.align	2
+ 274              	.L9:
+ 275 00c4 00000000 		.word	.LANCHOR1
+ 276 00c8 00000000 		.word	data_leg
+ 277 00cc 0000803B 		.word	998244352
+ 278 00d0 0000003C 		.word	1006632960
+ 279 00d4 00008038 		.word	947912704
+ 280 00d8 F90FC940 		.word	1086918649
+ 281 00dc 00000000 		.word	data_motor
+ 282              		.cfi_endproc
+ 283              	.LFE133:
+ 285              		.section	.text.USART1_IRQHandler,"ax",%progbits
+ 286              		.align	1
+ 287              		.global	USART1_IRQHandler
+ 288              		.syntax unified
+ 289              		.thumb
+ 290              		.thumb_func
+ 292              	USART1_IRQHandler:
+ 293              	.LFB131:
+  33:Lib/app/src/RC.c ****     extern uint8_t usart1RxBuffer[78];
+ 294              		.loc 1 33 1 is_stmt 1 view -0
+ 295              		.cfi_startproc
+ 296              		@ args = 0, pretend = 0, frame = 8
+ARM GAS  /tmp/ccbfPfxf.s 			page 11
+
+
+ 297              		@ frame_needed = 0, uses_anonymous_args = 0
+ 298 0000 00B5     		push	{lr}
+ 299              		.cfi_def_cfa_offset 4
+ 300              		.cfi_offset 14, -4
+ 301 0002 83B0     		sub	sp, sp, #12
+ 302              		.cfi_def_cfa_offset 16
+  34:Lib/app/src/RC.c ****     if (huart1.Instance->SR & UART_FLAG_RXNE) // 接收到数据
+ 303              		.loc 1 34 5 view .LVU89
+  35:Lib/app/src/RC.c ****     {
+ 304              		.loc 1 35 5 view .LVU90
+  35:Lib/app/src/RC.c ****     {
+ 305              		.loc 1 35 15 is_stmt 0 view .LVU91
+ 306 0004 324B     		ldr	r3, .L16
+ 307 0006 1B68     		ldr	r3, [r3]
+  35:Lib/app/src/RC.c ****     {
+ 308              		.loc 1 35 24 view .LVU92
+ 309 0008 1A68     		ldr	r2, [r3]
+  35:Lib/app/src/RC.c ****     {
+ 310              		.loc 1 35 8 view .LVU93
+ 311 000a 12F0200F 		tst	r2, #32
+ 312 000e 09D0     		beq	.L12
+  37:Lib/app/src/RC.c ****     }
+ 313              		.loc 1 37 9 is_stmt 1 view .LVU94
+ 314              	.LBB2:
+  37:Lib/app/src/RC.c ****     }
+ 315              		.loc 1 37 9 view .LVU95
+ 316 0010 0022     		movs	r2, #0
+ 317 0012 0092     		str	r2, [sp]
+  37:Lib/app/src/RC.c ****     }
+ 318              		.loc 1 37 9 view .LVU96
+ 319 0014 1A68     		ldr	r2, [r3]
+ 320 0016 0092     		str	r2, [sp]
+  37:Lib/app/src/RC.c ****     }
+ 321              		.loc 1 37 9 view .LVU97
+ 322 0018 5B68     		ldr	r3, [r3, #4]
+ 323 001a 0093     		str	r3, [sp]
+  37:Lib/app/src/RC.c ****     }
+ 324              		.loc 1 37 9 view .LVU98
+ 325 001c 009B     		ldr	r3, [sp]
+ 326              	.LBE2:
+  37:Lib/app/src/RC.c ****     }
+ 327              		.loc 1 37 9 view .LVU99
+ 328              	.L11:
+ 108:Lib/app/src/RC.c **** 
+ 329              		.loc 1 108 1 is_stmt 0 view .LVU100
+ 330 001e 03B0     		add	sp, sp, #12
+ 331              		.cfi_remember_state
+ 332              		.cfi_def_cfa_offset 4
+ 333              		@ sp needed
+ 334 0020 5DF804FB 		ldr	pc, [sp], #4
+ 335              	.L12:
+ 336              		.cfi_restore_state
+  39:Lib/app/src/RC.c ****     {
+ 337              		.loc 1 39 10 is_stmt 1 view .LVU101
+  39:Lib/app/src/RC.c ****     {
+ 338              		.loc 1 39 20 is_stmt 0 view .LVU102
+ 339 0024 2B4A     		ldr	r2, .L16+4
+ARM GAS  /tmp/ccbfPfxf.s 			page 12
+
+
+ 340 0026 1268     		ldr	r2, [r2]
+  39:Lib/app/src/RC.c ****     {
+ 341              		.loc 1 39 13 view .LVU103
+ 342 0028 12F0100F 		tst	r2, #16
+ 343 002c F7D0     		beq	.L11
+ 344              	.LBB3:
+  41:Lib/app/src/RC.c **** 
+ 345              		.loc 1 41 9 is_stmt 1 view .LVU104
+  43:Lib/app/src/RC.c **** 
+ 346              		.loc 1 43 9 view .LVU105
+ 347              	.LBB4:
+  43:Lib/app/src/RC.c **** 
+ 348              		.loc 1 43 9 view .LVU106
+ 349 002e 0022     		movs	r2, #0
+ 350 0030 0192     		str	r2, [sp, #4]
+  43:Lib/app/src/RC.c **** 
+ 351              		.loc 1 43 9 view .LVU107
+ 352 0032 1A68     		ldr	r2, [r3]
+ 353 0034 0192     		str	r2, [sp, #4]
+  43:Lib/app/src/RC.c **** 
+ 354              		.loc 1 43 9 view .LVU108
+ 355 0036 5B68     		ldr	r3, [r3, #4]
+ 356 0038 0193     		str	r3, [sp, #4]
+  43:Lib/app/src/RC.c **** 
+ 357              		.loc 1 43 9 view .LVU109
+ 358 003a 019B     		ldr	r3, [sp, #4]
+ 359              	.LBE4:
+  43:Lib/app/src/RC.c **** 
+ 360              		.loc 1 43 9 view .LVU110
+  45:Lib/app/src/RC.c ****         {
+ 361              		.loc 1 45 9 view .LVU111
+  45:Lib/app/src/RC.c ****         {
+ 362              		.loc 1 45 28 is_stmt 0 view .LVU112
+ 363 003c 264B     		ldr	r3, .L16+8
+ 364 003e 1B68     		ldr	r3, [r3]
+  45:Lib/app/src/RC.c ****         {
+ 365              		.loc 1 45 37 view .LVU113
+ 366 0040 1A68     		ldr	r2, [r3]
+  45:Lib/app/src/RC.c ****         {
+ 367              		.loc 1 45 12 view .LVU114
+ 368 0042 12F4002F 		tst	r2, #524288
+ 369 0046 20D1     		bne	.L14
+  51:Lib/app/src/RC.c **** 
+ 370              		.loc 1 51 13 is_stmt 1 view .LVU115
+ 371 0048 1A68     		ldr	r2, [r3]
+ 372 004a 22F00102 		bic	r2, r2, #1
+ 373 004e 1A60     		str	r2, [r3]
+  55:Lib/app/src/RC.c **** 
+ 374              		.loc 1 55 13 view .LVU116
+  55:Lib/app/src/RC.c **** 
+ 375              		.loc 1 55 64 is_stmt 0 view .LVU117
+ 376 0050 2148     		ldr	r0, .L16+8
+ 377 0052 0268     		ldr	r2, [r0]
+  55:Lib/app/src/RC.c **** 
+ 378              		.loc 1 55 73 view .LVU118
+ 379 0054 5368     		ldr	r3, [r2, #4]
+  55:Lib/app/src/RC.c **** 
+ARM GAS  /tmp/ccbfPfxf.s 			page 13
+
+
+ 380              		.loc 1 55 48 view .LVU119
+ 381 0056 C3F18003 		rsb	r3, r3, #128
+ 382 005a 9BB2     		uxth	r3, r3
+  55:Lib/app/src/RC.c **** 
+ 383              		.loc 1 55 30 view .LVU120
+ 384 005c 1F49     		ldr	r1, .L16+12
+ 385 005e 0B80     		strh	r3, [r1]	@ movhi
+  59:Lib/app/src/RC.c **** 
+ 386              		.loc 1 59 13 is_stmt 1 view .LVU121
+  59:Lib/app/src/RC.c **** 
+ 387              		.loc 1 59 43 is_stmt 0 view .LVU122
+ 388 0060 8021     		movs	r1, #128
+ 389 0062 5160     		str	r1, [r2, #4]
+  63:Lib/app/src/RC.c **** 
+ 390              		.loc 1 63 13 is_stmt 1 view .LVU123
+  63:Lib/app/src/RC.c **** 
+ 391              		.loc 1 63 41 is_stmt 0 view .LVU124
+ 392 0064 1168     		ldr	r1, [r2]
+ 393 0066 41F40021 		orr	r1, r1, #524288
+ 394 006a 1160     		str	r1, [r2]
+  67:Lib/app/src/RC.c **** 
+ 395              		.loc 1 67 13 is_stmt 1 view .LVU125
+ 396 006c 0168     		ldr	r1, [r0]
+ 397 006e 0A68     		ldr	r2, [r1]
+ 398 0070 42F00102 		orr	r2, r2, #1
+ 399 0074 0A60     		str	r2, [r1]
+  69:Lib/app/src/RC.c ****             {
+ 400              		.loc 1 69 13 view .LVU126
+  69:Lib/app/src/RC.c ****             {
+ 401              		.loc 1 69 16 is_stmt 0 view .LVU127
+ 402 0076 4E2B     		cmp	r3, #78
+ 403 0078 D1D1     		bne	.L11
+ 404              	.LBB5:
+  71:Lib/app/src/RC.c ****                 sbus_to_rc(sbus_rx_buf[0], &leg[L].a1_buf);
+ 405              		.loc 1 71 17 is_stmt 1 view .LVU128
+  72:Lib/app/src/RC.c ****                 unitreeA1_rx(0);
+ 406              		.loc 1 72 17 view .LVU129
+ 407 007a 1949     		ldr	r1, .L16+16
+ 408 007c 1948     		ldr	r0, .L16+20
+ 409 007e FFF7FEFF 		bl	sbus_to_rc
+ 410              	.LVL7:
+  73:Lib/app/src/RC.c ****             }
+ 411              		.loc 1 73 17 view .LVU130
+ 412 0082 0020     		movs	r0, #0
+ 413 0084 FFF7FEFF 		bl	unitreeA1_rx
+ 414              	.LVL8:
+ 415 0088 C9E7     		b	.L11
+ 416              	.L14:
+ 417              	.LBE5:
+  81:Lib/app/src/RC.c **** 
+ 418              		.loc 1 81 13 view .LVU131
+ 419 008a 1A68     		ldr	r2, [r3]
+ 420 008c 22F00102 		bic	r2, r2, #1
+ 421 0090 1A60     		str	r2, [r3]
+  85:Lib/app/src/RC.c **** 
+ 422              		.loc 1 85 13 view .LVU132
+  85:Lib/app/src/RC.c **** 
+ARM GAS  /tmp/ccbfPfxf.s 			page 14
+
+
+ 423              		.loc 1 85 64 is_stmt 0 view .LVU133
+ 424 0092 1149     		ldr	r1, .L16+8
+ 425 0094 0868     		ldr	r0, [r1]
+  85:Lib/app/src/RC.c **** 
+ 426              		.loc 1 85 73 view .LVU134
+ 427 0096 4368     		ldr	r3, [r0, #4]
+  85:Lib/app/src/RC.c **** 
+ 428              		.loc 1 85 48 view .LVU135
+ 429 0098 C3F18003 		rsb	r3, r3, #128
+  85:Lib/app/src/RC.c **** 
+ 430              		.loc 1 85 30 view .LVU136
+ 431 009c 0F4A     		ldr	r2, .L16+12
+ 432 009e 1380     		strh	r3, [r2]	@ movhi
+  89:Lib/app/src/RC.c **** 
+ 433              		.loc 1 89 13 is_stmt 1 view .LVU137
+  89:Lib/app/src/RC.c **** 
+ 434              		.loc 1 89 43 is_stmt 0 view .LVU138
+ 435 00a0 8023     		movs	r3, #128
+ 436 00a2 4360     		str	r3, [r0, #4]
+  93:Lib/app/src/RC.c **** 
+ 437              		.loc 1 93 13 is_stmt 1 view .LVU139
+  93:Lib/app/src/RC.c **** 
+ 438              		.loc 1 93 30 is_stmt 0 view .LVU140
+ 439 00a4 1048     		ldr	r0, .L16+24
+ 440 00a6 036C     		ldr	r3, [r0, #64]
+ 441 00a8 23F40023 		bic	r3, r3, #524288
+ 442 00ac 0364     		str	r3, [r0, #64]
+  97:Lib/app/src/RC.c **** 
+ 443              		.loc 1 97 13 is_stmt 1 view .LVU141
+ 444 00ae 0968     		ldr	r1, [r1]
+ 445 00b0 0B68     		ldr	r3, [r1]
+ 446 00b2 43F00103 		orr	r3, r3, #1
+ 447 00b6 0B60     		str	r3, [r1]
+  99:Lib/app/src/RC.c ****             {
+ 448              		.loc 1 99 13 view .LVU142
+  99:Lib/app/src/RC.c ****             {
+ 449              		.loc 1 99 34 is_stmt 0 view .LVU143
+ 450 00b8 1388     		ldrh	r3, [r2]
+  99:Lib/app/src/RC.c ****             {
+ 451              		.loc 1 99 16 view .LVU144
+ 452 00ba 4E2B     		cmp	r3, #78
+ 453 00bc AFD1     		bne	.L11
+ 454              	.LBB6:
+ 102:Lib/app/src/RC.c ****                 sbus_to_rc(sbus_rx_buf[1], &leg[L].a1_buf);
+ 455              		.loc 1 102 17 is_stmt 1 view .LVU145
+ 103:Lib/app/src/RC.c ****                 unitreeA1_rx(0);
+ 456              		.loc 1 103 17 view .LVU146
+ 457 00be 0849     		ldr	r1, .L16+16
+ 458 00c0 0A48     		ldr	r0, .L16+28
+ 459 00c2 FFF7FEFF 		bl	sbus_to_rc
+ 460              	.LVL9:
+ 104:Lib/app/src/RC.c ****             }
+ 461              		.loc 1 104 17 view .LVU147
+ 462 00c6 0020     		movs	r0, #0
+ 463 00c8 FFF7FEFF 		bl	unitreeA1_rx
+ 464              	.LVL10:
+ 465              	.LBE6:
+ARM GAS  /tmp/ccbfPfxf.s 			page 15
+
+
+ 466              	.LBE3:
+ 108:Lib/app/src/RC.c **** 
+ 467              		.loc 1 108 1 is_stmt 0 view .LVU148
+ 468 00cc A7E7     		b	.L11
+ 469              	.L17:
+ 470 00ce 00BF     		.align	2
+ 471              	.L16:
+ 472 00d0 00000000 		.word	huart1
+ 473 00d4 00100140 		.word	1073811456
+ 474 00d8 00000000 		.word	hdma_usart1_rx
+ 475 00dc 00000000 		.word	.LANCHOR2
+ 476 00e0 98010000 		.word	.LANCHOR1+408
+ 477 00e4 00000000 		.word	.LANCHOR0
+ 478 00e8 00640240 		.word	1073898496
+ 479 00ec 80000000 		.word	.LANCHOR0+128
+ 480              		.cfi_endproc
+ 481              	.LFE131:
+ 483              		.section	.text.USART6_IRQHandler,"ax",%progbits
+ 484              		.align	1
+ 485              		.global	USART6_IRQHandler
+ 486              		.syntax unified
+ 487              		.thumb
+ 488              		.thumb_func
+ 490              	USART6_IRQHandler:
+ 491              	.LFB132:
+ 111:Lib/app/src/RC.c ****     extern uint8_t usart6RxBuffer[78];
+ 492              		.loc 1 111 1 is_stmt 1 view -0
+ 493              		.cfi_startproc
+ 494              		@ args = 0, pretend = 0, frame = 8
+ 495              		@ frame_needed = 0, uses_anonymous_args = 0
+ 496 0000 00B5     		push	{lr}
+ 497              		.cfi_def_cfa_offset 4
+ 498              		.cfi_offset 14, -4
+ 499 0002 83B0     		sub	sp, sp, #12
+ 500              		.cfi_def_cfa_offset 16
+ 112:Lib/app/src/RC.c ****     if (huart6.Instance->SR & UART_FLAG_RXNE) // 接收到数据
+ 501              		.loc 1 112 5 view .LVU150
+ 113:Lib/app/src/RC.c ****     {
+ 502              		.loc 1 113 5 view .LVU151
+ 113:Lib/app/src/RC.c ****     {
+ 503              		.loc 1 113 15 is_stmt 0 view .LVU152
+ 504 0004 324B     		ldr	r3, .L23
+ 505 0006 1B68     		ldr	r3, [r3]
+ 113:Lib/app/src/RC.c ****     {
+ 506              		.loc 1 113 24 view .LVU153
+ 507 0008 1A68     		ldr	r2, [r3]
+ 113:Lib/app/src/RC.c ****     {
+ 508              		.loc 1 113 8 view .LVU154
+ 509 000a 12F0200F 		tst	r2, #32
+ 510 000e 09D0     		beq	.L19
+ 115:Lib/app/src/RC.c ****     }
+ 511              		.loc 1 115 9 is_stmt 1 view .LVU155
+ 512              	.LBB7:
+ 115:Lib/app/src/RC.c ****     }
+ 513              		.loc 1 115 9 view .LVU156
+ 514 0010 0022     		movs	r2, #0
+ 515 0012 0092     		str	r2, [sp]
+ARM GAS  /tmp/ccbfPfxf.s 			page 16
+
+
+ 115:Lib/app/src/RC.c ****     }
+ 516              		.loc 1 115 9 view .LVU157
+ 517 0014 1A68     		ldr	r2, [r3]
+ 518 0016 0092     		str	r2, [sp]
+ 115:Lib/app/src/RC.c ****     }
+ 519              		.loc 1 115 9 view .LVU158
+ 520 0018 5B68     		ldr	r3, [r3, #4]
+ 521 001a 0093     		str	r3, [sp]
+ 115:Lib/app/src/RC.c ****     }
+ 522              		.loc 1 115 9 view .LVU159
+ 523 001c 009B     		ldr	r3, [sp]
+ 524              	.LBE7:
+ 115:Lib/app/src/RC.c ****     }
+ 525              		.loc 1 115 9 view .LVU160
+ 526              	.L18:
+ 186:Lib/app/src/RC.c **** 
+ 527              		.loc 1 186 1 is_stmt 0 view .LVU161
+ 528 001e 03B0     		add	sp, sp, #12
+ 529              		.cfi_remember_state
+ 530              		.cfi_def_cfa_offset 4
+ 531              		@ sp needed
+ 532 0020 5DF804FB 		ldr	pc, [sp], #4
+ 533              	.L19:
+ 534              		.cfi_restore_state
+ 117:Lib/app/src/RC.c ****     {
+ 535              		.loc 1 117 10 is_stmt 1 view .LVU162
+ 117:Lib/app/src/RC.c ****     {
+ 536              		.loc 1 117 20 is_stmt 0 view .LVU163
+ 537 0024 2B4A     		ldr	r2, .L23+4
+ 538 0026 1268     		ldr	r2, [r2]
+ 117:Lib/app/src/RC.c ****     {
+ 539              		.loc 1 117 13 view .LVU164
+ 540 0028 12F0100F 		tst	r2, #16
+ 541 002c F7D0     		beq	.L18
+ 542              	.LBB8:
+ 119:Lib/app/src/RC.c **** 
+ 543              		.loc 1 119 9 is_stmt 1 view .LVU165
+ 121:Lib/app/src/RC.c **** 
+ 544              		.loc 1 121 9 view .LVU166
+ 545              	.LBB9:
+ 121:Lib/app/src/RC.c **** 
+ 546              		.loc 1 121 9 view .LVU167
+ 547 002e 0022     		movs	r2, #0
+ 548 0030 0192     		str	r2, [sp, #4]
+ 121:Lib/app/src/RC.c **** 
+ 549              		.loc 1 121 9 view .LVU168
+ 550 0032 1A68     		ldr	r2, [r3]
+ 551 0034 0192     		str	r2, [sp, #4]
+ 121:Lib/app/src/RC.c **** 
+ 552              		.loc 1 121 9 view .LVU169
+ 553 0036 5B68     		ldr	r3, [r3, #4]
+ 554 0038 0193     		str	r3, [sp, #4]
+ 121:Lib/app/src/RC.c **** 
+ 555              		.loc 1 121 9 view .LVU170
+ 556 003a 019B     		ldr	r3, [sp, #4]
+ 557              	.LBE9:
+ 121:Lib/app/src/RC.c **** 
+ARM GAS  /tmp/ccbfPfxf.s 			page 17
+
+
+ 558              		.loc 1 121 9 view .LVU171
+ 123:Lib/app/src/RC.c ****         {
+ 559              		.loc 1 123 9 view .LVU172
+ 123:Lib/app/src/RC.c ****         {
+ 560              		.loc 1 123 28 is_stmt 0 view .LVU173
+ 561 003c 264B     		ldr	r3, .L23+8
+ 562 003e 1B68     		ldr	r3, [r3]
+ 123:Lib/app/src/RC.c ****         {
+ 563              		.loc 1 123 37 view .LVU174
+ 564 0040 1A68     		ldr	r2, [r3]
+ 123:Lib/app/src/RC.c ****         {
+ 565              		.loc 1 123 12 view .LVU175
+ 566 0042 12F4002F 		tst	r2, #524288
+ 567 0046 20D1     		bne	.L21
+ 129:Lib/app/src/RC.c **** 
+ 568              		.loc 1 129 13 is_stmt 1 view .LVU176
+ 569 0048 1A68     		ldr	r2, [r3]
+ 570 004a 22F00102 		bic	r2, r2, #1
+ 571 004e 1A60     		str	r2, [r3]
+ 133:Lib/app/src/RC.c **** 
+ 572              		.loc 1 133 13 view .LVU177
+ 133:Lib/app/src/RC.c **** 
+ 573              		.loc 1 133 64 is_stmt 0 view .LVU178
+ 574 0050 2148     		ldr	r0, .L23+8
+ 575 0052 0268     		ldr	r2, [r0]
+ 133:Lib/app/src/RC.c **** 
+ 576              		.loc 1 133 73 view .LVU179
+ 577 0054 5368     		ldr	r3, [r2, #4]
+ 133:Lib/app/src/RC.c **** 
+ 578              		.loc 1 133 48 view .LVU180
+ 579 0056 C3F18003 		rsb	r3, r3, #128
+ 580 005a 9BB2     		uxth	r3, r3
+ 133:Lib/app/src/RC.c **** 
+ 581              		.loc 1 133 30 view .LVU181
+ 582 005c 1F49     		ldr	r1, .L23+12
+ 583 005e 0B80     		strh	r3, [r1]	@ movhi
+ 137:Lib/app/src/RC.c **** 
+ 584              		.loc 1 137 13 is_stmt 1 view .LVU182
+ 137:Lib/app/src/RC.c **** 
+ 585              		.loc 1 137 43 is_stmt 0 view .LVU183
+ 586 0060 8021     		movs	r1, #128
+ 587 0062 5160     		str	r1, [r2, #4]
+ 141:Lib/app/src/RC.c **** 
+ 588              		.loc 1 141 13 is_stmt 1 view .LVU184
+ 141:Lib/app/src/RC.c **** 
+ 589              		.loc 1 141 41 is_stmt 0 view .LVU185
+ 590 0064 1168     		ldr	r1, [r2]
+ 591 0066 41F40021 		orr	r1, r1, #524288
+ 592 006a 1160     		str	r1, [r2]
+ 145:Lib/app/src/RC.c **** 
+ 593              		.loc 1 145 13 is_stmt 1 view .LVU186
+ 594 006c 0168     		ldr	r1, [r0]
+ 595 006e 0A68     		ldr	r2, [r1]
+ 596 0070 42F00102 		orr	r2, r2, #1
+ 597 0074 0A60     		str	r2, [r1]
+ 147:Lib/app/src/RC.c ****             {
+ 598              		.loc 1 147 13 view .LVU187
+ARM GAS  /tmp/ccbfPfxf.s 			page 18
+
+
+ 147:Lib/app/src/RC.c ****             {
+ 599              		.loc 1 147 16 is_stmt 0 view .LVU188
+ 600 0076 4E2B     		cmp	r3, #78
+ 601 0078 D1D1     		bne	.L18
+ 602              	.LBB10:
+ 149:Lib/app/src/RC.c ****                 sbus_to_rc(sbus_rx_buf[0], &leg[R].a1_buf);
+ 603              		.loc 1 149 17 is_stmt 1 view .LVU189
+ 150:Lib/app/src/RC.c ****                 unitreeA1_rx(1);
+ 604              		.loc 1 150 17 view .LVU190
+ 605 007a 1949     		ldr	r1, .L23+16
+ 606 007c 1948     		ldr	r0, .L23+20
+ 607 007e FFF7FEFF 		bl	sbus_to_rc
+ 608              	.LVL11:
+ 151:Lib/app/src/RC.c ****             }
+ 609              		.loc 1 151 17 view .LVU191
+ 610 0082 0120     		movs	r0, #1
+ 611 0084 FFF7FEFF 		bl	unitreeA1_rx
+ 612              	.LVL12:
+ 613 0088 C9E7     		b	.L18
+ 614              	.L21:
+ 615              	.LBE10:
+ 159:Lib/app/src/RC.c **** 
+ 616              		.loc 1 159 13 view .LVU192
+ 617 008a 1A68     		ldr	r2, [r3]
+ 618 008c 22F00102 		bic	r2, r2, #1
+ 619 0090 1A60     		str	r2, [r3]
+ 163:Lib/app/src/RC.c **** 
+ 620              		.loc 1 163 13 view .LVU193
+ 163:Lib/app/src/RC.c **** 
+ 621              		.loc 1 163 64 is_stmt 0 view .LVU194
+ 622 0092 1149     		ldr	r1, .L23+8
+ 623 0094 0868     		ldr	r0, [r1]
+ 163:Lib/app/src/RC.c **** 
+ 624              		.loc 1 163 73 view .LVU195
+ 625 0096 4368     		ldr	r3, [r0, #4]
+ 163:Lib/app/src/RC.c **** 
+ 626              		.loc 1 163 48 view .LVU196
+ 627 0098 C3F18003 		rsb	r3, r3, #128
+ 163:Lib/app/src/RC.c **** 
+ 628              		.loc 1 163 30 view .LVU197
+ 629 009c 0F4A     		ldr	r2, .L23+12
+ 630 009e 1380     		strh	r3, [r2]	@ movhi
+ 167:Lib/app/src/RC.c **** 
+ 631              		.loc 1 167 13 is_stmt 1 view .LVU198
+ 167:Lib/app/src/RC.c **** 
+ 632              		.loc 1 167 43 is_stmt 0 view .LVU199
+ 633 00a0 8023     		movs	r3, #128
+ 634 00a2 4360     		str	r3, [r0, #4]
+ 171:Lib/app/src/RC.c **** 
+ 635              		.loc 1 171 13 is_stmt 1 view .LVU200
+ 171:Lib/app/src/RC.c **** 
+ 636              		.loc 1 171 30 is_stmt 0 view .LVU201
+ 637 00a4 1048     		ldr	r0, .L23+24
+ 638 00a6 836A     		ldr	r3, [r0, #40]
+ 639 00a8 23F40023 		bic	r3, r3, #524288
+ 640 00ac 8362     		str	r3, [r0, #40]
+ 175:Lib/app/src/RC.c **** 
+ARM GAS  /tmp/ccbfPfxf.s 			page 19
+
+
+ 641              		.loc 1 175 13 is_stmt 1 view .LVU202
+ 642 00ae 0968     		ldr	r1, [r1]
+ 643 00b0 0B68     		ldr	r3, [r1]
+ 644 00b2 43F00103 		orr	r3, r3, #1
+ 645 00b6 0B60     		str	r3, [r1]
+ 177:Lib/app/src/RC.c ****             {
+ 646              		.loc 1 177 13 view .LVU203
+ 177:Lib/app/src/RC.c ****             {
+ 647              		.loc 1 177 34 is_stmt 0 view .LVU204
+ 648 00b8 1388     		ldrh	r3, [r2]
+ 177:Lib/app/src/RC.c ****             {
+ 649              		.loc 1 177 16 view .LVU205
+ 650 00ba 4E2B     		cmp	r3, #78
+ 651 00bc AFD1     		bne	.L18
+ 652              	.LBB11:
+ 180:Lib/app/src/RC.c ****                 sbus_to_rc(sbus_rx_buf[1], &leg[R].a1_buf);
+ 653              		.loc 1 180 17 is_stmt 1 view .LVU206
+ 181:Lib/app/src/RC.c ****                 unitreeA1_rx(1);
+ 654              		.loc 1 181 17 view .LVU207
+ 655 00be 0849     		ldr	r1, .L23+16
+ 656 00c0 0A48     		ldr	r0, .L23+28
+ 657 00c2 FFF7FEFF 		bl	sbus_to_rc
+ 658              	.LVL13:
+ 182:Lib/app/src/RC.c ****             }
+ 659              		.loc 1 182 17 view .LVU208
+ 660 00c6 0120     		movs	r0, #1
+ 661 00c8 FFF7FEFF 		bl	unitreeA1_rx
+ 662              	.LVL14:
+ 663              	.LBE11:
+ 664              	.LBE8:
+ 186:Lib/app/src/RC.c **** 
+ 665              		.loc 1 186 1 is_stmt 0 view .LVU209
+ 666 00cc A7E7     		b	.L18
+ 667              	.L24:
+ 668 00ce 00BF     		.align	2
+ 669              	.L23:
+ 670 00d0 00000000 		.word	huart6
+ 671 00d4 00140140 		.word	1073812480
+ 672 00d8 00000000 		.word	hdma_usart6_rx
+ 673 00dc 00000000 		.word	.LANCHOR3
+ 674 00e0 3C030000 		.word	.LANCHOR1+828
+ 675 00e4 00000000 		.word	.LANCHOR0
+ 676 00e8 00640240 		.word	1073898496
+ 677 00ec 80000000 		.word	.LANCHOR0+128
+ 678              		.cfi_endproc
+ 679              	.LFE132:
+ 681              		.section	.text.sum_cheak,"ax",%progbits
+ 682              		.align	1
+ 683              		.global	sum_cheak
+ 684              		.syntax unified
+ 685              		.thumb
+ 686              		.thumb_func
+ 688              	sum_cheak:
+ 689              	.LFB135:
+ 227:Lib/app/src/RC.c **** 
+ 228:Lib/app/src/RC.c **** // 电机发送数据缓冲存储区域
+ 229:Lib/app/src/RC.c **** void sum_cheak()
+ARM GAS  /tmp/ccbfPfxf.s 			page 20
+
+
+ 230:Lib/app/src/RC.c **** {
+ 690              		.loc 1 230 1 is_stmt 1 view -0
+ 691              		.cfi_startproc
+ 692              		@ args = 0, pretend = 0, frame = 0
+ 693              		@ frame_needed = 0, uses_anonymous_args = 0
+ 694 0000 10B5     		push	{r4, lr}
+ 695              		.cfi_def_cfa_offset 8
+ 696              		.cfi_offset 4, -8
+ 697              		.cfi_offset 14, -4
+ 231:Lib/app/src/RC.c ****     for (int leg_id = 0; leg_id < 2; leg_id++)
+ 698              		.loc 1 231 5 view .LVU211
+ 699              	.LBB12:
+ 700              		.loc 1 231 10 view .LVU212
+ 701              	.LVL15:
+ 702              		.loc 1 231 14 is_stmt 0 view .LVU213
+ 703 0002 0024     		movs	r4, #0
+ 704              		.loc 1 231 5 view .LVU214
+ 705 0004 56E0     		b	.L26
+ 706              	.LVL16:
+ 707              	.L27:
+ 708              	.LBB13:
+ 232:Lib/app/src/RC.c ****     {
+ 233:Lib/app/src/RC.c ****         for (int motor_id = 0; motor_id < 3; motor_id++)
+ 709              		.loc 1 233 46 is_stmt 1 discriminator 2 view .LVU215
+ 710              		.loc 1 233 54 is_stmt 0 discriminator 2 view .LVU216
+ 711 0006 0EF1010E 		add	lr, lr, #1
+ 712              	.LVL17:
+ 713              	.L29:
+ 714              		.loc 1 233 32 is_stmt 1 discriminator 1 view .LVU217
+ 715              		.loc 1 233 9 is_stmt 0 discriminator 1 view .LVU218
+ 716 000a BEF1020F 		cmp	lr, #2
+ 717 000e 50DC     		bgt	.L32
+ 234:Lib/app/src/RC.c ****         {
+ 235:Lib/app/src/RC.c ****             leg[leg_id].motor_can[motor_id].sum_cheak_temp = (uint32_t)leg[leg_id].motor_can[motor_
+ 718              		.loc 1 235 13 is_stmt 1 view .LVU219
+ 719              		.loc 1 235 116 is_stmt 0 view .LVU220
+ 720 0010 0EEB0E13 		add	r3, lr, lr, lsl #4
+ 721 0014 4FEAC30C 		lsl	ip, r3, #3
+ 722 0018 4FF4D273 		mov	r3, #420
+ 723 001c 03FB04CC 		mla	ip, r3, r4, ip
+ 724 0020 274B     		ldr	r3, .L34
+ 725 0022 9C44     		add	ip, ip, r3
+ 726 0024 DCED1D6A 		vldr.32	s13, [ip, #116]
+ 727              		.loc 1 235 62 view .LVU221
+ 728 0028 FCEEE67A 		vcvt.u32.f32	s15, s13
+ 729 002c 17EE903A 		vmov	r3, s15	@ int
+ 730              		.loc 1 235 177 view .LVU222
+ 731 0030 DCED1E5A 		vldr.32	s11, [ip, #120]
+ 732              		.loc 1 235 123 view .LVU223
+ 733 0034 FCEEE57A 		vcvt.u32.f32	s15, s11
+ 734 0038 17EE900A 		vmov	r0, s15	@ int
+ 735              		.loc 1 235 121 view .LVU224
+ 736 003c 0343     		orrs	r3, r3, r0
+ 737 003e 98B2     		uxth	r0, r3
+ 738              		.loc 1 235 238 view .LVU225
+ 739 0040 9CED1F6A 		vldr.32	s12, [ip, #124]
+ 740              		.loc 1 235 184 view .LVU226
+ARM GAS  /tmp/ccbfPfxf.s 			page 21
+
+
+ 741 0044 FCEEC67A 		vcvt.u32.f32	s15, s12
+ 742 0048 17EE903A 		vmov	r3, s15	@ int
+ 743              		.loc 1 235 182 view .LVU227
+ 744 004c 0343     		orrs	r3, r3, r0
+ 745 004e 9BB2     		uxth	r3, r3
+ 746              		.loc 1 235 299 view .LVU228
+ 747 0050 BCF86A00 		ldrh	r0, [ip, #106]
+ 748              		.loc 1 235 243 view .LVU229
+ 749 0054 43EA0001 		orr	r1, r3, r0
+ 750              		.loc 1 235 361 view .LVU230
+ 751 0058 9CED1B7A 		vldr.32	s14, [ip, #108]
+ 752              		.loc 1 235 307 view .LVU231
+ 753 005c FCEEC77A 		vcvt.u32.f32	s15, s14
+ 754 0060 17EE903A 		vmov	r3, s15	@ int
+ 755              		.loc 1 235 305 view .LVU232
+ 756 0064 0B43     		orrs	r3, r3, r1
+ 757 0066 9AB2     		uxth	r2, r3
+ 758              		.loc 1 235 420 view .LVU233
+ 759 0068 DCED1C7A 		vldr.32	s15, [ip, #112]
+ 760              		.loc 1 235 366 view .LVU234
+ 761 006c BCEEE75A 		vcvt.u32.f32	s10, s15
+ 762 0070 15EE103A 		vmov	r3, s10	@ int
+ 763              		.loc 1 235 364 view .LVU235
+ 764 0074 1343     		orrs	r3, r3, r2
+ 765 0076 9BB2     		uxth	r3, r3
+ 766              		.loc 1 235 60 view .LVU236
+ 767 0078 ACF88630 		strh	r3, [ip, #134]	@ movhi
+ 236:Lib/app/src/RC.c **** 
+ 237:Lib/app/src/RC.c ****             if (leg[leg_id].motor_can[motor_id].Checksum == leg[leg_id].motor_can[motor_id].sum_che
+ 768              		.loc 1 237 13 is_stmt 1 view .LVU237
+ 769              		.loc 1 237 48 is_stmt 0 view .LVU238
+ 770 007c BCF88420 		ldrh	r2, [ip, #132]
+ 771              		.loc 1 237 16 view .LVU239
+ 772 0080 9342     		cmp	r3, r2
+ 773 0082 C0D1     		bne	.L27
+ 238:Lib/app/src/RC.c ****             {
+ 239:Lib/app/src/RC.c ****                 leg[leg_id].motor_can[motor_id].cmd_leg_confirm.mode = leg[leg_id].motor_can[motor_
+ 774              		.loc 1 239 17 is_stmt 1 view .LVU240
+ 775              		.loc 1 239 70 is_stmt 0 view .LVU241
+ 776 0084 ACF82800 		strh	r0, [ip, #40]	@ movhi
+ 240:Lib/app/src/RC.c ****                 leg[leg_id].motor_can[motor_id].cmd_leg_confirm.K_P = (float)leg[leg_id].motor_can[
+ 777              		.loc 1 240 17 is_stmt 1 view .LVU242
+ 778              		.loc 1 240 69 is_stmt 0 view .LVU243
+ 779 0088 15EE902A 		vmov	r2, s11
+ 780 008c CCF83620 		str	r2, [ip, #54]	@ unaligned
+ 241:Lib/app/src/RC.c ****                 leg[leg_id].motor_can[motor_id].cmd_leg_confirm.K_W = (float)leg[leg_id].motor_can[
+ 781              		.loc 1 241 17 is_stmt 1 view .LVU244
+ 782              		.loc 1 241 69 is_stmt 0 view .LVU245
+ 783 0090 16EE102A 		vmov	r2, s12
+ 784 0094 CCF83A20 		str	r2, [ip, #58]	@ unaligned
+ 242:Lib/app/src/RC.c ****                 leg[leg_id].motor_can[motor_id].cmd_leg_confirm.Pos = (float)leg[leg_id].motor_can[
+ 785              		.loc 1 242 17 is_stmt 1 view .LVU246
+ 786              		.loc 1 242 69 is_stmt 0 view .LVU247
+ 787 0098 16EE902A 		vmov	r2, s13
+ 788 009c CCF83220 		str	r2, [ip, #50]	@ unaligned
+ 243:Lib/app/src/RC.c ****                 leg[leg_id].motor_can[motor_id].cmd_leg_confirm.T = (float)leg[leg_id].motor_can[mo
+ 789              		.loc 1 243 17 is_stmt 1 view .LVU248
+ARM GAS  /tmp/ccbfPfxf.s 			page 22
+
+
+ 790              		.loc 1 243 67 is_stmt 0 view .LVU249
+ 791 00a0 17EE102A 		vmov	r2, s14
+ 792 00a4 CCF82A20 		str	r2, [ip, #42]	@ unaligned
+ 244:Lib/app/src/RC.c ****                 leg[leg_id].motor_can[motor_id].cmd_leg_confirm.W = (float)leg[leg_id].motor_can[mo
+ 793              		.loc 1 244 17 is_stmt 1 view .LVU250
+ 794              		.loc 1 244 67 is_stmt 0 view .LVU251
+ 795 00a8 17EE902A 		vmov	r2, s15
+ 796 00ac CCF82E20 		str	r2, [ip, #46]	@ unaligned
+ 797 00b0 A9E7     		b	.L27
+ 798              	.L32:
+ 799              		.loc 1 244 67 view .LVU252
+ 800              	.LBE13:
+ 231:Lib/app/src/RC.c ****     {
+ 801              		.loc 1 231 38 is_stmt 1 discriminator 2 view .LVU253
+ 231:Lib/app/src/RC.c ****     {
+ 802              		.loc 1 231 44 is_stmt 0 discriminator 2 view .LVU254
+ 803 00b2 0134     		adds	r4, r4, #1
+ 804              	.LVL18:
+ 805              	.L26:
+ 231:Lib/app/src/RC.c ****     {
+ 806              		.loc 1 231 26 is_stmt 1 discriminator 1 view .LVU255
+ 231:Lib/app/src/RC.c ****     {
+ 807              		.loc 1 231 5 is_stmt 0 discriminator 1 view .LVU256
+ 808 00b4 012C     		cmp	r4, #1
+ 809 00b6 02DC     		bgt	.L33
+ 810              	.LBB14:
+ 233:Lib/app/src/RC.c ****         {
+ 811              		.loc 1 233 18 view .LVU257
+ 812 00b8 4FF0000E 		mov	lr, #0
+ 813 00bc A5E7     		b	.L29
+ 814              	.L33:
+ 815              	.LBE14:
+ 816              	.LBE12:
+ 245:Lib/app/src/RC.c ****             }
+ 246:Lib/app/src/RC.c ****         }
+ 247:Lib/app/src/RC.c ****     }
+ 248:Lib/app/src/RC.c **** }
+ 817              		.loc 1 248 1 view .LVU258
+ 818 00be 10BD     		pop	{r4, pc}
+ 819              	.LVL19:
+ 820              	.L35:
+ 821              		.loc 1 248 1 view .LVU259
+ 822              		.align	2
+ 823              	.L34:
+ 824 00c0 00000000 		.word	.LANCHOR1
+ 825              		.cfi_endproc
+ 826              	.LFE135:
+ 828              		.section	.text.SetMotorMsg,"ax",%progbits
+ 829              		.align	1
+ 830              		.global	SetMotorMsg
+ 831              		.syntax unified
+ 832              		.thumb
+ 833              		.thumb_func
+ 835              	SetMotorMsg:
+ 836              	.LVL20:
+ 837              	.LFB136:
+ 249:Lib/app/src/RC.c **** 
+ARM GAS  /tmp/ccbfPfxf.s 			page 23
+
+
+ 250:Lib/app/src/RC.c **** // 设定电机发送数据结构体
+ 251:Lib/app/src/RC.c **** void SetMotorMsg(int motor_id)
+ 252:Lib/app/src/RC.c **** {
+ 838              		.loc 1 252 1 is_stmt 1 view -0
+ 839              		.cfi_startproc
+ 840              		@ args = 0, pretend = 0, frame = 0
+ 841              		@ frame_needed = 0, uses_anonymous_args = 0
+ 253:Lib/app/src/RC.c ****     for (int leg_id = 0; leg_id < 2; leg_id++)
+ 842              		.loc 1 253 5 view .LVU261
+ 843              	.LBB15:
+ 844              		.loc 1 253 10 view .LVU262
+ 845              		.loc 1 253 14 is_stmt 0 view .LVU263
+ 846 0000 0021     		movs	r1, #0
+ 847              	.LVL21:
+ 848              		.loc 1 253 26 is_stmt 1 view .LVU264
+ 849              		.loc 1 253 5 is_stmt 0 view .LVU265
+ 850 0002 0129     		cmp	r1, #1
+ 851 0004 2DDC     		bgt	.L42
+ 852              	.LBE15:
+ 252:Lib/app/src/RC.c ****     for (int leg_id = 0; leg_id < 2; leg_id++)
+ 853              		.loc 1 252 1 view .LVU266
+ 854 0006 00B5     		push	{lr}
+ 855              		.cfi_def_cfa_offset 4
+ 856              		.cfi_offset 14, -4
+ 857              	.L38:
+ 858              	.LBB16:
+ 254:Lib/app/src/RC.c ****     {
+ 255:Lib/app/src/RC.c ****         cmd_leg[leg_id].id = motor_id;
+ 859              		.loc 1 255 9 is_stmt 1 discriminator 3 view .LVU267
+ 860              		.loc 1 255 28 is_stmt 0 discriminator 3 view .LVU268
+ 861 0008 01EB4112 		add	r2, r1, r1, lsl #5
+ 862 000c 154B     		ldr	r3, .L43
+ 863 000e 03EB4203 		add	r3, r3, r2, lsl #1
+ 864 0012 D884     		strh	r0, [r3, #38]	@ unaligned
+ 256:Lib/app/src/RC.c ****         cmd_leg[leg_id].mode = leg[leg_id].motor_can[motor_id].cmd_leg_confirm.mode;
+ 865              		.loc 1 256 9 is_stmt 1 discriminator 3 view .LVU269
+ 866              		.loc 1 256 79 is_stmt 0 discriminator 3 view .LVU270
+ 867 0014 00EB0012 		add	r2, r0, r0, lsl #4
+ 868 0018 4FF4D27E 		mov	lr, #420
+ 869 001c 0EFB01FE 		mul	lr, lr, r1
+ 870 0020 0EEBC20C 		add	ip, lr, r2, lsl #3
+ 871 0024 104A     		ldr	r2, .L43+4
+ 872 0026 6244     		add	r2, r2, ip
+ 873 0028 B2F828C0 		ldrh	ip, [r2, #40]
+ 874              		.loc 1 256 30 discriminator 3 view .LVU271
+ 875 002c A3F828C0 		strh	ip, [r3, #40]	@ unaligned
+ 257:Lib/app/src/RC.c ****         cmd_leg[leg_id].K_P = leg[leg_id].motor_can[motor_id].cmd_leg_confirm.K_P;
+ 876              		.loc 1 257 9 is_stmt 1 discriminator 3 view .LVU272
+ 877              		.loc 1 257 78 is_stmt 0 discriminator 3 view .LVU273
+ 878 0030 D2F836C0 		ldr	ip, [r2, #54]	@ unaligned
+ 879              		.loc 1 257 29 discriminator 3 view .LVU274
+ 880 0034 C3F836C0 		str	ip, [r3, #54]	@ unaligned
+ 258:Lib/app/src/RC.c ****         cmd_leg[leg_id].K_W = leg[leg_id].motor_can[motor_id].cmd_leg_confirm.K_W;
+ 881              		.loc 1 258 9 is_stmt 1 discriminator 3 view .LVU275
+ 882              		.loc 1 258 78 is_stmt 0 discriminator 3 view .LVU276
+ 883 0038 D2F83AC0 		ldr	ip, [r2, #58]	@ unaligned
+ 884              		.loc 1 258 29 discriminator 3 view .LVU277
+ARM GAS  /tmp/ccbfPfxf.s 			page 24
+
+
+ 885 003c C3F83AC0 		str	ip, [r3, #58]	@ unaligned
+ 259:Lib/app/src/RC.c ****         cmd_leg[leg_id].Pos = leg[leg_id].motor_can[motor_id].cmd_leg_confirm.Pos;
+ 886              		.loc 1 259 9 is_stmt 1 discriminator 3 view .LVU278
+ 887              		.loc 1 259 78 is_stmt 0 discriminator 3 view .LVU279
+ 888 0040 D2F832C0 		ldr	ip, [r2, #50]	@ unaligned
+ 889              		.loc 1 259 29 discriminator 3 view .LVU280
+ 890 0044 C3F832C0 		str	ip, [r3, #50]	@ unaligned
+ 260:Lib/app/src/RC.c ****         cmd_leg[leg_id].T = leg[leg_id].motor_can[motor_id].cmd_leg_confirm.T;
+ 891              		.loc 1 260 9 is_stmt 1 discriminator 3 view .LVU281
+ 892              		.loc 1 260 76 is_stmt 0 discriminator 3 view .LVU282
+ 893 0048 D2F82AC0 		ldr	ip, [r2, #42]	@ unaligned
+ 894              		.loc 1 260 27 discriminator 3 view .LVU283
+ 895 004c C3F82AC0 		str	ip, [r3, #42]	@ unaligned
+ 261:Lib/app/src/RC.c ****         cmd_leg[leg_id].W = leg[leg_id].motor_can[motor_id].cmd_leg_confirm.W;
+ 896              		.loc 1 261 9 is_stmt 1 discriminator 3 view .LVU284
+ 897              		.loc 1 261 76 is_stmt 0 discriminator 3 view .LVU285
+ 898 0050 D2F82E20 		ldr	r2, [r2, #46]	@ unaligned
+ 899              		.loc 1 261 27 discriminator 3 view .LVU286
+ 900 0054 C3F82E20 		str	r2, [r3, #46]	@ unaligned
+ 253:Lib/app/src/RC.c ****     {
+ 901              		.loc 1 253 38 is_stmt 1 discriminator 3 view .LVU287
+ 253:Lib/app/src/RC.c ****     {
+ 902              		.loc 1 253 44 is_stmt 0 discriminator 3 view .LVU288
+ 903 0058 0131     		adds	r1, r1, #1
+ 904              	.LVL22:
+ 253:Lib/app/src/RC.c ****     {
+ 905              		.loc 1 253 26 is_stmt 1 discriminator 3 view .LVU289
+ 253:Lib/app/src/RC.c ****     {
+ 906              		.loc 1 253 5 is_stmt 0 discriminator 3 view .LVU290
+ 907 005a 0129     		cmp	r1, #1
+ 908 005c D4DD     		ble	.L38
+ 909              	.LBE16:
+ 262:Lib/app/src/RC.c ****     }
+ 263:Lib/app/src/RC.c **** }
+ 910              		.loc 1 263 1 view .LVU291
+ 911 005e 5DF804FB 		ldr	pc, [sp], #4
+ 912              	.L42:
+ 913              		.cfi_def_cfa_offset 0
+ 914              		.cfi_restore 14
+ 915              		.loc 1 263 1 view .LVU292
+ 916 0062 7047     		bx	lr
+ 917              	.L44:
+ 918              		.align	2
+ 919              	.L43:
+ 920 0064 00000000 		.word	cmd_leg
+ 921 0068 00000000 		.word	.LANCHOR1
+ 922              		.cfi_endproc
+ 923              	.LFE136:
+ 925              		.section	.text.HAL_TIM_PeriodElapsedCallback,"ax",%progbits
+ 926              		.align	1
+ 927              		.global	HAL_TIM_PeriodElapsedCallback
+ 928              		.syntax unified
+ 929              		.thumb
+ 930              		.thumb_func
+ 932              	HAL_TIM_PeriodElapsedCallback:
+ 933              	.LVL23:
+ 934              	.LFB137:
+ARM GAS  /tmp/ccbfPfxf.s 			page 25
+
+
+ 264:Lib/app/src/RC.c **** 
+ 265:Lib/app/src/RC.c **** int usart_motor_flag = 0;
+ 266:Lib/app/src/RC.c **** void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim) // tim4中断回调函数
+ 267:Lib/app/src/RC.c **** {
+ 935              		.loc 1 267 1 is_stmt 1 view -0
+ 936              		.cfi_startproc
+ 937              		@ args = 0, pretend = 0, frame = 0
+ 938              		@ frame_needed = 0, uses_anonymous_args = 0
+ 268:Lib/app/src/RC.c ****     if (htim->Instance == TIM4)
+ 939              		.loc 1 268 5 view .LVU294
+ 940              		.loc 1 268 13 is_stmt 0 view .LVU295
+ 941 0000 0268     		ldr	r2, [r0]
+ 942              		.loc 1 268 8 view .LVU296
+ 943 0002 0E4B     		ldr	r3, .L53
+ 944 0004 9A42     		cmp	r2, r3
+ 945 0006 00D0     		beq	.L52
+ 946 0008 7047     		bx	lr
+ 947              	.L52:
+ 267:Lib/app/src/RC.c ****     if (htim->Instance == TIM4)
+ 948              		.loc 1 267 1 view .LVU297
+ 949 000a 10B5     		push	{r4, lr}
+ 950              		.cfi_def_cfa_offset 8
+ 951              		.cfi_offset 4, -8
+ 952              		.cfi_offset 14, -4
+ 269:Lib/app/src/RC.c ****     {
+ 270:Lib/app/src/RC.c ****         if (usart_motor_flag > 2)
+ 953              		.loc 1 270 9 is_stmt 1 view .LVU298
+ 954              		.loc 1 270 30 is_stmt 0 view .LVU299
+ 955 000c 0C4B     		ldr	r3, .L53+4
+ 956 000e 1B68     		ldr	r3, [r3]
+ 957              		.loc 1 270 12 view .LVU300
+ 958 0010 022B     		cmp	r3, #2
+ 959 0012 02DD     		ble	.L47
+ 271:Lib/app/src/RC.c ****         {
+ 272:Lib/app/src/RC.c ****             usart_motor_flag = 0;
+ 960              		.loc 1 272 13 is_stmt 1 view .LVU301
+ 961              		.loc 1 272 30 is_stmt 0 view .LVU302
+ 962 0014 0A4B     		ldr	r3, .L53+4
+ 963 0016 0022     		movs	r2, #0
+ 964 0018 1A60     		str	r2, [r3]
+ 965              	.L47:
+ 273:Lib/app/src/RC.c ****         }
+ 274:Lib/app/src/RC.c ****         sum_cheak();
+ 966              		.loc 1 274 9 is_stmt 1 view .LVU303
+ 967 001a FFF7FEFF 		bl	sum_cheak
+ 968              	.LVL24:
+ 275:Lib/app/src/RC.c **** 
+ 276:Lib/app/src/RC.c ****         SetMotorMsg(usart_motor_flag);
+ 969              		.loc 1 276 9 view .LVU304
+ 970 001e 084C     		ldr	r4, .L53+4
+ 971 0020 2068     		ldr	r0, [r4]
+ 972 0022 FFF7FEFF 		bl	SetMotorMsg
+ 973              	.LVL25:
+ 277:Lib/app/src/RC.c ****         unitreeA1_tx(L);
+ 974              		.loc 1 277 9 view .LVU305
+ 975 0026 0020     		movs	r0, #0
+ 976 0028 FFF7FEFF 		bl	unitreeA1_tx
+ARM GAS  /tmp/ccbfPfxf.s 			page 26
+
+
+ 977              	.LVL26:
+ 278:Lib/app/src/RC.c ****         unitreeA1_tx(R);
+ 978              		.loc 1 278 9 view .LVU306
+ 979 002c 0120     		movs	r0, #1
+ 980 002e FFF7FEFF 		bl	unitreeA1_tx
+ 981              	.LVL27:
+ 279:Lib/app/src/RC.c ****         usart_motor_flag++;
+ 982              		.loc 1 279 9 view .LVU307
+ 983              		.loc 1 279 25 is_stmt 0 view .LVU308
+ 984 0032 2368     		ldr	r3, [r4]
+ 985 0034 0133     		adds	r3, r3, #1
+ 986 0036 2360     		str	r3, [r4]
+ 280:Lib/app/src/RC.c ****     }
+ 281:Lib/app/src/RC.c **** }
+ 987              		.loc 1 281 1 view .LVU309
+ 988 0038 10BD     		pop	{r4, pc}
+ 989              	.L54:
+ 990 003a 00BF     		.align	2
+ 991              	.L53:
+ 992 003c 00080040 		.word	1073743872
+ 993 0040 00000000 		.word	.LANCHOR4
+ 994              		.cfi_endproc
+ 995              	.LFE137:
+ 997              		.global	usart_motor_flag
+ 998              		.global	leg
+ 999              		.section	.bss.leg,"aw",%nobits
+ 1000              		.align	2
+ 1001              		.set	.LANCHOR1,. + 0
+ 1004              	leg:
+ 1005 0000 00000000 		.space	840
+ 1005      00000000 
+ 1005      00000000 
+ 1005      00000000 
+ 1005      00000000 
+ 1006              		.section	.bss.sbus_rx_buf,"aw",%nobits
+ 1007              		.align	2
+ 1008              		.set	.LANCHOR0,. + 0
+ 1011              	sbus_rx_buf:
+ 1012 0000 00000000 		.space	256
+ 1012      00000000 
+ 1012      00000000 
+ 1012      00000000 
+ 1012      00000000 
+ 1013              		.section	.bss.this_time_rx_len.0,"aw",%nobits
+ 1014              		.align	1
+ 1015              		.set	.LANCHOR3,. + 0
+ 1018              	this_time_rx_len.0:
+ 1019 0000 0000     		.space	2
+ 1020              		.section	.bss.this_time_rx_len.1,"aw",%nobits
+ 1021              		.align	1
+ 1022              		.set	.LANCHOR2,. + 0
+ 1025              	this_time_rx_len.1:
+ 1026 0000 0000     		.space	2
+ 1027              		.section	.bss.usart_motor_flag,"aw",%nobits
+ 1028              		.align	2
+ 1029              		.set	.LANCHOR4,. + 0
+ 1032              	usart_motor_flag:
+ARM GAS  /tmp/ccbfPfxf.s 			page 27
+
+
+ 1033 0000 00000000 		.space	4
+ 1034              		.text
+ 1035              	.Letext0:
+ 1036              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 1037              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 1038              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
+ 1039              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 1040              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 1041              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 1042              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_tim.h"
+ 1043              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 1044              		.file 10 "Lib/modules/unitreeMotor/include/motor_msg.h"
+ 1045              		.file 11 "Lib/app/include/RC.h"
+ 1046              		.file 12 "Core/Inc/usart.h"
+ 1047              		.file 13 "Lib/modules/unitreeMotor/include/unitreeA1_cmd.h"
+ 1048              		.file 14 "Lib/bsp/include/bsp_dma.h"
+ARM GAS  /tmp/ccbfPfxf.s 			page 28
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 RC.c
+     /tmp/ccbfPfxf.s:20     .text.sbus_to_rc:0000000000000000 $t
+     /tmp/ccbfPfxf.s:25     .text.sbus_to_rc:0000000000000000 sbus_to_rc
+     /tmp/ccbfPfxf.s:103    .text.remote_control_init:0000000000000000 $t
+     /tmp/ccbfPfxf.s:109    .text.remote_control_init:0000000000000000 remote_control_init
+     /tmp/ccbfPfxf.s:140    .text.remote_control_init:0000000000000020 $d
+     /tmp/ccbfPfxf.s:145    .text.unitreeA1_rx:0000000000000000 $t
+     /tmp/ccbfPfxf.s:151    .text.unitreeA1_rx:0000000000000000 unitreeA1_rx
+     /tmp/ccbfPfxf.s:275    .text.unitreeA1_rx:00000000000000c4 $d
+     /tmp/ccbfPfxf.s:286    .text.USART1_IRQHandler:0000000000000000 $t
+     /tmp/ccbfPfxf.s:292    .text.USART1_IRQHandler:0000000000000000 USART1_IRQHandler
+     /tmp/ccbfPfxf.s:472    .text.USART1_IRQHandler:00000000000000d0 $d
+     /tmp/ccbfPfxf.s:484    .text.USART6_IRQHandler:0000000000000000 $t
+     /tmp/ccbfPfxf.s:490    .text.USART6_IRQHandler:0000000000000000 USART6_IRQHandler
+     /tmp/ccbfPfxf.s:670    .text.USART6_IRQHandler:00000000000000d0 $d
+     /tmp/ccbfPfxf.s:682    .text.sum_cheak:0000000000000000 $t
+     /tmp/ccbfPfxf.s:688    .text.sum_cheak:0000000000000000 sum_cheak
+     /tmp/ccbfPfxf.s:824    .text.sum_cheak:00000000000000c0 $d
+     /tmp/ccbfPfxf.s:829    .text.SetMotorMsg:0000000000000000 $t
+     /tmp/ccbfPfxf.s:835    .text.SetMotorMsg:0000000000000000 SetMotorMsg
+     /tmp/ccbfPfxf.s:920    .text.SetMotorMsg:0000000000000064 $d
+     /tmp/ccbfPfxf.s:926    .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 $t
+     /tmp/ccbfPfxf.s:932    .text.HAL_TIM_PeriodElapsedCallback:0000000000000000 HAL_TIM_PeriodElapsedCallback
+     /tmp/ccbfPfxf.s:992    .text.HAL_TIM_PeriodElapsedCallback:000000000000003c $d
+     /tmp/ccbfPfxf.s:1032   .bss.usart_motor_flag:0000000000000000 usart_motor_flag
+     /tmp/ccbfPfxf.s:1004   .bss.leg:0000000000000000 leg
+     /tmp/ccbfPfxf.s:1000   .bss.leg:0000000000000000 $d
+     /tmp/ccbfPfxf.s:1007   .bss.sbus_rx_buf:0000000000000000 $d
+     /tmp/ccbfPfxf.s:1011   .bss.sbus_rx_buf:0000000000000000 sbus_rx_buf
+     /tmp/ccbfPfxf.s:1014   .bss.this_time_rx_len.0:0000000000000000 $d
+     /tmp/ccbfPfxf.s:1018   .bss.this_time_rx_len.0:0000000000000000 this_time_rx_len.0
+     /tmp/ccbfPfxf.s:1021   .bss.this_time_rx_len.1:0000000000000000 $d
+     /tmp/ccbfPfxf.s:1025   .bss.this_time_rx_len.1:0000000000000000 this_time_rx_len.1
+     /tmp/ccbfPfxf.s:1028   .bss.usart_motor_flag:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+RC1_init
+RC6_init
+data_leg
+data_motor
+huart1
+hdma_usart1_rx
+huart6
+hdma_usart6_rx
+cmd_leg
+unitreeA1_tx

@@ -450,7 +450,7 @@ void MainLoop(void)
                 if ( bEcatOutputUpdateRunning )
                 {
                     /* update the outputs */
-                    //PDO_OutputMapping();
+                    PDO_OutputMapping();
                 }
             }
              else if ( nPdOutputSize == 0 )

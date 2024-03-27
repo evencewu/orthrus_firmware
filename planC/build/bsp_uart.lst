@@ -1,0 +1,174 @@
+ARM GAS  /tmp/ccCZLEOz.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"bsp_uart.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.uart_dma_printf,"ax",%progbits
+  20              		.align	1
+  21              		.global	uart_dma_printf
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	uart_dma_printf:
+  27              	.LVL0:
+  28              	.LFB133:
+  29              		.file 1 "Lib/bsp/src/bsp_uart.c"
+   1:Lib/bsp/src/bsp_uart.c **** #include "bsp_uart.h"
+   2:Lib/bsp/src/bsp_uart.c **** #include "usart.h"
+   3:Lib/bsp/src/bsp_uart.c **** /**
+   4:Lib/bsp/src/bsp_uart.c ****   * @brief          发送uart_dma
+   5:Lib/bsp/src/bsp_uart.c ****   * @retval         无
+   6:Lib/bsp/src/bsp_uart.c ****   */
+   7:Lib/bsp/src/bsp_uart.c **** void uart_dma_printf(UART_HandleTypeDef *huart, char *fmt, ...)
+   8:Lib/bsp/src/bsp_uart.c **** {
+  30              		.loc 1 8 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 4, pretend = 12, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 1
+  34              		.loc 1 8 1 is_stmt 0 view .LVU1
+  35 0000 0EB4     		push	{r1, r2, r3}
+  36              		.cfi_def_cfa_offset 12
+  37              		.cfi_offset 1, -12
+  38              		.cfi_offset 2, -8
+  39              		.cfi_offset 3, -4
+  40 0002 30B5     		push	{r4, r5, lr}
+  41              		.cfi_def_cfa_offset 24
+  42              		.cfi_offset 4, -24
+  43              		.cfi_offset 5, -20
+  44              		.cfi_offset 14, -16
+  45 0004 0446     		mov	r4, r0
+  46 0006 03AA     		add	r2, sp, #12
+  47 0008 52F8041B 		ldr	r1, [r2], #4
+   9:Lib/bsp/src/bsp_uart.c ****   static uint8_t tx_buf[128] = {0};
+  48              		.loc 1 9 3 is_stmt 1 view .LVU2
+  10:Lib/bsp/src/bsp_uart.c ****   static va_list ap;
+ARM GAS  /tmp/ccCZLEOz.s 			page 2
+
+
+  49              		.loc 1 10 3 view .LVU3
+  11:Lib/bsp/src/bsp_uart.c ****   static uint16_t len = 0;
+  50              		.loc 1 11 3 view .LVU4
+  12:Lib/bsp/src/bsp_uart.c **** 
+  13:Lib/bsp/src/bsp_uart.c ****   va_start(ap, fmt);
+  51              		.loc 1 13 3 view .LVU5
+  52 000c 094B     		ldr	r3, .L3
+  53 000e 1A60     		str	r2, [r3]
+  14:Lib/bsp/src/bsp_uart.c ****   len = vsprintf((char *)tx_buf, fmt, ap);
+  54              		.loc 1 14 3 view .LVU6
+  55              		.loc 1 14 9 is_stmt 0 view .LVU7
+  56 0010 094D     		ldr	r5, .L3+4
+  57 0012 2846     		mov	r0, r5
+  58              	.LVL1:
+  59              		.loc 1 14 9 view .LVU8
+  60 0014 FFF7FEFF 		bl	vsprintf
+  61              	.LVL2:
+  62              		.loc 1 14 7 view .LVU9
+  63 0018 82B2     		uxth	r2, r0
+  64 001a 084B     		ldr	r3, .L3+8
+  65 001c 1A80     		strh	r2, [r3]	@ movhi
+  15:Lib/bsp/src/bsp_uart.c ****   va_end(ap);
+  66              		.loc 1 15 3 is_stmt 1 view .LVU10
+  16:Lib/bsp/src/bsp_uart.c **** 
+  17:Lib/bsp/src/bsp_uart.c ****   tx_buf[len] = '\0';
+  67              		.loc 1 17 3 view .LVU11
+  68              		.loc 1 17 15 is_stmt 0 view .LVU12
+  69 001e 0023     		movs	r3, #0
+  70 0020 AB54     		strb	r3, [r5, r2]
+  18:Lib/bsp/src/bsp_uart.c ****   // CDC_Transmit_FS(tx_buf, len);
+  19:Lib/bsp/src/bsp_uart.c ****   HAL_UART_Transmit_DMA(huart, tx_buf, len);
+  71              		.loc 1 19 3 is_stmt 1 view .LVU13
+  72 0022 2946     		mov	r1, r5
+  73 0024 2046     		mov	r0, r4
+  74 0026 FFF7FEFF 		bl	HAL_UART_Transmit_DMA
+  75              	.LVL3:
+  20:Lib/bsp/src/bsp_uart.c **** 
+  21:Lib/bsp/src/bsp_uart.c **** }
+  76              		.loc 1 21 1 is_stmt 0 view .LVU14
+  77 002a BDE83040 		pop	{r4, r5, lr}
+  78              		.cfi_restore 14
+  79              		.cfi_restore 5
+  80              		.cfi_restore 4
+  81              		.cfi_def_cfa_offset 12
+  82              	.LVL4:
+  83              		.loc 1 21 1 view .LVU15
+  84 002e 03B0     		add	sp, sp, #12
+  85              		.cfi_restore 3
+  86              		.cfi_restore 2
+  87              		.cfi_restore 1
+  88              		.cfi_def_cfa_offset 0
+  89 0030 7047     		bx	lr
+  90              	.L4:
+  91 0032 00BF     		.align	2
+  92              	.L3:
+  93 0034 00000000 		.word	.LANCHOR0
+  94 0038 00000000 		.word	.LANCHOR1
+ARM GAS  /tmp/ccCZLEOz.s 			page 3
+
+
+  95 003c 00000000 		.word	.LANCHOR2
+  96              		.cfi_endproc
+  97              	.LFE133:
+  99              		.section	.bss.ap.2,"aw",%nobits
+ 100              		.align	2
+ 101              		.set	.LANCHOR0,. + 0
+ 104              	ap.2:
+ 105 0000 00000000 		.space	4
+ 106              		.section	.bss.len.0,"aw",%nobits
+ 107              		.align	1
+ 108              		.set	.LANCHOR2,. + 0
+ 111              	len.0:
+ 112 0000 0000     		.space	2
+ 113              		.section	.bss.tx_buf.1,"aw",%nobits
+ 114              		.align	2
+ 115              		.set	.LANCHOR1,. + 0
+ 118              	tx_buf.1:
+ 119 0000 00000000 		.space	128
+ 119      00000000 
+ 119      00000000 
+ 119      00000000 
+ 119      00000000 
+ 120              		.text
+ 121              	.Letext0:
+ 122              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 123              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 124              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
+ 125              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 126              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 127              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 128              		.file 8 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/lib/gcc/arm-none-eabi/10.3.1/include/stdarg.h"
+ 129              		.file 9 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/stdio.h"
+ 130              		.file 10 "<built-in>"
+ARM GAS  /tmp/ccCZLEOz.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 bsp_uart.c
+     /tmp/ccCZLEOz.s:20     .text.uart_dma_printf:0000000000000000 $t
+     /tmp/ccCZLEOz.s:26     .text.uart_dma_printf:0000000000000000 uart_dma_printf
+     /tmp/ccCZLEOz.s:93     .text.uart_dma_printf:0000000000000034 $d
+     /tmp/ccCZLEOz.s:100    .bss.ap.2:0000000000000000 $d
+     /tmp/ccCZLEOz.s:104    .bss.ap.2:0000000000000000 ap.2
+     /tmp/ccCZLEOz.s:107    .bss.len.0:0000000000000000 $d
+     /tmp/ccCZLEOz.s:111    .bss.len.0:0000000000000000 len.0
+     /tmp/ccCZLEOz.s:114    .bss.tx_buf.1:0000000000000000 $d
+     /tmp/ccCZLEOz.s:118    .bss.tx_buf.1:0000000000000000 tx_buf.1
+
+UNDEFINED SYMBOLS
+vsprintf
+HAL_UART_Transmit_DMA

@@ -347,7 +347,7 @@ void USART6_IRQHandler(void)
         // ���PE��־��ͨ����ȡSR�Ĵ������ȡDR�Ĵ�����˳����������
         temp = USART6->SR;
         temp = USART6->DR;
-
+        
         if ((DMA2_Stream1->CR & DMA_SxCR_CT) == RESET)
         {
             /* Current memory buffer used is Memory 0 */

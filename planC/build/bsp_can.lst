@@ -1,0 +1,1156 @@
+ARM GAS  /tmp/ccMHajva.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"bsp_can.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.CANFilter_Enable,"ax",%progbits
+  20              		.align	1
+  21              		.global	CANFilter_Enable
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	CANFilter_Enable:
+  27              	.LVL0:
+  28              	.LFB132:
+  29              		.file 1 "Lib/bsp/src/bsp_can.c"
+   1:Lib/bsp/src/bsp_can.c **** #include "bsp_can.h"
+   2:Lib/bsp/src/bsp_can.c **** #include "RC.h"
+   3:Lib/bsp/src/bsp_can.c **** #include "unitreeA1_cmd.h"
+   4:Lib/bsp/src/bsp_can.c **** 
+   5:Lib/bsp/src/bsp_can.c **** fchange_t data4bytes;
+   6:Lib/bsp/src/bsp_can.c **** gyro_param gyro_pitch = {0};
+   7:Lib/bsp/src/bsp_can.c **** 
+   8:Lib/bsp/src/bsp_can.c **** extern motor_recv_t data_leg[2];
+   9:Lib/bsp/src/bsp_can.c **** extern motor_send_t cmd_leg_temp[2][3];
+  10:Lib/bsp/src/bsp_can.c **** extern motor_recv_t data_motor[2][3];
+  11:Lib/bsp/src/bsp_can.c **** 
+  12:Lib/bsp/src/bsp_can.c **** uint32_t can1_rx_stdid;
+  13:Lib/bsp/src/bsp_can.c **** uint8_t can1_rx_data[8];
+  14:Lib/bsp/src/bsp_can.c **** 
+  15:Lib/bsp/src/bsp_can.c **** extern Leg leg[2];
+  16:Lib/bsp/src/bsp_can.c **** 
+  17:Lib/bsp/src/bsp_can.c **** void CAN_InitArgument(void)
+  18:Lib/bsp/src/bsp_can.c **** {
+  19:Lib/bsp/src/bsp_can.c ****     CAN_Enable(&hcan1);
+  20:Lib/bsp/src/bsp_can.c ****     CAN_Enable(&hcan2);
+  21:Lib/bsp/src/bsp_can.c **** }
+  22:Lib/bsp/src/bsp_can.c **** 
+  23:Lib/bsp/src/bsp_can.c **** void CAN_Enable(CAN_HandleTypeDef *hcan)
+  24:Lib/bsp/src/bsp_can.c **** {
+  25:Lib/bsp/src/bsp_can.c ****     HAL_CAN_Start(hcan);                                             // 对can进行激活
+  26:Lib/bsp/src/bsp_can.c ****     HAL_CAN_ActivateNotification(hcan, CAN_IT_RX_FIFO0_MSG_PENDING); // 使能can接收中断
+  27:Lib/bsp/src/bsp_can.c ****     CANFilter_Enable(hcan);                                          // 使能滤波器
+  28:Lib/bsp/src/bsp_can.c **** }
+  29:Lib/bsp/src/bsp_can.c **** 
+ARM GAS  /tmp/ccMHajva.s 			page 2
+
+
+  30:Lib/bsp/src/bsp_can.c **** void CANFilter_Enable(CAN_HandleTypeDef *hcan)
+  31:Lib/bsp/src/bsp_can.c **** {
+  30              		.loc 1 31 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 80
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 31 1 is_stmt 0 view .LVU1
+  35 0000 10B5     		push	{r4, lr}
+  36              		.cfi_def_cfa_offset 8
+  37              		.cfi_offset 4, -8
+  38              		.cfi_offset 14, -4
+  39 0002 94B0     		sub	sp, sp, #80
+  40              		.cfi_def_cfa_offset 88
+  41 0004 0446     		mov	r4, r0
+  32:Lib/bsp/src/bsp_can.c ****     CAN_FilterTypeDef filter1;
+  42              		.loc 1 32 5 is_stmt 1 view .LVU2
+  33:Lib/bsp/src/bsp_can.c ****     CAN_FilterTypeDef filter2;
+  43              		.loc 1 33 5 view .LVU3
+  34:Lib/bsp/src/bsp_can.c ****     if (hcan->Instance == CAN1)
+  44              		.loc 1 34 5 view .LVU4
+  45              		.loc 1 34 13 is_stmt 0 view .LVU5
+  46 0006 0268     		ldr	r2, [r0]
+  47              		.loc 1 34 8 view .LVU6
+  48 0008 164B     		ldr	r3, .L7
+  49 000a 9A42     		cmp	r2, r3
+  50 000c 05D0     		beq	.L5
+  51              	.LVL1:
+  52              	.L2:
+  35:Lib/bsp/src/bsp_can.c ****     {
+  36:Lib/bsp/src/bsp_can.c ****         filter1.FilterActivation = ENABLE;
+  37:Lib/bsp/src/bsp_can.c ****         filter1.FilterBank = 0U;
+  38:Lib/bsp/src/bsp_can.c ****         filter1.FilterFIFOAssignment = CAN_FILTER_FIFO0;
+  39:Lib/bsp/src/bsp_can.c ****         filter1.FilterIdHigh = 0x0000;
+  40:Lib/bsp/src/bsp_can.c ****         filter1.FilterIdLow = 0x0000;
+  41:Lib/bsp/src/bsp_can.c ****         filter1.FilterMaskIdHigh = 0x0000;
+  42:Lib/bsp/src/bsp_can.c ****         filter1.FilterMaskIdLow = 0x0000;
+  43:Lib/bsp/src/bsp_can.c ****         filter1.FilterMode = CAN_FILTERMODE_IDMASK;
+  44:Lib/bsp/src/bsp_can.c ****         filter1.FilterScale = CAN_FILTERSCALE_32BIT;
+  45:Lib/bsp/src/bsp_can.c ****         filter1.SlaveStartFilterBank = 14;
+  46:Lib/bsp/src/bsp_can.c **** 
+  47:Lib/bsp/src/bsp_can.c ****         HAL_CAN_ConfigFilter(&hcan1, &filter1);
+  48:Lib/bsp/src/bsp_can.c ****     }
+  49:Lib/bsp/src/bsp_can.c ****     if (hcan->Instance == CAN2)
+  53              		.loc 1 49 5 is_stmt 1 view .LVU7
+  54              		.loc 1 49 13 is_stmt 0 view .LVU8
+  55 000e 2268     		ldr	r2, [r4]
+  56              		.loc 1 49 8 view .LVU9
+  57 0010 154B     		ldr	r3, .L7+4
+  58 0012 9A42     		cmp	r2, r3
+  59 0014 13D0     		beq	.L6
+  60              	.L1:
+  50:Lib/bsp/src/bsp_can.c ****     {
+  51:Lib/bsp/src/bsp_can.c ****         filter2.FilterActivation = ENABLE;
+  52:Lib/bsp/src/bsp_can.c ****         filter2.FilterBank = 14;
+  53:Lib/bsp/src/bsp_can.c ****         filter2.FilterFIFOAssignment = CAN_FILTER_FIFO0;
+  54:Lib/bsp/src/bsp_can.c ****         filter2.FilterIdHigh = 0x0000;
+  55:Lib/bsp/src/bsp_can.c ****         filter2.FilterIdLow = 0x0000;
+ARM GAS  /tmp/ccMHajva.s 			page 3
+
+
+  56:Lib/bsp/src/bsp_can.c ****         filter2.FilterMaskIdHigh = 0x0000;
+  57:Lib/bsp/src/bsp_can.c ****         filter2.FilterMaskIdLow = 0x0000;
+  58:Lib/bsp/src/bsp_can.c ****         filter2.FilterMode = CAN_FILTERMODE_IDMASK;
+  59:Lib/bsp/src/bsp_can.c ****         filter2.FilterScale = CAN_FILTERSCALE_32BIT;
+  60:Lib/bsp/src/bsp_can.c ****         filter2.SlaveStartFilterBank = 14;
+  61:Lib/bsp/src/bsp_can.c **** 
+  62:Lib/bsp/src/bsp_can.c ****         HAL_CAN_ConfigFilter(&hcan2, &filter2);
+  63:Lib/bsp/src/bsp_can.c ****     }
+  64:Lib/bsp/src/bsp_can.c **** }
+  61              		.loc 1 64 1 view .LVU10
+  62 0016 14B0     		add	sp, sp, #80
+  63              		.cfi_remember_state
+  64              		.cfi_def_cfa_offset 8
+  65              		@ sp needed
+  66 0018 10BD     		pop	{r4, pc}
+  67              	.LVL2:
+  68              	.L5:
+  69              		.cfi_restore_state
+  36:Lib/bsp/src/bsp_can.c ****         filter1.FilterBank = 0U;
+  70              		.loc 1 36 9 is_stmt 1 view .LVU11
+  36:Lib/bsp/src/bsp_can.c ****         filter1.FilterBank = 0U;
+  71              		.loc 1 36 34 is_stmt 0 view .LVU12
+  72 001a 0122     		movs	r2, #1
+  73 001c 1292     		str	r2, [sp, #72]
+  37:Lib/bsp/src/bsp_can.c ****         filter1.FilterFIFOAssignment = CAN_FILTER_FIFO0;
+  74              		.loc 1 37 9 is_stmt 1 view .LVU13
+  37:Lib/bsp/src/bsp_can.c ****         filter1.FilterFIFOAssignment = CAN_FILTER_FIFO0;
+  75              		.loc 1 37 28 is_stmt 0 view .LVU14
+  76 001e 0023     		movs	r3, #0
+  77 0020 0F93     		str	r3, [sp, #60]
+  38:Lib/bsp/src/bsp_can.c ****         filter1.FilterIdHigh = 0x0000;
+  78              		.loc 1 38 9 is_stmt 1 view .LVU15
+  38:Lib/bsp/src/bsp_can.c ****         filter1.FilterIdHigh = 0x0000;
+  79              		.loc 1 38 38 is_stmt 0 view .LVU16
+  80 0022 0E93     		str	r3, [sp, #56]
+  39:Lib/bsp/src/bsp_can.c ****         filter1.FilterIdLow = 0x0000;
+  81              		.loc 1 39 9 is_stmt 1 view .LVU17
+  39:Lib/bsp/src/bsp_can.c ****         filter1.FilterIdLow = 0x0000;
+  82              		.loc 1 39 30 is_stmt 0 view .LVU18
+  83 0024 0A93     		str	r3, [sp, #40]
+  40:Lib/bsp/src/bsp_can.c ****         filter1.FilterMaskIdHigh = 0x0000;
+  84              		.loc 1 40 9 is_stmt 1 view .LVU19
+  40:Lib/bsp/src/bsp_can.c ****         filter1.FilterMaskIdHigh = 0x0000;
+  85              		.loc 1 40 29 is_stmt 0 view .LVU20
+  86 0026 0B93     		str	r3, [sp, #44]
+  41:Lib/bsp/src/bsp_can.c ****         filter1.FilterMaskIdLow = 0x0000;
+  87              		.loc 1 41 9 is_stmt 1 view .LVU21
+  41:Lib/bsp/src/bsp_can.c ****         filter1.FilterMaskIdLow = 0x0000;
+  88              		.loc 1 41 34 is_stmt 0 view .LVU22
+  89 0028 0C93     		str	r3, [sp, #48]
+  42:Lib/bsp/src/bsp_can.c ****         filter1.FilterMode = CAN_FILTERMODE_IDMASK;
+  90              		.loc 1 42 9 is_stmt 1 view .LVU23
+  42:Lib/bsp/src/bsp_can.c ****         filter1.FilterMode = CAN_FILTERMODE_IDMASK;
+  91              		.loc 1 42 33 is_stmt 0 view .LVU24
+  92 002a 0D93     		str	r3, [sp, #52]
+  43:Lib/bsp/src/bsp_can.c ****         filter1.FilterScale = CAN_FILTERSCALE_32BIT;
+  93              		.loc 1 43 9 is_stmt 1 view .LVU25
+ARM GAS  /tmp/ccMHajva.s 			page 4
+
+
+  43:Lib/bsp/src/bsp_can.c ****         filter1.FilterScale = CAN_FILTERSCALE_32BIT;
+  94              		.loc 1 43 28 is_stmt 0 view .LVU26
+  95 002c 1093     		str	r3, [sp, #64]
+  44:Lib/bsp/src/bsp_can.c ****         filter1.SlaveStartFilterBank = 14;
+  96              		.loc 1 44 9 is_stmt 1 view .LVU27
+  44:Lib/bsp/src/bsp_can.c ****         filter1.SlaveStartFilterBank = 14;
+  97              		.loc 1 44 29 is_stmt 0 view .LVU28
+  98 002e 1192     		str	r2, [sp, #68]
+  45:Lib/bsp/src/bsp_can.c **** 
+  99              		.loc 1 45 9 is_stmt 1 view .LVU29
+  45:Lib/bsp/src/bsp_can.c **** 
+ 100              		.loc 1 45 38 is_stmt 0 view .LVU30
+ 101 0030 0E23     		movs	r3, #14
+ 102 0032 1393     		str	r3, [sp, #76]
+  47:Lib/bsp/src/bsp_can.c ****     }
+ 103              		.loc 1 47 9 is_stmt 1 view .LVU31
+ 104 0034 0AA9     		add	r1, sp, #40
+ 105 0036 0D48     		ldr	r0, .L7+8
+ 106              	.LVL3:
+  47:Lib/bsp/src/bsp_can.c ****     }
+ 107              		.loc 1 47 9 is_stmt 0 view .LVU32
+ 108 0038 FFF7FEFF 		bl	HAL_CAN_ConfigFilter
+ 109              	.LVL4:
+ 110 003c E7E7     		b	.L2
+ 111              	.L6:
+  51:Lib/bsp/src/bsp_can.c ****         filter2.FilterBank = 14;
+ 112              		.loc 1 51 9 is_stmt 1 view .LVU33
+  51:Lib/bsp/src/bsp_can.c ****         filter2.FilterBank = 14;
+ 113              		.loc 1 51 34 is_stmt 0 view .LVU34
+ 114 003e 0121     		movs	r1, #1
+ 115 0040 0891     		str	r1, [sp, #32]
+  52:Lib/bsp/src/bsp_can.c ****         filter2.FilterFIFOAssignment = CAN_FILTER_FIFO0;
+ 116              		.loc 1 52 9 is_stmt 1 view .LVU35
+  52:Lib/bsp/src/bsp_can.c ****         filter2.FilterFIFOAssignment = CAN_FILTER_FIFO0;
+ 117              		.loc 1 52 28 is_stmt 0 view .LVU36
+ 118 0042 0E22     		movs	r2, #14
+ 119 0044 0592     		str	r2, [sp, #20]
+  53:Lib/bsp/src/bsp_can.c ****         filter2.FilterIdHigh = 0x0000;
+ 120              		.loc 1 53 9 is_stmt 1 view .LVU37
+  53:Lib/bsp/src/bsp_can.c ****         filter2.FilterIdHigh = 0x0000;
+ 121              		.loc 1 53 38 is_stmt 0 view .LVU38
+ 122 0046 0023     		movs	r3, #0
+ 123 0048 0493     		str	r3, [sp, #16]
+  54:Lib/bsp/src/bsp_can.c ****         filter2.FilterIdLow = 0x0000;
+ 124              		.loc 1 54 9 is_stmt 1 view .LVU39
+  54:Lib/bsp/src/bsp_can.c ****         filter2.FilterIdLow = 0x0000;
+ 125              		.loc 1 54 30 is_stmt 0 view .LVU40
+ 126 004a 0093     		str	r3, [sp]
+  55:Lib/bsp/src/bsp_can.c ****         filter2.FilterMaskIdHigh = 0x0000;
+ 127              		.loc 1 55 9 is_stmt 1 view .LVU41
+  55:Lib/bsp/src/bsp_can.c ****         filter2.FilterMaskIdHigh = 0x0000;
+ 128              		.loc 1 55 29 is_stmt 0 view .LVU42
+ 129 004c 0193     		str	r3, [sp, #4]
+  56:Lib/bsp/src/bsp_can.c ****         filter2.FilterMaskIdLow = 0x0000;
+ 130              		.loc 1 56 9 is_stmt 1 view .LVU43
+  56:Lib/bsp/src/bsp_can.c ****         filter2.FilterMaskIdLow = 0x0000;
+ 131              		.loc 1 56 34 is_stmt 0 view .LVU44
+ARM GAS  /tmp/ccMHajva.s 			page 5
+
+
+ 132 004e 0293     		str	r3, [sp, #8]
+  57:Lib/bsp/src/bsp_can.c ****         filter2.FilterMode = CAN_FILTERMODE_IDMASK;
+ 133              		.loc 1 57 9 is_stmt 1 view .LVU45
+  57:Lib/bsp/src/bsp_can.c ****         filter2.FilterMode = CAN_FILTERMODE_IDMASK;
+ 134              		.loc 1 57 33 is_stmt 0 view .LVU46
+ 135 0050 0393     		str	r3, [sp, #12]
+  58:Lib/bsp/src/bsp_can.c ****         filter2.FilterScale = CAN_FILTERSCALE_32BIT;
+ 136              		.loc 1 58 9 is_stmt 1 view .LVU47
+  58:Lib/bsp/src/bsp_can.c ****         filter2.FilterScale = CAN_FILTERSCALE_32BIT;
+ 137              		.loc 1 58 28 is_stmt 0 view .LVU48
+ 138 0052 0693     		str	r3, [sp, #24]
+  59:Lib/bsp/src/bsp_can.c ****         filter2.SlaveStartFilterBank = 14;
+ 139              		.loc 1 59 9 is_stmt 1 view .LVU49
+  59:Lib/bsp/src/bsp_can.c ****         filter2.SlaveStartFilterBank = 14;
+ 140              		.loc 1 59 29 is_stmt 0 view .LVU50
+ 141 0054 0791     		str	r1, [sp, #28]
+  60:Lib/bsp/src/bsp_can.c **** 
+ 142              		.loc 1 60 9 is_stmt 1 view .LVU51
+  60:Lib/bsp/src/bsp_can.c **** 
+ 143              		.loc 1 60 38 is_stmt 0 view .LVU52
+ 144 0056 0992     		str	r2, [sp, #36]
+  62:Lib/bsp/src/bsp_can.c ****     }
+ 145              		.loc 1 62 9 is_stmt 1 view .LVU53
+ 146 0058 6946     		mov	r1, sp
+ 147 005a 0548     		ldr	r0, .L7+12
+ 148 005c FFF7FEFF 		bl	HAL_CAN_ConfigFilter
+ 149              	.LVL5:
+ 150              		.loc 1 64 1 is_stmt 0 view .LVU54
+ 151 0060 D9E7     		b	.L1
+ 152              	.L8:
+ 153 0062 00BF     		.align	2
+ 154              	.L7:
+ 155 0064 00640040 		.word	1073767424
+ 156 0068 00680040 		.word	1073768448
+ 157 006c 00000000 		.word	hcan1
+ 158 0070 00000000 		.word	hcan2
+ 159              		.cfi_endproc
+ 160              	.LFE132:
+ 162              		.section	.text.CAN_Enable,"ax",%progbits
+ 163              		.align	1
+ 164              		.global	CAN_Enable
+ 165              		.syntax unified
+ 166              		.thumb
+ 167              		.thumb_func
+ 169              	CAN_Enable:
+ 170              	.LVL6:
+ 171              	.LFB131:
+  24:Lib/bsp/src/bsp_can.c ****     HAL_CAN_Start(hcan);                                             // 对can进行激活
+ 172              		.loc 1 24 1 is_stmt 1 view -0
+ 173              		.cfi_startproc
+ 174              		@ args = 0, pretend = 0, frame = 0
+ 175              		@ frame_needed = 0, uses_anonymous_args = 0
+  24:Lib/bsp/src/bsp_can.c ****     HAL_CAN_Start(hcan);                                             // 对can进行激活
+ 176              		.loc 1 24 1 is_stmt 0 view .LVU56
+ 177 0000 10B5     		push	{r4, lr}
+ 178              		.cfi_def_cfa_offset 8
+ 179              		.cfi_offset 4, -8
+ARM GAS  /tmp/ccMHajva.s 			page 6
+
+
+ 180              		.cfi_offset 14, -4
+ 181 0002 0446     		mov	r4, r0
+  25:Lib/bsp/src/bsp_can.c ****     HAL_CAN_ActivateNotification(hcan, CAN_IT_RX_FIFO0_MSG_PENDING); // 使能can接收中断
+ 182              		.loc 1 25 5 is_stmt 1 view .LVU57
+ 183 0004 FFF7FEFF 		bl	HAL_CAN_Start
+ 184              	.LVL7:
+  26:Lib/bsp/src/bsp_can.c ****     CANFilter_Enable(hcan);                                          // 使能滤波器
+ 185              		.loc 1 26 5 view .LVU58
+ 186 0008 0221     		movs	r1, #2
+ 187 000a 2046     		mov	r0, r4
+ 188 000c FFF7FEFF 		bl	HAL_CAN_ActivateNotification
+ 189              	.LVL8:
+  27:Lib/bsp/src/bsp_can.c **** }
+ 190              		.loc 1 27 5 view .LVU59
+ 191 0010 2046     		mov	r0, r4
+ 192 0012 FFF7FEFF 		bl	CANFilter_Enable
+ 193              	.LVL9:
+  28:Lib/bsp/src/bsp_can.c **** 
+ 194              		.loc 1 28 1 is_stmt 0 view .LVU60
+ 195 0016 10BD     		pop	{r4, pc}
+  28:Lib/bsp/src/bsp_can.c **** 
+ 196              		.loc 1 28 1 view .LVU61
+ 197              		.cfi_endproc
+ 198              	.LFE131:
+ 200              		.section	.text.CAN_InitArgument,"ax",%progbits
+ 201              		.align	1
+ 202              		.global	CAN_InitArgument
+ 203              		.syntax unified
+ 204              		.thumb
+ 205              		.thumb_func
+ 207              	CAN_InitArgument:
+ 208              	.LFB130:
+  18:Lib/bsp/src/bsp_can.c ****     CAN_Enable(&hcan1);
+ 209              		.loc 1 18 1 is_stmt 1 view -0
+ 210              		.cfi_startproc
+ 211              		@ args = 0, pretend = 0, frame = 0
+ 212              		@ frame_needed = 0, uses_anonymous_args = 0
+ 213 0000 08B5     		push	{r3, lr}
+ 214              		.cfi_def_cfa_offset 8
+ 215              		.cfi_offset 3, -8
+ 216              		.cfi_offset 14, -4
+  19:Lib/bsp/src/bsp_can.c ****     CAN_Enable(&hcan2);
+ 217              		.loc 1 19 5 view .LVU63
+ 218 0002 0348     		ldr	r0, .L13
+ 219 0004 FFF7FEFF 		bl	CAN_Enable
+ 220              	.LVL10:
+  20:Lib/bsp/src/bsp_can.c **** }
+ 221              		.loc 1 20 5 view .LVU64
+ 222 0008 0248     		ldr	r0, .L13+4
+ 223 000a FFF7FEFF 		bl	CAN_Enable
+ 224              	.LVL11:
+  21:Lib/bsp/src/bsp_can.c **** 
+ 225              		.loc 1 21 1 is_stmt 0 view .LVU65
+ 226 000e 08BD     		pop	{r3, pc}
+ 227              	.L14:
+ 228              		.align	2
+ 229              	.L13:
+ARM GAS  /tmp/ccMHajva.s 			page 7
+
+
+ 230 0010 00000000 		.word	hcan1
+ 231 0014 00000000 		.word	hcan2
+ 232              		.cfi_endproc
+ 233              	.LFE130:
+ 235              		.section	.text.HAL_CAN_RxFifo0MsgPendingCallback,"ax",%progbits
+ 236              		.align	1
+ 237              		.global	HAL_CAN_RxFifo0MsgPendingCallback
+ 238              		.syntax unified
+ 239              		.thumb
+ 240              		.thumb_func
+ 242              	HAL_CAN_RxFifo0MsgPendingCallback:
+ 243              	.LVL12:
+ 244              	.LFB133:
+  65:Lib/bsp/src/bsp_can.c **** 
+  66:Lib/bsp/src/bsp_can.c **** union FloatConverter
+  67:Lib/bsp/src/bsp_can.c **** {
+  68:Lib/bsp/src/bsp_can.c ****     uint8_t bytes[4];
+  69:Lib/bsp/src/bsp_can.c ****     float floatValue;
+  70:Lib/bsp/src/bsp_can.c **** }converter;
+  71:Lib/bsp/src/bsp_can.c **** 
+  72:Lib/bsp/src/bsp_can.c **** void HAL_CAN_RxFifo0MsgPendingCallback(CAN_HandleTypeDef *hcan)
+  73:Lib/bsp/src/bsp_can.c **** {
+ 245              		.loc 1 73 1 is_stmt 1 view -0
+ 246              		.cfi_startproc
+ 247              		@ args = 0, pretend = 0, frame = 72
+ 248              		@ frame_needed = 0, uses_anonymous_args = 0
+ 249              		.loc 1 73 1 is_stmt 0 view .LVU67
+ 250 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 251              		.cfi_def_cfa_offset 28
+ 252              		.cfi_offset 4, -28
+ 253              		.cfi_offset 5, -24
+ 254              		.cfi_offset 6, -20
+ 255              		.cfi_offset 7, -16
+ 256              		.cfi_offset 8, -12
+ 257              		.cfi_offset 9, -8
+ 258              		.cfi_offset 14, -4
+ 259 0004 93B0     		sub	sp, sp, #76
+ 260              		.cfi_def_cfa_offset 104
+ 261 0006 0446     		mov	r4, r0
+  74:Lib/bsp/src/bsp_can.c ****     CAN_Message can1_rx_message, can2_rx_message;
+ 262              		.loc 1 74 5 is_stmt 1 view .LVU68
+  75:Lib/bsp/src/bsp_can.c ****     CAN_RxHeaderTypeDef Can1RxHeader, Can2RxHeader;
+ 263              		.loc 1 75 5 view .LVU69
+  76:Lib/bsp/src/bsp_can.c ****     if (hcan->Instance == CAN1)
+ 264              		.loc 1 76 5 view .LVU70
+ 265              		.loc 1 76 13 is_stmt 0 view .LVU71
+ 266 0008 0268     		ldr	r2, [r0]
+ 267              		.loc 1 76 8 view .LVU72
+ 268 000a 684B     		ldr	r3, .L24
+ 269 000c 9A42     		cmp	r2, r3
+ 270 000e 07D0     		beq	.L21
+ 271              	.LVL13:
+ 272              	.L16:
+  77:Lib/bsp/src/bsp_can.c ****     {
+  78:Lib/bsp/src/bsp_can.c ****         HAL_CAN_GetRxMessage(&hcan1, CAN_RX_FIFO0, &Can1RxHeader, can1_rx_message.Data);
+  79:Lib/bsp/src/bsp_can.c **** 
+  80:Lib/bsp/src/bsp_can.c ****         can1_rx_stdid = Can1RxHeader.StdId;
+ARM GAS  /tmp/ccMHajva.s 			page 8
+
+
+  81:Lib/bsp/src/bsp_can.c ****         can1_rx_data[0] = can1_rx_message.Data[0];
+  82:Lib/bsp/src/bsp_can.c ****         can1_rx_data[1] = can1_rx_message.Data[1];
+  83:Lib/bsp/src/bsp_can.c ****         can1_rx_data[2] = can1_rx_message.Data[2];
+  84:Lib/bsp/src/bsp_can.c ****         can1_rx_data[3] = can1_rx_message.Data[3];
+  85:Lib/bsp/src/bsp_can.c ****         can1_rx_data[4] = can1_rx_message.Data[4];
+  86:Lib/bsp/src/bsp_can.c ****         can1_rx_data[5] = can1_rx_message.Data[5];
+  87:Lib/bsp/src/bsp_can.c ****         can1_rx_data[6] = can1_rx_message.Data[6];
+  88:Lib/bsp/src/bsp_can.c ****         can1_rx_data[7] = can1_rx_message.Data[7];
+  89:Lib/bsp/src/bsp_can.c ****         if (Can1RxHeader.StdId >= 0x20 && Can1RxHeader.StdId <= 0x32)
+  90:Lib/bsp/src/bsp_can.c ****         {
+  91:Lib/bsp/src/bsp_can.c ****             int flag_num = (int)(Can1RxHeader.StdId - 0x20);
+  92:Lib/bsp/src/bsp_can.c ****             if (flag_num % 3 == 0)
+  93:Lib/bsp/src/bsp_can.c ****             {
+  94:Lib/bsp/src/bsp_can.c ****                 converter.bytes[0] = can1_rx_data[0];
+  95:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[1];
+  96:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[2];
+  97:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[3];
+  98:Lib/bsp/src/bsp_can.c **** 
+  99:Lib/bsp/src/bsp_can.c ****                 leg[flag_num / 9].motor_can[(flag_num % 9) / 3].cmd_leg_temp.K_P = converter.floatV
+ 100:Lib/bsp/src/bsp_can.c **** 
+ 101:Lib/bsp/src/bsp_can.c ****                 converter.bytes[0] = can1_rx_data[4];
+ 102:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[5];
+ 103:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[6];
+ 104:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[7];
+ 105:Lib/bsp/src/bsp_can.c **** 
+ 106:Lib/bsp/src/bsp_can.c ****                 leg[flag_num / 9].motor_can[(flag_num % 9) / 3].cmd_leg_temp.K_W = converter.floatV
+ 107:Lib/bsp/src/bsp_can.c ****             }
+ 108:Lib/bsp/src/bsp_can.c ****             else if (flag_num % 3 == 1)
+ 109:Lib/bsp/src/bsp_can.c ****             {
+ 110:Lib/bsp/src/bsp_can.c ****                 converter.bytes[0] = can1_rx_data[0];
+ 111:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[1];
+ 112:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[2];
+ 113:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[3];
+ 114:Lib/bsp/src/bsp_can.c **** 
+ 115:Lib/bsp/src/bsp_can.c ****                 leg[flag_num / 9].motor_can[(flag_num % 9) / 3].cmd_leg_temp.W = converter.floatVal
+ 116:Lib/bsp/src/bsp_can.c **** 
+ 117:Lib/bsp/src/bsp_can.c ****                 converter.bytes[0] = can1_rx_data[4];
+ 118:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[5];
+ 119:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[6];
+ 120:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[7];
+ 121:Lib/bsp/src/bsp_can.c **** 
+ 122:Lib/bsp/src/bsp_can.c ****                 leg[flag_num / 9].motor_can[(flag_num % 9) / 3].cmd_leg_temp.T = converter.floatVal
+ 123:Lib/bsp/src/bsp_can.c ****             }
+ 124:Lib/bsp/src/bsp_can.c ****             else if (flag_num % 3 == 2)
+ 125:Lib/bsp/src/bsp_can.c ****             {
+ 126:Lib/bsp/src/bsp_can.c ****                 converter.bytes[0] = can1_rx_data[0];
+ 127:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[1];
+ 128:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[2];
+ 129:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[3];
+ 130:Lib/bsp/src/bsp_can.c **** 
+ 131:Lib/bsp/src/bsp_can.c ****                 leg[flag_num / 9].motor_can[(flag_num % 9) / 3].cmd_leg_temp.Pos = converter.floatV
+ 132:Lib/bsp/src/bsp_can.c ****                 leg[flag_num / 9].motor_can[(flag_num % 9) / 3].cmd_leg_temp.mode = (uint32_t)can1_
+ 133:Lib/bsp/src/bsp_can.c **** 
+ 134:Lib/bsp/src/bsp_can.c ****                 leg[flag_num / 9].motor_can[(flag_num % 9) / 3].Checksum = (can1_rx_message.Data[6]
+ 135:Lib/bsp/src/bsp_can.c ****             }
+ 136:Lib/bsp/src/bsp_can.c ****         }
+ 137:Lib/bsp/src/bsp_can.c ****     }
+ARM GAS  /tmp/ccMHajva.s 			page 9
+
+
+ 138:Lib/bsp/src/bsp_can.c ****     if (hcan->Instance == CAN2)
+ 273              		.loc 1 138 5 is_stmt 1 view .LVU73
+ 274              		.loc 1 138 13 is_stmt 0 view .LVU74
+ 275 0010 2268     		ldr	r2, [r4]
+ 276              		.loc 1 138 8 view .LVU75
+ 277 0012 674B     		ldr	r3, .L24+4
+ 278 0014 9A42     		cmp	r2, r3
+ 279 0016 00F0C180 		beq	.L22
+ 280              	.L15:
+ 139:Lib/bsp/src/bsp_can.c ****     {
+ 140:Lib/bsp/src/bsp_can.c ****         HAL_CAN_GetRxMessage(&hcan2, CAN_RX_FIFO0, &Can2RxHeader, can2_rx_message.Data);
+ 141:Lib/bsp/src/bsp_can.c ****         switch (Can2RxHeader.StdId)
+ 142:Lib/bsp/src/bsp_can.c ****         {
+ 143:Lib/bsp/src/bsp_can.c ****         }
+ 144:Lib/bsp/src/bsp_can.c ****     }
+ 145:Lib/bsp/src/bsp_can.c **** }
+ 281              		.loc 1 145 1 view .LVU76
+ 282 001a 13B0     		add	sp, sp, #76
+ 283              		.cfi_remember_state
+ 284              		.cfi_def_cfa_offset 28
+ 285              		@ sp needed
+ 286 001c BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 287              	.LVL14:
+ 288              	.L21:
+ 289              		.cfi_restore_state
+  78:Lib/bsp/src/bsp_can.c **** 
+ 290              		.loc 1 78 9 is_stmt 1 view .LVU77
+ 291 0020 10AB     		add	r3, sp, #64
+ 292 0022 07AA     		add	r2, sp, #28
+ 293 0024 0021     		movs	r1, #0
+ 294 0026 6348     		ldr	r0, .L24+8
+ 295              	.LVL15:
+  78:Lib/bsp/src/bsp_can.c **** 
+ 296              		.loc 1 78 9 is_stmt 0 view .LVU78
+ 297 0028 FFF7FEFF 		bl	HAL_CAN_GetRxMessage
+ 298              	.LVL16:
+  80:Lib/bsp/src/bsp_can.c ****         can1_rx_data[0] = can1_rx_message.Data[0];
+ 299              		.loc 1 80 9 is_stmt 1 view .LVU79
+  80:Lib/bsp/src/bsp_can.c ****         can1_rx_data[0] = can1_rx_message.Data[0];
+ 300              		.loc 1 80 37 is_stmt 0 view .LVU80
+ 301 002c 079A     		ldr	r2, [sp, #28]
+  80:Lib/bsp/src/bsp_can.c ****         can1_rx_data[0] = can1_rx_message.Data[0];
+ 302              		.loc 1 80 23 view .LVU81
+ 303 002e 624B     		ldr	r3, .L24+12
+ 304 0030 1A60     		str	r2, [r3]
+  81:Lib/bsp/src/bsp_can.c ****         can1_rx_data[1] = can1_rx_message.Data[1];
+ 305              		.loc 1 81 9 is_stmt 1 view .LVU82
+  81:Lib/bsp/src/bsp_can.c ****         can1_rx_data[1] = can1_rx_message.Data[1];
+ 306              		.loc 1 81 47 is_stmt 0 view .LVU83
+ 307 0032 9DF84070 		ldrb	r7, [sp, #64]	@ zero_extendqisi2
+  81:Lib/bsp/src/bsp_can.c ****         can1_rx_data[1] = can1_rx_message.Data[1];
+ 308              		.loc 1 81 25 view .LVU84
+ 309 0036 614B     		ldr	r3, .L24+16
+ 310 0038 1F70     		strb	r7, [r3]
+  82:Lib/bsp/src/bsp_can.c ****         can1_rx_data[2] = can1_rx_message.Data[2];
+ 311              		.loc 1 82 9 is_stmt 1 view .LVU85
+  82:Lib/bsp/src/bsp_can.c ****         can1_rx_data[2] = can1_rx_message.Data[2];
+ARM GAS  /tmp/ccMHajva.s 			page 10
+
+
+ 312              		.loc 1 82 47 is_stmt 0 view .LVU86
+ 313 003a 9DF84160 		ldrb	r6, [sp, #65]	@ zero_extendqisi2
+  82:Lib/bsp/src/bsp_can.c ****         can1_rx_data[2] = can1_rx_message.Data[2];
+ 314              		.loc 1 82 25 view .LVU87
+ 315 003e 5E70     		strb	r6, [r3, #1]
+  83:Lib/bsp/src/bsp_can.c ****         can1_rx_data[3] = can1_rx_message.Data[3];
+ 316              		.loc 1 83 9 is_stmt 1 view .LVU88
+  83:Lib/bsp/src/bsp_can.c ****         can1_rx_data[3] = can1_rx_message.Data[3];
+ 317              		.loc 1 83 47 is_stmt 0 view .LVU89
+ 318 0040 9DF84250 		ldrb	r5, [sp, #66]	@ zero_extendqisi2
+  83:Lib/bsp/src/bsp_can.c ****         can1_rx_data[3] = can1_rx_message.Data[3];
+ 319              		.loc 1 83 25 view .LVU90
+ 320 0044 9D70     		strb	r5, [r3, #2]
+  84:Lib/bsp/src/bsp_can.c ****         can1_rx_data[4] = can1_rx_message.Data[4];
+ 321              		.loc 1 84 9 is_stmt 1 view .LVU91
+  84:Lib/bsp/src/bsp_can.c ****         can1_rx_data[4] = can1_rx_message.Data[4];
+ 322              		.loc 1 84 47 is_stmt 0 view .LVU92
+ 323 0046 9DF843E0 		ldrb	lr, [sp, #67]	@ zero_extendqisi2
+  84:Lib/bsp/src/bsp_can.c ****         can1_rx_data[4] = can1_rx_message.Data[4];
+ 324              		.loc 1 84 25 view .LVU93
+ 325 004a 83F803E0 		strb	lr, [r3, #3]
+  85:Lib/bsp/src/bsp_can.c ****         can1_rx_data[5] = can1_rx_message.Data[5];
+ 326              		.loc 1 85 9 is_stmt 1 view .LVU94
+  85:Lib/bsp/src/bsp_can.c ****         can1_rx_data[5] = can1_rx_message.Data[5];
+ 327              		.loc 1 85 47 is_stmt 0 view .LVU95
+ 328 004e 9DF844C0 		ldrb	ip, [sp, #68]	@ zero_extendqisi2
+  85:Lib/bsp/src/bsp_can.c ****         can1_rx_data[5] = can1_rx_message.Data[5];
+ 329              		.loc 1 85 25 view .LVU96
+ 330 0052 83F804C0 		strb	ip, [r3, #4]
+  86:Lib/bsp/src/bsp_can.c ****         can1_rx_data[6] = can1_rx_message.Data[6];
+ 331              		.loc 1 86 9 is_stmt 1 view .LVU97
+  86:Lib/bsp/src/bsp_can.c ****         can1_rx_data[6] = can1_rx_message.Data[6];
+ 332              		.loc 1 86 47 is_stmt 0 view .LVU98
+ 333 0056 9DF84580 		ldrb	r8, [sp, #69]	@ zero_extendqisi2
+  86:Lib/bsp/src/bsp_can.c ****         can1_rx_data[6] = can1_rx_message.Data[6];
+ 334              		.loc 1 86 25 view .LVU99
+ 335 005a 83F80580 		strb	r8, [r3, #5]
+  87:Lib/bsp/src/bsp_can.c ****         can1_rx_data[7] = can1_rx_message.Data[7];
+ 336              		.loc 1 87 9 is_stmt 1 view .LVU100
+  87:Lib/bsp/src/bsp_can.c ****         can1_rx_data[7] = can1_rx_message.Data[7];
+ 337              		.loc 1 87 47 is_stmt 0 view .LVU101
+ 338 005e 9DF84610 		ldrb	r1, [sp, #70]	@ zero_extendqisi2
+  87:Lib/bsp/src/bsp_can.c ****         can1_rx_data[7] = can1_rx_message.Data[7];
+ 339              		.loc 1 87 25 view .LVU102
+ 340 0062 9971     		strb	r1, [r3, #6]
+  88:Lib/bsp/src/bsp_can.c ****         if (Can1RxHeader.StdId >= 0x20 && Can1RxHeader.StdId <= 0x32)
+ 341              		.loc 1 88 9 is_stmt 1 view .LVU103
+  88:Lib/bsp/src/bsp_can.c ****         if (Can1RxHeader.StdId >= 0x20 && Can1RxHeader.StdId <= 0x32)
+ 342              		.loc 1 88 47 is_stmt 0 view .LVU104
+ 343 0064 9DF84700 		ldrb	r0, [sp, #71]	@ zero_extendqisi2
+  88:Lib/bsp/src/bsp_can.c ****         if (Can1RxHeader.StdId >= 0x20 && Can1RxHeader.StdId <= 0x32)
+ 344              		.loc 1 88 25 view .LVU105
+ 345 0068 D871     		strb	r0, [r3, #7]
+  89:Lib/bsp/src/bsp_can.c ****         {
+ 346              		.loc 1 89 9 is_stmt 1 view .LVU106
+  89:Lib/bsp/src/bsp_can.c ****         {
+ 347              		.loc 1 89 40 is_stmt 0 view .LVU107
+ARM GAS  /tmp/ccMHajva.s 			page 11
+
+
+ 348 006a A2F12003 		sub	r3, r2, #32
+  89:Lib/bsp/src/bsp_can.c ****         {
+ 349              		.loc 1 89 12 view .LVU108
+ 350 006e 122B     		cmp	r3, #18
+ 351 0070 CED8     		bhi	.L16
+ 352              	.LBB2:
+  91:Lib/bsp/src/bsp_can.c ****             if (flag_num % 3 == 0)
+ 353              		.loc 1 91 13 is_stmt 1 view .LVU109
+ 354              	.LVL17:
+  92:Lib/bsp/src/bsp_can.c ****             {
+ 355              		.loc 1 92 13 view .LVU110
+  92:Lib/bsp/src/bsp_can.c ****             {
+ 356              		.loc 1 92 26 is_stmt 0 view .LVU111
+ 357 0072 534A     		ldr	r2, .L24+20
+ 358 0074 82FB0392 		smull	r9, r2, r2, r3
+ 359 0078 A2EBE372 		sub	r2, r2, r3, asr #31
+ 360 007c 02EB4202 		add	r2, r2, r2, lsl #1
+  92:Lib/bsp/src/bsp_can.c ****             {
+ 361              		.loc 1 92 16 view .LVU112
+ 362 0080 9A1A     		subs	r2, r3, r2
+ 363 0082 30D1     		bne	.L17
+  94:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[1];
+ 364              		.loc 1 94 17 is_stmt 1 view .LVU113
+  94:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[1];
+ 365              		.loc 1 94 36 is_stmt 0 view .LVU114
+ 366 0084 DFF84491 		ldr	r9, .L24+32
+ 367 0088 89F80070 		strb	r7, [r9]
+  95:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[2];
+ 368              		.loc 1 95 17 is_stmt 1 view .LVU115
+  95:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[2];
+ 369              		.loc 1 95 36 is_stmt 0 view .LVU116
+ 370 008c 89F80160 		strb	r6, [r9, #1]
+  96:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[3];
+ 371              		.loc 1 96 17 is_stmt 1 view .LVU117
+  96:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[3];
+ 372              		.loc 1 96 36 is_stmt 0 view .LVU118
+ 373 0090 89F80250 		strb	r5, [r9, #2]
+  97:Lib/bsp/src/bsp_can.c **** 
+ 374              		.loc 1 97 17 is_stmt 1 view .LVU119
+  97:Lib/bsp/src/bsp_can.c **** 
+ 375              		.loc 1 97 36 is_stmt 0 view .LVU120
+ 376 0094 89F803E0 		strb	lr, [r9, #3]
+  99:Lib/bsp/src/bsp_can.c **** 
+ 377              		.loc 1 99 17 is_stmt 1 view .LVU121
+  99:Lib/bsp/src/bsp_can.c **** 
+ 378              		.loc 1 99 30 is_stmt 0 view .LVU122
+ 379 0098 4A4A     		ldr	r2, .L24+24
+ 380 009a 82FB0352 		smull	r5, r2, r2, r3
+ 381 009e DD17     		asrs	r5, r3, #31
+ 382 00a0 C5EB6202 		rsb	r2, r5, r2, asr #1
+  99:Lib/bsp/src/bsp_can.c **** 
+ 383              		.loc 1 99 55 view .LVU123
+ 384 00a4 02EBC205 		add	r5, r2, r2, lsl #3
+ 385 00a8 5B1B     		subs	r3, r3, r5
+ 386              	.LVL18:
+  99:Lib/bsp/src/bsp_can.c **** 
+ 387              		.loc 1 99 60 view .LVU124
+ARM GAS  /tmp/ccMHajva.s 			page 12
+
+
+ 388 00aa 454D     		ldr	r5, .L24+20
+ 389 00ac 85FB0365 		smull	r6, r5, r5, r3
+ 390 00b0 A5EBE373 		sub	r3, r5, r3, asr #31
+  99:Lib/bsp/src/bsp_can.c **** 
+ 391              		.loc 1 99 93 view .LVU125
+ 392 00b4 D9F80070 		ldr	r7, [r9]	@ float
+  99:Lib/bsp/src/bsp_can.c **** 
+ 393              		.loc 1 99 82 view .LVU126
+ 394 00b8 434E     		ldr	r6, .L24+28
+ 395 00ba 03EB0315 		add	r5, r3, r3, lsl #4
+ 396 00be 4FF4D27E 		mov	lr, #420
+ 397 00c2 0EFB02F2 		mul	r2, lr, r2
+ 398 00c6 02EBC505 		add	r5, r2, r5, lsl #3
+ 399 00ca 3544     		add	r5, r5, r6
+ 400 00cc AF67     		str	r7, [r5, #120]	@ float
+ 101:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[5];
+ 401              		.loc 1 101 17 is_stmt 1 view .LVU127
+ 101:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[5];
+ 402              		.loc 1 101 36 is_stmt 0 view .LVU128
+ 403 00ce 89F800C0 		strb	ip, [r9]
+ 102:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[6];
+ 404              		.loc 1 102 17 is_stmt 1 view .LVU129
+ 102:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[6];
+ 405              		.loc 1 102 36 is_stmt 0 view .LVU130
+ 406 00d2 89F80180 		strb	r8, [r9, #1]
+ 103:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[7];
+ 407              		.loc 1 103 17 is_stmt 1 view .LVU131
+ 103:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[7];
+ 408              		.loc 1 103 36 is_stmt 0 view .LVU132
+ 409 00d6 89F80210 		strb	r1, [r9, #2]
+ 104:Lib/bsp/src/bsp_can.c **** 
+ 410              		.loc 1 104 17 is_stmt 1 view .LVU133
+ 104:Lib/bsp/src/bsp_can.c **** 
+ 411              		.loc 1 104 36 is_stmt 0 view .LVU134
+ 412 00da 89F80300 		strb	r0, [r9, #3]
+ 106:Lib/bsp/src/bsp_can.c ****             }
+ 413              		.loc 1 106 17 is_stmt 1 view .LVU135
+ 106:Lib/bsp/src/bsp_can.c ****             }
+ 414              		.loc 1 106 93 is_stmt 0 view .LVU136
+ 415 00de D9F80010 		ldr	r1, [r9]	@ float
+ 106:Lib/bsp/src/bsp_can.c ****             }
+ 416              		.loc 1 106 82 view .LVU137
+ 417 00e2 E967     		str	r1, [r5, #124]	@ float
+ 418 00e4 94E7     		b	.L16
+ 419              	.LVL19:
+ 420              	.L17:
+ 108:Lib/bsp/src/bsp_can.c ****             {
+ 421              		.loc 1 108 18 is_stmt 1 view .LVU138
+ 108:Lib/bsp/src/bsp_can.c ****             {
+ 422              		.loc 1 108 21 is_stmt 0 view .LVU139
+ 423 00e6 012A     		cmp	r2, #1
+ 424 00e8 2DD0     		beq	.L23
+ 124:Lib/bsp/src/bsp_can.c ****             {
+ 425              		.loc 1 124 18 is_stmt 1 view .LVU140
+ 124:Lib/bsp/src/bsp_can.c ****             {
+ 426              		.loc 1 124 21 is_stmt 0 view .LVU141
+ 427 00ea 022A     		cmp	r2, #2
+ARM GAS  /tmp/ccMHajva.s 			page 13
+
+
+ 428 00ec 90D1     		bne	.L16
+ 126:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[1];
+ 429              		.loc 1 126 17 is_stmt 1 view .LVU142
+ 126:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[1];
+ 430              		.loc 1 126 36 is_stmt 0 view .LVU143
+ 431 00ee DFF8DC80 		ldr	r8, .L24+32
+ 432 00f2 88F80070 		strb	r7, [r8]
+ 127:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[2];
+ 433              		.loc 1 127 17 is_stmt 1 view .LVU144
+ 127:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[2];
+ 434              		.loc 1 127 36 is_stmt 0 view .LVU145
+ 435 00f6 88F80160 		strb	r6, [r8, #1]
+ 128:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[3];
+ 436              		.loc 1 128 17 is_stmt 1 view .LVU146
+ 128:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[3];
+ 437              		.loc 1 128 36 is_stmt 0 view .LVU147
+ 438 00fa 88F80250 		strb	r5, [r8, #2]
+ 129:Lib/bsp/src/bsp_can.c **** 
+ 439              		.loc 1 129 17 is_stmt 1 view .LVU148
+ 129:Lib/bsp/src/bsp_can.c **** 
+ 440              		.loc 1 129 36 is_stmt 0 view .LVU149
+ 441 00fe 88F803E0 		strb	lr, [r8, #3]
+ 131:Lib/bsp/src/bsp_can.c ****                 leg[flag_num / 9].motor_can[(flag_num % 9) / 3].cmd_leg_temp.mode = (uint32_t)can1_
+ 442              		.loc 1 131 17 is_stmt 1 view .LVU150
+ 131:Lib/bsp/src/bsp_can.c ****                 leg[flag_num / 9].motor_can[(flag_num % 9) / 3].cmd_leg_temp.mode = (uint32_t)can1_
+ 443              		.loc 1 131 30 is_stmt 0 view .LVU151
+ 444 0102 304A     		ldr	r2, .L24+24
+ 445 0104 82FB0352 		smull	r5, r2, r2, r3
+ 446 0108 DD17     		asrs	r5, r3, #31
+ 447 010a C5EB6202 		rsb	r2, r5, r2, asr #1
+ 131:Lib/bsp/src/bsp_can.c ****                 leg[flag_num / 9].motor_can[(flag_num % 9) / 3].cmd_leg_temp.mode = (uint32_t)can1_
+ 448              		.loc 1 131 55 view .LVU152
+ 449 010e 02EBC205 		add	r5, r2, r2, lsl #3
+ 450 0112 5B1B     		subs	r3, r3, r5
+ 451              	.LVL20:
+ 131:Lib/bsp/src/bsp_can.c ****                 leg[flag_num / 9].motor_can[(flag_num % 9) / 3].cmd_leg_temp.mode = (uint32_t)can1_
+ 452              		.loc 1 131 60 view .LVU153
+ 453 0114 2A4D     		ldr	r5, .L24+20
+ 454 0116 85FB0365 		smull	r6, r5, r5, r3
+ 455 011a A5EBE373 		sub	r3, r5, r3, asr #31
+ 131:Lib/bsp/src/bsp_can.c ****                 leg[flag_num / 9].motor_can[(flag_num % 9) / 3].cmd_leg_temp.mode = (uint32_t)can1_
+ 456              		.loc 1 131 93 view .LVU154
+ 457 011e D8F80070 		ldr	r7, [r8]	@ float
+ 131:Lib/bsp/src/bsp_can.c ****                 leg[flag_num / 9].motor_can[(flag_num % 9) / 3].cmd_leg_temp.mode = (uint32_t)can1_
+ 458              		.loc 1 131 82 view .LVU155
+ 459 0122 294E     		ldr	r6, .L24+28
+ 460 0124 03EB0315 		add	r5, r3, r3, lsl #4
+ 461 0128 4FF4D27E 		mov	lr, #420
+ 462 012c 0EFB02F2 		mul	r2, lr, r2
+ 463 0130 02EBC505 		add	r5, r2, r5, lsl #3
+ 464 0134 3544     		add	r5, r5, r6
+ 465 0136 6F67     		str	r7, [r5, #116]	@ float
+ 132:Lib/bsp/src/bsp_can.c **** 
+ 466              		.loc 1 132 17 is_stmt 1 view .LVU156
+ 132:Lib/bsp/src/bsp_can.c **** 
+ 467              		.loc 1 132 83 is_stmt 0 view .LVU157
+ 468 0138 A5F86AC0 		strh	ip, [r5, #106]	@ movhi
+ARM GAS  /tmp/ccMHajva.s 			page 14
+
+
+ 134:Lib/bsp/src/bsp_can.c ****             }
+ 469              		.loc 1 134 17 is_stmt 1 view .LVU158
+ 134:Lib/bsp/src/bsp_can.c ****             }
+ 470              		.loc 1 134 101 is_stmt 0 view .LVU159
+ 471 013c 41EA0021 		orr	r1, r1, r0, lsl #8
+ 134:Lib/bsp/src/bsp_can.c ****             }
+ 472              		.loc 1 134 74 view .LVU160
+ 473 0140 A5F88410 		strh	r1, [r5, #132]	@ movhi
+ 474 0144 64E7     		b	.L16
+ 475              	.LVL21:
+ 476              	.L23:
+ 110:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[1];
+ 477              		.loc 1 110 17 is_stmt 1 view .LVU161
+ 110:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[1];
+ 478              		.loc 1 110 36 is_stmt 0 view .LVU162
+ 479 0146 214A     		ldr	r2, .L24+32
+ 480 0148 1770     		strb	r7, [r2]
+ 111:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[2];
+ 481              		.loc 1 111 17 is_stmt 1 view .LVU163
+ 111:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[2];
+ 482              		.loc 1 111 36 is_stmt 0 view .LVU164
+ 483 014a 5670     		strb	r6, [r2, #1]
+ 112:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[3];
+ 484              		.loc 1 112 17 is_stmt 1 view .LVU165
+ 112:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[3];
+ 485              		.loc 1 112 36 is_stmt 0 view .LVU166
+ 486 014c 9570     		strb	r5, [r2, #2]
+ 113:Lib/bsp/src/bsp_can.c **** 
+ 487              		.loc 1 113 17 is_stmt 1 view .LVU167
+ 113:Lib/bsp/src/bsp_can.c **** 
+ 488              		.loc 1 113 36 is_stmt 0 view .LVU168
+ 489 014e 82F803E0 		strb	lr, [r2, #3]
+ 115:Lib/bsp/src/bsp_can.c **** 
+ 490              		.loc 1 115 17 is_stmt 1 view .LVU169
+ 115:Lib/bsp/src/bsp_can.c **** 
+ 491              		.loc 1 115 30 is_stmt 0 view .LVU170
+ 492 0152 1C4D     		ldr	r5, .L24+24
+ 493 0154 85FB0365 		smull	r6, r5, r5, r3
+ 494 0158 DE17     		asrs	r6, r3, #31
+ 495 015a C6EB6506 		rsb	r6, r6, r5, asr #1
+ 115:Lib/bsp/src/bsp_can.c **** 
+ 496              		.loc 1 115 55 view .LVU171
+ 497 015e 06EBC605 		add	r5, r6, r6, lsl #3
+ 498 0162 5B1B     		subs	r3, r3, r5
+ 499              	.LVL22:
+ 115:Lib/bsp/src/bsp_can.c **** 
+ 500              		.loc 1 115 60 view .LVU172
+ 501 0164 164D     		ldr	r5, .L24+20
+ 502 0166 85FB0375 		smull	r7, r5, r5, r3
+ 503 016a A5EBE373 		sub	r3, r5, r3, asr #31
+ 115:Lib/bsp/src/bsp_can.c **** 
+ 504              		.loc 1 115 91 view .LVU173
+ 505 016e D2F800E0 		ldr	lr, [r2]	@ float
+ 115:Lib/bsp/src/bsp_can.c **** 
+ 506              		.loc 1 115 80 view .LVU174
+ 507 0172 154F     		ldr	r7, .L24+28
+ 508 0174 03EB0315 		add	r5, r3, r3, lsl #4
+ARM GAS  /tmp/ccMHajva.s 			page 15
+
+
+ 509 0178 4FF4D279 		mov	r9, #420
+ 510 017c 09FB06F6 		mul	r6, r9, r6
+ 511 0180 06EBC505 		add	r5, r6, r5, lsl #3
+ 512 0184 3D44     		add	r5, r5, r7
+ 513 0186 C5F870E0 		str	lr, [r5, #112]	@ float
+ 117:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[5];
+ 514              		.loc 1 117 17 is_stmt 1 view .LVU175
+ 117:Lib/bsp/src/bsp_can.c ****                 converter.bytes[1] = can1_rx_data[5];
+ 515              		.loc 1 117 36 is_stmt 0 view .LVU176
+ 516 018a 82F800C0 		strb	ip, [r2]
+ 118:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[6];
+ 517              		.loc 1 118 17 is_stmt 1 view .LVU177
+ 118:Lib/bsp/src/bsp_can.c ****                 converter.bytes[2] = can1_rx_data[6];
+ 518              		.loc 1 118 36 is_stmt 0 view .LVU178
+ 519 018e 82F80180 		strb	r8, [r2, #1]
+ 119:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[7];
+ 520              		.loc 1 119 17 is_stmt 1 view .LVU179
+ 119:Lib/bsp/src/bsp_can.c ****                 converter.bytes[3] = can1_rx_data[7];
+ 521              		.loc 1 119 36 is_stmt 0 view .LVU180
+ 522 0192 9170     		strb	r1, [r2, #2]
+ 120:Lib/bsp/src/bsp_can.c **** 
+ 523              		.loc 1 120 17 is_stmt 1 view .LVU181
+ 120:Lib/bsp/src/bsp_can.c **** 
+ 524              		.loc 1 120 36 is_stmt 0 view .LVU182
+ 525 0194 D070     		strb	r0, [r2, #3]
+ 122:Lib/bsp/src/bsp_can.c ****             }
+ 526              		.loc 1 122 17 is_stmt 1 view .LVU183
+ 122:Lib/bsp/src/bsp_can.c ****             }
+ 527              		.loc 1 122 91 is_stmt 0 view .LVU184
+ 528 0196 1268     		ldr	r2, [r2]	@ float
+ 122:Lib/bsp/src/bsp_can.c ****             }
+ 529              		.loc 1 122 80 view .LVU185
+ 530 0198 EA66     		str	r2, [r5, #108]	@ float
+ 531 019a 39E7     		b	.L16
+ 532              	.LVL23:
+ 533              	.L22:
+ 122:Lib/bsp/src/bsp_can.c ****             }
+ 534              		.loc 1 122 80 view .LVU186
+ 535              	.LBE2:
+ 140:Lib/bsp/src/bsp_can.c ****         switch (Can2RxHeader.StdId)
+ 536              		.loc 1 140 9 is_stmt 1 view .LVU187
+ 537 019c 0EAB     		add	r3, sp, #56
+ 538 019e 6A46     		mov	r2, sp
+ 539 01a0 0021     		movs	r1, #0
+ 540 01a2 0B48     		ldr	r0, .L24+36
+ 541 01a4 FFF7FEFF 		bl	HAL_CAN_GetRxMessage
+ 542              	.LVL24:
+ 141:Lib/bsp/src/bsp_can.c ****         {
+ 543              		.loc 1 141 9 view .LVU188
+ 143:Lib/bsp/src/bsp_can.c ****     }
+ 544              		.loc 1 143 9 view .LVU189
+ 545              		.loc 1 145 1 is_stmt 0 view .LVU190
+ 546 01a8 37E7     		b	.L15
+ 547              	.L25:
+ 548 01aa 00BF     		.align	2
+ 549              	.L24:
+ 550 01ac 00640040 		.word	1073767424
+ARM GAS  /tmp/ccMHajva.s 			page 16
+
+
+ 551 01b0 00680040 		.word	1073768448
+ 552 01b4 00000000 		.word	hcan1
+ 553 01b8 00000000 		.word	.LANCHOR0
+ 554 01bc 00000000 		.word	.LANCHOR1
+ 555 01c0 56555555 		.word	1431655766
+ 556 01c4 398EE338 		.word	954437177
+ 557 01c8 00000000 		.word	leg
+ 558 01cc 00000000 		.word	.LANCHOR2
+ 559 01d0 00000000 		.word	hcan2
+ 560              		.cfi_endproc
+ 561              	.LFE133:
+ 563              		.section	.text.CAN_send_data,"ax",%progbits
+ 564              		.align	1
+ 565              		.global	CAN_send_data
+ 566              		.syntax unified
+ 567              		.thumb
+ 568              		.thumb_func
+ 570              	CAN_send_data:
+ 571              	.LVL25:
+ 572              	.LFB134:
+ 146:Lib/bsp/src/bsp_can.c **** 
+ 147:Lib/bsp/src/bsp_can.c **** uint8_t send_succeed = 0;
+ 148:Lib/bsp/src/bsp_can.c **** /*CAN发送1个4个元素的uint8_t数组，共32位(从float类型转换而来)*/
+ 149:Lib/bsp/src/bsp_can.c **** void CAN_send_data(CAN_HandleTypeDef *hcan, uint32_t id, uint8_t data[])
+ 150:Lib/bsp/src/bsp_can.c **** {
+ 573              		.loc 1 150 1 is_stmt 1 view -0
+ 574              		.cfi_startproc
+ 575              		@ args = 0, pretend = 0, frame = 40
+ 576              		@ frame_needed = 0, uses_anonymous_args = 0
+ 577              		.loc 1 150 1 is_stmt 0 view .LVU192
+ 578 0000 00B5     		push	{lr}
+ 579              		.cfi_def_cfa_offset 4
+ 580              		.cfi_offset 14, -4
+ 581 0002 8BB0     		sub	sp, sp, #44
+ 582              		.cfi_def_cfa_offset 48
+ 151:Lib/bsp/src/bsp_can.c ****     CAN_TxHeaderTypeDef tx_message;
+ 583              		.loc 1 151 5 is_stmt 1 view .LVU193
+ 152:Lib/bsp/src/bsp_can.c ****     uint8_t can_send_data[8];
+ 584              		.loc 1 152 5 view .LVU194
+ 153:Lib/bsp/src/bsp_can.c ****     uint32_t send_mail_box;
+ 585              		.loc 1 153 5 view .LVU195
+ 154:Lib/bsp/src/bsp_can.c ****     tx_message.StdId = id;
+ 586              		.loc 1 154 5 view .LVU196
+ 587              		.loc 1 154 22 is_stmt 0 view .LVU197
+ 588 0004 0491     		str	r1, [sp, #16]
+ 155:Lib/bsp/src/bsp_can.c ****     tx_message.IDE = CAN_ID_STD;
+ 589              		.loc 1 155 5 is_stmt 1 view .LVU198
+ 590              		.loc 1 155 20 is_stmt 0 view .LVU199
+ 591 0006 0023     		movs	r3, #0
+ 592 0008 0693     		str	r3, [sp, #24]
+ 156:Lib/bsp/src/bsp_can.c ****     tx_message.RTR = CAN_RTR_DATA;
+ 593              		.loc 1 156 5 is_stmt 1 view .LVU200
+ 594              		.loc 1 156 20 is_stmt 0 view .LVU201
+ 595 000a 0793     		str	r3, [sp, #28]
+ 157:Lib/bsp/src/bsp_can.c ****     tx_message.DLC = 0x08;
+ 596              		.loc 1 157 5 is_stmt 1 view .LVU202
+ 597              		.loc 1 157 20 is_stmt 0 view .LVU203
+ARM GAS  /tmp/ccMHajva.s 			page 17
+
+
+ 598 000c 0823     		movs	r3, #8
+ 599 000e 0893     		str	r3, [sp, #32]
+ 158:Lib/bsp/src/bsp_can.c ****     can_send_data[0] = data[0];
+ 600              		.loc 1 158 5 is_stmt 1 view .LVU204
+ 601              		.loc 1 158 28 is_stmt 0 view .LVU205
+ 602 0010 1378     		ldrb	r3, [r2]	@ zero_extendqisi2
+ 603              		.loc 1 158 22 view .LVU206
+ 604 0012 8DF80830 		strb	r3, [sp, #8]
+ 159:Lib/bsp/src/bsp_can.c ****     can_send_data[1] = data[1];
+ 605              		.loc 1 159 5 is_stmt 1 view .LVU207
+ 606              		.loc 1 159 22 is_stmt 0 view .LVU208
+ 607 0016 5378     		ldrb	r3, [r2, #1]	@ zero_extendqisi2
+ 608 0018 8DF80930 		strb	r3, [sp, #9]
+ 160:Lib/bsp/src/bsp_can.c ****     can_send_data[2] = data[2];
+ 609              		.loc 1 160 5 is_stmt 1 view .LVU209
+ 610              		.loc 1 160 22 is_stmt 0 view .LVU210
+ 611 001c 9378     		ldrb	r3, [r2, #2]	@ zero_extendqisi2
+ 612 001e 8DF80A30 		strb	r3, [sp, #10]
+ 161:Lib/bsp/src/bsp_can.c ****     can_send_data[3] = data[3];
+ 613              		.loc 1 161 5 is_stmt 1 view .LVU211
+ 614              		.loc 1 161 22 is_stmt 0 view .LVU212
+ 615 0022 D378     		ldrb	r3, [r2, #3]	@ zero_extendqisi2
+ 616 0024 8DF80B30 		strb	r3, [sp, #11]
+ 162:Lib/bsp/src/bsp_can.c ****     can_send_data[4] = data[4];
+ 617              		.loc 1 162 5 is_stmt 1 view .LVU213
+ 618              		.loc 1 162 22 is_stmt 0 view .LVU214
+ 619 0028 1379     		ldrb	r3, [r2, #4]	@ zero_extendqisi2
+ 620 002a 8DF80C30 		strb	r3, [sp, #12]
+ 163:Lib/bsp/src/bsp_can.c ****     can_send_data[5] = data[5];
+ 621              		.loc 1 163 5 is_stmt 1 view .LVU215
+ 622              		.loc 1 163 22 is_stmt 0 view .LVU216
+ 623 002e 5379     		ldrb	r3, [r2, #5]	@ zero_extendqisi2
+ 624 0030 8DF80D30 		strb	r3, [sp, #13]
+ 164:Lib/bsp/src/bsp_can.c ****     can_send_data[6] = data[6];
+ 625              		.loc 1 164 5 is_stmt 1 view .LVU217
+ 626              		.loc 1 164 22 is_stmt 0 view .LVU218
+ 627 0034 9379     		ldrb	r3, [r2, #6]	@ zero_extendqisi2
+ 628 0036 8DF80E30 		strb	r3, [sp, #14]
+ 165:Lib/bsp/src/bsp_can.c ****     can_send_data[7] = data[7];
+ 629              		.loc 1 165 5 is_stmt 1 view .LVU219
+ 630              		.loc 1 165 22 is_stmt 0 view .LVU220
+ 631 003a D379     		ldrb	r3, [r2, #7]	@ zero_extendqisi2
+ 632 003c 8DF80F30 		strb	r3, [sp, #15]
+ 166:Lib/bsp/src/bsp_can.c **** 
+ 167:Lib/bsp/src/bsp_can.c ****     // HAL_CAN_AddTxMessage(hcan, &tx_message, can_send_data, &send_mail_box);
+ 168:Lib/bsp/src/bsp_can.c ****     if (HAL_CAN_AddTxMessage(hcan, &tx_message, can_send_data, &send_mail_box) == HAL_OK)
+ 633              		.loc 1 168 5 is_stmt 1 view .LVU221
+ 634              		.loc 1 168 9 is_stmt 0 view .LVU222
+ 635 0040 01AB     		add	r3, sp, #4
+ 636 0042 02AA     		add	r2, sp, #8
+ 637              	.LVL26:
+ 638              		.loc 1 168 9 view .LVU223
+ 639 0044 04A9     		add	r1, sp, #16
+ 640              	.LVL27:
+ 641              		.loc 1 168 9 view .LVU224
+ 642 0046 FFF7FEFF 		bl	HAL_CAN_AddTxMessage
+ 643              	.LVL28:
+ARM GAS  /tmp/ccMHajva.s 			page 18
+
+
+ 644              		.loc 1 168 8 view .LVU225
+ 645 004a 28B9     		cbnz	r0, .L27
+ 169:Lib/bsp/src/bsp_can.c ****     {
+ 170:Lib/bsp/src/bsp_can.c ****         send_succeed = 1;
+ 646              		.loc 1 170 9 is_stmt 1 view .LVU226
+ 647              		.loc 1 170 22 is_stmt 0 view .LVU227
+ 648 004c 044B     		ldr	r3, .L30
+ 649 004e 0122     		movs	r2, #1
+ 650 0050 1A70     		strb	r2, [r3]
+ 651              	.L26:
+ 171:Lib/bsp/src/bsp_can.c ****     }
+ 172:Lib/bsp/src/bsp_can.c ****     else
+ 173:Lib/bsp/src/bsp_can.c ****     {
+ 174:Lib/bsp/src/bsp_can.c ****         send_succeed = 2;
+ 175:Lib/bsp/src/bsp_can.c ****     }
+ 176:Lib/bsp/src/bsp_can.c **** }
+ 652              		.loc 1 176 1 view .LVU228
+ 653 0052 0BB0     		add	sp, sp, #44
+ 654              		.cfi_remember_state
+ 655              		.cfi_def_cfa_offset 4
+ 656              		@ sp needed
+ 657 0054 5DF804FB 		ldr	pc, [sp], #4
+ 658              	.L27:
+ 659              		.cfi_restore_state
+ 174:Lib/bsp/src/bsp_can.c ****     }
+ 660              		.loc 1 174 9 is_stmt 1 view .LVU229
+ 174:Lib/bsp/src/bsp_can.c ****     }
+ 661              		.loc 1 174 22 is_stmt 0 view .LVU230
+ 662 0058 014B     		ldr	r3, .L30
+ 663 005a 0222     		movs	r2, #2
+ 664 005c 1A70     		strb	r2, [r3]
+ 665              		.loc 1 176 1 view .LVU231
+ 666 005e F8E7     		b	.L26
+ 667              	.L31:
+ 668              		.align	2
+ 669              	.L30:
+ 670 0060 00000000 		.word	.LANCHOR3
+ 671              		.cfi_endproc
+ 672              	.LFE134:
+ 674              		.global	send_succeed
+ 675              		.global	converter
+ 676              		.global	can1_rx_data
+ 677              		.global	can1_rx_stdid
+ 678              		.global	gyro_pitch
+ 679              		.global	data4bytes
+ 680              		.section	.bss.can1_rx_data,"aw",%nobits
+ 681              		.align	2
+ 682              		.set	.LANCHOR1,. + 0
+ 685              	can1_rx_data:
+ 686 0000 00000000 		.space	8
+ 686      00000000 
+ 687              		.section	.bss.can1_rx_stdid,"aw",%nobits
+ 688              		.align	2
+ 689              		.set	.LANCHOR0,. + 0
+ 692              	can1_rx_stdid:
+ 693 0000 00000000 		.space	4
+ 694              		.section	.bss.converter,"aw",%nobits
+ARM GAS  /tmp/ccMHajva.s 			page 19
+
+
+ 695              		.align	2
+ 696              		.set	.LANCHOR2,. + 0
+ 699              	converter:
+ 700 0000 00000000 		.space	4
+ 701              		.section	.bss.data4bytes,"aw",%nobits
+ 702              		.align	2
+ 705              	data4bytes:
+ 706 0000 00000000 		.space	4
+ 707              		.section	.bss.gyro_pitch,"aw",%nobits
+ 708              		.align	2
+ 711              	gyro_pitch:
+ 712 0000 00000000 		.space	20
+ 712      00000000 
+ 712      00000000 
+ 712      00000000 
+ 712      00000000 
+ 713              		.section	.bss.send_succeed,"aw",%nobits
+ 714              		.set	.LANCHOR3,. + 0
+ 717              	send_succeed:
+ 718 0000 00       		.space	1
+ 719              		.text
+ 720              	.Letext0:
+ 721              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 722              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 723              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f407xx.h"
+ 724              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 725              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 726              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_can.h"
+ 727              		.file 8 "Core/Inc/can.h"
+ 728              		.file 9 "Lib/bsp/include/bsp_can.h"
+ 729              		.file 10 "Lib/modules/unitreeMotor/include/motor_msg.h"
+ 730              		.file 11 "Lib/app/include/RC.h"
+ARM GAS  /tmp/ccMHajva.s 			page 20
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 bsp_can.c
+     /tmp/ccMHajva.s:20     .text.CANFilter_Enable:0000000000000000 $t
+     /tmp/ccMHajva.s:26     .text.CANFilter_Enable:0000000000000000 CANFilter_Enable
+     /tmp/ccMHajva.s:155    .text.CANFilter_Enable:0000000000000064 $d
+     /tmp/ccMHajva.s:163    .text.CAN_Enable:0000000000000000 $t
+     /tmp/ccMHajva.s:169    .text.CAN_Enable:0000000000000000 CAN_Enable
+     /tmp/ccMHajva.s:201    .text.CAN_InitArgument:0000000000000000 $t
+     /tmp/ccMHajva.s:207    .text.CAN_InitArgument:0000000000000000 CAN_InitArgument
+     /tmp/ccMHajva.s:230    .text.CAN_InitArgument:0000000000000010 $d
+     /tmp/ccMHajva.s:236    .text.HAL_CAN_RxFifo0MsgPendingCallback:0000000000000000 $t
+     /tmp/ccMHajva.s:242    .text.HAL_CAN_RxFifo0MsgPendingCallback:0000000000000000 HAL_CAN_RxFifo0MsgPendingCallback
+     /tmp/ccMHajva.s:550    .text.HAL_CAN_RxFifo0MsgPendingCallback:00000000000001ac $d
+     /tmp/ccMHajva.s:564    .text.CAN_send_data:0000000000000000 $t
+     /tmp/ccMHajva.s:570    .text.CAN_send_data:0000000000000000 CAN_send_data
+     /tmp/ccMHajva.s:670    .text.CAN_send_data:0000000000000060 $d
+     /tmp/ccMHajva.s:717    .bss.send_succeed:0000000000000000 send_succeed
+     /tmp/ccMHajva.s:699    .bss.converter:0000000000000000 converter
+     /tmp/ccMHajva.s:685    .bss.can1_rx_data:0000000000000000 can1_rx_data
+     /tmp/ccMHajva.s:692    .bss.can1_rx_stdid:0000000000000000 can1_rx_stdid
+     /tmp/ccMHajva.s:711    .bss.gyro_pitch:0000000000000000 gyro_pitch
+     /tmp/ccMHajva.s:705    .bss.data4bytes:0000000000000000 data4bytes
+     /tmp/ccMHajva.s:681    .bss.can1_rx_data:0000000000000000 $d
+     /tmp/ccMHajva.s:688    .bss.can1_rx_stdid:0000000000000000 $d
+     /tmp/ccMHajva.s:695    .bss.converter:0000000000000000 $d
+     /tmp/ccMHajva.s:702    .bss.data4bytes:0000000000000000 $d
+     /tmp/ccMHajva.s:708    .bss.gyro_pitch:0000000000000000 $d
+     /tmp/ccMHajva.s:718    .bss.send_succeed:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+HAL_CAN_ConfigFilter
+hcan1
+hcan2
+HAL_CAN_Start
+HAL_CAN_ActivateNotification
+HAL_CAN_GetRxMessage
+leg
+HAL_CAN_AddTxMessage
