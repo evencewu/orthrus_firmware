@@ -86,6 +86,7 @@ Lib/bsp/src/EXIT.c \
 Lib/bsp/src/SPI1.c \
 Lib/bsp/src/Timer.c \
 Lib/bsp/src/system_stm32f4xx.c \
+Lib/bsp/src/bsp_spi2.c \
 Lib/ssc/src/bootmode.c \
 Lib/ssc/src/diag.c \
 Lib/ssc/src/ecataoe.c \
@@ -106,6 +107,7 @@ Lib/ssc_app/src/ecatappl.c \
 Lib/ssc_app/src/el9800appl.c \
 Lib/ssc_app/src/el9800hw.c \
 Lib/ssc_app/src/foeappl.c
+
 
 # ASM sources
 ASM_SOURCES =  \

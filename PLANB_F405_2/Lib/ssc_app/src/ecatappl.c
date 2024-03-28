@@ -380,6 +380,7 @@ void Sync1_Isr(void)
 #include "RST.h"
 #include "bsp_can.h"
 #include "bsp_led.h"
+#include "bsp_spi2.h"
 
 UINT16 MainInit(void)
 {
@@ -399,6 +400,8 @@ UINT16 MainInit(void)
 
     //user code
     rst_setup();
+
+    SPI2_Init();
 
     led_setup();
     CAN1_Config();
