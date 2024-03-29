@@ -1,6 +1,4 @@
-build/ecatappl.o: Lib/ssc_app/src/ecatappl.c Lib/ssc/include/ecatslv.h \
- Lib/ssc/include/ecat_def.h Lib/ssc/include/el9800hw.h \
- Lib/ssc/include/esc.h \
+build/bsp_spi2.o: Lib/bsp/src/bsp_spi2.c Lib/bsp/include/bsp_spi2.h \
  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
  Drivers/CMSIS/Include/core_cm4.h Drivers/CMSIS/Include/core_cmInstr.h \
  Drivers/CMSIS/Include/core_cmFunc.h Drivers/CMSIS/Include/core_cmSimd.h \
@@ -31,20 +29,8 @@ build/ecatappl.o: Lib/ssc_app/src/ecatappl.c Lib/ssc/include/ecatslv.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_can.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dac.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dcmi.h \
- Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_fsmc.h \
- Lib/bsp/include/system.h Lib/ssc_app/include/ecatappl.h \
- Lib/ssc/include/ecat_def.h Lib/ssc_app/include/coeappl.h \
- Lib/ssc/include/objdef.h Lib/ssc/include/sdoserv.h \
- Lib/ssc/include/ecatcoe.h Lib/ssc/include/mailbox.h \
- Lib/ssc/include/applInterface.h Lib/ssc/include/ecatslv.h \
- Lib/ssc/include/objdef.h Lib/ssc_app/include/el9800appl.h \
- Lib/ssc_app/include/ecatappl.h Lib/bsp/include/RST.h \
- Lib/bsp/include/stm32f4xx_conf.h Lib/bsp/include/bsp_can.h \
- Lib/bsp/include/bsp_led.h Lib/bsp/include/bsp_spi2.h
-Lib/ssc/include/ecatslv.h:
-Lib/ssc/include/ecat_def.h:
-Lib/ssc/include/el9800hw.h:
-Lib/ssc/include/esc.h:
+ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_fsmc.h
+Lib/bsp/include/bsp_spi2.h:
 Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:
 Drivers/CMSIS/Include/core_cm4.h:
 Drivers/CMSIS/Include/core_cmInstr.h:
@@ -78,21 +64,3 @@ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_can.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dac.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dcmi.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_fsmc.h:
-Lib/bsp/include/system.h:
-Lib/ssc_app/include/ecatappl.h:
-Lib/ssc/include/ecat_def.h:
-Lib/ssc_app/include/coeappl.h:
-Lib/ssc/include/objdef.h:
-Lib/ssc/include/sdoserv.h:
-Lib/ssc/include/ecatcoe.h:
-Lib/ssc/include/mailbox.h:
-Lib/ssc/include/applInterface.h:
-Lib/ssc/include/ecatslv.h:
-Lib/ssc/include/objdef.h:
-Lib/ssc_app/include/el9800appl.h:
-Lib/ssc_app/include/ecatappl.h:
-Lib/bsp/include/RST.h:
-Lib/bsp/include/stm32f4xx_conf.h:
-Lib/bsp/include/bsp_can.h:
-Lib/bsp/include/bsp_led.h:
-Lib/bsp/include/bsp_spi2.h:

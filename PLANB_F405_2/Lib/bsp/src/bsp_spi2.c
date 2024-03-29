@@ -8,7 +8,7 @@ uint8_t rxBuffer[BUFFER_SIZE];
 void SPI2_Init(void)
 {
     SPI2_GPIO_Init();
-    
+
     SPI_InitTypeDef SPI_InitStructure;
     DMA_InitTypeDef DMA_InitStructure;
 
@@ -76,7 +76,7 @@ void SPI2_GPIO_Init(void)
 
     /* Peripheral Clock Enable -------------------------------------------------*/
     /* Enable the SPI clock */
-    SPIx_CLK_INIT(SPI2_CLK, ENABLE);
+    SPI2_CLK_INIT(SPI2_CLK, ENABLE);
 
     /* Enable GPIO clocks */
     RCC_AHB1PeriphClockCmd(SPI2_SCK_GPIO_CLK | SPI2_MISO_GPIO_CLK | SPI2_MOSI_GPIO_CLK, ENABLE);
@@ -113,12 +113,12 @@ uint8_t spi2_wr_cmd(uint8_t cmd)
 {
     uint8_t temp;
 
-    while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_TXE) == RESET)
+    while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET)
         ;
-    SPI_I2S_SendData(SPI1, cmd);
-    while (SPI_I2S_GetFlagStatus(SPI1, SPI_I2S_FLAG_RXNE) == RESET)
+    SPI_I2S_SendData(SPI2, cmd);
+    while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET)
         ;
     /* Read SPI1 received data */
-    temp = SPI_I2S_ReceiveData(SPI1);
+    temp = SPI_I2S_ReceiveData(SPI2);
     return temp;
 }
