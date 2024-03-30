@@ -109,16 +109,28 @@ void SPI2_GPIO_Init(void)
     RCC_AHB1PeriphClockCmd(RCC_AHB1Periph_GPIOC, ENABLE);
 }
 
-uint8_t spi2_wr_cmd(uint8_t cmd)
+void spi2_w_cmd(uint8_t cmd)
 {
-    uint8_t temp;
-
     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET)
         ;
     SPI_I2S_SendData(SPI2, cmd);
+
+    //while (SPI_GetFlagStatus(SPI2, SPI_FLAG_BSY) == SET)
+    //    ;
+}
+
+uint8_t spi2_r_cmd()
+{
+    uint8_t temp;
     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET)
         ;
     /* Read SPI1 received data */
     temp = SPI_I2S_ReceiveData(SPI2);
     return temp;
+}
+
+uint8_t spi2_wr_cmd(uint8_t cmd)
+{
+    spi2_w_cmd(cmd);
+    return spi2_r_cmd();
 }

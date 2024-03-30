@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccgp2Vob.s 			page 1
+ARM GAS  /tmp/cc3UjTto.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccgp2Vob.s 			page 1
   28:Lib/bsp/src/bsp_spi2.c ****     SPI_InitStructure.SPI_CRCPolynomial = 7;
   29:Lib/bsp/src/bsp_spi2.c ****     SPI_Init(SPI2, &SPI_InitStructure);
   30:Lib/bsp/src/bsp_spi2.c **** 
-ARM GAS  /tmp/ccgp2Vob.s 			page 2
+ARM GAS  /tmp/cc3UjTto.s 			page 2
 
 
   31:Lib/bsp/src/bsp_spi2.c ****     SPI_Cmd(SPI2, ENABLE);
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccgp2Vob.s 			page 1
   39 0002 82B0     		sub	sp, sp, #8
   40              		.cfi_def_cfa_offset 24
   75:Lib/bsp/src/bsp_spi2.c ****     GPIO_InitTypeDef GPIO_InitStructure;
-ARM GAS  /tmp/ccgp2Vob.s 			page 3
+ARM GAS  /tmp/cc3UjTto.s 			page 3
 
 
   41              		.loc 1 75 5 view .LVU1
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccgp2Vob.s 			page 1
   79              		.loc 1 91 5 is_stmt 1 view .LVU11
   80              		.loc 1 91 35 is_stmt 0 view .LVU12
   81 0042 0023     		movs	r3, #0
-ARM GAS  /tmp/ccgp2Vob.s 			page 4
+ARM GAS  /tmp/cc3UjTto.s 			page 4
 
 
   82 0044 8DF80630 		strb	r3, [sp, #6]
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccgp2Vob.s 			page 1
  119 007a 0121     		movs	r1, #1
  120 007c 2046     		mov	r0, r4
  121 007e FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
-ARM GAS  /tmp/ccgp2Vob.s 			page 5
+ARM GAS  /tmp/cc3UjTto.s 			page 5
 
 
  122              	.LVL9:
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccgp2Vob.s 			page 1
  170              		.loc 1 17 5 view .LVU33
  171 0012 0121     		movs	r1, #1
  172 0014 4FF40010 		mov	r0, #2097152
-ARM GAS  /tmp/ccgp2Vob.s 			page 6
+ARM GAS  /tmp/cc3UjTto.s 			page 6
 
 
  173 0018 FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccgp2Vob.s 			page 1
  208 004c 01A9     		add	r1, sp, #4
  209 004e 2046     		mov	r0, r4
  210 0050 FFF7FEFF 		bl	SPI_Init
-ARM GAS  /tmp/ccgp2Vob.s 			page 7
+ARM GAS  /tmp/cc3UjTto.s 			page 7
 
 
  211              	.LVL14:
@@ -380,17 +380,17 @@ ARM GAS  /tmp/ccgp2Vob.s 			page 1
  225 0060 00380040 		.word	1073756160
  226              		.cfi_endproc
  227              	.LFE123:
- 229              		.section	.text.spi2_wr_cmd,"ax",%progbits
+ 229              		.section	.text.spi2_w_cmd,"ax",%progbits
  230              		.align	1
- 231              		.global	spi2_wr_cmd
+ 231              		.global	spi2_w_cmd
  232              		.syntax unified
  233              		.thumb
  234              		.thumb_func
- 236              	spi2_wr_cmd:
+ 236              	spi2_w_cmd:
  237              	.LVL16:
  238              	.LFB125:
  111:Lib/bsp/src/bsp_spi2.c **** 
- 112:Lib/bsp/src/bsp_spi2.c **** uint8_t spi2_wr_cmd(uint8_t cmd)
+ 112:Lib/bsp/src/bsp_spi2.c **** void spi2_w_cmd(uint8_t cmd)
  113:Lib/bsp/src/bsp_spi2.c **** {
  239              		.loc 1 113 1 is_stmt 1 view -0
  240              		.cfi_startproc
@@ -402,117 +402,188 @@ ARM GAS  /tmp/ccgp2Vob.s 			page 1
  246              		.cfi_offset 4, -8
  247              		.cfi_offset 14, -4
  248 0002 0446     		mov	r4, r0
- 114:Lib/bsp/src/bsp_spi2.c ****     uint8_t temp;
+ 114:Lib/bsp/src/bsp_spi2.c ****     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET)
  249              		.loc 1 114 5 is_stmt 1 view .LVU57
- 115:Lib/bsp/src/bsp_spi2.c **** 
- 116:Lib/bsp/src/bsp_spi2.c ****     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET)
- 250              		.loc 1 116 5 view .LVU58
- 251              	.LVL17:
- 252              	.L10:
- 117:Lib/bsp/src/bsp_spi2.c ****         ;
- 253              		.loc 1 117 9 discriminator 1 view .LVU59
- 116:Lib/bsp/src/bsp_spi2.c ****         ;
- 254              		.loc 1 116 11 discriminator 1 view .LVU60
- 116:Lib/bsp/src/bsp_spi2.c ****         ;
- 255              		.loc 1 116 12 is_stmt 0 discriminator 1 view .LVU61
- 256 0004 0221     		movs	r1, #2
- 257 0006 0A48     		ldr	r0, .L13
- 258 0008 FFF7FEFF 		bl	SPI_I2S_GetFlagStatus
-ARM GAS  /tmp/ccgp2Vob.s 			page 8
+ 250              	.LVL17:
+ 251              	.L10:
+ 115:Lib/bsp/src/bsp_spi2.c ****         ;
+ 252              		.loc 1 115 9 discriminator 1 view .LVU58
+ 114:Lib/bsp/src/bsp_spi2.c ****     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET)
+ 253              		.loc 1 114 11 discriminator 1 view .LVU59
+ 114:Lib/bsp/src/bsp_spi2.c ****     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET)
+ 254              		.loc 1 114 12 is_stmt 0 discriminator 1 view .LVU60
+ 255 0004 0221     		movs	r1, #2
+ 256 0006 0548     		ldr	r0, .L12
+ 257 0008 FFF7FEFF 		bl	SPI_I2S_GetFlagStatus
+ 258              	.LVL18:
+ 114:Lib/bsp/src/bsp_spi2.c ****     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET)
+ 259              		.loc 1 114 11 discriminator 1 view .LVU61
+ARM GAS  /tmp/cc3UjTto.s 			page 8
 
 
- 259              	.LVL18:
- 116:Lib/bsp/src/bsp_spi2.c ****         ;
- 260              		.loc 1 116 11 discriminator 1 view .LVU62
- 261 000c 0028     		cmp	r0, #0
- 262 000e F9D0     		beq	.L10
- 118:Lib/bsp/src/bsp_spi2.c ****     SPI_I2S_SendData(SPI2, cmd);
- 263              		.loc 1 118 5 is_stmt 1 view .LVU63
- 264 0010 2146     		mov	r1, r4
- 265 0012 0748     		ldr	r0, .L13
- 266 0014 FFF7FEFF 		bl	SPI_I2S_SendData
- 267              	.LVL19:
- 119:Lib/bsp/src/bsp_spi2.c ****     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET)
- 268              		.loc 1 119 5 view .LVU64
- 269              	.L11:
- 120:Lib/bsp/src/bsp_spi2.c ****         ;
- 270              		.loc 1 120 9 discriminator 1 view .LVU65
- 119:Lib/bsp/src/bsp_spi2.c ****     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET)
- 271              		.loc 1 119 11 discriminator 1 view .LVU66
- 119:Lib/bsp/src/bsp_spi2.c ****     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET)
- 272              		.loc 1 119 12 is_stmt 0 discriminator 1 view .LVU67
- 273 0018 0121     		movs	r1, #1
- 274 001a 0548     		ldr	r0, .L13
- 275 001c FFF7FEFF 		bl	SPI_I2S_GetFlagStatus
- 276              	.LVL20:
- 119:Lib/bsp/src/bsp_spi2.c ****     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET)
- 277              		.loc 1 119 11 discriminator 1 view .LVU68
- 278 0020 0028     		cmp	r0, #0
- 279 0022 F9D0     		beq	.L11
- 121:Lib/bsp/src/bsp_spi2.c ****     /* Read SPI1 received data */
- 122:Lib/bsp/src/bsp_spi2.c ****     temp = SPI_I2S_ReceiveData(SPI2);
- 280              		.loc 1 122 5 is_stmt 1 view .LVU69
- 281              		.loc 1 122 12 is_stmt 0 view .LVU70
- 282 0024 0248     		ldr	r0, .L13
- 283 0026 FFF7FEFF 		bl	SPI_I2S_ReceiveData
- 284              	.LVL21:
- 123:Lib/bsp/src/bsp_spi2.c ****     return temp;
- 285              		.loc 1 123 5 is_stmt 1 view .LVU71
- 124:Lib/bsp/src/bsp_spi2.c **** }...
- 286              		.loc 1 124 1 is_stmt 0 view .LVU72
- 287 002a C0B2     		uxtb	r0, r0
- 288              		.loc 1 124 1 view .LVU73
- 289 002c 10BD     		pop	{r4, pc}
- 290              	.L14:
- 291 002e 00BF     		.align	2
- 292              	.L13:
- 293 0030 00380040 		.word	1073756160
- 294              		.cfi_endproc
- 295              	.LFE125:
- 297              		.global	rxBuffer
- 298              		.global	txBuffer
- 299              		.section	.bss.rxBuffer,"aw",%nobits
- 300              		.align	2
- 303              	rxBuffer:
- 304 0000 00000000 		.space	10
- 304      00000000 
- 304      0000
- 305              		.section	.bss.txBuffer,"aw",%nobits
-ARM GAS  /tmp/ccgp2Vob.s 			page 9
+ 260 000c 0028     		cmp	r0, #0
+ 261 000e F9D0     		beq	.L10
+ 116:Lib/bsp/src/bsp_spi2.c ****     SPI_I2S_SendData(SPI2, cmd);
+ 262              		.loc 1 116 5 is_stmt 1 view .LVU62
+ 263 0010 2146     		mov	r1, r4
+ 264 0012 0248     		ldr	r0, .L12
+ 265 0014 FFF7FEFF 		bl	SPI_I2S_SendData
+ 266              	.LVL19:
+ 117:Lib/bsp/src/bsp_spi2.c **** 
+ 118:Lib/bsp/src/bsp_spi2.c ****     //while (SPI_GetFlagStatus(SPI2, SPI_FLAG_BSY) == SET)
+ 119:Lib/bsp/src/bsp_spi2.c ****     //    ;
+ 120:Lib/bsp/src/bsp_spi2.c **** }
+ 267              		.loc 1 120 1 is_stmt 0 view .LVU63
+ 268 0018 10BD     		pop	{r4, pc}
+ 269              	.L13:
+ 270 001a 00BF     		.align	2
+ 271              	.L12:
+ 272 001c 00380040 		.word	1073756160
+ 273              		.cfi_endproc
+ 274              	.LFE125:
+ 276              		.section	.text.spi2_r_cmd,"ax",%progbits
+ 277              		.align	1
+ 278              		.global	spi2_r_cmd
+ 279              		.syntax unified
+ 280              		.thumb
+ 281              		.thumb_func
+ 283              	spi2_r_cmd:
+ 284              	.LFB126:
+ 121:Lib/bsp/src/bsp_spi2.c **** 
+ 122:Lib/bsp/src/bsp_spi2.c **** uint8_t spi2_r_cmd()
+ 123:Lib/bsp/src/bsp_spi2.c **** {
+ 285              		.loc 1 123 1 is_stmt 1 view -0
+ 286              		.cfi_startproc
+ 287              		@ args = 0, pretend = 0, frame = 0
+ 288              		@ frame_needed = 0, uses_anonymous_args = 0
+ 289 0000 08B5     		push	{r3, lr}
+ 290              		.cfi_def_cfa_offset 8
+ 291              		.cfi_offset 3, -8
+ 292              		.cfi_offset 14, -4
+ 293              	.L15:
+ 124:Lib/bsp/src/bsp_spi2.c ****     uint8_t temp;
+ 125:Lib/bsp/src/bsp_spi2.c ****     while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_RXNE) == RESET)
+ 126:Lib/bsp/src/bsp_spi2.c ****         ;
+ 294              		.loc 1 126 9 discriminator 1 view .LVU65
+ 125:Lib/bsp/src/bsp_spi2.c ****         ;
+ 295              		.loc 1 125 11 discriminator 1 view .LVU66
+ 125:Lib/bsp/src/bsp_spi2.c ****         ;
+ 296              		.loc 1 125 12 is_stmt 0 discriminator 1 view .LVU67
+ 297 0002 0121     		movs	r1, #1
+ 298 0004 0448     		ldr	r0, .L17
+ 299 0006 FFF7FEFF 		bl	SPI_I2S_GetFlagStatus
+ 300              	.LVL20:
+ 125:Lib/bsp/src/bsp_spi2.c ****         ;
+ 301              		.loc 1 125 11 discriminator 1 view .LVU68
+ 302 000a 0028     		cmp	r0, #0
+ 303 000c F9D0     		beq	.L15
+ 127:Lib/bsp/src/bsp_spi2.c ****     /* Read SPI1 received data */
+ARM GAS  /tmp/cc3UjTto.s 			page 9
 
 
- 306              		.align	2
- 309              	txBuffer:
- 310 0000 00000000 		.space	10
- 310      00000000 
- 310      0000
- 311              		.text
- 312              	.Letext0:
- 313              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
- 314              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
- 315              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
- 316              		.file 5 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma.h"
- 317              		.file 6 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
- 318              		.file 7 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_spi.h"
- 319              		.file 8 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h"
-ARM GAS  /tmp/ccgp2Vob.s 			page 10
+ 128:Lib/bsp/src/bsp_spi2.c ****     temp = SPI_I2S_ReceiveData(SPI2);
+ 304              		.loc 1 128 5 is_stmt 1 view .LVU69
+ 305              		.loc 1 128 12 is_stmt 0 view .LVU70
+ 306 000e 0248     		ldr	r0, .L17
+ 307 0010 FFF7FEFF 		bl	SPI_I2S_ReceiveData
+ 308              	.LVL21:
+ 129:Lib/bsp/src/bsp_spi2.c ****     return temp;
+ 309              		.loc 1 129 5 is_stmt 1 view .LVU71
+ 130:Lib/bsp/src/bsp_spi2.c **** }
+ 310              		.loc 1 130 1 is_stmt 0 view .LVU72
+ 311 0014 C0B2     		uxtb	r0, r0
+ 312              		.loc 1 130 1 view .LVU73
+ 313 0016 08BD     		pop	{r3, pc}
+ 314              	.L18:
+ 315              		.align	2
+ 316              	.L17:
+ 317 0018 00380040 		.word	1073756160
+ 318              		.cfi_endproc
+ 319              	.LFE126:
+ 321              		.section	.text.spi2_wr_cmd,"ax",%progbits
+ 322              		.align	1
+ 323              		.global	spi2_wr_cmd
+ 324              		.syntax unified
+ 325              		.thumb
+ 326              		.thumb_func
+ 328              	spi2_wr_cmd:
+ 329              	.LVL22:
+ 330              	.LFB127:
+ 131:Lib/bsp/src/bsp_spi2.c **** 
+ 132:Lib/bsp/src/bsp_spi2.c **** uint8_t spi2_wr_cmd(uint8_t cmd)
+ 133:Lib/bsp/src/bsp_spi2.c **** {
+ 331              		.loc 1 133 1 is_stmt 1 view -0
+ 332              		.cfi_startproc
+ 333              		@ args = 0, pretend = 0, frame = 0
+ 334              		@ frame_needed = 0, uses_anonymous_args = 0
+ 335              		.loc 1 133 1 is_stmt 0 view .LVU75
+ 336 0000 08B5     		push	{r3, lr}
+ 337              		.cfi_def_cfa_offset 8
+ 338              		.cfi_offset 3, -8
+ 339              		.cfi_offset 14, -4
+ 134:Lib/bsp/src/bsp_spi2.c ****     spi2_w_cmd(cmd);
+ 340              		.loc 1 134 5 is_stmt 1 view .LVU76
+ 341 0002 FFF7FEFF 		bl	spi2_w_cmd
+ 342              	.LVL23:
+ 135:Lib/bsp/src/bsp_spi2.c ****     return spi2_r_cmd();
+ 343              		.loc 1 135 5 view .LVU77
+ 344              		.loc 1 135 12 is_stmt 0 view .LVU78
+ 345 0006 FFF7FEFF 		bl	spi2_r_cmd
+ 346              	.LVL24:
+ 136:Lib/bsp/src/bsp_spi2.c **** }...
+ 347              		.loc 1 136 1 view .LVU79
+ 348 000a 08BD     		pop	{r3, pc}
+ 349              		.cfi_endproc
+ 350              	.LFE127:
+ 352              		.global	rxBuffer
+ 353              		.global	txBuffer
+ 354              		.section	.bss.rxBuffer,"aw",%nobits
+ARM GAS  /tmp/cc3UjTto.s 			page 10
+
+
+ 355              		.align	2
+ 358              	rxBuffer:
+ 359 0000 00000000 		.space	10
+ 359      00000000 
+ 359      0000
+ 360              		.section	.bss.txBuffer,"aw",%nobits
+ 361              		.align	2
+ 364              	txBuffer:
+ 365 0000 00000000 		.space	10
+ 365      00000000 
+ 365      0000
+ 366              		.text
+ 367              	.Letext0:
+ 368              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 369              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 370              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 371              		.file 5 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dma.h"
+ 372              		.file 6 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
+ 373              		.file 7 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_spi.h"
+ 374              		.file 8 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h"
+ARM GAS  /tmp/cc3UjTto.s 			page 11
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 bsp_spi2.c
-     /tmp/ccgp2Vob.s:20     .text.SPI2_GPIO_Init:0000000000000000 $t
-     /tmp/ccgp2Vob.s:26     .text.SPI2_GPIO_Init:0000000000000000 SPI2_GPIO_Init
-     /tmp/ccgp2Vob.s:136    .text.SPI2_GPIO_Init:0000000000000090 $d
-     /tmp/ccgp2Vob.s:142    .text.SPI2_Init:0000000000000000 $t
-     /tmp/ccgp2Vob.s:148    .text.SPI2_Init:0000000000000000 SPI2_Init
-     /tmp/ccgp2Vob.s:225    .text.SPI2_Init:0000000000000060 $d
-     /tmp/ccgp2Vob.s:230    .text.spi2_wr_cmd:0000000000000000 $t
-     /tmp/ccgp2Vob.s:236    .text.spi2_wr_cmd:0000000000000000 spi2_wr_cmd
-     /tmp/ccgp2Vob.s:293    .text.spi2_wr_cmd:0000000000000030 $d
-     /tmp/ccgp2Vob.s:303    .bss.rxBuffer:0000000000000000 rxBuffer
-     /tmp/ccgp2Vob.s:309    .bss.txBuffer:0000000000000000 txBuffer
-     /tmp/ccgp2Vob.s:300    .bss.rxBuffer:0000000000000000 $d
-     /tmp/ccgp2Vob.s:306    .bss.txBuffer:0000000000000000 $d
+     /tmp/cc3UjTto.s:20     .text.SPI2_GPIO_Init:0000000000000000 $t
+     /tmp/cc3UjTto.s:26     .text.SPI2_GPIO_Init:0000000000000000 SPI2_GPIO_Init
+     /tmp/cc3UjTto.s:136    .text.SPI2_GPIO_Init:0000000000000090 $d
+     /tmp/cc3UjTto.s:142    .text.SPI2_Init:0000000000000000 $t
+     /tmp/cc3UjTto.s:148    .text.SPI2_Init:0000000000000000 SPI2_Init
+     /tmp/cc3UjTto.s:225    .text.SPI2_Init:0000000000000060 $d
+     /tmp/cc3UjTto.s:230    .text.spi2_w_cmd:0000000000000000 $t
+     /tmp/cc3UjTto.s:236    .text.spi2_w_cmd:0000000000000000 spi2_w_cmd
+     /tmp/cc3UjTto.s:272    .text.spi2_w_cmd:000000000000001c $d
+     /tmp/cc3UjTto.s:277    .text.spi2_r_cmd:0000000000000000 $t
+     /tmp/cc3UjTto.s:283    .text.spi2_r_cmd:0000000000000000 spi2_r_cmd
+     /tmp/cc3UjTto.s:317    .text.spi2_r_cmd:0000000000000018 $d
+     /tmp/cc3UjTto.s:322    .text.spi2_wr_cmd:0000000000000000 $t
+     /tmp/cc3UjTto.s:328    .text.spi2_wr_cmd:0000000000000000 spi2_wr_cmd
+     /tmp/cc3UjTto.s:358    .bss.rxBuffer:0000000000000000 rxBuffer
+     /tmp/cc3UjTto.s:364    .bss.txBuffer:0000000000000000 txBuffer
+     /tmp/cc3UjTto.s:355    .bss.rxBuffer:0000000000000000 $d
+     /tmp/cc3UjTto.s:361    .bss.txBuffer:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 RCC_APB1PeriphClockCmd

@@ -29,6 +29,10 @@
 
 void SPI2_Init(void);
 void SPI2_GPIO_Init(void);
+
+void spi2_w_cmd(uint8_t cmd);
+uint8_t spi2_r_cmd();
+
 uint8_t spi2_wr_cmd(uint8_t cmd);
 
 #endif

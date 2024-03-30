@@ -357,6 +357,19 @@ void APPL_InputMapping(UINT16 *pData)
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[26]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[27]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[28]);
+
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[29]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[30]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[31]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[32]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[33]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[34]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[35]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[36]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[37]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[38]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[39]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[40]);
             break;
         }
     }
@@ -485,8 +498,11 @@ void APPL_Application(void)
     sDIInputs.bSwitch6 = 0;
     sDIInputs.bSwitch7 = 0;
     sDIInputs.bSwitch8 = 0; 
+    
     //spi
-    uint8_t dummy = spi2_wr_cmd(0x01);
+
+    //spi2_w_cmd(0x01);
+    //uint8_t dummy = spi2_wr_cmd(0x01);
 
     /* start the conversion of the A/D converter */
     //		while(!(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)==SET));
@@ -522,6 +538,17 @@ void APPL_Application(void)
     sAIInputs.can2_d5 = Can2_RxMessage.Data[5];
     sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
     sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
+
+        
+    sAIInputs.motor1_id = 10;
+    sAIInputs.motor1_mode = 10;
+    sAIInputs.motor1_temp = 10;
+    sAIInputs.motor1_error = 10;
+    sAIInputs.motor1_T = 10;
+    sAIInputs.motor1_W = 10;
+    sAIInputs.motor1_Pos = 10;
+    sAIInputs.motor1_LW = 10;
+    sAIInputs.motor1_Acc = 10;
 
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
     sAIInputs.bTxPDOToggle ^= 1;
