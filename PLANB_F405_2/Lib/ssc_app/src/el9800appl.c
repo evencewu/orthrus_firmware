@@ -1,3 +1,41 @@
+// ############################################################
+// ������ֻ��ѧϰʹ�ã�δ���������ɣ��������������κ���;
+// ��Ȩ���У�����ؾ�
+// EtherCAT��վѧϰ��
+// Author��͢���������
+// �Ա�����: https://shop461235811.taobao.com/
+// �ҵĲ��ͣ�https://blog.csdn.net/zhandouhu/article/category/9455918
+// ############################################################
+/**
+\addtogroup EL9800Appl EL9800 application
+@{
+*/
+
+/**
+\file el9800appl.c
+\author EthercatSSC@beckhoff.com
+\brief Implementation
+
+\version 5.11
+
+<br>Changes to version V5.10:<br>
+V5.11 ECAT11: create application interface function pointer, add eeprom emulation interface functions<br>
+V5.11 EL9800 1: reset outputs on fallback from OP state<br>
+<br>Changes to version V5.01:<br>
+V5.10 ECAT6: Add "USE_DEFAULT_MAIN" to enable or disable the main function<br>
+<br>Changes to version V5.0:<br>
+V5.01 EL9800 2: Add TxPdo Parameter object 0x1802<br>
+<br>Changes to version V4.30:<br>
+V4.50 ECAT2: Create generic application interface functions. Documentation in Application Note ET9300.<br>
+V4.50 COE2: Handle invalid PDO assign values.<br>
+V4.30 : create file
+*/
+
+/*-----------------------------------------------------------------------------------------
+------
+------    Includes
+------
+-----------------------------------------------------------------------------------------*/
 #include "ecat_def.h"
 
 #if EL9800_APPLICATION
@@ -161,7 +199,6 @@ UINT16 APPL_StartOutputHandler(void)
 ///////////////////////////////////////////////////////////////////////////////////////
 
 #include "bsp_led.h"
-#include "bsp_spi2.h"
 
 extern CanTxMsg Can1_TxMessage; // 发送缓冲区
 extern CanRxMsg Can1_RxMessage; // 接收缓冲区
@@ -497,8 +534,8 @@ void APPL_Application(void)
     sDIInputs.bSwitch5 = 0;
     sDIInputs.bSwitch6 = 0;
     sDIInputs.bSwitch7 = 0;
-    sDIInputs.bSwitch8 = 0; 
-    
+    sDIInputs.bSwitch8 = 0;
+
     //spi
 
     //spi2_w_cmd(0x01);
@@ -538,17 +575,6 @@ void APPL_Application(void)
     sAIInputs.can2_d5 = Can2_RxMessage.Data[5];
     sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
     sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
-
-        
-    sAIInputs.motor1_id = 10;
-    sAIInputs.motor1_mode = 10;
-    sAIInputs.motor1_temp = 10;
-    sAIInputs.motor1_error = 10;
-    sAIInputs.motor1_T = 10;
-    sAIInputs.motor1_W = 10;
-    sAIInputs.motor1_Pos = 10;
-    sAIInputs.motor1_LW = 10;
-    sAIInputs.motor1_Acc = 10;
 
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
     sAIInputs.bTxPDOToggle ^= 1;
