@@ -256,6 +256,6 @@ void CAN1_RX0_IRQHandler(void)
 void CAN2_RX0_IRQHandler(void)
 {
     /*从邮箱中读出报文*/
-    GPIO_ToggleBits(GPIOB, GPIO_Pin_13);
+    //GPIO_ToggleBits(GPIOB, GPIO_Pin_13);
     CAN_Receive(CAN2, CAN_FIFO0, &Can2_RxMessage);
 }
