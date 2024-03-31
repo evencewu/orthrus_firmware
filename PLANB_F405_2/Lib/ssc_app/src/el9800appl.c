@@ -576,6 +576,17 @@ void APPL_Application(void)
     sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
     sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
 
+    sAIInputs.motor1_id = 10;
+    sAIInputs.motor1_mode = 10;
+    sAIInputs.motor1_temp = 10;
+    sAIInputs.motor1_error = 10;
+    sAIInputs.motor1_T = 10;
+    sAIInputs.motor1_W = 10;
+    sAIInputs.motor1_Pos = 10;
+    sAIInputs.motor1_LW = 10;
+    sAIInputs.motor1_Acc = 10;
+
+
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
     sAIInputs.bTxPDOToggle ^= 1;
 
