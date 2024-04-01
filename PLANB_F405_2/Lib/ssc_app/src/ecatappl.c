@@ -401,7 +401,7 @@ UINT16 MainInit(void)
     //user code
     rst_setup();
 
-    SPI2_Init();
+    //SPI2_Init();
 
     led_setup();
     CAN1_Config();

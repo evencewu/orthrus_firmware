@@ -37,7 +37,6 @@ V4.30 : create file
 ------
 -----------------------------------------------------------------------------------------*/
 #include "ecat_def.h"
-#include "bsp_spi2.h"
 
 #if EL9800_APPLICATION
 
@@ -453,19 +452,12 @@ void APPL_OutputMapping(UINT16 *pData)
             ((UINT16 *)&sDOOutputs)[13] = (SWAPWORD(*(pTmpData + 11)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 12)) & 0xFF) << 8;
             ((UINT16 *)&sDOOutputs)[14] = (SWAPWORD(*(pTmpData + 12)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 13)) & 0xFF) << 8;
             ((UINT16 *)&sDOOutputs)[15] = (SWAPWORD(*(pTmpData + 13)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 14)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[16] = (SWAPWORD(*(pTmpData + 14)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 15)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[17] = (SWAPWORD(*(pTmpData + 15)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 16)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[18] = (SWAPWORD(*(pTmpData + 16)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 17)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[19] = (SWAPWORD(*(pTmpData + 17)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 18)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[20] = (SWAPWORD(*(pTmpData + 18)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 19)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[21] = (SWAPWORD(*(pTmpData + 19)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 20)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[22] = (SWAPWORD(*(pTmpData + 20)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 21)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[23] = (SWAPWORD(*(pTmpData + 21)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 22)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[24] = (SWAPWORD(*(pTmpData + 22)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 23)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[25] = (SWAPWORD(*(pTmpData + 23)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 24)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[26] = (SWAPWORD(*(pTmpData + 24)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 25)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[27] = (SWAPWORD(*(pTmpData + 25)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 26)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[28] = (SWAPWORD(*(pTmpData + 26)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 27)) & 0xFF) << 8;
+            /*motor1*/
+            ((UINT16 *)&sDOOutputs)[16] = (SWAPWORD(*(pTmpData + 14)) >> 8 & 0xFF);
+            ((UINT16 *)&sDOOutputs)[17] = SWAPWORD(*(pTmpData + 15));
+            ((UINT16 *)&sDOOutputs)[18] = SWAPWORD(*(pTmpData + 16));
+            ((UINT16 *)&sDOOutputs)[19] = SWAPWORD(*(pTmpData + 17));
+            ((UINT16 *)&sDOOutputs)[20] = SWAPWORD(*(pTmpData + 18));
             break;
         }
     }
@@ -552,7 +544,7 @@ void APPL_Application(void)
 
     //spi
 
-    spi2_w_cmd(0x01);
+    //spi2_w_cmd(0x01);
     //uint8_t dummy = spi2_wr_cmd(0x01);
 
     /* start the conversion of the A/D converter */
@@ -594,11 +586,11 @@ void APPL_Application(void)
     sAIInputs.motor1_mode = 10;
     sAIInputs.motor1_temp = 10;
     sAIInputs.motor1_error = 10;
-    sAIInputs.motor1_T = sDOOutputs.motor2_pos;
-    sAIInputs.motor1_W = sDOOutputs.motor2_w;
-    sAIInputs.motor1_Pos = sDOOutputs.motor2_kp;
-    sAIInputs.motor1_LW = sDOOutputs.motor2_kd;
-    sAIInputs.motor1_Acc = sDOOutputs.motor2_t;
+    sAIInputs.motor1_T = 10;
+    sAIInputs.motor1_W = 10;
+    sAIInputs.motor1_Pos = 10;
+    sAIInputs.motor1_LW = 10;
+    sAIInputs.motor1_Acc = 10;
 
 
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */

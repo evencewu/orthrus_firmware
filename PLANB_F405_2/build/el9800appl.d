@@ -1,5 +1,7 @@
 build/el9800appl.o: Lib/ssc_app/src/el9800appl.c \
- Lib/ssc/include/ecat_def.h Lib/bsp/include/bsp_spi2.h \
+ Lib/ssc/include/ecat_def.h Lib/ssc/include/applInterface.h \
+ Lib/ssc/include/ecat_def.h Lib/ssc/include/esc.h \
+ Lib/ssc/include/ecatslv.h Lib/ssc/include/el9800hw.h \
  Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h \
  Drivers/CMSIS/Include/core_cm4.h Drivers/CMSIS/Include/core_cmInstr.h \
  Drivers/CMSIS/Include/core_cmFunc.h Drivers/CMSIS/Include/core_cmSimd.h \
@@ -31,16 +33,18 @@ build/el9800appl.o: Lib/ssc_app/src/el9800appl.c \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dac.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dcmi.h \
  Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_fsmc.h \
- Lib/ssc/include/applInterface.h Lib/ssc/include/ecat_def.h \
- Lib/ssc/include/esc.h Lib/ssc/include/ecatslv.h \
- Lib/ssc/include/el9800hw.h Lib/bsp/include/system.h \
- Lib/ssc/include/objdef.h Lib/ssc/include/sdoserv.h \
- Lib/ssc/include/ecatcoe.h Lib/ssc/include/mailbox.h \
- Lib/ssc_app/include/ecatappl.h Lib/ssc_app/include/el9800appl.h \
- Lib/ssc_app/include/ecatappl.h Lib/ssc/include/el9800hw.h \
- Lib/bsp/include/bsp_led.h Lib/bsp/include/stm32f4xx_conf.h
+ Lib/bsp/include/system.h Lib/ssc/include/objdef.h \
+ Lib/ssc/include/sdoserv.h Lib/ssc/include/ecatcoe.h \
+ Lib/ssc/include/mailbox.h Lib/ssc_app/include/ecatappl.h \
+ Lib/ssc_app/include/el9800appl.h Lib/ssc_app/include/ecatappl.h \
+ Lib/ssc/include/el9800hw.h Lib/bsp/include/bsp_led.h \
+ Lib/bsp/include/stm32f4xx_conf.h
 Lib/ssc/include/ecat_def.h:
-Lib/bsp/include/bsp_spi2.h:
+Lib/ssc/include/applInterface.h:
+Lib/ssc/include/ecat_def.h:
+Lib/ssc/include/esc.h:
+Lib/ssc/include/ecatslv.h:
+Lib/ssc/include/el9800hw.h:
 Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h:
 Drivers/CMSIS/Include/core_cm4.h:
 Drivers/CMSIS/Include/core_cmInstr.h:
@@ -74,11 +78,6 @@ Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_can.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dac.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_dcmi.h:
 Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_fsmc.h:
-Lib/ssc/include/applInterface.h:
-Lib/ssc/include/ecat_def.h:
-Lib/ssc/include/esc.h:
-Lib/ssc/include/ecatslv.h:
-Lib/ssc/include/el9800hw.h:
 Lib/bsp/include/system.h:
 Lib/ssc/include/objdef.h:
 Lib/ssc/include/sdoserv.h:
