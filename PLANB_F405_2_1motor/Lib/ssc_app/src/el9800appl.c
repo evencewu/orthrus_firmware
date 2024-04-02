@@ -453,11 +453,11 @@ void APPL_OutputMapping(UINT16 *pData)
             ((UINT16 *)&sDOOutputs)[14] = (SWAPWORD(*(pTmpData + 12)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 13)) & 0xFF) << 8;
             ((UINT16 *)&sDOOutputs)[15] = (SWAPWORD(*(pTmpData + 13)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 14)) & 0xFF) << 8;
             /*motor1*/
-            ((UINT16 *)&sDOOutputs)[16] = (SWAPWORD(*(pTmpData + 14)) >> 8 & 0xFF);
-            ((UINT16 *)&sDOOutputs)[17] = SWAPWORD(*(pTmpData + 15));
-            ((UINT16 *)&sDOOutputs)[18] = SWAPWORD(*(pTmpData + 16));
-            ((UINT16 *)&sDOOutputs)[19] = SWAPWORD(*(pTmpData + 17));
-            ((UINT16 *)&sDOOutputs)[20] = SWAPWORD(*(pTmpData + 18));
+            //((UINT16 *)&sDOOutputs)[16] = (SWAPWORD(*(pTmpData + 14)) >> 8 & 0xFF);
+            //((UINT16 *)&sDOOutputs)[17] = SWAPWORD(*(pTmpData + 15));
+            //((UINT16 *)&sDOOutputs)[18] = SWAPWORD(*(pTmpData + 16));
+            //((UINT16 *)&sDOOutputs)[19] = SWAPWORD(*(pTmpData + 17));
+            //((UINT16 *)&sDOOutputs)[20] = SWAPWORD(*(pTmpData + 18));
             break;
         }
     }
