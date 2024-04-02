@@ -63,7 +63,8 @@ Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_tim_ex.c \
 Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_uart.c \
 Lib/Motor/Src/bsp_dma.c \
 Lib/Motor/Src/unitreeA1_cmd.c \
-Lib/Motor/Src/unitreeA1_recv.c
+Lib/Motor/Src/unitreeA1_recv.c \
+Lib/SPI_Bus/Src/spi_deal.c
 
 
 CPP_SOURCES = \

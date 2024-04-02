@@ -26,7 +26,7 @@ build/unitreeA1_recv.o: Lib/Motor/Src/unitreeA1_recv.c \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_pwr_ex.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h \
  Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h \
- Lib/Motor/Inc/bsp_dma.h Core/Inc/main.h
+ Lib/Motor/Inc/bsp_dma.h Core/Inc/main.h Lib/SPI_Bus/Inc/data_def.h
 Lib/Motor/Inc/unitreeA1_recv.h:
 Lib/Motor/Inc/unitreeA1_msg.h:
 Lib/Motor/Inc/unitreeA1_cmd.h:
@@ -61,3 +61,4 @@ Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h:
 Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h:
 Lib/Motor/Inc/bsp_dma.h:
 Core/Inc/main.h:
+Lib/SPI_Bus/Inc/data_def.h:

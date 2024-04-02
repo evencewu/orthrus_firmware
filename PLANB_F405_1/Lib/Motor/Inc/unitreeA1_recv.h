@@ -34,7 +34,7 @@ typedef struct Leg
 	A1_buf a1_buf;
 }Leg;
 
-extern Leg leg[2];
+extern Leg leg[4];
 
 void remote_control_init(void);
 
