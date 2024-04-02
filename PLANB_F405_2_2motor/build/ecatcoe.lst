@@ -1,0 +1,458 @@
+ARM GAS  /tmp/cc41dgnu.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"ecatcoe.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.COE_Init,"ax",%progbits
+  20              		.align	1
+  21              		.global	COE_Init
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	COE_Init:
+  27              	.LFB0:
+  28              		.file 1 "Lib/ssc/src/ecatcoe.c"
+   1:Lib/ssc/src/ecatcoe.c **** /**
+   2:Lib/ssc/src/ecatcoe.c **** \addtogroup CoE CAN Application Profile over EtherCAT
+   3:Lib/ssc/src/ecatcoe.c **** @{
+   4:Lib/ssc/src/ecatcoe.c **** */
+   5:Lib/ssc/src/ecatcoe.c **** 
+   6:Lib/ssc/src/ecatcoe.c **** /**
+   7:Lib/ssc/src/ecatcoe.c **** \file ecatcoe.c
+   8:Lib/ssc/src/ecatcoe.c **** \author EthercatSSC@beckhoff.com
+   9:Lib/ssc/src/ecatcoe.c **** \brief Implementation
+  10:Lib/ssc/src/ecatcoe.c **** This file contains the CoE mailbox interface
+  11:Lib/ssc/src/ecatcoe.c **** 
+  12:Lib/ssc/src/ecatcoe.c **** \version 5.11
+  13:Lib/ssc/src/ecatcoe.c **** 
+  14:Lib/ssc/src/ecatcoe.c **** <br>Changes to version V5.0:<br>
+  15:Lib/ssc/src/ecatcoe.c **** V5.11 COE4: "change prototype of ""COE_ContinueInd()"" return <> 0 if a failure occurred"<br>
+  16:Lib/ssc/src/ecatcoe.c **** V5.11 ECAT10: change PROTO handling to prevent compiler errors<br>
+  17:Lib/ssc/src/ecatcoe.c **** V5.11 TEST6: add test object to trigger Slave-to-Slave communication<br>
+  18:Lib/ssc/src/ecatcoe.c **** V5.11 TEST7: add test behaviour to send an emergency on every SDO request (in SafeOP)<br>
+  19:Lib/ssc/src/ecatcoe.c **** <br>Changes to version V4.40:<br>
+  20:Lib/ssc/src/ecatcoe.c **** V5.0 SDO7: "SDOS_SdoInfoInd()" never return pending SDO Info service. Delete "NOERROR_INWORK" handl
+  21:Lib/ssc/src/ecatcoe.c **** <br>Changes to version V4.08:<br>
+  22:Lib/ssc/src/ecatcoe.c **** V4.40 SDO1: add initial value for "nSdoInfoFragmentsLeft"<br>
+  23:Lib/ssc/src/ecatcoe.c **** V4.40 MBX6: change return value if no mailbox buffer is available<br>
+  24:Lib/ssc/src/ecatcoe.c **** V4.08 MBX 1: If the switch MAILBOX_QUEUE was set, we have to put all SDO Info Responses in the Send
+  25:Lib/ssc/src/ecatcoe.c **** */
+  26:Lib/ssc/src/ecatcoe.c **** 
+  27:Lib/ssc/src/ecatcoe.c **** /*---------------------------------------------------------------------------------------
+  28:Lib/ssc/src/ecatcoe.c **** ------
+  29:Lib/ssc/src/ecatcoe.c **** ------    Includes
+  30:Lib/ssc/src/ecatcoe.c **** ------
+ARM GAS  /tmp/cc41dgnu.s 			page 2
+
+
+  31:Lib/ssc/src/ecatcoe.c **** ---------------------------------------------------------------------------------------*/
+  32:Lib/ssc/src/ecatcoe.c **** 
+  33:Lib/ssc/src/ecatcoe.c **** #include "ecat_def.h"
+  34:Lib/ssc/src/ecatcoe.c **** 
+  35:Lib/ssc/src/ecatcoe.c **** 
+  36:Lib/ssc/src/ecatcoe.c **** #include "sdoserv.h"
+  37:Lib/ssc/src/ecatcoe.c **** #define    _ECATCOE_    1
+  38:Lib/ssc/src/ecatcoe.c **** #include "ecatcoe.h"
+  39:Lib/ssc/src/ecatcoe.c **** #undef      _ECATCOE_
+  40:Lib/ssc/src/ecatcoe.c **** /* ECATCHANGE_START(V5.11) ECAT10*/
+  41:Lib/ssc/src/ecatcoe.c **** /*remove definition of _ECATCOE_ (#ifdef is used in ecatcoe.h)*/
+  42:Lib/ssc/src/ecatcoe.c **** /* ECATCHANGE_END(V5.11) ECAT10*/
+  43:Lib/ssc/src/ecatcoe.c **** 
+  44:Lib/ssc/src/ecatcoe.c **** 
+  45:Lib/ssc/src/ecatcoe.c **** 
+  46:Lib/ssc/src/ecatcoe.c **** /*---------------------------------------------------------------------------------------
+  47:Lib/ssc/src/ecatcoe.c **** ------
+  48:Lib/ssc/src/ecatcoe.c **** ------    internal Types and Defines
+  49:Lib/ssc/src/ecatcoe.c **** ------
+  50:Lib/ssc/src/ecatcoe.c **** ---------------------------------------------------------------------------------------*/
+  51:Lib/ssc/src/ecatcoe.c **** 
+  52:Lib/ssc/src/ecatcoe.c **** #define    ECATCOE        0x4300
+  53:Lib/ssc/src/ecatcoe.c **** #define    ECATCOEMAX    0x02
+  54:Lib/ssc/src/ecatcoe.c **** 
+  55:Lib/ssc/src/ecatcoe.c **** /*---------------------------------------------------------------------------------------
+  56:Lib/ssc/src/ecatcoe.c **** ------
+  57:Lib/ssc/src/ecatcoe.c **** ------    static variables
+  58:Lib/ssc/src/ecatcoe.c **** ------
+  59:Lib/ssc/src/ecatcoe.c **** ---------------------------------------------------------------------------------------*/
+  60:Lib/ssc/src/ecatcoe.c **** 
+  61:Lib/ssc/src/ecatcoe.c **** /*---------------------------------------------------------------------------------------
+  62:Lib/ssc/src/ecatcoe.c **** ------
+  63:Lib/ssc/src/ecatcoe.c **** ------    static functions
+  64:Lib/ssc/src/ecatcoe.c **** ------
+  65:Lib/ssc/src/ecatcoe.c **** ---------------------------------------------------------------------------------------*/
+  66:Lib/ssc/src/ecatcoe.c **** 
+  67:Lib/ssc/src/ecatcoe.c **** /*---------------------------------------------------------------------------------------
+  68:Lib/ssc/src/ecatcoe.c **** ------
+  69:Lib/ssc/src/ecatcoe.c **** ------    functions
+  70:Lib/ssc/src/ecatcoe.c **** ------
+  71:Lib/ssc/src/ecatcoe.c **** ---------------------------------------------------------------------------------------*/
+  72:Lib/ssc/src/ecatcoe.c **** 
+  73:Lib/ssc/src/ecatcoe.c **** /////////////////////////////////////////////////////////////////////////////////////////
+  74:Lib/ssc/src/ecatcoe.c **** /**
+  75:Lib/ssc/src/ecatcoe.c **** 
+  76:Lib/ssc/src/ecatcoe.c ****  \brief    This function intialize the CoE Interface.
+  77:Lib/ssc/src/ecatcoe.c **** *////////////////////////////////////////////////////////////////////////////////////////
+  78:Lib/ssc/src/ecatcoe.c **** 
+  79:Lib/ssc/src/ecatcoe.c **** void COE_Init(void)
+  80:Lib/ssc/src/ecatcoe.c **** {
+  29              		.loc 1 80 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+  81:Lib/ssc/src/ecatcoe.c ****     pCoeSendStored = 0;
+  34              		.loc 1 81 5 view .LVU1
+ARM GAS  /tmp/cc41dgnu.s 			page 3
+
+
+  35              		.loc 1 81 20 is_stmt 0 view .LVU2
+  36 0000 0023     		movs	r3, #0
+  37 0002 024A     		ldr	r2, .L2
+  38 0004 1360     		str	r3, [r2]
+  82:Lib/ssc/src/ecatcoe.c ****     nSdoInfoFragmentsLeft = 0;
+  39              		.loc 1 82 5 is_stmt 1 view .LVU3
+  40              		.loc 1 82 27 is_stmt 0 view .LVU4
+  41 0006 024A     		ldr	r2, .L2+4
+  42 0008 1380     		strh	r3, [r2]	@ movhi
+  83:Lib/ssc/src/ecatcoe.c **** }
+  43              		.loc 1 83 1 view .LVU5
+  44 000a 7047     		bx	lr
+  45              	.L3:
+  46              		.align	2
+  47              	.L2:
+  48 000c 00000000 		.word	.LANCHOR0
+  49 0010 00000000 		.word	nSdoInfoFragmentsLeft
+  50              		.cfi_endproc
+  51              	.LFE0:
+  53              		.section	.text.COE_ServiceInd,"ax",%progbits
+  54              		.align	1
+  55              		.global	COE_ServiceInd
+  56              		.syntax unified
+  57              		.thumb
+  58              		.thumb_func
+  60              	COE_ServiceInd:
+  61              	.LVL0:
+  62              	.LFB1:
+  84:Lib/ssc/src/ecatcoe.c **** 
+  85:Lib/ssc/src/ecatcoe.c **** /////////////////////////////////////////////////////////////////////////////////////////
+  86:Lib/ssc/src/ecatcoe.c **** /**
+  87:Lib/ssc/src/ecatcoe.c ****  \param     pCoeMbx      Pointer to the received mailbox data from the master.
+  88:Lib/ssc/src/ecatcoe.c **** 
+  89:Lib/ssc/src/ecatcoe.c ****  \return    result of the operation (0 (success) or mailbox error code (MBXERR_.... defined in
+  90:Lib/ssc/src/ecatcoe.c ****             mailbox.h))
+  91:Lib/ssc/src/ecatcoe.c **** 
+  92:Lib/ssc/src/ecatcoe.c ****  \brief    This function is called when a CoE (CAN application layer over EtherCAT) service is rece
+  93:Lib/ssc/src/ecatcoe.c ****              the master.
+  94:Lib/ssc/src/ecatcoe.c **** *////////////////////////////////////////////////////////////////////////////////////////
+  95:Lib/ssc/src/ecatcoe.c **** 
+  96:Lib/ssc/src/ecatcoe.c **** UINT8 COE_ServiceInd(TCOEMBX MBXMEM *pCoeMbx)
+  97:Lib/ssc/src/ecatcoe.c **** {
+  63              		.loc 1 97 1 is_stmt 1 view -0
+  64              		.cfi_startproc
+  65              		@ args = 0, pretend = 0, frame = 0
+  66              		@ frame_needed = 0, uses_anonymous_args = 0
+  67              		.loc 1 97 1 is_stmt 0 view .LVU7
+  68 0000 08B5     		push	{r3, lr}
+  69              		.cfi_def_cfa_offset 8
+  70              		.cfi_offset 3, -8
+  71              		.cfi_offset 14, -4
+  98:Lib/ssc/src/ecatcoe.c ****     UINT8 result = 0;
+  72              		.loc 1 98 5 is_stmt 1 view .LVU8
+  73              	.LVL1:
+  99:Lib/ssc/src/ecatcoe.c **** 
+ 100:Lib/ssc/src/ecatcoe.c ****     switch ((pCoeMbx->CoeHeader & COEHEADER_COESERVICEMASK) >> COEHEADER_COESERVICESHIFT)
+  74              		.loc 1 100 5 view .LVU9
+ARM GAS  /tmp/cc41dgnu.s 			page 4
+
+
+  75              		.loc 1 100 21 is_stmt 0 view .LVU10
+  76 0002 C388     		ldrh	r3, [r0, #6]
+  77              		.loc 1 100 61 view .LVU11
+  78 0004 1B0B     		lsrs	r3, r3, #12
+  79              		.loc 1 100 5 view .LVU12
+  80 0006 013B     		subs	r3, r3, #1
+  81 0008 072B     		cmp	r3, #7
+  82 000a 0DD8     		bhi	.L10
+  83 000c DFE803F0 		tbb	[pc, r3]
+  84              	.L7:
+  85 0010 04       		.byte	(.L8-.L7)/2
+  86 0011 06       		.byte	(.L9-.L7)/2
+  87 0012 04       		.byte	(.L8-.L7)/2
+  88 0013 04       		.byte	(.L8-.L7)/2
+  89 0014 04       		.byte	(.L8-.L7)/2
+  90 0015 04       		.byte	(.L8-.L7)/2
+  91 0016 04       		.byte	(.L8-.L7)/2
+  92 0017 09       		.byte	(.L6-.L7)/2
+  93              		.p2align 1
+  94              	.L8:
+  95 0018 0420     		movs	r0, #4
+  96              	.LVL2:
+  97              	.L5:
+ 101:Lib/ssc/src/ecatcoe.c ****     {
+ 102:Lib/ssc/src/ecatcoe.c ****     case COESERVICE_SDOREQUEST:
+ 103:Lib/ssc/src/ecatcoe.c ****         /* SDO-Request received, call SDOS_SdoInd to process the SDO-Request
+ 104:Lib/ssc/src/ecatcoe.c ****            if an existing SDO-Stack shall be used, the corresponding function
+ 105:Lib/ssc/src/ecatcoe.c ****             should be called */
+ 106:Lib/ssc/src/ecatcoe.c ****         result = SDOS_SdoInd( (TINITSDOMBX MBXMEM *) pCoeMbx );
+ 107:Lib/ssc/src/ecatcoe.c ****         break;
+ 108:Lib/ssc/src/ecatcoe.c **** 
+ 109:Lib/ssc/src/ecatcoe.c ****     case COESERVICE_SDOINFO:
+ 110:Lib/ssc/src/ecatcoe.c ****         /* SDO-Information Request received, call SDOS_SdoInfoInd to process the SDO-Request */
+ 111:Lib/ssc/src/ecatcoe.c ****         result = SDOS_SdoInfoInd( (TSDOINFORMATION MBXMEM *) pCoeMbx );
+ 112:Lib/ssc/src/ecatcoe.c ****         /*NOERROR_INWORK is never returned by SDOS_SdoInfoInd() => delete return code handling*/
+ 113:Lib/ssc/src/ecatcoe.c ****         break;
+ 114:Lib/ssc/src/ecatcoe.c **** 
+ 115:Lib/ssc/src/ecatcoe.c **** 
+ 116:Lib/ssc/src/ecatcoe.c ****     case COESERVICE_SDORESPONSE:
+ 117:Lib/ssc/src/ecatcoe.c ****     case COESERVICE_EMERGENCY:
+ 118:Lib/ssc/src/ecatcoe.c ****     case COESERVICE_TXPDO:
+ 119:Lib/ssc/src/ecatcoe.c ****     case COESERVICE_RXPDO:
+ 120:Lib/ssc/src/ecatcoe.c ****     case COESERVICE_TXPDOREMREQ:
+ 121:Lib/ssc/src/ecatcoe.c ****     case COESERVICE_RXPDOREMREQ:
+ 122:Lib/ssc/src/ecatcoe.c ****         /* these CoE services are not supported yet */
+ 123:Lib/ssc/src/ecatcoe.c ****         result = MBXERR_SERVICENOTSUPPORTED;
+ 124:Lib/ssc/src/ecatcoe.c ****         break;
+ 125:Lib/ssc/src/ecatcoe.c **** 
+ 126:Lib/ssc/src/ecatcoe.c ****     default:
+ 127:Lib/ssc/src/ecatcoe.c ****         result = MBXERR_INVALIDHEADER;
+ 128:Lib/ssc/src/ecatcoe.c ****         break;
+ 129:Lib/ssc/src/ecatcoe.c ****     }
+ 130:Lib/ssc/src/ecatcoe.c ****     return result;
+  98              		.loc 1 130 5 is_stmt 1 view .LVU13
+ 131:Lib/ssc/src/ecatcoe.c **** }
+  99              		.loc 1 131 1 is_stmt 0 view .LVU14
+ 100 001a 08BD     		pop	{r3, pc}
+ARM GAS  /tmp/cc41dgnu.s 			page 5
+
+
+ 101              	.LVL3:
+ 102              	.L9:
+ 106:Lib/ssc/src/ecatcoe.c ****         break;
+ 103              		.loc 1 106 9 is_stmt 1 view .LVU15
+ 106:Lib/ssc/src/ecatcoe.c ****         break;
+ 104              		.loc 1 106 18 is_stmt 0 view .LVU16
+ 105 001c FFF7FEFF 		bl	SDOS_SdoInd
+ 106              	.LVL4:
+ 107:Lib/ssc/src/ecatcoe.c **** 
+ 107              		.loc 1 107 9 is_stmt 1 view .LVU17
+ 108 0020 FBE7     		b	.L5
+ 109              	.LVL5:
+ 110              	.L6:
+ 111:Lib/ssc/src/ecatcoe.c ****         /*NOERROR_INWORK is never returned by SDOS_SdoInfoInd() => delete return code handling*/
+ 111              		.loc 1 111 9 view .LVU18
+ 111:Lib/ssc/src/ecatcoe.c ****         /*NOERROR_INWORK is never returned by SDOS_SdoInfoInd() => delete return code handling*/
+ 112              		.loc 1 111 18 is_stmt 0 view .LVU19
+ 113 0022 FFF7FEFF 		bl	SDOS_SdoInfoInd
+ 114              	.LVL6:
+ 113:Lib/ssc/src/ecatcoe.c **** 
+ 115              		.loc 1 113 9 is_stmt 1 view .LVU20
+ 116 0026 F8E7     		b	.L5
+ 117              	.LVL7:
+ 118              	.L10:
+ 127:Lib/ssc/src/ecatcoe.c ****         break;
+ 119              		.loc 1 127 16 is_stmt 0 view .LVU21
+ 120 0028 0520     		movs	r0, #5
+ 121              	.LVL8:
+ 127:Lib/ssc/src/ecatcoe.c ****         break;
+ 122              		.loc 1 127 16 view .LVU22
+ 123 002a F6E7     		b	.L5
+ 124              		.cfi_endproc
+ 125              	.LFE1:
+ 127              		.section	.text.COE_ContinueInd,"ax",%progbits
+ 128              		.align	1
+ 129              		.global	COE_ContinueInd
+ 130              		.syntax unified
+ 131              		.thumb
+ 132              		.thumb_func
+ 134              	COE_ContinueInd:
+ 135              	.LVL9:
+ 136              	.LFB2:
+ 132:Lib/ssc/src/ecatcoe.c **** 
+ 133:Lib/ssc/src/ecatcoe.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 134:Lib/ssc/src/ecatcoe.c **** /**
+ 135:Lib/ssc/src/ecatcoe.c ****  \param     pMbx      Pointer to the free mailbox to sent.
+ 136:Lib/ssc/src/ecatcoe.c **** 
+ 137:Lib/ssc/src/ecatcoe.c ****  \return    result of the operation (0 (success)
+ 138:Lib/ssc/src/ecatcoe.c **** 
+ 139:Lib/ssc/src/ecatcoe.c ****  \brief    This function is called when a CoE service to be sent is stored and can
+ 140:Lib/ssc/src/ecatcoe.c ****  \brief  be put in the send mailbox.
+ 141:Lib/ssc/src/ecatcoe.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 142:Lib/ssc/src/ecatcoe.c **** 
+ 143:Lib/ssc/src/ecatcoe.c **** /*ECATCHANGE_START(V5.11) COE4*/
+ 144:Lib/ssc/src/ecatcoe.c **** UINT8 COE_ContinueInd(TMBX MBXMEM * pMbx)
+ 145:Lib/ssc/src/ecatcoe.c **** /*ECATCHANGE_END(V5.11) COE4*/
+ 146:Lib/ssc/src/ecatcoe.c **** {
+ARM GAS  /tmp/cc41dgnu.s 			page 6
+
+
+ 137              		.loc 1 146 1 is_stmt 1 view -0
+ 138              		.cfi_startproc
+ 139              		@ args = 0, pretend = 0, frame = 0
+ 140              		@ frame_needed = 0, uses_anonymous_args = 0
+ 141              		.loc 1 146 1 is_stmt 0 view .LVU24
+ 142 0000 08B5     		push	{r3, lr}
+ 143              		.cfi_def_cfa_offset 8
+ 144              		.cfi_offset 3, -8
+ 145              		.cfi_offset 14, -4
+ 147:Lib/ssc/src/ecatcoe.c ****     if (pCoeSendStored)
+ 146              		.loc 1 147 5 is_stmt 1 view .LVU25
+ 147              		.loc 1 147 9 is_stmt 0 view .LVU26
+ 148 0002 114B     		ldr	r3, .L17
+ 149 0004 1868     		ldr	r0, [r3]
+ 150              	.LVL10:
+ 151              		.loc 1 147 8 view .LVU27
+ 152 0006 30B1     		cbz	r0, .L13
+ 148:Lib/ssc/src/ecatcoe.c ****     {
+ 149:Lib/ssc/src/ecatcoe.c ****         /* send the stored CoE service which could not be sent before */
+ 150:Lib/ssc/src/ecatcoe.c ****         MBX_MailboxSendReq(pCoeSendStored, 0);
+ 153              		.loc 1 150 9 is_stmt 1 view .LVU28
+ 154 0008 0021     		movs	r1, #0
+ 155 000a FFF7FEFF 		bl	MBX_MailboxSendReq
+ 156              	.LVL11:
+ 151:Lib/ssc/src/ecatcoe.c ****         pCoeSendStored = 0;
+ 157              		.loc 1 151 9 view .LVU29
+ 158              		.loc 1 151 24 is_stmt 0 view .LVU30
+ 159 000e 0020     		movs	r0, #0
+ 160 0010 0D4B     		ldr	r3, .L17
+ 161 0012 1860     		str	r0, [r3]
+ 162              	.LVL12:
+ 163              	.L14:
+ 152:Lib/ssc/src/ecatcoe.c ****     }
+ 153:Lib/ssc/src/ecatcoe.c ****     else
+ 154:Lib/ssc/src/ecatcoe.c ****     {
+ 155:Lib/ssc/src/ecatcoe.c ****         /* send the next fragment of the last CoE service (only for SDO-Information possible) */
+ 156:Lib/ssc/src/ecatcoe.c ****         /* in mailbox queue mode pMbx is always 0, so a mailbox buffer shall be get */
+ 157:Lib/ssc/src/ecatcoe.c ****         pMbx = (TMBX MBXMEM *) APPL_AllocMailboxBuffer(SIZEOF(TMBX));
+ 158:Lib/ssc/src/ecatcoe.c ****         /* it shall be checked if a valid pointer was returned */
+ 159:Lib/ssc/src/ecatcoe.c **** /*ECATCHANGE_START(V5.11) COE4*/
+ 160:Lib/ssc/src/ecatcoe.c ****         if (pMbx == NULL)
+ 161:Lib/ssc/src/ecatcoe.c ****         {
+ 162:Lib/ssc/src/ecatcoe.c ****             return MBXERR_NOMOREMEMORY;
+ 163:Lib/ssc/src/ecatcoe.c ****         }
+ 164:Lib/ssc/src/ecatcoe.c ****         else
+ 165:Lib/ssc/src/ecatcoe.c **** /*ECATCHANGE_END(V5.11) COE4*/
+ 166:Lib/ssc/src/ecatcoe.c ****         {
+ 167:Lib/ssc/src/ecatcoe.c ****             /* copy the stored SDO-Info-Header in the request */
+ 168:Lib/ssc/src/ecatcoe.c ****             MBXMEMCPY(pMbx, aSdoInfoHeader, SDO_INFO_HEADER_BYTE_SIZE);
+ 169:Lib/ssc/src/ecatcoe.c ****             /* call SDOS_SdoInfoInd to generate and send the next fragment */
+ 170:Lib/ssc/src/ecatcoe.c ****             SDOS_SdoInfoInd( (TSDOINFORMATION MBXMEM *) pMbx );
+ 171:Lib/ssc/src/ecatcoe.c ****         }
+ 172:Lib/ssc/src/ecatcoe.c ****     }
+ 173:Lib/ssc/src/ecatcoe.c **** 
+ 174:Lib/ssc/src/ecatcoe.c ****     return 0;
+ 175:Lib/ssc/src/ecatcoe.c **** }
+ 164              		.loc 1 175 1 view .LVU31
+ARM GAS  /tmp/cc41dgnu.s 			page 7
+
+
+ 165 0014 08BD     		pop	{r3, pc}
+ 166              	.LVL13:
+ 167              	.L13:
+ 157:Lib/ssc/src/ecatcoe.c ****         /* it shall be checked if a valid pointer was returned */
+ 168              		.loc 1 157 9 is_stmt 1 view .LVU32
+ 157:Lib/ssc/src/ecatcoe.c ****         /* it shall be checked if a valid pointer was returned */
+ 169              		.loc 1 157 32 is_stmt 0 view .LVU33
+ 170 0016 4FF48070 		mov	r0, #256
+ 171 001a FFF7FEFF 		bl	malloc
+ 172              	.LVL14:
+ 160:Lib/ssc/src/ecatcoe.c ****         {
+ 173              		.loc 1 160 9 is_stmt 1 view .LVU34
+ 160:Lib/ssc/src/ecatcoe.c ****         {
+ 174              		.loc 1 160 12 is_stmt 0 view .LVU35
+ 175 001e 0346     		mov	r3, r0
+ 176 0020 78B1     		cbz	r0, .L15
+ 168:Lib/ssc/src/ecatcoe.c ****             /* call SDOS_SdoInfoInd to generate and send the next fragment */
+ 177              		.loc 1 168 13 is_stmt 1 view .LVU36
+ 178 0022 0A4A     		ldr	r2, .L17+4
+ 179 0024 D2F800C0 		ldr	ip, [r2]	@ unaligned
+ 180 0028 5068     		ldr	r0, [r2, #4]	@ unaligned
+ 181              	.LVL15:
+ 168:Lib/ssc/src/ecatcoe.c ****             /* call SDOS_SdoInfoInd to generate and send the next fragment */
+ 182              		.loc 1 168 13 is_stmt 0 view .LVU37
+ 183 002a 9168     		ldr	r1, [r2, #8]	@ unaligned
+ 184 002c C3F800C0 		str	ip, [r3]	@ unaligned
+ 185 0030 5860     		str	r0, [r3, #4]	@ unaligned
+ 186 0032 9960     		str	r1, [r3, #8]	@ unaligned
+ 187 0034 9289     		ldrh	r2, [r2, #12]	@ unaligned
+ 188 0036 9A81     		strh	r2, [r3, #12]	@ unaligned
+ 170:Lib/ssc/src/ecatcoe.c ****         }
+ 189              		.loc 1 170 13 is_stmt 1 view .LVU38
+ 190 0038 1846     		mov	r0, r3
+ 191 003a FFF7FEFF 		bl	SDOS_SdoInfoInd
+ 192              	.LVL16:
+ 174:Lib/ssc/src/ecatcoe.c **** }
+ 193              		.loc 1 174 12 is_stmt 0 view .LVU39
+ 194 003e 0020     		movs	r0, #0
+ 195 0040 E8E7     		b	.L14
+ 196              	.LVL17:
+ 197              	.L15:
+ 162:Lib/ssc/src/ecatcoe.c ****         }
+ 198              		.loc 1 162 20 view .LVU40
+ 199 0042 0720     		movs	r0, #7
+ 200              	.LVL18:
+ 162:Lib/ssc/src/ecatcoe.c ****         }
+ 201              		.loc 1 162 20 view .LVU41
+ 202 0044 E6E7     		b	.L14
+ 203              	.L18:
+ 204 0046 00BF     		.align	2
+ 205              	.L17:
+ 206 0048 00000000 		.word	.LANCHOR0
+ 207 004c 00000000 		.word	aSdoInfoHeader
+ 208              		.cfi_endproc
+ 209              	.LFE2:
+ 211              		.global	pCoeSendStored
+ 212              		.section	.bss.pCoeSendStored,"aw",%nobits
+ARM GAS  /tmp/cc41dgnu.s 			page 8
+
+
+ 213              		.align	2
+ 214              		.set	.LANCHOR0,. + 0
+ 217              	pCoeSendStored:
+ 218 0000 00000000 		.space	4
+ 219              		.text
+ 220              	.Letext0:
+ 221              		.file 2 "Lib/ssc/include/mailbox.h"
+ 222              		.file 3 "Lib/ssc/include/ecatcoe.h"
+ 223              		.file 4 "Lib/ssc/include/sdoserv.h"
+ 224              		.file 5 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/stdlib.h"
+ARM GAS  /tmp/cc41dgnu.s 			page 9
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 ecatcoe.c
+     /tmp/cc41dgnu.s:20     .text.COE_Init:0000000000000000 $t
+     /tmp/cc41dgnu.s:26     .text.COE_Init:0000000000000000 COE_Init
+     /tmp/cc41dgnu.s:48     .text.COE_Init:000000000000000c $d
+     /tmp/cc41dgnu.s:54     .text.COE_ServiceInd:0000000000000000 $t
+     /tmp/cc41dgnu.s:60     .text.COE_ServiceInd:0000000000000000 COE_ServiceInd
+     /tmp/cc41dgnu.s:85     .text.COE_ServiceInd:0000000000000010 $d
+     /tmp/cc41dgnu.s:93     .text.COE_ServiceInd:0000000000000018 $t
+     /tmp/cc41dgnu.s:128    .text.COE_ContinueInd:0000000000000000 $t
+     /tmp/cc41dgnu.s:134    .text.COE_ContinueInd:0000000000000000 COE_ContinueInd
+     /tmp/cc41dgnu.s:206    .text.COE_ContinueInd:0000000000000048 $d
+     /tmp/cc41dgnu.s:217    .bss.pCoeSendStored:0000000000000000 pCoeSendStored
+     /tmp/cc41dgnu.s:213    .bss.pCoeSendStored:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+nSdoInfoFragmentsLeft
+SDOS_SdoInd
+SDOS_SdoInfoInd
+MBX_MailboxSendReq
+malloc
+aSdoInfoHeader
