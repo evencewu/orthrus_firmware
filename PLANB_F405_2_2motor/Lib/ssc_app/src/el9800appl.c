@@ -452,12 +452,21 @@ void APPL_OutputMapping(UINT16 *pData)
             ((UINT16 *)&sDOOutputs)[13] = (SWAPWORD(*(pTmpData + 11)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 12)) & 0xFF) << 8;
             ((UINT16 *)&sDOOutputs)[14] = (SWAPWORD(*(pTmpData + 12)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 13)) & 0xFF) << 8;
             ((UINT16 *)&sDOOutputs)[15] = (SWAPWORD(*(pTmpData + 13)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 14)) & 0xFF) << 8;
+            ((UINT16 *)&sDOOutputs)[16] = (SWAPWORD(*(pTmpData + 14)) >> 8 & 0xFF);
             /*motor1*/
-            //((UINT16 *)&sDOOutputs)[16] = (SWAPWORD(*(pTmpData + 14)) >> 8 & 0xFF);
-            //((UINT16 *)&sDOOutputs)[17] = SWAPWORD(*(pTmpData + 15));
-            //((UINT16 *)&sDOOutputs)[18] = SWAPWORD(*(pTmpData + 16));
-            //((UINT16 *)&sDOOutputs)[19] = SWAPWORD(*(pTmpData + 17));
-            //((UINT16 *)&sDOOutputs)[20] = SWAPWORD(*(pTmpData + 18));
+            ((UINT16 *)&sDOOutputs)[17] = SWAPWORD(*(pTmpData + 15));
+            ((UINT16 *)&sDOOutputs)[18] = SWAPWORD(*(pTmpData + 16));
+            ((UINT16 *)&sDOOutputs)[19] = SWAPWORD(*(pTmpData + 17));
+            ((UINT16 *)&sDOOutputs)[20] = SWAPWORD(*(pTmpData + 18));
+            ((UINT16 *)&sDOOutputs)[21] = SWAPWORD(*(pTmpData + 19));
+            ((UINT16 *)&sDOOutputs)[22] = SWAPWORD(*(pTmpData + 20));
+            ((UINT16 *)&sDOOutputs)[23] = SWAPWORD(*(pTmpData + 21));
+            ((UINT16 *)&sDOOutputs)[24] = SWAPWORD(*(pTmpData + 22));
+            ((UINT16 *)&sDOOutputs)[25] = SWAPWORD(*(pTmpData + 23));
+            ((UINT16 *)&sDOOutputs)[26] = SWAPWORD(*(pTmpData + 24));
+            ((UINT16 *)&sDOOutputs)[27] = SWAPWORD(*(pTmpData + 25));
+            /*motor2*/
+            ((UINT16 *)&sDOOutputs)[28] = SWAPWORD(*(pTmpData + 26));
             break;
         }
     }
