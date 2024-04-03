@@ -3266,7 +3266,7 @@ LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3
                 0x0000000010000000                _eccmram = .
                 0x0000000010000000                . = ALIGN (0x4)
 
-.bss            0x0000000020000740      0x4cc
+.bss            0x0000000020000740      0x640
                 0x0000000020000740                _sbss = .
                 0x0000000020000740                __bss_start__ = _sbss
  *(.bss)
@@ -3557,59 +3557,58 @@ LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3
                 0x0000000020000b60        0x4 build/ecatappl.o
                 0x0000000020000b60                StartTimerCnt
  .bss.aPdInputData
-                0x0000000020000b64       0x44 build/ecatappl.o
+                0x0000000020000b64       0xfe build/ecatappl.o
                 0x0000000020000b64                aPdInputData
+ *fill*         0x0000000020000c62        0x2 
  .bss.aPdOutputData
-                0x0000000020000ba8       0x44 build/ecatappl.o
-                0x0000000020000ba8                aPdOutputData
+                0x0000000020000c64       0xfe build/ecatappl.o
+                0x0000000020000c64                aPdOutputData
  .bss.bCycleTimeMeasurementStarted
-                0x0000000020000bec        0x1 build/ecatappl.o
-                0x0000000020000bec                bCycleTimeMeasurementStarted
+                0x0000000020000d62        0x1 build/ecatappl.o
+                0x0000000020000d62                bCycleTimeMeasurementStarted
  .bss.bInitFinished
-                0x0000000020000bed        0x1 build/ecatappl.o
-                0x0000000020000bed                bInitFinished
+                0x0000000020000d63        0x1 build/ecatappl.o
+                0x0000000020000d63                bInitFinished
  .bss.bRunApplication
-                0x0000000020000bee        0x1 build/ecatappl.o
-                0x0000000020000bee                bRunApplication
- *fill*         0x0000000020000bef        0x1 
+                0x0000000020000d64        0x1 build/ecatappl.o
+                0x0000000020000d64                bRunApplication
+ *fill*         0x0000000020000d65        0x1 
  .bss.u16BusCycleCntMs
-                0x0000000020000bf0        0x2 build/ecatappl.o
-                0x0000000020000bf0                u16BusCycleCntMs
- *fill*         0x0000000020000bf2        0x2 
+                0x0000000020000d66        0x2 build/ecatappl.o
+                0x0000000020000d66                u16BusCycleCntMs
  .bss.EscALEvent
-                0x0000000020000bf4        0x2 build/el9800hw.o
-                0x0000000020000bf4                EscALEvent
- *fill*         0x0000000020000bf6        0x2 
+                0x0000000020000d68        0x2 build/el9800hw.o
+                0x0000000020000d68                EscALEvent
+ *fill*         0x0000000020000d6a        0x2 
  .bss.__malloc_free_list
-                0x0000000020000bf8        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-mallocr.o)
-                0x0000000020000bf8                __malloc_free_list
+                0x0000000020000d6c        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-mallocr.o)
+                0x0000000020000d6c                __malloc_free_list
  .bss.__malloc_sbrk_start
-                0x0000000020000bfc        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-mallocr.o)
-                0x0000000020000bfc                __malloc_sbrk_start
- .bss.errno     0x0000000020000c00        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-reent.o)
-                0x0000000020000c00                errno
+                0x0000000020000d70        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-mallocr.o)
+                0x0000000020000d70                __malloc_sbrk_start
+ .bss.errno     0x0000000020000d74        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-reent.o)
+                0x0000000020000d74                errno
  .bss.__lock___malloc_recursive_mutex
-                0x0000000020000c04        0x1 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-lock.o)
-                0x0000000020000c04                __lock___malloc_recursive_mutex
- *fill*         0x0000000020000c05        0x3 
+                0x0000000020000d78        0x1 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-lock.o)
+                0x0000000020000d78                __lock___malloc_recursive_mutex
+ *fill*         0x0000000020000d79        0x3 
  .bss.heap_end.0
-                0x0000000020000c08        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(sbrk.o)
+                0x0000000020000d7c        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(sbrk.o)
  *(COMMON)
-                0x0000000020000c0c                . = ALIGN (0x4)
-                0x0000000020000c0c                _ebss = .
-                0x0000000020000c0c                __bss_end__ = _ebss
+                0x0000000020000d80                . = ALIGN (0x4)
+                0x0000000020000d80                _ebss = .
+                0x0000000020000d80                __bss_end__ = _ebss
 
 ._user_heap_stack
-                0x0000000020000c0c      0x604
-                0x0000000020000c10                . = ALIGN (0x8)
- *fill*         0x0000000020000c0c        0x4 
-                0x0000000020000c10                PROVIDE (end = .)
+                0x0000000020000d80      0x600
+                0x0000000020000d80                . = ALIGN (0x8)
+                0x0000000020000d80                PROVIDE (end = .)
                 [!provide]                        PROVIDE (_end = .)
-                0x0000000020000e10                . = (. + _Min_Heap_Size)
- *fill*         0x0000000020000c10      0x200 
-                0x0000000020001210                . = (. + _Min_Stack_Size)
- *fill*         0x0000000020000e10      0x400 
-                0x0000000020001210                . = ALIGN (0x8)
+                0x0000000020000f80                . = (. + _Min_Heap_Size)
+ *fill*         0x0000000020000d80      0x200 
+                0x0000000020001380                . = (. + _Min_Stack_Size)
+ *fill*         0x0000000020000f80      0x400 
+                0x0000000020001380                . = ALIGN (0x8)
 
 /DISCARD/
  libc.a(*)
