@@ -7,6 +7,9 @@
 #include "string.h"
 #include "spi_deal.h"
 
+A1msgTxTransform a1_msg_tx_transform;
+A1msgRxTransform a1_msg_rx_transform;
+
 volatile uint8_t RxComplete = 0;
 
 extern DMA_HandleTypeDef hdma_spi2_rx;
@@ -131,14 +134,16 @@ void SPI_RECEIVE(void)
     }
     while (HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
     {
-
     }
 
-    //SPI_RXdate(&RXA1cmd, rxdate);
+    // SPI_RXdate(&RXA1cmd, rxdate);
     ecat_NS_H();
 }
 
-uint8_t rx_data[41];
+uint8_t spi2_tx_original_data[41];
+uint8_t spi2_rx_original_data[41];
+uint8_t spi2_tx_data[21];
+uint8_t spi2_rx_recv[21];
 
 /// @brief 进行一次中断形式的发送
 /// @param leg_id 对应腿的ID
@@ -146,40 +151,62 @@ void SPI_TRANSMIT(int leg_id)
 {
     ecat_NS_L();
     MASTER_Synchro();
-    uint8_t tx_data[41];
-
-    uint8_t motor_data[21];
-
-    memcpy(motor_data, &A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID], 21);
-    
-    link_2array(motor_data,tx_data);
-
-    if (HAL_SPI_TransmitReceive_IT(&hspi2, tx_data,rx_data,41) != HAL_OK)
+    memcpy(spi2_tx_data, &A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID], 21);
+    MotorTxDeal(spi2_tx_data, spi2_tx_original_data);
+    if (HAL_SPI_TransmitReceive_IT(&hspi2, spi2_tx_original_data, spi2_rx_original_data, 41) != HAL_OK)
     {
         Error_Handler();
     }
-
+    
+    for (int i = 0; i < 21; i++)
+    {
+        if (spi2_rx_original_data[i] == 0xD2 && spi2_rx_original_data[i+1] == 0xFE)
+        {
+            for (int j = 0; j < 21; j++)
+            {
+                spi2_rx_recv[j] = spi2_rx_original_data[i + j];
+            }
+            SpiMotorRxArchive(spi2_rx_recv);
+        }
+    }
+    
     while (HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
     {
-        
     }
 
     ecat_NS_H();
 }
 
-void link_2array(uint8_t *array1,uint8_t *array3)
+/// @brief 处理21字节uint8列表，将电机数据归档到usart发送缓冲区
+/// @param spi2_rx_recv 
+void SpiMotorRxArchive(uint8_t *spi2_rx_recv)
+{
+    memcpy(&a1_msg_rx_transform.u8[0],spi2_rx_recv,21);
+    a1_msg_rx_transform.a1msg.LegID;
+    a1_msg_rx_transform.a1msg.motorID;
+    a1_msg_rx_transform.a1msg.mode;
+    a1_msg_rx_transform.a1msg.T;
+    a1_msg_rx_transform.a1msg.Pos;
+    a1_msg_rx_transform.a1msg.K_P;
+    a1_msg_rx_transform.a1msg.K_W;
+}
+
+/// @brief 21字节数据转为双倍41字节数据
+/// @param data motor spi 的21字节数据
+/// @param original_data 被发送出去的41字节数据
+void MotorTxDeal(uint8_t *data, uint8_t *original_data)
 {
     for (int i = 0; i < 20; i++)
     {
-        *(array3 + i) = *(array1 + i + 1);
+        *(original_data+ i) = *(data + i + 1);
     }
 
     for (int i = 0; i < 21; i++)
     {
-        *(array3 + i + 20) = *(array1 + i);
+        *(original_data + i + 20) = *(data + i);
     }
 
-    *(array3) = 0xFE;
-    *(array3 + 20) = 0xD2;
-    *(array3 + 21) = 0xFE;
+    *(original_data) = 0xFE;
+    *(original_data + 20) = 0xD2;
+    *(original_data + 21) = 0xFE;
 }

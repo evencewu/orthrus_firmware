@@ -10,14 +10,13 @@
 #define RF 2
 #define RB 3
 
+motor_send_t cmd_motor[4][3];
 motor_send_t cmd_leg[4];
-motor_recv_t data_leg[4];
 
 void unitreeA1_tx(int leg_id)
 {
     /*—————————————————————————————————————————左前腿代码范围————————————————————————————————————————————————*/
     uint8_t A1cmd[34];
-
 
     // 此处为左腿电机结构体//
     cmd_leg[leg_id].motor_send_data.head.start[0] = 0xFE;

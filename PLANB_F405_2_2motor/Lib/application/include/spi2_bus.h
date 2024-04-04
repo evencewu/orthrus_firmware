@@ -59,5 +59,6 @@ extern A1PackageSpiTx motor_tx[4][3];
 extern A1PackageSpiRx motor_rx[4][3];
 
 void GetMotorMsg(uint8_t *input);
+void PreparMotorMsg(A1PackageSpiTx motor_tx_pack,uint8_t *motor_original_tx);
 
 #endif

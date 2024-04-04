@@ -10,6 +10,7 @@
 Leg leg[4];
 
 motor_recv_t data_motor[4][3];
+motor_recv_t data_leg[4];
 extern A1PackageSpiTx A1date[4][3];
 
 static uint8_t sbus_rx_buf_LF[2][SBUS_RX_BUF_NUM]; // 128字节,防越界

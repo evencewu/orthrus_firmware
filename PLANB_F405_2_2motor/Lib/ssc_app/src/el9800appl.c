@@ -481,10 +481,9 @@ void APPL_OutputMapping(UINT16 *pData)
 
 #include "spi2_bus.h"
 
-uint8_t motormsg_rx[40];
-uint8_t motormsg_tx[40];
+uint8_t motor_original_rx[41];
+uint8_t motor_original_tx[41];
 uint8_t motormsg_get[21];
-uint8_t motormsg_set[21];
 
 uint8_t spi2_flag;
 uint8_t call_flag;
@@ -561,29 +560,20 @@ void APPL_Application(void)
     sDIInputs.bSwitch7 = 0;
     sDIInputs.bSwitch8 = 0;
 
-    motormsg_set[0] = 0x01;
-    motormsg_set[1] = 0x02;
-    motormsg_set[2] = 0;
-    motormsg_set[3] = 0;
-    motormsg_set[4] = 0;
-    motormsg_set[5] = 0;
-    motormsg_set[6] = 0;
-    motormsg_set[7] = 0;
-    motormsg_set[8] = 0;
-    motormsg_set[9] = 0;
-    motormsg_set[10] = 0;
-    motormsg_set[11] = 0;
-    motormsg_set[12] = 0;
-    motormsg_set[13] = 0;
-    motormsg_set[14] = 0;
-    motormsg_set[15] = 0;
-    motormsg_set[16] = 0;
-    motormsg_set[17] = 0;
-    motormsg_set[18] = 0;
-    motormsg_set[19] = 0x02;
-    motormsg_set[20] = 0x01;
+    motor_tx[0][0].start[0] = 0xd2;
+    motor_tx[0][0].start[1] = 0xFE;
+    motor_tx[0][0].leg_id = 0;
+    motor_tx[0][0].motor_id = 0;
+    motor_tx[0][0].mode = 0;
+    motor_tx[0][0].T = 0;
+    motor_tx[0][0].W = 0;
+    motor_tx[0][0].Pos = 0;
+    motor_tx[0][0].K_P = 0;
+    motor_tx[0][0].K_W = 0;
 
-    PreparMotorMsg(motormsg_set,motormsg_tx);
+    motor_tx[0][0].SumCheck = motor_tx[0][0].start[0] + motor_tx[0][0].start[1] + motor_tx[0][0].leg_id + motor_tx[0][0].motor_id + motor_tx[0][0].mode + motor_tx[0][0].T + motor_tx[0][0].W + motor_tx[0][0].Pos + motor_tx[0][0].K_P + motor_tx[0][0].K_W;
+
+    PreparMotorMsg(motor_tx[0][0], motor_original_tx);
 
     spi2_flag = 0;
 
@@ -600,21 +590,21 @@ void APPL_Application(void)
     {
         for (int i = 0; i < 41; i++)
         {
-            motormsg_rx[i] = spi2_wr_cmd(motormsg_tx[i]);
+            motor_original_rx[i] = spi2_wr_cmd(motor_original_tx[i]);
         }
 
         for (int i = 0; i < 21; i++)
         {
-            if (motormsg_rx[i] == 0xD2 && motormsg_rx[i+1] == 0xFE)
+            if (motor_original_rx[i] == 0xD2 && motor_original_rx[i + 1] == 0xFE)
             {
                 for (int j = 0; j < 21; j++)
                 {
-                    motormsg_get[j] = motormsg_rx[i + j];
+                    motormsg_get[j] = motor_original_rx[i + j];
                 }
                 GetMotorMsg(&motormsg_get[0]);
             }
         }
-        
+
         call_flag = 0;
     }
 

@@ -45,4 +45,17 @@ typedef struct
 	
 }__attribute__((__packed__)) A1PackageSpiTx;//21位一个电机
 
+typedef union 
+{
+    A1PackageSpiTx a1msg;
+    uint8_t u8[21];
+}A1msgTxTransform;
+
+typedef union 
+{
+    A1PackageSpiRx a1msg;
+    uint8_t u8[21];
+}A1msgRxTransform;
+
+
 #endif

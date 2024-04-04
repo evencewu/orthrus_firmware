@@ -4,6 +4,7 @@
 #include "unitreeA1_msg.h"
 #include "usart.h"
 
+extern motor_send_t cmd_motor[4][3];
 extern motor_send_t cmd_leg[4];
 extern motor_recv_t data_motor[4][3];
 extern motor_recv_t data_leg[4];
