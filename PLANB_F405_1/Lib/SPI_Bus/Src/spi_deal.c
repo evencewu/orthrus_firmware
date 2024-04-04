@@ -7,7 +7,6 @@
 #include "string.h"
 #include "spi_deal.h"
 
-
 volatile uint8_t RxComplete = 0;
 
 extern DMA_HandleTypeDef hdma_spi2_rx;
@@ -20,64 +19,61 @@ extern motor_recv_t data_motor[4][3];
 extern motor_recv_t data_leg[4];
 extern motor_send_t cmd_leg[4];
 
-
-void DateCheck_DateModfy (A1PackageSpiRx *modf_buf)
+void DateCheck_DateModfy(A1PackageSpiRx *modf_buf)
 {
-    if(modf_buf->SumCheck == modf_buf->start[0] + modf_buf->start[1] + modf_buf->LegID + modf_buf->motorID +modf_buf->mode + modf_buf->T + modf_buf->W + modf_buf->Pos + modf_buf->K_P + modf_buf->K_W)
+    if (modf_buf->SumCheck == modf_buf->start[0] + modf_buf->start[1] + modf_buf->LegID + modf_buf->motorID + modf_buf->mode + modf_buf->T + modf_buf->W + modf_buf->Pos + modf_buf->K_P + modf_buf->K_W)
     {
         if (modf_buf->LegID == 0)
         {
-        uint8_t leg_id = 0;
-        cmd_leg[leg_id].id = modf_buf->motorID;
-        cmd_leg[leg_id].mode = modf_buf->mode;
-        cmd_leg[leg_id].K_P = modf_buf->K_P;
-        cmd_leg[leg_id].K_W = modf_buf->K_W;
-        cmd_leg[leg_id].Pos = modf_buf->Pos;
-        cmd_leg[leg_id].W = modf_buf->W;
-        cmd_leg[leg_id].T = modf_buf->T;
+            uint8_t leg_id = 0;
+            cmd_leg[leg_id].id = modf_buf->motorID;
+            cmd_leg[leg_id].mode = modf_buf->mode;
+            cmd_leg[leg_id].K_P = modf_buf->K_P;
+            cmd_leg[leg_id].K_W = modf_buf->K_W;
+            cmd_leg[leg_id].Pos = modf_buf->Pos;
+            cmd_leg[leg_id].W = modf_buf->W;
+            cmd_leg[leg_id].T = modf_buf->T;
         }
         if (modf_buf->LegID == 1)
         {
-        uint8_t leg_id = 1;
-        cmd_leg[leg_id].id = modf_buf->motorID;
-        cmd_leg[leg_id].mode = modf_buf->mode;
-        cmd_leg[leg_id].K_P = modf_buf->K_P;
-        cmd_leg[leg_id].K_W = modf_buf->K_W;
-        cmd_leg[leg_id].Pos = modf_buf->Pos;
-        cmd_leg[leg_id].W = modf_buf->W;
-        cmd_leg[leg_id].T = modf_buf->T;
+            uint8_t leg_id = 1;
+            cmd_leg[leg_id].id = modf_buf->motorID;
+            cmd_leg[leg_id].mode = modf_buf->mode;
+            cmd_leg[leg_id].K_P = modf_buf->K_P;
+            cmd_leg[leg_id].K_W = modf_buf->K_W;
+            cmd_leg[leg_id].Pos = modf_buf->Pos;
+            cmd_leg[leg_id].W = modf_buf->W;
+            cmd_leg[leg_id].T = modf_buf->T;
         }
 
         if (modf_buf->LegID == 2)
         {
-        uint8_t leg_id = 2;
-        cmd_leg[leg_id].id = modf_buf->motorID;
-        cmd_leg[leg_id].mode = modf_buf->mode;
-        cmd_leg[leg_id].K_P = modf_buf->K_P;
-        cmd_leg[leg_id].K_W = modf_buf->K_W;
-        cmd_leg[leg_id].Pos = modf_buf->Pos;
-        cmd_leg[leg_id].W = modf_buf->W;
-        cmd_leg[leg_id].T = modf_buf->T;
+            uint8_t leg_id = 2;
+            cmd_leg[leg_id].id = modf_buf->motorID;
+            cmd_leg[leg_id].mode = modf_buf->mode;
+            cmd_leg[leg_id].K_P = modf_buf->K_P;
+            cmd_leg[leg_id].K_W = modf_buf->K_W;
+            cmd_leg[leg_id].Pos = modf_buf->Pos;
+            cmd_leg[leg_id].W = modf_buf->W;
+            cmd_leg[leg_id].T = modf_buf->T;
         }
 
         if (modf_buf->LegID == 3)
         {
-        uint8_t leg_id = 3;
-        cmd_leg[leg_id].id = modf_buf->motorID;
-        cmd_leg[leg_id].mode = modf_buf->mode;
-        cmd_leg[leg_id].K_P = modf_buf->K_P;
-        cmd_leg[leg_id].K_W = modf_buf->K_W;
-        cmd_leg[leg_id].Pos = modf_buf->Pos;
-        cmd_leg[leg_id].W = modf_buf->W;
-        cmd_leg[leg_id].T = modf_buf->T;
+            uint8_t leg_id = 3;
+            cmd_leg[leg_id].id = modf_buf->motorID;
+            cmd_leg[leg_id].mode = modf_buf->mode;
+            cmd_leg[leg_id].K_P = modf_buf->K_P;
+            cmd_leg[leg_id].K_W = modf_buf->K_W;
+            cmd_leg[leg_id].Pos = modf_buf->Pos;
+            cmd_leg[leg_id].W = modf_buf->W;
+            cmd_leg[leg_id].T = modf_buf->T;
         }
-
     }
-
 }
-void SPI_RXdate(A1PackageSpiRx *modf_buf,uint8_t *spi_sbus_buf)
+void SPI_RXdate(A1PackageSpiRx *modf_buf, uint8_t *spi_sbus_buf)
 {
-    
+
     modf_buf->start[0] = spi_sbus_buf[0];
     modf_buf->start[1] = spi_sbus_buf[1];
     modf_buf->LegID = spi_sbus_buf[2];
@@ -92,47 +88,19 @@ void SPI_RXdate(A1PackageSpiRx *modf_buf,uint8_t *spi_sbus_buf)
     DateCheck_DateModfy(modf_buf);
 }
 
-
-void ecat_NS_L (void)
+// 拉底片选
+void ecat_NS_L(void)
 {
-    HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_RESET);
-
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
 }
-
-void ecat_NS_H (void)
+// 拉高片选
+void ecat_NS_H(void)
 {
-    HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_SET);
+    HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);
 }
 
-
-void sendToEcat(int leg_id)
-{   
-    ecat_NS_L();
-    uint8_t rxdate[21];
-    uint8_t txdate[21];//= {1,1,1,1,1,1,1,1,11,1,1,1,1,1,1,1,1};
-    memcpy(txdate ,&A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID],21);
-    HAL_SPI_TransmitReceive(&hspi2,txdate,rxdate,21,0x10);
-
-    SPI_RXdate(&RXA1cmd,rxdate);
-    ecat_NS_H();
-}
-
-void SPI_TRANSMIT(int leg_id)
-{   
-    ecat_NS_L();
-    MASTER_Synchro();
-    uint8_t txdate[21]= {54,11,91,13,87,55,1,11,11,98,1,1,1,1,1,1,1};
-    //memcpy(txdate ,&A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID],21);
-
-    if(HAL_SPI_Transmit_IT(&hspi2,txdate,21) != HAL_OK)
-    {
-        Error_Handler();
-    }
-    while ( HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
-    {}
-    ecat_NS_H();
-}
-
+/// @brief 主从同步读写
+/// @param
 void MASTER_Synchro(void)
 {
     uint8_t txbety = 0xD2;
@@ -140,22 +108,95 @@ void MASTER_Synchro(void)
 
     do
     {
-        if (HAL_SPI_TransmitReceive_IT(&hspi2,&txbety,&rxbety,1) != HAL_OK)
+        if (HAL_SPI_TransmitReceive_IT(&hspi2, &txbety, &rxbety, 1) != HAL_OK)
         {
             Error_Handler();
         }
 
-    while ( HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
-    {}
+        while (HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
+        {
+        }
     } while (rxbety != txbety);
 }
 
+/// @brief 进行一次中断形式的接收,并尝试赋值给发送电机数据结构体
+/// @param
 void SPI_RECEIVE(void)
-{   ecat_NS_L();
+{
+    ecat_NS_L();
     MASTER_Synchro();
     uint8_t rxdate[21];
-    HAL_SPI_Receive_IT(&hspi2,rxdate,21);
-    SPI_RXdate(&RXA1cmd,rxdate);
-    ecat_NS_H();
+    if (HAL_SPI_Receive_IT(&hspi2, rxdate, 21) != HAL_OK)
+    {
+        Error_Handler();
+    }
+    while (HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
+    {
+    }
 
+    SPI_RXdate(&RXA1cmd, rxdate);
+    ecat_NS_H();
+}
+
+/// @brief 进行一次中断形式的发送
+/// @param leg_id 对应腿的ID
+void SPI_TRANSMIT(int leg_id)
+{
+    ecat_NS_L();
+    MASTER_Synchro();
+    uint8_t TXdate[42];
+    uint8_t txdate_1[21];
+    memcpy(txdate_1, &A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID], 21);
+    link_2array(txdate_1,TXdate);
+
+    if (HAL_SPI_Transmit_IT(&hspi2, TXdate, 41) != HAL_OK)
+    {
+        Error_Handler();
+    }
+    while (HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
+    {
+    }
+    ecat_NS_H();
+}
+
+void link_2array(uint8_t *array1,uint8_t *array3)
+{
+    for (int i = 0; i < 20; i++)
+    {
+        *(array3 + i) = *(array1 + i + 1);
+    }
+
+    for (int i = 0; i < 21; i++)
+    {
+        *(array3 + i + 20) = *(array1 + i);
+    }
+
+    *(array3) = 0xFE;
+    *(array3 + 20) = 0xD2;
+    *(array3 + 21) = 0xFE;
+    /*
+    int length1 = sizeof(array1) / sizeof(array1[0]);
+    int length2 = sizeof(array2) / sizeof(array2[0]);
+
+    // 创建新数组
+    uint8_t *mergedArray = (uint8_t *)malloc((length1 + length2) * sizeof(int));
+    if (mergedArray == NULL) {
+        // 内存分配失败处理
+        //printf("Memory allocation failed!\n");
+        return 1;
+    }
+
+    // 复制数组元素
+    int index = 0;
+    for (int i = 0; i < length1; i++) {
+        mergedArray[index++] = array1[i];
+    }
+    for (int i = 0; i < length2; i++) {
+        mergedArray[index++] = array2[i];
+    }
+
+    array3 = mergedArray;
+    // 释放内存
+    free(mergedArray);
+    */
 }

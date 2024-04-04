@@ -20,7 +20,7 @@ void SPI2_Init(void)
     SPI_InitStructure.SPI_Direction = SPI_Direction_2Lines_FullDuplex;
     SPI_InitStructure.SPI_Mode = SPI_Mode_Slave;
     SPI_InitStructure.SPI_DataSize = SPI_DataSize_8b;
-    SPI_InitStructure.SPI_CPOL = SPI_CPOL_Low;
+    SPI_InitStructure.SPI_CPOL = SPI_CPOL_High;
     SPI_InitStructure.SPI_CPHA = SPI_CPHA_1Edge;
     SPI_InitStructure.SPI_NSS = SPI_NSS_Soft;
     SPI_InitStructure.SPI_BaudRatePrescaler = SPI_BaudRatePrescaler_8;
@@ -111,8 +111,8 @@ void SPI2_GPIO_Init(void)
 
 void spi2_w_cmd(uint8_t cmd)
 {
-    //while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET)
-    //     ;
+    while (SPI_I2S_GetFlagStatus(SPI2, SPI_I2S_FLAG_TXE) == RESET)
+         ;
     SPI_I2S_SendData(SPI2, cmd);
 
     //while (SPI_GetFlagStatus(SPI2, SPI_FLAG_BSY) == SET)

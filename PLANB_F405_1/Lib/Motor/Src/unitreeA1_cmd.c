@@ -12,21 +12,7 @@
 
 motor_send_t cmd_leg[4];
 motor_recv_t data_leg[4];
-/*
-void DataSet(int leg_id)
-{
-    cmd_leg[leg_id].hex_len = 34;
 
-    cmd_leg[leg_id].id = 2;
-
-    cmd_leg[leg_id].mode = 10;
-    cmd_leg[leg_id].K_P = 0;
-    cmd_leg[leg_id].K_W = 0;
-    cmd_leg[leg_id].Pos = 0;
-    cmd_leg[leg_id].W = 0;
-    cmd_leg[leg_id].T = 0;
-}
-*/
 void unitreeA1_tx(int leg_id)
 {
     /*—————————————————————————————————————————左前腿代码范围————————————————————————————————————————————————*/

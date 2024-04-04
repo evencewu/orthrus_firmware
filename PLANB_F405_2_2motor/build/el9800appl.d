@@ -38,7 +38,8 @@ build/el9800appl.o: Lib/ssc_app/src/el9800appl.c \
  Lib/ssc/include/mailbox.h Lib/ssc_app/include/ecatappl.h \
  Lib/ssc_app/include/el9800appl.h Lib/ssc_app/include/ecatappl.h \
  Lib/ssc/include/el9800hw.h Lib/bsp/include/bsp_led.h \
- Lib/bsp/include/stm32f4xx_conf.h
+ Lib/bsp/include/stm32f4xx_conf.h Lib/application/include/spi2_bus.h \
+ Lib/application/include/spi2_typedef.h
 Lib/ssc/include/ecat_def.h:
 Lib/ssc/include/applInterface.h:
 Lib/ssc/include/ecat_def.h:
@@ -89,3 +90,5 @@ Lib/ssc_app/include/ecatappl.h:
 Lib/ssc/include/el9800hw.h:
 Lib/bsp/include/bsp_led.h:
 Lib/bsp/include/stm32f4xx_conf.h:
+Lib/application/include/spi2_bus.h:
+Lib/application/include/spi2_typedef.h:

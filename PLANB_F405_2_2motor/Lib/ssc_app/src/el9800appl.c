@@ -479,7 +479,16 @@ void APPL_OutputMapping(UINT16 *pData)
 */
 ///////////////////////////////////////////////////////////////////////////////////////
 
-uint8_t motormsg = 0;
+#include "spi2_bus.h"
+
+uint8_t motormsg[40];
+uint8_t motormsg_get[21];
+uint8_t spi2_flag;
+uint8_t call_flag;
+uint8_t spi2_msg;
+
+uint8_t rxbety = 0;
+uint8_t txbety = 0xD2;
 
 void APPL_Application(void)
 {
@@ -553,10 +562,39 @@ void APPL_Application(void)
     sDIInputs.bSwitch7 = 0;
     sDIInputs.bSwitch8 = 0;
 
-    //spi
-    //motormsg = spi2_r_cmd();
-    //spi2_w_cmd(0x01);
-    //uint8_t dummy = spi2_wr_cmd(0x01);
+    spi2_flag = 0;
+
+    if (call_flag == 0)
+    {
+        spi2_w_cmd(0xD2);
+        call_flag = 1;
+    }
+
+    spi2_flag = spi2_r_cmd();
+
+    // spi
+    if (spi2_flag == 0xD2)
+    {
+        for (int i = 0; i < 41; i++)
+        {
+            motormsg[i] = spi2_r_cmd();
+        }
+
+        for (int i = 0; i < 21; i++)
+        {
+            if (motormsg[i] == 0xD2 && motormsg[i+1] == 0xFE)
+            {
+                for (int j = 0; j < 21; j++)
+                {
+                    motormsg_get[j] = motormsg[i + j];
+                }
+                GetMotorMsg(&motormsg_get[0]);
+            }
+        }
+        call_flag = 0;
+    }
+
+    // uint8_t dummy = spi2_wr_cmd(0x01);
 
     /* start the conversion of the A/D converter */
     //		while(!(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)==SET));
@@ -602,7 +640,6 @@ void APPL_Application(void)
     sAIInputs.motor1_Pos = 10;
     sAIInputs.motor1_LW = 10;
     sAIInputs.motor1_Acc = 10;
-
 
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
     sAIInputs.bTxPDOToggle ^= 1;

@@ -110,12 +110,12 @@ int main(void)
   { 
 
     //sendToEcat(0);
-    SPI_TRANSMIT(0);
+    SPI_TRANSMIT();
 
-      //unitreeA1_tx(0);
-      //unitreeA1_tx(1);
-      //unitreeA1_tx(2);
-      //unitreeA1_tx(3);
+      unitreeA1_tx(0);
+      unitreeA1_tx(1);
+      unitreeA1_tx(2);
+      unitreeA1_tx(3);
     
     /* USER CODE END WHILE */
 

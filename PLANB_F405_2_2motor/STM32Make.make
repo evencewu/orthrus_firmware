@@ -78,6 +78,7 @@ Drivers/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_syscfg.c \
 Drivers/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_tim.c \
 Drivers/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_usart.c \
 Drivers/STM32F4xx_StdPeriph_Driver/src/stm32f4xx_wwdg.c \
+Lib/application/src/spi2_bus.c \
 Lib/bsp/src/EXIT.c \
 Lib/bsp/src/RST.c \
 Lib/bsp/src/SPI1.c \
@@ -181,6 +182,7 @@ C_INCLUDES =  \
 -IDrivers/CMSIS/Device/ST/STM32F4xx/Include \
 -IDrivers/CMSIS/Include \
 -IDrivers/STM32F4xx_StdPeriph_Driver/inc \
+-ILib/application/include \
 -ILib/bsp/include \
 -ILib/ssc/include \
 -ILib/ssc_app/include

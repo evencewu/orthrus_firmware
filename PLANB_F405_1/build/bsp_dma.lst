@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccZ5WdJR.s 			page 1
+ARM GAS  /tmp/cclgCyQ7.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -31,122 +31,123 @@ ARM GAS  /tmp/ccZ5WdJR.s 			page 1
   29              		.file 1 "Lib/Motor/Src/bsp_dma.c"
    1:Lib/Motor/Src/bsp_dma.c **** #include "bsp_dma.h"
    2:Lib/Motor/Src/bsp_dma.c **** 
-   3:Lib/Motor/Src/bsp_dma.c **** void RC1_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
-   4:Lib/Motor/Src/bsp_dma.c **** {
-  30              		.loc 1 4 1 view -0
+   3:Lib/Motor/Src/bsp_dma.c **** //串口1的初始化
+   4:Lib/Motor/Src/bsp_dma.c **** void RC1_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
+   5:Lib/Motor/Src/bsp_dma.c **** {
+  30              		.loc 1 5 1 view -0
   31              		.cfi_startproc
   32              		@ args = 0, pretend = 0, frame = 0
   33              		@ frame_needed = 0, uses_anonymous_args = 0
   34              		@ link register save eliminated.
-  35              		.loc 1 4 1 is_stmt 0 view .LVU1
+  35              		.loc 1 5 1 is_stmt 0 view .LVU1
   36 0000 10B4     		push	{r4}
   37              		.cfi_def_cfa_offset 4
   38              		.cfi_offset 4, -4
-   5:Lib/Motor/Src/bsp_dma.c ****     //enable the DMA transfer for the receiver request
-   6:Lib/Motor/Src/bsp_dma.c ****     //使能DMA串口接收
-   7:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(huart1.Instance->CR3, USART_CR3_DMAR);
-  39              		.loc 1 7 5 is_stmt 1 view .LVU2
+   6:Lib/Motor/Src/bsp_dma.c ****     //enable the DMA transfer for the receiver request
+   7:Lib/Motor/Src/bsp_dma.c ****     //使能DMA串口接收
+   8:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(huart1.Instance->CR3, USART_CR3_DMAR);
+  39              		.loc 1 8 5 is_stmt 1 view .LVU2
   40 0002 164B     		ldr	r3, .L5
   41 0004 1B68     		ldr	r3, [r3]
   42 0006 5C69     		ldr	r4, [r3, #20]
   43 0008 44F04004 		orr	r4, r4, #64
   44 000c 5C61     		str	r4, [r3, #20]
-   8:Lib/Motor/Src/bsp_dma.c **** 
-   9:Lib/Motor/Src/bsp_dma.c ****     //enalbe idle interrupt
-  10:Lib/Motor/Src/bsp_dma.c ****     //使能空闲中断
-  11:Lib/Motor/Src/bsp_dma.c ****     __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
-  45              		.loc 1 11 5 view .LVU3
+   9:Lib/Motor/Src/bsp_dma.c **** 
+  10:Lib/Motor/Src/bsp_dma.c ****     //enalbe idle interrupt
+  11:Lib/Motor/Src/bsp_dma.c ****     //使能空闲中断
+  12:Lib/Motor/Src/bsp_dma.c ****     __HAL_UART_ENABLE_IT(&huart1, UART_IT_IDLE);
+  45              		.loc 1 12 5 view .LVU3
   46 000e DC68     		ldr	r4, [r3, #12]
+ARM GAS  /tmp/cclgCyQ7.s 			page 2
+
+
   47 0010 44F01004 		orr	r4, r4, #16
-ARM GAS  /tmp/ccZ5WdJR.s 			page 2
-
-
   48 0014 DC60     		str	r4, [r3, #12]
-  12:Lib/Motor/Src/bsp_dma.c **** 
-  13:Lib/Motor/Src/bsp_dma.c ****     //disable DMA
-  14:Lib/Motor/Src/bsp_dma.c ****     //失效DMA
-  15:Lib/Motor/Src/bsp_dma.c ****     __HAL_DMA_DISABLE(&hdma_usart1_rx);
-  49              		.loc 1 15 5 view .LVU4
+  13:Lib/Motor/Src/bsp_dma.c **** 
+  14:Lib/Motor/Src/bsp_dma.c ****     //disable DMA
+  15:Lib/Motor/Src/bsp_dma.c ****     //失效DMA
+  16:Lib/Motor/Src/bsp_dma.c ****     __HAL_DMA_DISABLE(&hdma_usart1_rx);
+  49              		.loc 1 16 5 view .LVU4
   50 0016 124B     		ldr	r3, .L5+4
   51 0018 1C68     		ldr	r4, [r3]
   52 001a 2368     		ldr	r3, [r4]
   53 001c 23F00103 		bic	r3, r3, #1
   54 0020 2360     		str	r3, [r4]
-  16:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart1_rx.Instance->CR & DMA_SxCR_EN)
-  55              		.loc 1 16 5 view .LVU5
-  56              		.loc 1 16 10 is_stmt 0 view .LVU6
+  17:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart1_rx.Instance->CR & DMA_SxCR_EN)
+  55              		.loc 1 17 5 view .LVU5
+  56              		.loc 1 17 10 is_stmt 0 view .LVU6
   57 0022 03E0     		b	.L2
   58              	.L3:
-  17:Lib/Motor/Src/bsp_dma.c ****     {
-  18:Lib/Motor/Src/bsp_dma.c ****         __HAL_DMA_DISABLE(&hdma_usart1_rx);
-  59              		.loc 1 18 9 is_stmt 1 view .LVU7
+  18:Lib/Motor/Src/bsp_dma.c ****     {
+  19:Lib/Motor/Src/bsp_dma.c ****         __HAL_DMA_DISABLE(&hdma_usart1_rx);
+  59              		.loc 1 19 9 is_stmt 1 view .LVU7
   60 0024 1C68     		ldr	r4, [r3]
   61 0026 24F00104 		bic	r4, r4, #1
   62 002a 1C60     		str	r4, [r3]
   63              	.L2:
-  16:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart1_rx.Instance->CR & DMA_SxCR_EN)
-  64              		.loc 1 16 10 view .LVU8
-  16:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart1_rx.Instance->CR & DMA_SxCR_EN)
-  65              		.loc 1 16 25 is_stmt 0 view .LVU9
+  17:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart1_rx.Instance->CR & DMA_SxCR_EN)
+  64              		.loc 1 17 10 view .LVU8
+  17:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart1_rx.Instance->CR & DMA_SxCR_EN)
+  65              		.loc 1 17 25 is_stmt 0 view .LVU9
   66 002c 0C4B     		ldr	r3, .L5+4
   67 002e 1B68     		ldr	r3, [r3]
-  16:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart1_rx.Instance->CR & DMA_SxCR_EN)
-  68              		.loc 1 16 34 view .LVU10
+  17:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart1_rx.Instance->CR & DMA_SxCR_EN)
+  68              		.loc 1 17 34 view .LVU10
   69 0030 1C68     		ldr	r4, [r3]
-  16:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart1_rx.Instance->CR & DMA_SxCR_EN)
-  70              		.loc 1 16 10 view .LVU11
+  17:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart1_rx.Instance->CR & DMA_SxCR_EN)
+  70              		.loc 1 17 10 view .LVU11
   71 0032 14F0010F 		tst	r4, #1
   72 0036 F5D1     		bne	.L3
-  19:Lib/Motor/Src/bsp_dma.c ****     }
-  20:Lib/Motor/Src/bsp_dma.c **** 
-  21:Lib/Motor/Src/bsp_dma.c ****     hdma_usart1_rx.Instance->PAR = (uint32_t) & (USART1->DR);
-  73              		.loc 1 21 5 is_stmt 1 view .LVU12
-  74              		.loc 1 21 34 is_stmt 0 view .LVU13
+  20:Lib/Motor/Src/bsp_dma.c ****     }
+  21:Lib/Motor/Src/bsp_dma.c **** 
+  22:Lib/Motor/Src/bsp_dma.c ****     hdma_usart1_rx.Instance->PAR = (uint32_t) & (USART1->DR);
+  73              		.loc 1 22 5 is_stmt 1 view .LVU12
+  74              		.loc 1 22 34 is_stmt 0 view .LVU13
   75 0038 0A4C     		ldr	r4, .L5+8
   76 003a 9C60     		str	r4, [r3, #8]
-  22:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 1
-  23:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区1
-  24:Lib/Motor/Src/bsp_dma.c ****     hdma_usart1_rx.Instance->M0AR = (uint32_t)(rx1_buf);
-  77              		.loc 1 24 5 is_stmt 1 view .LVU14
-  78              		.loc 1 24 35 is_stmt 0 view .LVU15
+  23:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 1
+  24:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区1
+  25:Lib/Motor/Src/bsp_dma.c ****     hdma_usart1_rx.Instance->M0AR = (uint32_t)(rx1_buf);
+  77              		.loc 1 25 5 is_stmt 1 view .LVU14
+  78              		.loc 1 25 35 is_stmt 0 view .LVU15
   79 003c D860     		str	r0, [r3, #12]
-  25:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 2
-  26:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区2
-  27:Lib/Motor/Src/bsp_dma.c ****     hdma_usart1_rx.Instance->M1AR = (uint32_t)(rx2_buf);
-  80              		.loc 1 27 5 is_stmt 1 view .LVU16
-  81              		.loc 1 27 35 is_stmt 0 view .LVU17
+  26:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 2
+  27:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区2
+  28:Lib/Motor/Src/bsp_dma.c ****     hdma_usart1_rx.Instance->M1AR = (uint32_t)(rx2_buf);
+  80              		.loc 1 28 5 is_stmt 1 view .LVU16
+  81              		.loc 1 28 35 is_stmt 0 view .LVU17
   82 003e 1961     		str	r1, [r3, #16]
-  28:Lib/Motor/Src/bsp_dma.c ****     //data length
-  29:Lib/Motor/Src/bsp_dma.c ****     //数据长度
-ARM GAS  /tmp/ccZ5WdJR.s 			page 3
+  29:Lib/Motor/Src/bsp_dma.c ****     //data length
+ARM GAS  /tmp/cclgCyQ7.s 			page 3
 
 
-  30:Lib/Motor/Src/bsp_dma.c ****     hdma_usart1_rx.Instance->NDTR = dma_buf_num;
-  83              		.loc 1 30 5 is_stmt 1 view .LVU18
-  84              		.loc 1 30 35 is_stmt 0 view .LVU19
+  30:Lib/Motor/Src/bsp_dma.c ****     //数据长度
+  31:Lib/Motor/Src/bsp_dma.c ****     hdma_usart1_rx.Instance->NDTR = dma_buf_num;
+  83              		.loc 1 31 5 is_stmt 1 view .LVU18
+  84              		.loc 1 31 35 is_stmt 0 view .LVU19
   85 0040 5A60     		str	r2, [r3, #4]
-  31:Lib/Motor/Src/bsp_dma.c ****     //enable double memory buffer
-  32:Lib/Motor/Src/bsp_dma.c ****     //使能双缓冲区
-  33:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(hdma_usart1_rx.Instance->CR, DMA_SxCR_DBM);
-  86              		.loc 1 33 5 is_stmt 1 view .LVU20
+  32:Lib/Motor/Src/bsp_dma.c ****     //enable double memory buffer
+  33:Lib/Motor/Src/bsp_dma.c ****     //使能双缓冲区
+  34:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(hdma_usart1_rx.Instance->CR, DMA_SxCR_DBM);
+  86              		.loc 1 34 5 is_stmt 1 view .LVU20
   87 0042 1A68     		ldr	r2, [r3]
   88              	.LVL1:
-  89              		.loc 1 33 5 is_stmt 0 view .LVU21
+  89              		.loc 1 34 5 is_stmt 0 view .LVU21
   90 0044 42F48022 		orr	r2, r2, #262144
   91 0048 1A60     		str	r2, [r3]
-  34:Lib/Motor/Src/bsp_dma.c **** 
-  35:Lib/Motor/Src/bsp_dma.c ****     //enable DMA
-  36:Lib/Motor/Src/bsp_dma.c ****     //使能DMA
-  37:Lib/Motor/Src/bsp_dma.c ****     __HAL_DMA_ENABLE(&hdma_usart1_rx);
-  92              		.loc 1 37 5 is_stmt 1 view .LVU22
+  35:Lib/Motor/Src/bsp_dma.c **** 
+  36:Lib/Motor/Src/bsp_dma.c ****     //enable DMA
+  37:Lib/Motor/Src/bsp_dma.c ****     //使能DMA
+  38:Lib/Motor/Src/bsp_dma.c ****     __HAL_DMA_ENABLE(&hdma_usart1_rx);
+  92              		.loc 1 38 5 is_stmt 1 view .LVU22
   93 004a 054B     		ldr	r3, .L5+4
   94 004c 1A68     		ldr	r2, [r3]
   95 004e 1368     		ldr	r3, [r2]
   96 0050 43F00103 		orr	r3, r3, #1
   97 0054 1360     		str	r3, [r2]
-  38:Lib/Motor/Src/bsp_dma.c **** 
-  39:Lib/Motor/Src/bsp_dma.c **** }
-  98              		.loc 1 39 1 is_stmt 0 view .LVU23
+  39:Lib/Motor/Src/bsp_dma.c **** 
+  40:Lib/Motor/Src/bsp_dma.c **** }
+  98              		.loc 1 40 1 is_stmt 0 view .LVU23
   99 0056 5DF8044B 		ldr	r4, [sp], #4
  100              		.cfi_restore 4
  101              		.cfi_def_cfa_offset 0
@@ -168,123 +169,124 @@ ARM GAS  /tmp/ccZ5WdJR.s 			page 1
  119              	RC2_init:
  120              	.LVL2:
  121              	.LFB135:
-  40:Lib/Motor/Src/bsp_dma.c **** 
-  41:Lib/Motor/Src/bsp_dma.c **** void RC2_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
-  42:Lib/Motor/Src/bsp_dma.c **** {
- 122              		.loc 1 42 1 is_stmt 1 view -0
+  41:Lib/Motor/Src/bsp_dma.c **** 
+  42:Lib/Motor/Src/bsp_dma.c **** //串口2的初始化
+  43:Lib/Motor/Src/bsp_dma.c **** void RC2_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
+  44:Lib/Motor/Src/bsp_dma.c **** {
+ 122              		.loc 1 44 1 is_stmt 1 view -0
  123              		.cfi_startproc
  124              		@ args = 0, pretend = 0, frame = 0
  125              		@ frame_needed = 0, uses_anonymous_args = 0
  126              		@ link register save eliminated.
- 127              		.loc 1 42 1 is_stmt 0 view .LVU25
+ARM GAS  /tmp/cclgCyQ7.s 			page 4
+
+
+ 127              		.loc 1 44 1 is_stmt 0 view .LVU25
  128 0000 10B4     		push	{r4}
-ARM GAS  /tmp/ccZ5WdJR.s 			page 4
-
-
  129              		.cfi_def_cfa_offset 4
  130              		.cfi_offset 4, -4
-  43:Lib/Motor/Src/bsp_dma.c ****     //enable the DMA transfer for the receiver request
-  44:Lib/Motor/Src/bsp_dma.c ****     //使能DMA串口接收
-  45:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(huart2.Instance->CR3, USART_CR3_DMAR);
- 131              		.loc 1 45 5 is_stmt 1 view .LVU26
+  45:Lib/Motor/Src/bsp_dma.c ****     //enable the DMA transfer for the receiver request
+  46:Lib/Motor/Src/bsp_dma.c ****     //使能DMA串口接收
+  47:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(huart2.Instance->CR3, USART_CR3_DMAR);
+ 131              		.loc 1 47 5 is_stmt 1 view .LVU26
  132 0002 164B     		ldr	r3, .L11
  133 0004 1B68     		ldr	r3, [r3]
  134 0006 5C69     		ldr	r4, [r3, #20]
  135 0008 44F04004 		orr	r4, r4, #64
  136 000c 5C61     		str	r4, [r3, #20]
-  46:Lib/Motor/Src/bsp_dma.c **** 
-  47:Lib/Motor/Src/bsp_dma.c ****     //enalbe idle interrupt
-  48:Lib/Motor/Src/bsp_dma.c ****     //使能空闲中断
-  49:Lib/Motor/Src/bsp_dma.c ****     __HAL_UART_ENABLE_IT(&huart2, UART_IT_IDLE);
- 137              		.loc 1 49 5 view .LVU27
+  48:Lib/Motor/Src/bsp_dma.c **** 
+  49:Lib/Motor/Src/bsp_dma.c ****     //enalbe idle interrupt
+  50:Lib/Motor/Src/bsp_dma.c ****     //使能空闲中断
+  51:Lib/Motor/Src/bsp_dma.c ****     __HAL_UART_ENABLE_IT(&huart2, UART_IT_IDLE);
+ 137              		.loc 1 51 5 view .LVU27
  138 000e DC68     		ldr	r4, [r3, #12]
  139 0010 44F01004 		orr	r4, r4, #16
  140 0014 DC60     		str	r4, [r3, #12]
-  50:Lib/Motor/Src/bsp_dma.c **** 
-  51:Lib/Motor/Src/bsp_dma.c ****     //disable DMA
-  52:Lib/Motor/Src/bsp_dma.c ****     //失效DMA
-  53:Lib/Motor/Src/bsp_dma.c ****     __HAL_DMA_DISABLE(&hdma_usart2_rx);
- 141              		.loc 1 53 5 view .LVU28
+  52:Lib/Motor/Src/bsp_dma.c **** 
+  53:Lib/Motor/Src/bsp_dma.c ****     //disable DMA
+  54:Lib/Motor/Src/bsp_dma.c ****     //失效DMA
+  55:Lib/Motor/Src/bsp_dma.c ****     __HAL_DMA_DISABLE(&hdma_usart2_rx);
+ 141              		.loc 1 55 5 view .LVU28
  142 0016 124B     		ldr	r3, .L11+4
  143 0018 1C68     		ldr	r4, [r3]
  144 001a 2368     		ldr	r3, [r4]
  145 001c 23F00103 		bic	r3, r3, #1
  146 0020 2360     		str	r3, [r4]
-  54:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart2_rx.Instance->CR & DMA_SxCR_EN)
- 147              		.loc 1 54 5 view .LVU29
- 148              		.loc 1 54 10 is_stmt 0 view .LVU30
+  56:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart2_rx.Instance->CR & DMA_SxCR_EN)
+ 147              		.loc 1 56 5 view .LVU29
+ 148              		.loc 1 56 10 is_stmt 0 view .LVU30
  149 0022 03E0     		b	.L8
  150              	.L9:
-  55:Lib/Motor/Src/bsp_dma.c ****     {
-  56:Lib/Motor/Src/bsp_dma.c ****         __HAL_DMA_DISABLE(&hdma_usart2_rx);
- 151              		.loc 1 56 9 is_stmt 1 view .LVU31
+  57:Lib/Motor/Src/bsp_dma.c ****     {
+  58:Lib/Motor/Src/bsp_dma.c ****         __HAL_DMA_DISABLE(&hdma_usart2_rx);
+ 151              		.loc 1 58 9 is_stmt 1 view .LVU31
  152 0024 1C68     		ldr	r4, [r3]
  153 0026 24F00104 		bic	r4, r4, #1
  154 002a 1C60     		str	r4, [r3]
  155              	.L8:
-  54:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart2_rx.Instance->CR & DMA_SxCR_EN)
- 156              		.loc 1 54 10 view .LVU32
-  54:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart2_rx.Instance->CR & DMA_SxCR_EN)
- 157              		.loc 1 54 25 is_stmt 0 view .LVU33
+  56:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart2_rx.Instance->CR & DMA_SxCR_EN)
+ 156              		.loc 1 56 10 view .LVU32
+  56:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart2_rx.Instance->CR & DMA_SxCR_EN)
+ 157              		.loc 1 56 25 is_stmt 0 view .LVU33
  158 002c 0C4B     		ldr	r3, .L11+4
  159 002e 1B68     		ldr	r3, [r3]
-  54:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart2_rx.Instance->CR & DMA_SxCR_EN)
- 160              		.loc 1 54 34 view .LVU34
+  56:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart2_rx.Instance->CR & DMA_SxCR_EN)
+ 160              		.loc 1 56 34 view .LVU34
  161 0030 1C68     		ldr	r4, [r3]
-  54:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart2_rx.Instance->CR & DMA_SxCR_EN)
- 162              		.loc 1 54 10 view .LVU35
+  56:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart2_rx.Instance->CR & DMA_SxCR_EN)
+ 162              		.loc 1 56 10 view .LVU35
  163 0032 14F0010F 		tst	r4, #1
  164 0036 F5D1     		bne	.L9
-  57:Lib/Motor/Src/bsp_dma.c ****     }
-  58:Lib/Motor/Src/bsp_dma.c **** 
-  59:Lib/Motor/Src/bsp_dma.c ****     hdma_usart2_rx.Instance->PAR = (uint32_t) & (USART2->DR);
-ARM GAS  /tmp/ccZ5WdJR.s 			page 5
+  59:Lib/Motor/Src/bsp_dma.c ****     }
+ARM GAS  /tmp/cclgCyQ7.s 			page 5
 
 
- 165              		.loc 1 59 5 is_stmt 1 view .LVU36
- 166              		.loc 1 59 34 is_stmt 0 view .LVU37
+  60:Lib/Motor/Src/bsp_dma.c **** 
+  61:Lib/Motor/Src/bsp_dma.c ****     hdma_usart2_rx.Instance->PAR = (uint32_t) & (USART2->DR);
+ 165              		.loc 1 61 5 is_stmt 1 view .LVU36
+ 166              		.loc 1 61 34 is_stmt 0 view .LVU37
  167 0038 0A4C     		ldr	r4, .L11+8
  168 003a 9C60     		str	r4, [r3, #8]
-  60:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 1
-  61:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区1
-  62:Lib/Motor/Src/bsp_dma.c ****     hdma_usart2_rx.Instance->M0AR = (uint32_t)(rx1_buf);
- 169              		.loc 1 62 5 is_stmt 1 view .LVU38
- 170              		.loc 1 62 35 is_stmt 0 view .LVU39
+  62:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 1
+  63:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区1
+  64:Lib/Motor/Src/bsp_dma.c ****     hdma_usart2_rx.Instance->M0AR = (uint32_t)(rx1_buf);
+ 169              		.loc 1 64 5 is_stmt 1 view .LVU38
+ 170              		.loc 1 64 35 is_stmt 0 view .LVU39
  171 003c D860     		str	r0, [r3, #12]
-  63:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 2
-  64:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区2
-  65:Lib/Motor/Src/bsp_dma.c ****     hdma_usart2_rx.Instance->M1AR = (uint32_t)(rx2_buf);
- 172              		.loc 1 65 5 is_stmt 1 view .LVU40
- 173              		.loc 1 65 35 is_stmt 0 view .LVU41
+  65:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 2
+  66:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区2
+  67:Lib/Motor/Src/bsp_dma.c ****     hdma_usart2_rx.Instance->M1AR = (uint32_t)(rx2_buf);
+ 172              		.loc 1 67 5 is_stmt 1 view .LVU40
+ 173              		.loc 1 67 35 is_stmt 0 view .LVU41
  174 003e 1961     		str	r1, [r3, #16]
-  66:Lib/Motor/Src/bsp_dma.c ****     //data length
-  67:Lib/Motor/Src/bsp_dma.c ****     //数据长度
-  68:Lib/Motor/Src/bsp_dma.c ****     hdma_usart2_rx.Instance->NDTR = dma_buf_num;
- 175              		.loc 1 68 5 is_stmt 1 view .LVU42
- 176              		.loc 1 68 35 is_stmt 0 view .LVU43
+  68:Lib/Motor/Src/bsp_dma.c ****     //data length
+  69:Lib/Motor/Src/bsp_dma.c ****     //数据长度
+  70:Lib/Motor/Src/bsp_dma.c ****     hdma_usart2_rx.Instance->NDTR = dma_buf_num;
+ 175              		.loc 1 70 5 is_stmt 1 view .LVU42
+ 176              		.loc 1 70 35 is_stmt 0 view .LVU43
  177 0040 5A60     		str	r2, [r3, #4]
-  69:Lib/Motor/Src/bsp_dma.c ****     //enable double memory buffer
-  70:Lib/Motor/Src/bsp_dma.c ****     //使能双缓冲区
-  71:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(hdma_usart2_rx.Instance->CR, DMA_SxCR_DBM);
- 178              		.loc 1 71 5 is_stmt 1 view .LVU44
+  71:Lib/Motor/Src/bsp_dma.c ****     //enable double memory buffer
+  72:Lib/Motor/Src/bsp_dma.c ****     //使能双缓冲区
+  73:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(hdma_usart2_rx.Instance->CR, DMA_SxCR_DBM);
+ 178              		.loc 1 73 5 is_stmt 1 view .LVU44
  179 0042 1A68     		ldr	r2, [r3]
  180              	.LVL3:
- 181              		.loc 1 71 5 is_stmt 0 view .LVU45
+ 181              		.loc 1 73 5 is_stmt 0 view .LVU45
  182 0044 42F48022 		orr	r2, r2, #262144
  183 0048 1A60     		str	r2, [r3]
-  72:Lib/Motor/Src/bsp_dma.c **** 
-  73:Lib/Motor/Src/bsp_dma.c ****     //enable DMA
-  74:Lib/Motor/Src/bsp_dma.c ****     //使能DMA
-  75:Lib/Motor/Src/bsp_dma.c ****     __HAL_DMA_ENABLE(&hdma_usart2_rx);
- 184              		.loc 1 75 5 is_stmt 1 view .LVU46
+  74:Lib/Motor/Src/bsp_dma.c **** 
+  75:Lib/Motor/Src/bsp_dma.c ****     //enable DMA
+  76:Lib/Motor/Src/bsp_dma.c ****     //使能DMA
+  77:Lib/Motor/Src/bsp_dma.c ****     __HAL_DMA_ENABLE(&hdma_usart2_rx);
+ 184              		.loc 1 77 5 is_stmt 1 view .LVU46
  185 004a 054B     		ldr	r3, .L11+4
  186 004c 1A68     		ldr	r2, [r3]
  187 004e 1368     		ldr	r3, [r2]
  188 0050 43F00103 		orr	r3, r3, #1
  189 0054 1360     		str	r3, [r2]
-  76:Lib/Motor/Src/bsp_dma.c **** 
-  77:Lib/Motor/Src/bsp_dma.c **** }
- 190              		.loc 1 77 1 is_stmt 0 view .LVU47
+  78:Lib/Motor/Src/bsp_dma.c **** 
+  79:Lib/Motor/Src/bsp_dma.c **** }
+ 190              		.loc 1 79 1 is_stmt 0 view .LVU47
  191 0056 5DF8044B 		ldr	r4, [sp], #4
  192              		.cfi_restore 4
  193              		.cfi_def_cfa_offset 0
@@ -296,11 +298,11 @@ ARM GAS  /tmp/ccZ5WdJR.s 			page 1
  199 0060 00000000 		.word	hdma_usart2_rx
  200 0064 04440040 		.word	1073759236
  201              		.cfi_endproc
+ARM GAS  /tmp/cclgCyQ7.s 			page 6
+
+
  202              	.LFE135:
  204              		.section	.text.RC3_init,"ax",%progbits
-ARM GAS  /tmp/ccZ5WdJR.s 			page 6
-
-
  205              		.align	1
  206              		.global	RC3_init
  207              		.syntax unified
@@ -309,123 +311,124 @@ ARM GAS  /tmp/ccZ5WdJR.s 			page 1
  211              	RC3_init:
  212              	.LVL4:
  213              	.LFB136:
-  78:Lib/Motor/Src/bsp_dma.c **** 
-  79:Lib/Motor/Src/bsp_dma.c **** void RC3_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
-  80:Lib/Motor/Src/bsp_dma.c **** {
- 214              		.loc 1 80 1 is_stmt 1 view -0
+  80:Lib/Motor/Src/bsp_dma.c **** 
+  81:Lib/Motor/Src/bsp_dma.c **** ////串口3的初始化
+  82:Lib/Motor/Src/bsp_dma.c **** void RC3_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
+  83:Lib/Motor/Src/bsp_dma.c **** {
+ 214              		.loc 1 83 1 is_stmt 1 view -0
  215              		.cfi_startproc
  216              		@ args = 0, pretend = 0, frame = 0
  217              		@ frame_needed = 0, uses_anonymous_args = 0
  218              		@ link register save eliminated.
- 219              		.loc 1 80 1 is_stmt 0 view .LVU49
+ 219              		.loc 1 83 1 is_stmt 0 view .LVU49
  220 0000 10B4     		push	{r4}
  221              		.cfi_def_cfa_offset 4
  222              		.cfi_offset 4, -4
-  81:Lib/Motor/Src/bsp_dma.c ****     //enable the DMA transfer for the receiver request
-  82:Lib/Motor/Src/bsp_dma.c ****     //使能DMA串口接收
-  83:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(huart3.Instance->CR3, USART_CR3_DMAR);
- 223              		.loc 1 83 5 is_stmt 1 view .LVU50
+  84:Lib/Motor/Src/bsp_dma.c ****     //enable the DMA transfer for the receiver request
+  85:Lib/Motor/Src/bsp_dma.c ****     //使能DMA串口接收
+  86:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(huart3.Instance->CR3, USART_CR3_DMAR);
+ 223              		.loc 1 86 5 is_stmt 1 view .LVU50
  224 0002 164B     		ldr	r3, .L17
  225 0004 1B68     		ldr	r3, [r3]
  226 0006 5C69     		ldr	r4, [r3, #20]
  227 0008 44F04004 		orr	r4, r4, #64
  228 000c 5C61     		str	r4, [r3, #20]
-  84:Lib/Motor/Src/bsp_dma.c **** 
-  85:Lib/Motor/Src/bsp_dma.c ****     //enalbe idle interrupt
-  86:Lib/Motor/Src/bsp_dma.c ****     //使能空闲中断
-  87:Lib/Motor/Src/bsp_dma.c ****     __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
- 229              		.loc 1 87 5 view .LVU51
+  87:Lib/Motor/Src/bsp_dma.c **** 
+  88:Lib/Motor/Src/bsp_dma.c ****     //enalbe idle interrupt
+  89:Lib/Motor/Src/bsp_dma.c ****     //使能空闲中断
+  90:Lib/Motor/Src/bsp_dma.c ****     __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
+ 229              		.loc 1 90 5 view .LVU51
  230 000e DC68     		ldr	r4, [r3, #12]
  231 0010 44F01004 		orr	r4, r4, #16
  232 0014 DC60     		str	r4, [r3, #12]
-  88:Lib/Motor/Src/bsp_dma.c **** 
-  89:Lib/Motor/Src/bsp_dma.c ****     //disable DMA
-  90:Lib/Motor/Src/bsp_dma.c ****     //失效DMA
-  91:Lib/Motor/Src/bsp_dma.c ****     __HAL_DMA_DISABLE(&hdma_usart3_rx);
- 233              		.loc 1 91 5 view .LVU52
+  91:Lib/Motor/Src/bsp_dma.c **** 
+  92:Lib/Motor/Src/bsp_dma.c ****     //disable DMA
+  93:Lib/Motor/Src/bsp_dma.c ****     //失效DMA
+  94:Lib/Motor/Src/bsp_dma.c ****     __HAL_DMA_DISABLE(&hdma_usart3_rx);
+ 233              		.loc 1 94 5 view .LVU52
  234 0016 124B     		ldr	r3, .L17+4
  235 0018 1C68     		ldr	r4, [r3]
  236 001a 2368     		ldr	r3, [r4]
  237 001c 23F00103 		bic	r3, r3, #1
  238 0020 2360     		str	r3, [r4]
-  92:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart3_rx.Instance->CR & DMA_SxCR_EN)
- 239              		.loc 1 92 5 view .LVU53
- 240              		.loc 1 92 10 is_stmt 0 view .LVU54
+  95:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart3_rx.Instance->CR & DMA_SxCR_EN)
+ 239              		.loc 1 95 5 view .LVU53
+ 240              		.loc 1 95 10 is_stmt 0 view .LVU54
  241 0022 03E0     		b	.L14
  242              	.L15:
-  93:Lib/Motor/Src/bsp_dma.c ****     {
-  94:Lib/Motor/Src/bsp_dma.c ****         __HAL_DMA_DISABLE(&hdma_usart3_rx);
- 243              		.loc 1 94 9 is_stmt 1 view .LVU55
+  96:Lib/Motor/Src/bsp_dma.c ****     {
+  97:Lib/Motor/Src/bsp_dma.c ****         __HAL_DMA_DISABLE(&hdma_usart3_rx);
+ARM GAS  /tmp/cclgCyQ7.s 			page 7
+
+
+ 243              		.loc 1 97 9 is_stmt 1 view .LVU55
  244 0024 1C68     		ldr	r4, [r3]
  245 0026 24F00104 		bic	r4, r4, #1
-ARM GAS  /tmp/ccZ5WdJR.s 			page 7
-
-
  246 002a 1C60     		str	r4, [r3]
  247              	.L14:
-  92:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart3_rx.Instance->CR & DMA_SxCR_EN)
- 248              		.loc 1 92 10 view .LVU56
-  92:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart3_rx.Instance->CR & DMA_SxCR_EN)
- 249              		.loc 1 92 25 is_stmt 0 view .LVU57
+  95:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart3_rx.Instance->CR & DMA_SxCR_EN)
+ 248              		.loc 1 95 10 view .LVU56
+  95:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart3_rx.Instance->CR & DMA_SxCR_EN)
+ 249              		.loc 1 95 25 is_stmt 0 view .LVU57
  250 002c 0C4B     		ldr	r3, .L17+4
  251 002e 1B68     		ldr	r3, [r3]
-  92:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart3_rx.Instance->CR & DMA_SxCR_EN)
- 252              		.loc 1 92 34 view .LVU58
+  95:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart3_rx.Instance->CR & DMA_SxCR_EN)
+ 252              		.loc 1 95 34 view .LVU58
  253 0030 1C68     		ldr	r4, [r3]
-  92:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart3_rx.Instance->CR & DMA_SxCR_EN)
- 254              		.loc 1 92 10 view .LVU59
+  95:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart3_rx.Instance->CR & DMA_SxCR_EN)
+ 254              		.loc 1 95 10 view .LVU59
  255 0032 14F0010F 		tst	r4, #1
  256 0036 F5D1     		bne	.L15
-  95:Lib/Motor/Src/bsp_dma.c ****     }
-  96:Lib/Motor/Src/bsp_dma.c **** 
-  97:Lib/Motor/Src/bsp_dma.c ****     hdma_usart3_rx.Instance->PAR = (uint32_t) & (USART3->DR);
- 257              		.loc 1 97 5 is_stmt 1 view .LVU60
- 258              		.loc 1 97 34 is_stmt 0 view .LVU61
+  98:Lib/Motor/Src/bsp_dma.c ****     }
+  99:Lib/Motor/Src/bsp_dma.c **** 
+ 100:Lib/Motor/Src/bsp_dma.c ****     hdma_usart3_rx.Instance->PAR = (uint32_t) & (USART3->DR);
+ 257              		.loc 1 100 5 is_stmt 1 view .LVU60
+ 258              		.loc 1 100 34 is_stmt 0 view .LVU61
  259 0038 0A4C     		ldr	r4, .L17+8
  260 003a 9C60     		str	r4, [r3, #8]
-  98:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 1
-  99:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区1
- 100:Lib/Motor/Src/bsp_dma.c ****     hdma_usart3_rx.Instance->M0AR = (uint32_t)(rx1_buf);
- 261              		.loc 1 100 5 is_stmt 1 view .LVU62
- 262              		.loc 1 100 35 is_stmt 0 view .LVU63
+ 101:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 1
+ 102:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区1
+ 103:Lib/Motor/Src/bsp_dma.c ****     hdma_usart3_rx.Instance->M0AR = (uint32_t)(rx1_buf);
+ 261              		.loc 1 103 5 is_stmt 1 view .LVU62
+ 262              		.loc 1 103 35 is_stmt 0 view .LVU63
  263 003c D860     		str	r0, [r3, #12]
- 101:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 2
- 102:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区2
- 103:Lib/Motor/Src/bsp_dma.c ****     hdma_usart3_rx.Instance->M1AR = (uint32_t)(rx2_buf);
- 264              		.loc 1 103 5 is_stmt 1 view .LVU64
- 265              		.loc 1 103 35 is_stmt 0 view .LVU65
+ 104:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 2
+ 105:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区2
+ 106:Lib/Motor/Src/bsp_dma.c ****     hdma_usart3_rx.Instance->M1AR = (uint32_t)(rx2_buf);
+ 264              		.loc 1 106 5 is_stmt 1 view .LVU64
+ 265              		.loc 1 106 35 is_stmt 0 view .LVU65
  266 003e 1961     		str	r1, [r3, #16]
- 104:Lib/Motor/Src/bsp_dma.c ****     //data length
- 105:Lib/Motor/Src/bsp_dma.c ****     //数据长度
- 106:Lib/Motor/Src/bsp_dma.c ****     hdma_usart3_rx.Instance->NDTR = dma_buf_num;
- 267              		.loc 1 106 5 is_stmt 1 view .LVU66
- 268              		.loc 1 106 35 is_stmt 0 view .LVU67
+ 107:Lib/Motor/Src/bsp_dma.c ****     //data length
+ 108:Lib/Motor/Src/bsp_dma.c ****     //数据长度
+ 109:Lib/Motor/Src/bsp_dma.c ****     hdma_usart3_rx.Instance->NDTR = dma_buf_num;
+ 267              		.loc 1 109 5 is_stmt 1 view .LVU66
+ 268              		.loc 1 109 35 is_stmt 0 view .LVU67
  269 0040 5A60     		str	r2, [r3, #4]
- 107:Lib/Motor/Src/bsp_dma.c ****     //enable double memory buffer
- 108:Lib/Motor/Src/bsp_dma.c ****     //使能双缓冲区
- 109:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(hdma_usart3_rx.Instance->CR, DMA_SxCR_DBM);
- 270              		.loc 1 109 5 is_stmt 1 view .LVU68
+ 110:Lib/Motor/Src/bsp_dma.c ****     //enable double memory buffer
+ 111:Lib/Motor/Src/bsp_dma.c ****     //使能双缓冲区
+ 112:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(hdma_usart3_rx.Instance->CR, DMA_SxCR_DBM);
+ 270              		.loc 1 112 5 is_stmt 1 view .LVU68
  271 0042 1A68     		ldr	r2, [r3]
  272              	.LVL5:
- 273              		.loc 1 109 5 is_stmt 0 view .LVU69
+ 273              		.loc 1 112 5 is_stmt 0 view .LVU69
  274 0044 42F48022 		orr	r2, r2, #262144
  275 0048 1A60     		str	r2, [r3]
- 110:Lib/Motor/Src/bsp_dma.c **** 
- 111:Lib/Motor/Src/bsp_dma.c ****     //enable DMA
- 112:Lib/Motor/Src/bsp_dma.c ****     //使能DMA
- 113:Lib/Motor/Src/bsp_dma.c ****     __HAL_DMA_ENABLE(&hdma_usart3_rx);
- 276              		.loc 1 113 5 is_stmt 1 view .LVU70
+ 113:Lib/Motor/Src/bsp_dma.c **** 
+ 114:Lib/Motor/Src/bsp_dma.c ****     //enable DMA
+ 115:Lib/Motor/Src/bsp_dma.c ****     //使能DMA
+ 116:Lib/Motor/Src/bsp_dma.c ****     __HAL_DMA_ENABLE(&hdma_usart3_rx);
+ 276              		.loc 1 116 5 is_stmt 1 view .LVU70
+ARM GAS  /tmp/cclgCyQ7.s 			page 8
+
+
  277 004a 054B     		ldr	r3, .L17+4
  278 004c 1A68     		ldr	r2, [r3]
  279 004e 1368     		ldr	r3, [r2]
-ARM GAS  /tmp/ccZ5WdJR.s 			page 8
-
-
  280 0050 43F00103 		orr	r3, r3, #1
  281 0054 1360     		str	r3, [r2]
- 114:Lib/Motor/Src/bsp_dma.c **** 
- 115:Lib/Motor/Src/bsp_dma.c **** }
- 282              		.loc 1 115 1 is_stmt 0 view .LVU71
+ 117:Lib/Motor/Src/bsp_dma.c **** 
+ 118:Lib/Motor/Src/bsp_dma.c **** }
+ 282              		.loc 1 118 1 is_stmt 0 view .LVU71
  283 0056 5DF8044B 		ldr	r4, [sp], #4
  284              		.cfi_restore 4
  285              		.cfi_def_cfa_offset 0
@@ -447,124 +450,125 @@ ARM GAS  /tmp/ccZ5WdJR.s 			page 1
  303              	RC6_init:
  304              	.LVL6:
  305              	.LFB137:
- 116:Lib/Motor/Src/bsp_dma.c **** 
- 117:Lib/Motor/Src/bsp_dma.c **** void RC6_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
- 118:Lib/Motor/Src/bsp_dma.c **** {
- 306              		.loc 1 118 1 is_stmt 1 view -0
+ 119:Lib/Motor/Src/bsp_dma.c **** 
+ 120:Lib/Motor/Src/bsp_dma.c **** //串口6的初始化
+ 121:Lib/Motor/Src/bsp_dma.c **** void RC6_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
+ 122:Lib/Motor/Src/bsp_dma.c **** {
+ 306              		.loc 1 122 1 is_stmt 1 view -0
  307              		.cfi_startproc
  308              		@ args = 0, pretend = 0, frame = 0
  309              		@ frame_needed = 0, uses_anonymous_args = 0
  310              		@ link register save eliminated.
- 311              		.loc 1 118 1 is_stmt 0 view .LVU73
+ 311              		.loc 1 122 1 is_stmt 0 view .LVU73
  312 0000 10B4     		push	{r4}
  313              		.cfi_def_cfa_offset 4
  314              		.cfi_offset 4, -4
- 119:Lib/Motor/Src/bsp_dma.c **** 	__HAL_DMA_DISABLE(&hdma_usart6_rx);
- 315              		.loc 1 119 2 is_stmt 1 view .LVU74
+ 123:Lib/Motor/Src/bsp_dma.c **** 	__HAL_DMA_DISABLE(&hdma_usart6_rx);
+ 315              		.loc 1 123 2 is_stmt 1 view .LVU74
  316 0002 164B     		ldr	r3, .L23
  317 0004 1C68     		ldr	r4, [r3]
  318 0006 2368     		ldr	r3, [r4]
  319 0008 23F00103 		bic	r3, r3, #1
  320 000c 2360     		str	r3, [r4]
- 120:Lib/Motor/Src/bsp_dma.c ****     //enable the DMA transfer for the receiver request
- 121:Lib/Motor/Src/bsp_dma.c ****     //使能DMA串口接收
- 122:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(huart6.Instance->CR3, USART_CR3_DMAR);
- 321              		.loc 1 122 5 view .LVU75
+ 124:Lib/Motor/Src/bsp_dma.c ****     //enable the DMA transfer for the receiver request
+ 125:Lib/Motor/Src/bsp_dma.c ****     //使能DMA串口接收
+ 126:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(huart6.Instance->CR3, USART_CR3_DMAR);
+ 321              		.loc 1 126 5 view .LVU75
  322 000e 144B     		ldr	r3, .L23+4
  323 0010 1B68     		ldr	r3, [r3]
  324 0012 5C69     		ldr	r4, [r3, #20]
  325 0014 44F04004 		orr	r4, r4, #64
+ARM GAS  /tmp/cclgCyQ7.s 			page 9
+
+
  326 0018 5C61     		str	r4, [r3, #20]
- 123:Lib/Motor/Src/bsp_dma.c **** 
- 124:Lib/Motor/Src/bsp_dma.c ****     //enalbe idle interrupt
- 125:Lib/Motor/Src/bsp_dma.c ****     //使能空闲中断
-ARM GAS  /tmp/ccZ5WdJR.s 			page 9
-
-
- 126:Lib/Motor/Src/bsp_dma.c ****     __HAL_UART_ENABLE_IT(&huart6, UART_IT_IDLE);
- 327              		.loc 1 126 5 view .LVU76
+ 127:Lib/Motor/Src/bsp_dma.c **** 
+ 128:Lib/Motor/Src/bsp_dma.c ****     //enalbe idle interrupt
+ 129:Lib/Motor/Src/bsp_dma.c ****     //使能空闲中断
+ 130:Lib/Motor/Src/bsp_dma.c ****     __HAL_UART_ENABLE_IT(&huart6, UART_IT_IDLE);
+ 327              		.loc 1 130 5 view .LVU76
  328 001a DC68     		ldr	r4, [r3, #12]
  329 001c 44F01004 		orr	r4, r4, #16
  330 0020 DC60     		str	r4, [r3, #12]
- 127:Lib/Motor/Src/bsp_dma.c **** 
- 128:Lib/Motor/Src/bsp_dma.c ****     //disable DMA
- 129:Lib/Motor/Src/bsp_dma.c ****     //失效DMA
- 130:Lib/Motor/Src/bsp_dma.c ****     
- 131:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart6_rx.Instance->CR & DMA_SxCR_EN)
- 331              		.loc 1 131 5 view .LVU77
- 332              		.loc 1 131 10 is_stmt 0 view .LVU78
+ 131:Lib/Motor/Src/bsp_dma.c **** 
+ 132:Lib/Motor/Src/bsp_dma.c ****     //disable DMA
+ 133:Lib/Motor/Src/bsp_dma.c ****     //失效DMA
+ 134:Lib/Motor/Src/bsp_dma.c ****     
+ 135:Lib/Motor/Src/bsp_dma.c ****     while(hdma_usart6_rx.Instance->CR & DMA_SxCR_EN)
+ 331              		.loc 1 135 5 view .LVU77
+ 332              		.loc 1 135 10 is_stmt 0 view .LVU78
  333 0022 03E0     		b	.L20
  334              	.L21:
- 132:Lib/Motor/Src/bsp_dma.c ****     {
- 133:Lib/Motor/Src/bsp_dma.c ****         __HAL_DMA_DISABLE(&hdma_usart6_rx);
- 335              		.loc 1 133 9 is_stmt 1 view .LVU79
+ 136:Lib/Motor/Src/bsp_dma.c ****     {
+ 137:Lib/Motor/Src/bsp_dma.c ****         __HAL_DMA_DISABLE(&hdma_usart6_rx);
+ 335              		.loc 1 137 9 is_stmt 1 view .LVU79
  336 0024 1C68     		ldr	r4, [r3]
  337 0026 24F00104 		bic	r4, r4, #1
  338 002a 1C60     		str	r4, [r3]
  339              	.L20:
- 131:Lib/Motor/Src/bsp_dma.c ****     {
- 340              		.loc 1 131 10 view .LVU80
- 131:Lib/Motor/Src/bsp_dma.c ****     {
- 341              		.loc 1 131 25 is_stmt 0 view .LVU81
+ 135:Lib/Motor/Src/bsp_dma.c ****     {
+ 340              		.loc 1 135 10 view .LVU80
+ 135:Lib/Motor/Src/bsp_dma.c ****     {
+ 341              		.loc 1 135 25 is_stmt 0 view .LVU81
  342 002c 0B4B     		ldr	r3, .L23
  343 002e 1B68     		ldr	r3, [r3]
- 131:Lib/Motor/Src/bsp_dma.c ****     {
- 344              		.loc 1 131 34 view .LVU82
+ 135:Lib/Motor/Src/bsp_dma.c ****     {
+ 344              		.loc 1 135 34 view .LVU82
  345 0030 1C68     		ldr	r4, [r3]
- 131:Lib/Motor/Src/bsp_dma.c ****     {
- 346              		.loc 1 131 10 view .LVU83
+ 135:Lib/Motor/Src/bsp_dma.c ****     {
+ 346              		.loc 1 135 10 view .LVU83
  347 0032 14F0010F 		tst	r4, #1
  348 0036 F5D1     		bne	.L21
- 134:Lib/Motor/Src/bsp_dma.c ****     }
- 135:Lib/Motor/Src/bsp_dma.c **** 
- 136:Lib/Motor/Src/bsp_dma.c ****     hdma_usart6_rx.Instance->PAR = (uint32_t) & (USART6->DR);
- 349              		.loc 1 136 5 is_stmt 1 view .LVU84
- 350              		.loc 1 136 34 is_stmt 0 view .LVU85
+ 138:Lib/Motor/Src/bsp_dma.c ****     }
+ 139:Lib/Motor/Src/bsp_dma.c **** 
+ 140:Lib/Motor/Src/bsp_dma.c ****     hdma_usart6_rx.Instance->PAR = (uint32_t) & (USART6->DR);
+ 349              		.loc 1 140 5 is_stmt 1 view .LVU84
+ 350              		.loc 1 140 34 is_stmt 0 view .LVU85
  351 0038 0A4C     		ldr	r4, .L23+8
  352 003a 9C60     		str	r4, [r3, #8]
- 137:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 1
- 138:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区1
- 139:Lib/Motor/Src/bsp_dma.c ****     hdma_usart6_rx.Instance->M0AR = (uint32_t)(rx1_buf);
- 353              		.loc 1 139 5 is_stmt 1 view .LVU86
- 354              		.loc 1 139 35 is_stmt 0 view .LVU87
+ 141:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 1
+ 142:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区1
+ 143:Lib/Motor/Src/bsp_dma.c ****     hdma_usart6_rx.Instance->M0AR = (uint32_t)(rx1_buf);
+ 353              		.loc 1 143 5 is_stmt 1 view .LVU86
+ 354              		.loc 1 143 35 is_stmt 0 view .LVU87
  355 003c D860     		str	r0, [r3, #12]
- 140:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 2
- 141:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区2
- 142:Lib/Motor/Src/bsp_dma.c ****     hdma_usart6_rx.Instance->M1AR = (uint32_t)(rx2_buf);
- 356              		.loc 1 142 5 is_stmt 1 view .LVU88
- 357              		.loc 1 142 35 is_stmt 0 view .LVU89
+ 144:Lib/Motor/Src/bsp_dma.c ****     //memory buffer 2
+ 145:Lib/Motor/Src/bsp_dma.c ****     //内存缓冲区2
+ 146:Lib/Motor/Src/bsp_dma.c ****     hdma_usart6_rx.Instance->M1AR = (uint32_t)(rx2_buf);
+ 356              		.loc 1 146 5 is_stmt 1 view .LVU88
+ 357              		.loc 1 146 35 is_stmt 0 view .LVU89
  358 003e 1961     		str	r1, [r3, #16]
- 143:Lib/Motor/Src/bsp_dma.c ****     //data length
- 144:Lib/Motor/Src/bsp_dma.c ****     //数据长度
- 145:Lib/Motor/Src/bsp_dma.c ****     hdma_usart6_rx.Instance->NDTR = dma_buf_num;
- 359              		.loc 1 145 5 is_stmt 1 view .LVU90
-ARM GAS  /tmp/ccZ5WdJR.s 			page 10
+ARM GAS  /tmp/cclgCyQ7.s 			page 10
 
 
- 360              		.loc 1 145 35 is_stmt 0 view .LVU91
+ 147:Lib/Motor/Src/bsp_dma.c ****     //data length
+ 148:Lib/Motor/Src/bsp_dma.c ****     //数据长度
+ 149:Lib/Motor/Src/bsp_dma.c ****     hdma_usart6_rx.Instance->NDTR = dma_buf_num;
+ 359              		.loc 1 149 5 is_stmt 1 view .LVU90
+ 360              		.loc 1 149 35 is_stmt 0 view .LVU91
  361 0040 5A60     		str	r2, [r3, #4]
- 146:Lib/Motor/Src/bsp_dma.c ****     //enable double memory buffer
- 147:Lib/Motor/Src/bsp_dma.c ****     //使能双缓冲区
- 148:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(hdma_usart6_rx.Instance->CR, DMA_SxCR_DBM);
- 362              		.loc 1 148 5 is_stmt 1 view .LVU92
+ 150:Lib/Motor/Src/bsp_dma.c ****     //enable double memory buffer
+ 151:Lib/Motor/Src/bsp_dma.c ****     //使能双缓冲区
+ 152:Lib/Motor/Src/bsp_dma.c ****     SET_BIT(hdma_usart6_rx.Instance->CR, DMA_SxCR_DBM);
+ 362              		.loc 1 152 5 is_stmt 1 view .LVU92
  363 0042 1A68     		ldr	r2, [r3]
  364              	.LVL7:
- 365              		.loc 1 148 5 is_stmt 0 view .LVU93
+ 365              		.loc 1 152 5 is_stmt 0 view .LVU93
  366 0044 42F48022 		orr	r2, r2, #262144
  367 0048 1A60     		str	r2, [r3]
- 149:Lib/Motor/Src/bsp_dma.c **** 	
- 150:Lib/Motor/Src/bsp_dma.c ****     //enable DMA
- 151:Lib/Motor/Src/bsp_dma.c ****     //使能DMA
- 152:Lib/Motor/Src/bsp_dma.c ****     __HAL_DMA_ENABLE(&hdma_usart6_rx);
- 368              		.loc 1 152 5 is_stmt 1 view .LVU94
+ 153:Lib/Motor/Src/bsp_dma.c **** 	
+ 154:Lib/Motor/Src/bsp_dma.c ****     //enable DMA
+ 155:Lib/Motor/Src/bsp_dma.c ****     //使能DMA
+ 156:Lib/Motor/Src/bsp_dma.c ****     __HAL_DMA_ENABLE(&hdma_usart6_rx);
+ 368              		.loc 1 156 5 is_stmt 1 view .LVU94
  369 004a 044B     		ldr	r3, .L23
  370 004c 1A68     		ldr	r2, [r3]
  371 004e 1368     		ldr	r3, [r2]
  372 0050 43F00103 		orr	r3, r3, #1
  373 0054 1360     		str	r3, [r2]
- 153:Lib/Motor/Src/bsp_dma.c **** 
- 154:Lib/Motor/Src/bsp_dma.c **** }
- 374              		.loc 1 154 1 is_stmt 0 view .LVU95
+ 157:Lib/Motor/Src/bsp_dma.c **** 
+ 158:Lib/Motor/Src/bsp_dma.c **** }
+ 374              		.loc 1 158 1 is_stmt 0 view .LVU95
  375 0056 5DF8044B 		ldr	r4, [sp], #4
  376              		.cfi_restore 4
  377              		.cfi_def_cfa_offset 0
@@ -587,23 +591,23 @@ ARM GAS  /tmp/ccZ5WdJR.s 			page 1
  395              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
  396              		.file 8 "Core/Inc/usart.h"
  397              		.file 9 "Lib/Motor/Inc/bsp_dma.h"
-ARM GAS  /tmp/ccZ5WdJR.s 			page 11
+ARM GAS  /tmp/cclgCyQ7.s 			page 11
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 bsp_dma.c
-     /tmp/ccZ5WdJR.s:20     .text.RC1_init:0000000000000000 $t
-     /tmp/ccZ5WdJR.s:26     .text.RC1_init:0000000000000000 RC1_init
-     /tmp/ccZ5WdJR.s:106    .text.RC1_init:000000000000005c $d
-     /tmp/ccZ5WdJR.s:113    .text.RC2_init:0000000000000000 $t
-     /tmp/ccZ5WdJR.s:119    .text.RC2_init:0000000000000000 RC2_init
-     /tmp/ccZ5WdJR.s:198    .text.RC2_init:000000000000005c $d
-     /tmp/ccZ5WdJR.s:205    .text.RC3_init:0000000000000000 $t
-     /tmp/ccZ5WdJR.s:211    .text.RC3_init:0000000000000000 RC3_init
-     /tmp/ccZ5WdJR.s:290    .text.RC3_init:000000000000005c $d
-     /tmp/ccZ5WdJR.s:297    .text.RC6_init:0000000000000000 $t
-     /tmp/ccZ5WdJR.s:303    .text.RC6_init:0000000000000000 RC6_init
-     /tmp/ccZ5WdJR.s:382    .text.RC6_init:000000000000005c $d
+     /tmp/cclgCyQ7.s:20     .text.RC1_init:0000000000000000 $t
+     /tmp/cclgCyQ7.s:26     .text.RC1_init:0000000000000000 RC1_init
+     /tmp/cclgCyQ7.s:106    .text.RC1_init:000000000000005c $d
+     /tmp/cclgCyQ7.s:113    .text.RC2_init:0000000000000000 $t
+     /tmp/cclgCyQ7.s:119    .text.RC2_init:0000000000000000 RC2_init
+     /tmp/cclgCyQ7.s:198    .text.RC2_init:000000000000005c $d
+     /tmp/cclgCyQ7.s:205    .text.RC3_init:0000000000000000 $t
+     /tmp/cclgCyQ7.s:211    .text.RC3_init:0000000000000000 RC3_init
+     /tmp/cclgCyQ7.s:290    .text.RC3_init:000000000000005c $d
+     /tmp/cclgCyQ7.s:297    .text.RC6_init:0000000000000000 $t
+     /tmp/cclgCyQ7.s:303    .text.RC6_init:0000000000000000 RC6_init
+     /tmp/cclgCyQ7.s:382    .text.RC6_init:000000000000005c $d
 
 UNDEFINED SYMBOLS
 huart1

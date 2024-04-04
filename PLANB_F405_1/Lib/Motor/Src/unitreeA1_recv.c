@@ -351,8 +351,8 @@ void unitreeA1_rx(int leg_id)
 
 
 
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[0] = 0xff; 
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[1] = 0xfe;
+    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[0] = 0xD2; 
+    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[1] = 0xFE;
     A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].LegID = leg_id;
     A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MotorID = data_leg[leg_id].motor_recv_data.head.motorID;
     A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;

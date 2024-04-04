@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccNaxIvK.s 			page 1
+ARM GAS  /tmp/ccW2cv6a.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -38,1197 +38,1303 @@ ARM GAS  /tmp/ccNaxIvK.s 			page 1
    7:Lib/SPI_Bus/Src/spi_deal.c **** #include "string.h"
    8:Lib/SPI_Bus/Src/spi_deal.c **** #include "spi_deal.h"
    9:Lib/SPI_Bus/Src/spi_deal.c **** 
-  10:Lib/SPI_Bus/Src/spi_deal.c **** 
-  11:Lib/SPI_Bus/Src/spi_deal.c **** volatile uint8_t RxComplete = 0;
-  12:Lib/SPI_Bus/Src/spi_deal.c **** 
-  13:Lib/SPI_Bus/Src/spi_deal.c **** extern DMA_HandleTypeDef hdma_spi2_rx;
-  14:Lib/SPI_Bus/Src/spi_deal.c **** extern DMA_HandleTypeDef hdma_spi2_tx;
-  15:Lib/SPI_Bus/Src/spi_deal.c **** 
-  16:Lib/SPI_Bus/Src/spi_deal.c **** A1PackageSpiTx A1date[4][3];
-  17:Lib/SPI_Bus/Src/spi_deal.c **** A1PackageSpiRx RXA1cmd;
-  18:Lib/SPI_Bus/Src/spi_deal.c **** 
-  19:Lib/SPI_Bus/Src/spi_deal.c **** extern motor_recv_t data_motor[4][3];
-  20:Lib/SPI_Bus/Src/spi_deal.c **** extern motor_recv_t data_leg[4];
-  21:Lib/SPI_Bus/Src/spi_deal.c **** extern motor_send_t cmd_leg[4];
-  22:Lib/SPI_Bus/Src/spi_deal.c **** 
-  23:Lib/SPI_Bus/Src/spi_deal.c **** 
-  24:Lib/SPI_Bus/Src/spi_deal.c **** void DateCheck_DateModfy (A1PackageSpiRx *modf_buf)
-  25:Lib/SPI_Bus/Src/spi_deal.c **** {
-  30              		.loc 1 25 1 view -0
+  10:Lib/SPI_Bus/Src/spi_deal.c **** volatile uint8_t RxComplete = 0;
+  11:Lib/SPI_Bus/Src/spi_deal.c **** 
+  12:Lib/SPI_Bus/Src/spi_deal.c **** extern DMA_HandleTypeDef hdma_spi2_rx;
+  13:Lib/SPI_Bus/Src/spi_deal.c **** extern DMA_HandleTypeDef hdma_spi2_tx;
+  14:Lib/SPI_Bus/Src/spi_deal.c **** 
+  15:Lib/SPI_Bus/Src/spi_deal.c **** A1PackageSpiTx A1date[4][3];
+  16:Lib/SPI_Bus/Src/spi_deal.c **** A1PackageSpiRx RXA1cmd;
+  17:Lib/SPI_Bus/Src/spi_deal.c **** 
+  18:Lib/SPI_Bus/Src/spi_deal.c **** extern motor_recv_t data_motor[4][3];
+  19:Lib/SPI_Bus/Src/spi_deal.c **** extern motor_recv_t data_leg[4];
+  20:Lib/SPI_Bus/Src/spi_deal.c **** extern motor_send_t cmd_leg[4];
+  21:Lib/SPI_Bus/Src/spi_deal.c **** 
+  22:Lib/SPI_Bus/Src/spi_deal.c **** void DateCheck_DateModfy(A1PackageSpiRx *modf_buf)
+  23:Lib/SPI_Bus/Src/spi_deal.c **** {
+  30              		.loc 1 23 1 view -0
   31              		.cfi_startproc
   32              		@ args = 0, pretend = 0, frame = 0
   33              		@ frame_needed = 0, uses_anonymous_args = 0
-ARM GAS  /tmp/ccNaxIvK.s 			page 2
+  34              		.loc 1 23 1 is_stmt 0 view .LVU1
+  35 0000 00B5     		push	{lr}
+ARM GAS  /tmp/ccW2cv6a.s 			page 2
 
 
-  34              		.loc 1 25 1 is_stmt 0 view .LVU1
-  35 0000 10B5     		push	{r4, lr}
-  36              		.cfi_def_cfa_offset 8
-  37              		.cfi_offset 4, -8
-  38              		.cfi_offset 14, -4
-  26:Lib/SPI_Bus/Src/spi_deal.c ****     if(modf_buf->SumCheck == modf_buf->start[0] + modf_buf->start[1] + modf_buf->LegID + modf_buf->
-  39              		.loc 1 26 5 is_stmt 1 view .LVU2
-  40              		.loc 1 26 16 is_stmt 0 view .LVU3
-  41 0002 4269     		ldr	r2, [r0, #20]
-  42              		.loc 1 26 45 view .LVU4
-  43 0004 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
-  44              		.loc 1 26 66 view .LVU5
-  45 0006 4178     		ldrb	r1, [r0, #1]	@ zero_extendqisi2
-  46              		.loc 1 26 49 view .LVU6
-  47 0008 0B44     		add	r3, r3, r1
-  48              		.loc 1 26 80 view .LVU7
-  49 000a 8178     		ldrb	r1, [r0, #2]	@ zero_extendqisi2
-  50              		.loc 1 26 70 view .LVU8
-  51 000c 0B44     		add	r3, r3, r1
-  52              		.loc 1 26 98 view .LVU9
-  53 000e 90F803C0 		ldrb	ip, [r0, #3]	@ zero_extendqisi2
-  54              		.loc 1 26 88 view .LVU10
-  55 0012 6344     		add	r3, r3, ip
-  56              		.loc 1 26 117 view .LVU11
-  57 0014 90F804E0 		ldrb	lr, [r0, #4]	@ zero_extendqisi2
-  58              		.loc 1 26 108 view .LVU12
-  59 0018 7344     		add	r3, r3, lr
-  60              		.loc 1 26 134 view .LVU13
-  61 001a B0F906E0 		ldrsh	lr, [r0, #6]
-  62              		.loc 1 26 124 view .LVU14
-  63 001e 7344     		add	r3, r3, lr
-  64              		.loc 1 26 148 view .LVU15
-  65 0020 B0F908E0 		ldrsh	lr, [r0, #8]
-  66              		.loc 1 26 138 view .LVU16
-  67 0024 7344     		add	r3, r3, lr
-  68              		.loc 1 26 152 view .LVU17
-  69 0026 C468     		ldr	r4, [r0, #12]
-  70 0028 2344     		add	r3, r3, r4
-  71              		.loc 1 26 178 view .LVU18
-  72 002a B0F910E0 		ldrsh	lr, [r0, #16]
-  73              		.loc 1 26 168 view .LVU19
-  74 002e 7344     		add	r3, r3, lr
-  75              		.loc 1 26 194 view .LVU20
-  76 0030 B0F912E0 		ldrsh	lr, [r0, #18]
-  77              		.loc 1 26 184 view .LVU21
-  78 0034 7344     		add	r3, r3, lr
-  79              		.loc 1 26 7 view .LVU22
-  80 0036 9A42     		cmp	r2, r3
-  81 0038 00D0     		beq	.L7
+  36              		.cfi_def_cfa_offset 4
+  37              		.cfi_offset 14, -4
+  24:Lib/SPI_Bus/Src/spi_deal.c ****     if (modf_buf->SumCheck == modf_buf->start[0] + modf_buf->start[1] + modf_buf->LegID + modf_buf-
+  38              		.loc 1 24 5 is_stmt 1 view .LVU2
+  39              		.loc 1 24 17 is_stmt 0 view .LVU3
+  40 0002 D0F811C0 		ldr	ip, [r0, #17]	@ unaligned
+  41              		.loc 1 24 46 view .LVU4
+  42 0006 0378     		ldrb	r3, [r0]	@ zero_extendqisi2
+  43              		.loc 1 24 67 view .LVU5
+  44 0008 4278     		ldrb	r2, [r0, #1]	@ zero_extendqisi2
+  45              		.loc 1 24 50 view .LVU6
+  46 000a 1344     		add	r3, r3, r2
+  47              		.loc 1 24 81 view .LVU7
+  48 000c 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
+  49              		.loc 1 24 71 view .LVU8
+  50 000e 1344     		add	r3, r3, r2
+  51              		.loc 1 24 99 view .LVU9
+  52 0010 C178     		ldrb	r1, [r0, #3]	@ zero_extendqisi2
+  53              		.loc 1 24 89 view .LVU10
+  54 0012 0B44     		add	r3, r3, r1
+  55              		.loc 1 24 119 view .LVU11
+  56 0014 90F804E0 		ldrb	lr, [r0, #4]	@ zero_extendqisi2
+  57              		.loc 1 24 109 view .LVU12
+  58 0018 7344     		add	r3, r3, lr
+  59              		.loc 1 24 136 view .LVU13
+  60 001a B0F905E0 		ldrsh	lr, [r0, #5]	@ unaligned
+  61              		.loc 1 24 126 view .LVU14
+  62 001e 7344     		add	r3, r3, lr
+  63              		.loc 1 24 150 view .LVU15
+  64 0020 B0F907E0 		ldrsh	lr, [r0, #7]	@ unaligned
+  65              		.loc 1 24 140 view .LVU16
+  66 0024 7344     		add	r3, r3, lr
+  67              		.loc 1 24 164 view .LVU17
+  68 0026 D0F809E0 		ldr	lr, [r0, #9]	@ unaligned
+  69              		.loc 1 24 154 view .LVU18
+  70 002a 7344     		add	r3, r3, lr
+  71              		.loc 1 24 180 view .LVU19
+  72 002c B0F90DE0 		ldrsh	lr, [r0, #13]	@ unaligned
+  73              		.loc 1 24 170 view .LVU20
+  74 0030 7344     		add	r3, r3, lr
+  75              		.loc 1 24 196 view .LVU21
+  76 0032 B0F90FE0 		ldrsh	lr, [r0, #15]	@ unaligned
+  77              		.loc 1 24 186 view .LVU22
+  78 0036 7344     		add	r3, r3, lr
+  79              		.loc 1 24 8 view .LVU23
+  80 0038 9C45     		cmp	ip, r3
+  81 003a 01D0     		beq	.L7
   82              	.L1:
-  27:Lib/SPI_Bus/Src/spi_deal.c ****     {
-  28:Lib/SPI_Bus/Src/spi_deal.c ****         if (modf_buf->LegID == 0)
-  29:Lib/SPI_Bus/Src/spi_deal.c ****         {
-  30:Lib/SPI_Bus/Src/spi_deal.c ****         uint8_t leg_id = 0;
-  31:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].id = modf_buf->motorID;
-  32:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
-  33:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
-ARM GAS  /tmp/ccNaxIvK.s 			page 3
+  25:Lib/SPI_Bus/Src/spi_deal.c ****     {
+  26:Lib/SPI_Bus/Src/spi_deal.c ****         if (modf_buf->LegID == 0)
+  27:Lib/SPI_Bus/Src/spi_deal.c ****         {
+  28:Lib/SPI_Bus/Src/spi_deal.c ****             uint8_t leg_id = 0;
+  29:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].id = modf_buf->motorID;
+  30:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+  31:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+  32:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+  33:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+ARM GAS  /tmp/ccW2cv6a.s 			page 3
 
 
-  34:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
-  35:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
-  36:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].W = modf_buf->W;
-  37:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
-  38:Lib/SPI_Bus/Src/spi_deal.c ****         }
-  39:Lib/SPI_Bus/Src/spi_deal.c ****         if (modf_buf->LegID == 1)
-  40:Lib/SPI_Bus/Src/spi_deal.c ****         {
-  41:Lib/SPI_Bus/Src/spi_deal.c ****         uint8_t leg_id = 1;
-  42:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].id = modf_buf->motorID;
-  43:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
-  44:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
-  45:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
-  46:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
-  47:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].W = modf_buf->W;
-  48:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
-  49:Lib/SPI_Bus/Src/spi_deal.c ****         }
-  50:Lib/SPI_Bus/Src/spi_deal.c **** 
-  51:Lib/SPI_Bus/Src/spi_deal.c ****         if (modf_buf->LegID == 2)
-  52:Lib/SPI_Bus/Src/spi_deal.c ****         {
-  53:Lib/SPI_Bus/Src/spi_deal.c ****         uint8_t leg_id = 2;
-  54:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].id = modf_buf->motorID;
-  55:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
-  56:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
-  57:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
-  58:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
-  59:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].W = modf_buf->W;
-  60:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
-  61:Lib/SPI_Bus/Src/spi_deal.c ****         }
-  62:Lib/SPI_Bus/Src/spi_deal.c **** 
-  63:Lib/SPI_Bus/Src/spi_deal.c ****         if (modf_buf->LegID == 3)
-  64:Lib/SPI_Bus/Src/spi_deal.c ****         {
-  65:Lib/SPI_Bus/Src/spi_deal.c ****         uint8_t leg_id = 3;
-  66:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].id = modf_buf->motorID;
-  67:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
-  68:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
-  69:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
-  70:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
-  71:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].W = modf_buf->W;
-  72:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
-  73:Lib/SPI_Bus/Src/spi_deal.c ****         }
-  74:Lib/SPI_Bus/Src/spi_deal.c **** 
-  75:Lib/SPI_Bus/Src/spi_deal.c ****     }
-  76:Lib/SPI_Bus/Src/spi_deal.c **** 
-  77:Lib/SPI_Bus/Src/spi_deal.c **** }
-  83              		.loc 1 77 1 view .LVU23
-  84 003a 10BD     		pop	{r4, pc}
+  34:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+  35:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+  36:Lib/SPI_Bus/Src/spi_deal.c ****         }
+  37:Lib/SPI_Bus/Src/spi_deal.c ****         if (modf_buf->LegID == 1)
+  38:Lib/SPI_Bus/Src/spi_deal.c ****         {
+  39:Lib/SPI_Bus/Src/spi_deal.c ****             uint8_t leg_id = 1;
+  40:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].id = modf_buf->motorID;
+  41:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+  42:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+  43:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+  44:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+  45:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+  46:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+  47:Lib/SPI_Bus/Src/spi_deal.c ****         }
+  48:Lib/SPI_Bus/Src/spi_deal.c **** 
+  49:Lib/SPI_Bus/Src/spi_deal.c ****         if (modf_buf->LegID == 2)
+  50:Lib/SPI_Bus/Src/spi_deal.c ****         {
+  51:Lib/SPI_Bus/Src/spi_deal.c ****             uint8_t leg_id = 2;
+  52:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].id = modf_buf->motorID;
+  53:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+  54:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+  55:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+  56:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+  57:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+  58:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+  59:Lib/SPI_Bus/Src/spi_deal.c ****         }
+  60:Lib/SPI_Bus/Src/spi_deal.c **** 
+  61:Lib/SPI_Bus/Src/spi_deal.c ****         if (modf_buf->LegID == 3)
+  62:Lib/SPI_Bus/Src/spi_deal.c ****         {
+  63:Lib/SPI_Bus/Src/spi_deal.c ****             uint8_t leg_id = 3;
+  64:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].id = modf_buf->motorID;
+  65:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+  66:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+  67:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+  68:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+  69:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+  70:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+  71:Lib/SPI_Bus/Src/spi_deal.c ****         }
+  72:Lib/SPI_Bus/Src/spi_deal.c ****     }
+  73:Lib/SPI_Bus/Src/spi_deal.c **** }
+  83              		.loc 1 73 1 view .LVU24
+  84 003c 5DF804FB 		ldr	pc, [sp], #4
   85              	.L7:
-  28:Lib/SPI_Bus/Src/spi_deal.c ****         {
-  86              		.loc 1 28 9 is_stmt 1 view .LVU24
-  28:Lib/SPI_Bus/Src/spi_deal.c ****         {
-  87              		.loc 1 28 12 is_stmt 0 view .LVU25
-  88 003c A1BB     		cbnz	r1, .L3
+  26:Lib/SPI_Bus/Src/spi_deal.c ****         {
+  86              		.loc 1 26 9 is_stmt 1 view .LVU25
+  26:Lib/SPI_Bus/Src/spi_deal.c ****         {
+  87              		.loc 1 26 12 is_stmt 0 view .LVU26
+  88 0040 AABB     		cbnz	r2, .L3
   89              	.LBB2:
-  30:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].id = modf_buf->motorID;
-  90              		.loc 1 30 9 is_stmt 1 view .LVU26
+  28:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].id = modf_buf->motorID;
+  90              		.loc 1 28 13 is_stmt 1 view .LVU27
   91              	.LVL1:
-  31:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
-ARM GAS  /tmp/ccNaxIvK.s 			page 4
+  29:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+  92              		.loc 1 29 13 view .LVU28
+  29:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+  93              		.loc 1 29 32 is_stmt 0 view .LVU29
+  94 0042 744B     		ldr	r3, .L10
+ARM GAS  /tmp/ccW2cv6a.s 			page 4
 
 
-  92              		.loc 1 31 9 view .LVU27
-  31:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
-  93              		.loc 1 31 28 is_stmt 0 view .LVU28
-  94 003e 704B     		ldr	r3, .L10
-  95 0040 A3F826C0 		strh	ip, [r3, #38]	@ unaligned
-  32:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
-  96              		.loc 1 32 9 is_stmt 1 view .LVU29
-  32:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
-  97              		.loc 1 32 40 is_stmt 0 view .LVU30
-  98 0044 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
-  32:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
-  99              		.loc 1 32 30 view .LVU31
- 100 0046 1A85     		strh	r2, [r3, #40]	@ unaligned
-  33:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
- 101              		.loc 1 33 9 is_stmt 1 view .LVU32
-  33:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
- 102              		.loc 1 33 39 is_stmt 0 view .LVU33
- 103 0048 B0F91020 		ldrsh	r2, [r0, #16]
-  33:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
- 104              		.loc 1 33 29 view .LVU34
- 105 004c 07EE902A 		vmov	s15, r2	@ int
- 106 0050 F8EEE77A 		vcvt.f32.s32	s15, s15
- 107 0054 17EE902A 		vmov	r2, s15
- 108 0058 C3F83620 		str	r2, [r3, #54]	@ unaligned
-  34:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
- 109              		.loc 1 34 9 is_stmt 1 view .LVU35
-  34:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
- 110              		.loc 1 34 39 is_stmt 0 view .LVU36
- 111 005c B0F91220 		ldrsh	r2, [r0, #18]
-  34:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
- 112              		.loc 1 34 29 view .LVU37
- 113 0060 07EE902A 		vmov	s15, r2	@ int
- 114 0064 F8EEE77A 		vcvt.f32.s32	s15, s15
- 115 0068 17EE902A 		vmov	r2, s15
- 116 006c C3F83A20 		str	r2, [r3, #58]	@ unaligned
-  35:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].W = modf_buf->W;
- 117              		.loc 1 35 9 is_stmt 1 view .LVU38
-  35:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].W = modf_buf->W;
- 118              		.loc 1 35 29 is_stmt 0 view .LVU39
- 119 0070 D0ED037A 		vldr.32	s15, [r0, #12]	@ int
- 120 0074 F8EEE77A 		vcvt.f32.s32	s15, s15
- 121 0078 17EE902A 		vmov	r2, s15
- 122 007c C3F83220 		str	r2, [r3, #50]	@ unaligned
-  36:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
- 123              		.loc 1 36 9 is_stmt 1 view .LVU40
-  36:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
- 124              		.loc 1 36 37 is_stmt 0 view .LVU41
- 125 0080 B0F90820 		ldrsh	r2, [r0, #8]
-  36:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
- 126              		.loc 1 36 27 view .LVU42
- 127 0084 07EE902A 		vmov	s15, r2	@ int
- 128 0088 F8EEE77A 		vcvt.f32.s32	s15, s15
- 129 008c 17EE902A 		vmov	r2, s15
- 130 0090 C3F82E20 		str	r2, [r3, #46]	@ unaligned
-  37:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 131              		.loc 1 37 9 is_stmt 1 view .LVU43
-  37:Lib/SPI_Bus/Src/spi_deal.c ****         }
-ARM GAS  /tmp/ccNaxIvK.s 			page 5
+  95 0044 D984     		strh	r1, [r3, #38]	@ unaligned
+  30:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+  96              		.loc 1 30 13 is_stmt 1 view .LVU30
+  30:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+  97              		.loc 1 30 44 is_stmt 0 view .LVU31
+  98 0046 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
+  30:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+  99              		.loc 1 30 34 view .LVU32
+ 100 0048 1A85     		strh	r2, [r3, #40]	@ unaligned
+  31:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+ 101              		.loc 1 31 13 is_stmt 1 view .LVU33
+  31:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+ 102              		.loc 1 31 43 is_stmt 0 view .LVU34
+ 103 004a B0F90D20 		ldrsh	r2, [r0, #13]	@ unaligned
+  31:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+ 104              		.loc 1 31 33 view .LVU35
+ 105 004e 07EE902A 		vmov	s15, r2	@ int
+ 106 0052 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 107 0056 17EE902A 		vmov	r2, s15
+ 108 005a C3F83620 		str	r2, [r3, #54]	@ unaligned
+  32:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+ 109              		.loc 1 32 13 is_stmt 1 view .LVU36
+  32:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+ 110              		.loc 1 32 43 is_stmt 0 view .LVU37
+ 111 005e B0F90F20 		ldrsh	r2, [r0, #15]	@ unaligned
+  32:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+ 112              		.loc 1 32 33 view .LVU38
+ 113 0062 07EE902A 		vmov	s15, r2	@ int
+ 114 0066 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 115 006a 17EE902A 		vmov	r2, s15
+ 116 006e C3F83A20 		str	r2, [r3, #58]	@ unaligned
+  33:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+ 117              		.loc 1 33 13 is_stmt 1 view .LVU39
+  33:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+ 118              		.loc 1 33 43 is_stmt 0 view .LVU40
+ 119 0072 D0F80920 		ldr	r2, [r0, #9]	@ unaligned
+  33:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+ 120              		.loc 1 33 33 view .LVU41
+ 121 0076 07EE902A 		vmov	s15, r2	@ int
+ 122 007a F8EEE77A 		vcvt.f32.s32	s15, s15
+ 123 007e 17EE902A 		vmov	r2, s15
+ 124 0082 C3F83220 		str	r2, [r3, #50]	@ unaligned
+  34:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+ 125              		.loc 1 34 13 is_stmt 1 view .LVU42
+  34:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+ 126              		.loc 1 34 41 is_stmt 0 view .LVU43
+ 127 0086 B0F90720 		ldrsh	r2, [r0, #7]	@ unaligned
+  34:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+ 128              		.loc 1 34 31 view .LVU44
+ 129 008a 07EE902A 		vmov	s15, r2	@ int
+ 130 008e F8EEE77A 		vcvt.f32.s32	s15, s15
+ 131 0092 17EE902A 		vmov	r2, s15
+ 132 0096 C3F82E20 		str	r2, [r3, #46]	@ unaligned
+  35:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 133              		.loc 1 35 13 is_stmt 1 view .LVU45
+  35:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 134              		.loc 1 35 41 is_stmt 0 view .LVU46
+ARM GAS  /tmp/ccW2cv6a.s 			page 5
 
 
- 132              		.loc 1 37 37 is_stmt 0 view .LVU44
- 133 0094 B0F90620 		ldrsh	r2, [r0, #6]
-  37:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 134              		.loc 1 37 27 view .LVU45
- 135 0098 07EE902A 		vmov	s15, r2	@ int
- 136 009c F8EEE77A 		vcvt.f32.s32	s15, s15
- 137 00a0 17EE902A 		vmov	r2, s15
- 138 00a4 C3F82A20 		str	r2, [r3, #42]	@ unaligned
- 139              	.LVL2:
- 140              	.L3:
-  37:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 141              		.loc 1 37 27 view .LVU46
- 142              	.LBE2:
-  39:Lib/SPI_Bus/Src/spi_deal.c ****         {
- 143              		.loc 1 39 9 is_stmt 1 view .LVU47
-  39:Lib/SPI_Bus/Src/spi_deal.c ****         {
- 144              		.loc 1 39 21 is_stmt 0 view .LVU48
- 145 00a8 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
-  39:Lib/SPI_Bus/Src/spi_deal.c ****         {
- 146              		.loc 1 39 12 view .LVU49
- 147 00aa 012B     		cmp	r3, #1
- 148 00ac 3DD0     		beq	.L8
- 149              	.L4:
-  51:Lib/SPI_Bus/Src/spi_deal.c ****         {
- 150              		.loc 1 51 9 is_stmt 1 view .LVU50
-  51:Lib/SPI_Bus/Src/spi_deal.c ****         {
- 151              		.loc 1 51 21 is_stmt 0 view .LVU51
- 152 00ae 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
-  51:Lib/SPI_Bus/Src/spi_deal.c ****         {
- 153              		.loc 1 51 12 view .LVU52
- 154 00b0 022B     		cmp	r3, #2
- 155 00b2 6DD0     		beq	.L9
- 156              	.L5:
-  63:Lib/SPI_Bus/Src/spi_deal.c ****         {
- 157              		.loc 1 63 9 is_stmt 1 view .LVU53
-  63:Lib/SPI_Bus/Src/spi_deal.c ****         {
- 158              		.loc 1 63 21 is_stmt 0 view .LVU54
- 159 00b4 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
-  63:Lib/SPI_Bus/Src/spi_deal.c ****         {
- 160              		.loc 1 63 12 view .LVU55
- 161 00b6 032B     		cmp	r3, #3
- 162 00b8 BFD1     		bne	.L1
- 163              	.LBB3:
-  65:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].id = modf_buf->motorID;
- 164              		.loc 1 65 9 is_stmt 1 view .LVU56
- 165              	.LVL3:
-  66:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
- 166              		.loc 1 66 9 view .LVU57
-  66:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
- 167              		.loc 1 66 38 is_stmt 0 view .LVU58
- 168 00ba C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
-  66:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
- 169              		.loc 1 66 28 view .LVU59
- 170 00bc 504B     		ldr	r3, .L10
- 171 00be A3F8EC20 		strh	r2, [r3, #236]	@ unaligned
-  67:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
- 172              		.loc 1 67 9 is_stmt 1 view .LVU60
-ARM GAS  /tmp/ccNaxIvK.s 			page 6
+ 135 009a B0F90520 		ldrsh	r2, [r0, #5]	@ unaligned
+  35:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 136              		.loc 1 35 31 view .LVU47
+ 137 009e 07EE902A 		vmov	s15, r2	@ int
+ 138 00a2 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 139 00a6 17EE902A 		vmov	r2, s15
+ 140 00aa C3F82A20 		str	r2, [r3, #42]	@ unaligned
+ 141              	.LVL2:
+ 142              	.L3:
+  35:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 143              		.loc 1 35 31 view .LVU48
+ 144              	.LBE2:
+  37:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 145              		.loc 1 37 9 is_stmt 1 view .LVU49
+  37:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 146              		.loc 1 37 21 is_stmt 0 view .LVU50
+ 147 00ae 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+  37:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 148              		.loc 1 37 12 view .LVU51
+ 149 00b0 012B     		cmp	r3, #1
+ 150 00b2 3FD0     		beq	.L8
+ 151              	.L4:
+  49:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 152              		.loc 1 49 9 is_stmt 1 view .LVU52
+  49:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 153              		.loc 1 49 21 is_stmt 0 view .LVU53
+ 154 00b4 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+  49:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 155              		.loc 1 49 12 view .LVU54
+ 156 00b6 022B     		cmp	r3, #2
+ 157 00b8 71D0     		beq	.L9
+ 158              	.L5:
+  61:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 159              		.loc 1 61 9 is_stmt 1 view .LVU55
+  61:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 160              		.loc 1 61 21 is_stmt 0 view .LVU56
+ 161 00ba 8378     		ldrb	r3, [r0, #2]	@ zero_extendqisi2
+  61:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 162              		.loc 1 61 12 view .LVU57
+ 163 00bc 032B     		cmp	r3, #3
+ 164 00be BDD1     		bne	.L1
+ 165              	.LBB3:
+  63:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].id = modf_buf->motorID;
+ 166              		.loc 1 63 13 is_stmt 1 view .LVU58
+ 167              	.LVL3:
+  64:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+ 168              		.loc 1 64 13 view .LVU59
+  64:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+ 169              		.loc 1 64 42 is_stmt 0 view .LVU60
+ 170 00c0 C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
+  64:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+ 171              		.loc 1 64 32 view .LVU61
+ 172 00c2 544B     		ldr	r3, .L10
+ 173 00c4 A3F8EC20 		strh	r2, [r3, #236]	@ unaligned
+  65:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+ 174              		.loc 1 65 13 is_stmt 1 view .LVU62
+  65:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+ARM GAS  /tmp/ccW2cv6a.s 			page 6
 
 
-  67:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
- 173              		.loc 1 67 40 is_stmt 0 view .LVU61
- 174 00c2 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
-  67:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
- 175              		.loc 1 67 30 view .LVU62
- 176 00c4 A3F8EE20 		strh	r2, [r3, #238]	@ unaligned
-  68:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
- 177              		.loc 1 68 9 is_stmt 1 view .LVU63
-  68:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
- 178              		.loc 1 68 39 is_stmt 0 view .LVU64
- 179 00c8 B0F91020 		ldrsh	r2, [r0, #16]
-  68:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
- 180              		.loc 1 68 29 view .LVU65
- 181 00cc 07EE902A 		vmov	s15, r2	@ int
- 182 00d0 F8EEE77A 		vcvt.f32.s32	s15, s15
- 183 00d4 17EE902A 		vmov	r2, s15
- 184 00d8 C3F8FC20 		str	r2, [r3, #252]	@ unaligned
-  69:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
- 185              		.loc 1 69 9 is_stmt 1 view .LVU66
-  69:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
- 186              		.loc 1 69 39 is_stmt 0 view .LVU67
- 187 00dc B0F91220 		ldrsh	r2, [r0, #18]
-  69:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
- 188              		.loc 1 69 29 view .LVU68
- 189 00e0 07EE902A 		vmov	s15, r2	@ int
- 190 00e4 F8EEE77A 		vcvt.f32.s32	s15, s15
- 191 00e8 17EE902A 		vmov	r2, s15
- 192 00ec C3F80021 		str	r2, [r3, #256]	@ unaligned
-  70:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].W = modf_buf->W;
- 193              		.loc 1 70 9 is_stmt 1 view .LVU69
-  70:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].W = modf_buf->W;
- 194              		.loc 1 70 29 is_stmt 0 view .LVU70
- 195 00f0 D0ED037A 		vldr.32	s15, [r0, #12]	@ int
- 196 00f4 F8EEE77A 		vcvt.f32.s32	s15, s15
- 197 00f8 17EE902A 		vmov	r2, s15
- 198 00fc C3F8F820 		str	r2, [r3, #248]	@ unaligned
-  71:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
- 199              		.loc 1 71 9 is_stmt 1 view .LVU71
-  71:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
- 200              		.loc 1 71 37 is_stmt 0 view .LVU72
- 201 0100 B0F90820 		ldrsh	r2, [r0, #8]
-  71:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
- 202              		.loc 1 71 27 view .LVU73
- 203 0104 07EE902A 		vmov	s15, r2	@ int
- 204 0108 F8EEE77A 		vcvt.f32.s32	s15, s15
- 205 010c 17EE902A 		vmov	r2, s15
- 206 0110 C3F8F420 		str	r2, [r3, #244]	@ unaligned
-  72:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 207              		.loc 1 72 9 is_stmt 1 view .LVU74
-  72:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 208              		.loc 1 72 37 is_stmt 0 view .LVU75
- 209 0114 B0F90620 		ldrsh	r2, [r0, #6]
-  72:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 210              		.loc 1 72 27 view .LVU76
- 211 0118 07EE902A 		vmov	s15, r2	@ int
- 212 011c F8EEE77A 		vcvt.f32.s32	s15, s15
- 213 0120 17EE902A 		vmov	r2, s15
-ARM GAS  /tmp/ccNaxIvK.s 			page 7
+ 175              		.loc 1 65 44 is_stmt 0 view .LVU63
+ 176 00c8 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
+  65:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+ 177              		.loc 1 65 34 view .LVU64
+ 178 00ca A3F8EE20 		strh	r2, [r3, #238]	@ unaligned
+  66:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+ 179              		.loc 1 66 13 is_stmt 1 view .LVU65
+  66:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+ 180              		.loc 1 66 43 is_stmt 0 view .LVU66
+ 181 00ce B0F90D20 		ldrsh	r2, [r0, #13]	@ unaligned
+  66:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+ 182              		.loc 1 66 33 view .LVU67
+ 183 00d2 07EE902A 		vmov	s15, r2	@ int
+ 184 00d6 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 185 00da 17EE902A 		vmov	r2, s15
+ 186 00de C3F8FC20 		str	r2, [r3, #252]	@ unaligned
+  67:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+ 187              		.loc 1 67 13 is_stmt 1 view .LVU68
+  67:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+ 188              		.loc 1 67 43 is_stmt 0 view .LVU69
+ 189 00e2 B0F90F20 		ldrsh	r2, [r0, #15]	@ unaligned
+  67:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+ 190              		.loc 1 67 33 view .LVU70
+ 191 00e6 07EE902A 		vmov	s15, r2	@ int
+ 192 00ea F8EEE77A 		vcvt.f32.s32	s15, s15
+ 193 00ee 17EE902A 		vmov	r2, s15
+ 194 00f2 C3F80021 		str	r2, [r3, #256]	@ unaligned
+  68:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+ 195              		.loc 1 68 13 is_stmt 1 view .LVU71
+  68:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+ 196              		.loc 1 68 43 is_stmt 0 view .LVU72
+ 197 00f6 D0F80920 		ldr	r2, [r0, #9]	@ unaligned
+  68:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+ 198              		.loc 1 68 33 view .LVU73
+ 199 00fa 07EE902A 		vmov	s15, r2	@ int
+ 200 00fe F8EEE77A 		vcvt.f32.s32	s15, s15
+ 201 0102 17EE902A 		vmov	r2, s15
+ 202 0106 C3F8F820 		str	r2, [r3, #248]	@ unaligned
+  69:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+ 203              		.loc 1 69 13 is_stmt 1 view .LVU74
+  69:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+ 204              		.loc 1 69 41 is_stmt 0 view .LVU75
+ 205 010a B0F90720 		ldrsh	r2, [r0, #7]	@ unaligned
+  69:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+ 206              		.loc 1 69 31 view .LVU76
+ 207 010e 07EE902A 		vmov	s15, r2	@ int
+ 208 0112 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 209 0116 17EE902A 		vmov	r2, s15
+ 210 011a C3F8F420 		str	r2, [r3, #244]	@ unaligned
+  70:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 211              		.loc 1 70 13 is_stmt 1 view .LVU77
+  70:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 212              		.loc 1 70 41 is_stmt 0 view .LVU78
+ 213 011e B0F90520 		ldrsh	r2, [r0, #5]	@ unaligned
+  70:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 214              		.loc 1 70 31 view .LVU79
+ 215 0122 07EE902A 		vmov	s15, r2	@ int
+ARM GAS  /tmp/ccW2cv6a.s 			page 7
 
 
- 214 0124 C3F8F020 		str	r2, [r3, #240]	@ unaligned
- 215              	.LBE3:
- 216              		.loc 1 77 1 view .LVU77
- 217 0128 87E7     		b	.L1
- 218              	.LVL4:
- 219              	.L8:
- 220              	.LBB4:
-  41:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].id = modf_buf->motorID;
- 221              		.loc 1 41 9 is_stmt 1 view .LVU78
-  42:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
- 222              		.loc 1 42 9 view .LVU79
-  42:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
- 223              		.loc 1 42 38 is_stmt 0 view .LVU80
- 224 012a C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
-  42:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
- 225              		.loc 1 42 28 view .LVU81
- 226 012c 344B     		ldr	r3, .L10
- 227 012e A3F86820 		strh	r2, [r3, #104]	@ unaligned
-  43:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
- 228              		.loc 1 43 9 is_stmt 1 view .LVU82
-  43:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
- 229              		.loc 1 43 40 is_stmt 0 view .LVU83
- 230 0132 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
-  43:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
- 231              		.loc 1 43 30 view .LVU84
- 232 0134 A3F86A20 		strh	r2, [r3, #106]	@ unaligned
-  44:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
- 233              		.loc 1 44 9 is_stmt 1 view .LVU85
-  44:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
- 234              		.loc 1 44 39 is_stmt 0 view .LVU86
- 235 0138 B0F91020 		ldrsh	r2, [r0, #16]
-  44:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
- 236              		.loc 1 44 29 view .LVU87
- 237 013c 07EE902A 		vmov	s15, r2	@ int
- 238 0140 F8EEE77A 		vcvt.f32.s32	s15, s15
- 239 0144 17EE902A 		vmov	r2, s15
- 240 0148 9A67     		str	r2, [r3, #120]	@ unaligned
-  45:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
- 241              		.loc 1 45 9 is_stmt 1 view .LVU88
-  45:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
- 242              		.loc 1 45 39 is_stmt 0 view .LVU89
- 243 014a B0F91220 		ldrsh	r2, [r0, #18]
-  45:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
- 244              		.loc 1 45 29 view .LVU90
- 245 014e 07EE902A 		vmov	s15, r2	@ int
- 246 0152 F8EEE77A 		vcvt.f32.s32	s15, s15
- 247 0156 17EE902A 		vmov	r2, s15
- 248 015a DA67     		str	r2, [r3, #124]	@ unaligned
-  46:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].W = modf_buf->W;
- 249              		.loc 1 46 9 is_stmt 1 view .LVU91
-  46:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].W = modf_buf->W;
- 250              		.loc 1 46 29 is_stmt 0 view .LVU92
- 251 015c D0ED037A 		vldr.32	s15, [r0, #12]	@ int
- 252 0160 F8EEE77A 		vcvt.f32.s32	s15, s15
- 253 0164 17EE902A 		vmov	r2, s15
- 254 0168 5A67     		str	r2, [r3, #116]	@ unaligned
-  47:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
-ARM GAS  /tmp/ccNaxIvK.s 			page 8
+ 216 0126 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 217 012a 17EE902A 		vmov	r2, s15
+ 218 012e C3F8F020 		str	r2, [r3, #240]	@ unaligned
+ 219              	.LBE3:
+ 220              		.loc 1 73 1 view .LVU80
+ 221 0132 83E7     		b	.L1
+ 222              	.LVL4:
+ 223              	.L8:
+ 224              	.LBB4:
+  39:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].id = modf_buf->motorID;
+ 225              		.loc 1 39 13 is_stmt 1 view .LVU81
+  40:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+ 226              		.loc 1 40 13 view .LVU82
+  40:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+ 227              		.loc 1 40 42 is_stmt 0 view .LVU83
+ 228 0134 C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
+  40:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+ 229              		.loc 1 40 32 view .LVU84
+ 230 0136 374B     		ldr	r3, .L10
+ 231 0138 A3F86820 		strh	r2, [r3, #104]	@ unaligned
+  41:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+ 232              		.loc 1 41 13 is_stmt 1 view .LVU85
+  41:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+ 233              		.loc 1 41 44 is_stmt 0 view .LVU86
+ 234 013c 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
+  41:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+ 235              		.loc 1 41 34 view .LVU87
+ 236 013e A3F86A20 		strh	r2, [r3, #106]	@ unaligned
+  42:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+ 237              		.loc 1 42 13 is_stmt 1 view .LVU88
+  42:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+ 238              		.loc 1 42 43 is_stmt 0 view .LVU89
+ 239 0142 B0F90D20 		ldrsh	r2, [r0, #13]	@ unaligned
+  42:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+ 240              		.loc 1 42 33 view .LVU90
+ 241 0146 07EE902A 		vmov	s15, r2	@ int
+ 242 014a F8EEE77A 		vcvt.f32.s32	s15, s15
+ 243 014e 17EE902A 		vmov	r2, s15
+ 244 0152 9A67     		str	r2, [r3, #120]	@ unaligned
+  43:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+ 245              		.loc 1 43 13 is_stmt 1 view .LVU91
+  43:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+ 246              		.loc 1 43 43 is_stmt 0 view .LVU92
+ 247 0154 B0F90F20 		ldrsh	r2, [r0, #15]	@ unaligned
+  43:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+ 248              		.loc 1 43 33 view .LVU93
+ 249 0158 07EE902A 		vmov	s15, r2	@ int
+ 250 015c F8EEE77A 		vcvt.f32.s32	s15, s15
+ 251 0160 17EE902A 		vmov	r2, s15
+ 252 0164 DA67     		str	r2, [r3, #124]	@ unaligned
+  44:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+ 253              		.loc 1 44 13 is_stmt 1 view .LVU94
+  44:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+ 254              		.loc 1 44 43 is_stmt 0 view .LVU95
+ 255 0166 D0F80920 		ldr	r2, [r0, #9]	@ unaligned
+  44:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+ 256              		.loc 1 44 33 view .LVU96
+ARM GAS  /tmp/ccW2cv6a.s 			page 8
 
 
- 255              		.loc 1 47 9 is_stmt 1 view .LVU93
-  47:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
- 256              		.loc 1 47 37 is_stmt 0 view .LVU94
- 257 016a B0F90820 		ldrsh	r2, [r0, #8]
-  47:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
- 258              		.loc 1 47 27 view .LVU95
- 259 016e 07EE902A 		vmov	s15, r2	@ int
- 260 0172 F8EEE77A 		vcvt.f32.s32	s15, s15
- 261 0176 17EE902A 		vmov	r2, s15
- 262 017a 1A67     		str	r2, [r3, #112]	@ unaligned
-  48:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 263              		.loc 1 48 9 is_stmt 1 view .LVU96
-  48:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 264              		.loc 1 48 37 is_stmt 0 view .LVU97
- 265 017c B0F90620 		ldrsh	r2, [r0, #6]
-  48:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 266              		.loc 1 48 27 view .LVU98
- 267 0180 07EE902A 		vmov	s15, r2	@ int
- 268 0184 F8EEE77A 		vcvt.f32.s32	s15, s15
- 269 0188 17EE902A 		vmov	r2, s15
- 270 018c DA66     		str	r2, [r3, #108]	@ unaligned
- 271 018e 8EE7     		b	.L4
- 272              	.LVL5:
- 273              	.L9:
-  48:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 274              		.loc 1 48 27 view .LVU99
- 275              	.LBE4:
- 276              	.LBB5:
-  53:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].id = modf_buf->motorID;
- 277              		.loc 1 53 9 is_stmt 1 view .LVU100
-  54:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
- 278              		.loc 1 54 9 view .LVU101
-  54:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
- 279              		.loc 1 54 38 is_stmt 0 view .LVU102
- 280 0190 C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
-  54:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].mode = modf_buf->mode;
- 281              		.loc 1 54 28 view .LVU103
- 282 0192 1B4B     		ldr	r3, .L10
- 283 0194 A3F8AA20 		strh	r2, [r3, #170]	@ unaligned
-  55:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
- 284              		.loc 1 55 9 is_stmt 1 view .LVU104
-  55:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
- 285              		.loc 1 55 40 is_stmt 0 view .LVU105
- 286 0198 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
-  55:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_P = modf_buf->K_P;
- 287              		.loc 1 55 30 view .LVU106
- 288 019a A3F8AC20 		strh	r2, [r3, #172]	@ unaligned
-  56:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
- 289              		.loc 1 56 9 is_stmt 1 view .LVU107
-  56:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
- 290              		.loc 1 56 39 is_stmt 0 view .LVU108
- 291 019e B0F91020 		ldrsh	r2, [r0, #16]
-  56:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].K_W = modf_buf->K_W;
- 292              		.loc 1 56 29 view .LVU109
- 293 01a2 07EE902A 		vmov	s15, r2	@ int
- 294 01a6 F8EEE77A 		vcvt.f32.s32	s15, s15
- 295 01aa 17EE902A 		vmov	r2, s15
-ARM GAS  /tmp/ccNaxIvK.s 			page 9
+ 257 016a 07EE902A 		vmov	s15, r2	@ int
+ 258 016e F8EEE77A 		vcvt.f32.s32	s15, s15
+ 259 0172 17EE902A 		vmov	r2, s15
+ 260 0176 5A67     		str	r2, [r3, #116]	@ unaligned
+  45:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+ 261              		.loc 1 45 13 is_stmt 1 view .LVU97
+  45:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+ 262              		.loc 1 45 41 is_stmt 0 view .LVU98
+ 263 0178 B0F90720 		ldrsh	r2, [r0, #7]	@ unaligned
+  45:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+ 264              		.loc 1 45 31 view .LVU99
+ 265 017c 07EE902A 		vmov	s15, r2	@ int
+ 266 0180 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 267 0184 17EE902A 		vmov	r2, s15
+ 268 0188 1A67     		str	r2, [r3, #112]	@ unaligned
+  46:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 269              		.loc 1 46 13 is_stmt 1 view .LVU100
+  46:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 270              		.loc 1 46 41 is_stmt 0 view .LVU101
+ 271 018a B0F90520 		ldrsh	r2, [r0, #5]	@ unaligned
+  46:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 272              		.loc 1 46 31 view .LVU102
+ 273 018e 07EE902A 		vmov	s15, r2	@ int
+ 274 0192 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 275 0196 17EE902A 		vmov	r2, s15
+ 276 019a DA66     		str	r2, [r3, #108]	@ unaligned
+ 277 019c 8AE7     		b	.L4
+ 278              	.LVL5:
+ 279              	.L9:
+  46:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 280              		.loc 1 46 31 view .LVU103
+ 281              	.LBE4:
+ 282              	.LBB5:
+  51:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].id = modf_buf->motorID;
+ 283              		.loc 1 51 13 is_stmt 1 view .LVU104
+  52:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+ 284              		.loc 1 52 13 view .LVU105
+  52:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+ 285              		.loc 1 52 42 is_stmt 0 view .LVU106
+ 286 019e C278     		ldrb	r2, [r0, #3]	@ zero_extendqisi2
+  52:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].mode = modf_buf->mode;
+ 287              		.loc 1 52 32 view .LVU107
+ 288 01a0 1C4B     		ldr	r3, .L10
+ 289 01a2 A3F8AA20 		strh	r2, [r3, #170]	@ unaligned
+  53:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+ 290              		.loc 1 53 13 is_stmt 1 view .LVU108
+  53:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+ 291              		.loc 1 53 44 is_stmt 0 view .LVU109
+ 292 01a6 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
+  53:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_P = modf_buf->K_P;
+ 293              		.loc 1 53 34 view .LVU110
+ 294 01a8 A3F8AC20 		strh	r2, [r3, #172]	@ unaligned
+  54:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+ 295              		.loc 1 54 13 is_stmt 1 view .LVU111
+  54:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+ 296              		.loc 1 54 43 is_stmt 0 view .LVU112
+ 297 01ac B0F90D20 		ldrsh	r2, [r0, #13]	@ unaligned
+ARM GAS  /tmp/ccW2cv6a.s 			page 9
 
 
- 296 01ae C3F8BA20 		str	r2, [r3, #186]	@ unaligned
-  57:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
- 297              		.loc 1 57 9 is_stmt 1 view .LVU110
-  57:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
- 298              		.loc 1 57 39 is_stmt 0 view .LVU111
- 299 01b2 B0F91220 		ldrsh	r2, [r0, #18]
-  57:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].Pos = modf_buf->Pos;
- 300              		.loc 1 57 29 view .LVU112
- 301 01b6 07EE902A 		vmov	s15, r2	@ int
- 302 01ba F8EEE77A 		vcvt.f32.s32	s15, s15
- 303 01be 17EE902A 		vmov	r2, s15
- 304 01c2 C3F8BE20 		str	r2, [r3, #190]	@ unaligned
-  58:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].W = modf_buf->W;
- 305              		.loc 1 58 9 is_stmt 1 view .LVU113
-  58:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].W = modf_buf->W;
- 306              		.loc 1 58 29 is_stmt 0 view .LVU114
- 307 01c6 D0ED037A 		vldr.32	s15, [r0, #12]	@ int
- 308 01ca F8EEE77A 		vcvt.f32.s32	s15, s15
- 309 01ce 17EE902A 		vmov	r2, s15
- 310 01d2 C3F8B620 		str	r2, [r3, #182]	@ unaligned
-  59:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
- 311              		.loc 1 59 9 is_stmt 1 view .LVU115
-  59:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
- 312              		.loc 1 59 37 is_stmt 0 view .LVU116
- 313 01d6 B0F90820 		ldrsh	r2, [r0, #8]
-  59:Lib/SPI_Bus/Src/spi_deal.c ****         cmd_leg[leg_id].T = modf_buf->T;
- 314              		.loc 1 59 27 view .LVU117
- 315 01da 07EE902A 		vmov	s15, r2	@ int
- 316 01de F8EEE77A 		vcvt.f32.s32	s15, s15
- 317 01e2 17EE902A 		vmov	r2, s15
- 318 01e6 C3F8B220 		str	r2, [r3, #178]	@ unaligned
-  60:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 319              		.loc 1 60 9 is_stmt 1 view .LVU118
-  60:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 320              		.loc 1 60 37 is_stmt 0 view .LVU119
- 321 01ea B0F90620 		ldrsh	r2, [r0, #6]
-  60:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 322              		.loc 1 60 27 view .LVU120
- 323 01ee 07EE902A 		vmov	s15, r2	@ int
- 324 01f2 F8EEE77A 		vcvt.f32.s32	s15, s15
- 325 01f6 17EE902A 		vmov	r2, s15
- 326 01fa C3F8AE20 		str	r2, [r3, #174]	@ unaligned
- 327 01fe 59E7     		b	.L5
- 328              	.L11:
- 329              		.align	2
- 330              	.L10:
- 331 0200 00000000 		.word	cmd_leg
- 332              	.LBE5:
- 333              		.cfi_endproc
- 334              	.LFE134:
- 336              		.section	.text.SPI_RXdate,"ax",%progbits
- 337              		.align	1
- 338              		.global	SPI_RXdate
- 339              		.syntax unified
- 340              		.thumb
- 341              		.thumb_func
- 343              	SPI_RXdate:
-ARM GAS  /tmp/ccNaxIvK.s 			page 10
+  54:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].K_W = modf_buf->K_W;
+ 298              		.loc 1 54 33 view .LVU113
+ 299 01b0 07EE902A 		vmov	s15, r2	@ int
+ 300 01b4 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 301 01b8 17EE902A 		vmov	r2, s15
+ 302 01bc C3F8BA20 		str	r2, [r3, #186]	@ unaligned
+  55:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+ 303              		.loc 1 55 13 is_stmt 1 view .LVU114
+  55:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+ 304              		.loc 1 55 43 is_stmt 0 view .LVU115
+ 305 01c0 B0F90F20 		ldrsh	r2, [r0, #15]	@ unaligned
+  55:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].Pos = modf_buf->Pos;
+ 306              		.loc 1 55 33 view .LVU116
+ 307 01c4 07EE902A 		vmov	s15, r2	@ int
+ 308 01c8 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 309 01cc 17EE902A 		vmov	r2, s15
+ 310 01d0 C3F8BE20 		str	r2, [r3, #190]	@ unaligned
+  56:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+ 311              		.loc 1 56 13 is_stmt 1 view .LVU117
+  56:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+ 312              		.loc 1 56 43 is_stmt 0 view .LVU118
+ 313 01d4 D0F80920 		ldr	r2, [r0, #9]	@ unaligned
+  56:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].W = modf_buf->W;
+ 314              		.loc 1 56 33 view .LVU119
+ 315 01d8 07EE902A 		vmov	s15, r2	@ int
+ 316 01dc F8EEE77A 		vcvt.f32.s32	s15, s15
+ 317 01e0 17EE902A 		vmov	r2, s15
+ 318 01e4 C3F8B620 		str	r2, [r3, #182]	@ unaligned
+  57:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+ 319              		.loc 1 57 13 is_stmt 1 view .LVU120
+  57:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+ 320              		.loc 1 57 41 is_stmt 0 view .LVU121
+ 321 01e8 B0F90720 		ldrsh	r2, [r0, #7]	@ unaligned
+  57:Lib/SPI_Bus/Src/spi_deal.c ****             cmd_leg[leg_id].T = modf_buf->T;
+ 322              		.loc 1 57 31 view .LVU122
+ 323 01ec 07EE902A 		vmov	s15, r2	@ int
+ 324 01f0 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 325 01f4 17EE902A 		vmov	r2, s15
+ 326 01f8 C3F8B220 		str	r2, [r3, #178]	@ unaligned
+  58:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 327              		.loc 1 58 13 is_stmt 1 view .LVU123
+  58:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 328              		.loc 1 58 41 is_stmt 0 view .LVU124
+ 329 01fc B0F90520 		ldrsh	r2, [r0, #5]	@ unaligned
+  58:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 330              		.loc 1 58 31 view .LVU125
+ 331 0200 07EE902A 		vmov	s15, r2	@ int
+ 332 0204 F8EEE77A 		vcvt.f32.s32	s15, s15
+ 333 0208 17EE902A 		vmov	r2, s15
+ 334 020c C3F8AE20 		str	r2, [r3, #174]	@ unaligned
+ 335 0210 53E7     		b	.L5
+ 336              	.L11:
+ 337 0212 00BF     		.align	2
+ 338              	.L10:
+ 339 0214 00000000 		.word	cmd_leg
+ 340              	.LBE5:
+ 341              		.cfi_endproc
+ARM GAS  /tmp/ccW2cv6a.s 			page 10
 
 
- 344              	.LVL6:
- 345              	.LFB135:
-  78:Lib/SPI_Bus/Src/spi_deal.c **** void SPI_RXdate(A1PackageSpiRx *modf_buf,uint8_t *spi_sbus_buf)
-  79:Lib/SPI_Bus/Src/spi_deal.c **** {
- 346              		.loc 1 79 1 is_stmt 1 view -0
- 347              		.cfi_startproc
- 348              		@ args = 0, pretend = 0, frame = 0
- 349              		@ frame_needed = 0, uses_anonymous_args = 0
- 350              		.loc 1 79 1 is_stmt 0 view .LVU122
- 351 0000 08B5     		push	{r3, lr}
- 352              		.cfi_def_cfa_offset 8
- 353              		.cfi_offset 3, -8
- 354              		.cfi_offset 14, -4
-  80:Lib/SPI_Bus/Src/spi_deal.c ****     
-  81:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->start[0] = spi_sbus_buf[0];
- 355              		.loc 1 81 5 is_stmt 1 view .LVU123
- 356              		.loc 1 81 38 is_stmt 0 view .LVU124
- 357 0002 0A78     		ldrb	r2, [r1]	@ zero_extendqisi2
- 358              		.loc 1 81 24 view .LVU125
- 359 0004 0270     		strb	r2, [r0]
-  82:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->start[1] = spi_sbus_buf[1];
- 360              		.loc 1 82 5 is_stmt 1 view .LVU126
- 361              		.loc 1 82 24 is_stmt 0 view .LVU127
- 362 0006 4A78     		ldrb	r2, [r1, #1]	@ zero_extendqisi2
- 363 0008 4270     		strb	r2, [r0, #1]
-  83:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->LegID = spi_sbus_buf[2];
- 364              		.loc 1 83 5 is_stmt 1 view .LVU128
- 365              		.loc 1 83 21 is_stmt 0 view .LVU129
- 366 000a 8A78     		ldrb	r2, [r1, #2]	@ zero_extendqisi2
- 367 000c 8270     		strb	r2, [r0, #2]
-  84:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->motorID = spi_sbus_buf[3];
- 368              		.loc 1 84 5 is_stmt 1 view .LVU130
- 369              		.loc 1 84 23 is_stmt 0 view .LVU131
- 370 000e CA78     		ldrb	r2, [r1, #3]	@ zero_extendqisi2
- 371 0010 C270     		strb	r2, [r0, #3]
-  85:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->mode = spi_sbus_buf[4];
- 372              		.loc 1 85 5 is_stmt 1 view .LVU132
- 373              		.loc 1 85 20 is_stmt 0 view .LVU133
- 374 0012 0A79     		ldrb	r2, [r1, #4]	@ zero_extendqisi2
- 375 0014 0271     		strb	r2, [r0, #4]
-  86:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->T = spi_sbus_buf[5] << 8 | spi_sbus_buf[6];
- 376              		.loc 1 86 5 is_stmt 1 view .LVU134
- 377              		.loc 1 86 31 is_stmt 0 view .LVU135
- 378 0016 91F805C0 		ldrb	ip, [r1, #5]	@ zero_extendqisi2
- 379              		.loc 1 86 54 view .LVU136
- 380 001a 8A79     		ldrb	r2, [r1, #6]	@ zero_extendqisi2
- 381              		.loc 1 86 40 view .LVU137
- 382 001c 42EA0C22 		orr	r2, r2, ip, lsl #8
- 383              		.loc 1 86 17 view .LVU138
- 384 0020 C280     		strh	r2, [r0, #6]	@ movhi
-  87:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->W = spi_sbus_buf[7] << 8 | spi_sbus_buf[8];
- 385              		.loc 1 87 5 is_stmt 1 view .LVU139
- 386              		.loc 1 87 31 is_stmt 0 view .LVU140
- 387 0022 91F807C0 		ldrb	ip, [r1, #7]	@ zero_extendqisi2
- 388              		.loc 1 87 54 view .LVU141
- 389 0026 0A7A     		ldrb	r2, [r1, #8]	@ zero_extendqisi2
- 390              		.loc 1 87 40 view .LVU142
-ARM GAS  /tmp/ccNaxIvK.s 			page 11
+ 342              	.LFE134:
+ 344              		.section	.text.SPI_RXdate,"ax",%progbits
+ 345              		.align	1
+ 346              		.global	SPI_RXdate
+ 347              		.syntax unified
+ 348              		.thumb
+ 349              		.thumb_func
+ 351              	SPI_RXdate:
+ 352              	.LVL6:
+ 353              	.LFB135:
+  74:Lib/SPI_Bus/Src/spi_deal.c **** void SPI_RXdate(A1PackageSpiRx *modf_buf, uint8_t *spi_sbus_buf)
+  75:Lib/SPI_Bus/Src/spi_deal.c **** {
+ 354              		.loc 1 75 1 is_stmt 1 view -0
+ 355              		.cfi_startproc
+ 356              		@ args = 0, pretend = 0, frame = 0
+ 357              		@ frame_needed = 0, uses_anonymous_args = 0
+ 358              		.loc 1 75 1 is_stmt 0 view .LVU127
+ 359 0000 08B5     		push	{r3, lr}
+ 360              		.cfi_def_cfa_offset 8
+ 361              		.cfi_offset 3, -8
+ 362              		.cfi_offset 14, -4
+  76:Lib/SPI_Bus/Src/spi_deal.c **** 
+  77:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->start[0] = spi_sbus_buf[0];
+ 363              		.loc 1 77 5 is_stmt 1 view .LVU128
+ 364              		.loc 1 77 38 is_stmt 0 view .LVU129
+ 365 0002 0A78     		ldrb	r2, [r1]	@ zero_extendqisi2
+ 366              		.loc 1 77 24 view .LVU130
+ 367 0004 0270     		strb	r2, [r0]
+  78:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->start[1] = spi_sbus_buf[1];
+ 368              		.loc 1 78 5 is_stmt 1 view .LVU131
+ 369              		.loc 1 78 24 is_stmt 0 view .LVU132
+ 370 0006 4A78     		ldrb	r2, [r1, #1]	@ zero_extendqisi2
+ 371 0008 4270     		strb	r2, [r0, #1]
+  79:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->LegID = spi_sbus_buf[2];
+ 372              		.loc 1 79 5 is_stmt 1 view .LVU133
+ 373              		.loc 1 79 21 is_stmt 0 view .LVU134
+ 374 000a 8A78     		ldrb	r2, [r1, #2]	@ zero_extendqisi2
+ 375 000c 8270     		strb	r2, [r0, #2]
+  80:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->motorID = spi_sbus_buf[3];
+ 376              		.loc 1 80 5 is_stmt 1 view .LVU135
+ 377              		.loc 1 80 23 is_stmt 0 view .LVU136
+ 378 000e CA78     		ldrb	r2, [r1, #3]	@ zero_extendqisi2
+ 379 0010 C270     		strb	r2, [r0, #3]
+  81:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->mode = spi_sbus_buf[4];
+ 380              		.loc 1 81 5 is_stmt 1 view .LVU137
+ 381              		.loc 1 81 20 is_stmt 0 view .LVU138
+ 382 0012 0A79     		ldrb	r2, [r1, #4]	@ zero_extendqisi2
+ 383 0014 0271     		strb	r2, [r0, #4]
+  82:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->T = spi_sbus_buf[5] << 8 | spi_sbus_buf[6];
+ 384              		.loc 1 82 5 is_stmt 1 view .LVU139
+ 385              		.loc 1 82 31 is_stmt 0 view .LVU140
+ 386 0016 91F805C0 		ldrb	ip, [r1, #5]	@ zero_extendqisi2
+ 387              		.loc 1 82 54 view .LVU141
+ 388 001a 8A79     		ldrb	r2, [r1, #6]	@ zero_extendqisi2
+ 389              		.loc 1 82 40 view .LVU142
+ 390 001c 42EA0C22 		orr	r2, r2, ip, lsl #8
+ 391              		.loc 1 82 17 view .LVU143
+ARM GAS  /tmp/ccW2cv6a.s 			page 11
 
 
- 391 0028 42EA0C22 		orr	r2, r2, ip, lsl #8
- 392              		.loc 1 87 17 view .LVU143
- 393 002c 0281     		strh	r2, [r0, #8]	@ movhi
-  88:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->Pos = spi_sbus_buf[9] << 24 | spi_sbus_buf[10] << 16 | spi_sbus_buf[11] << 8 | spi_sb
- 394              		.loc 1 88 5 is_stmt 1 view .LVU144
- 395              		.loc 1 88 33 is_stmt 0 view .LVU145
- 396 002e 91F809C0 		ldrb	ip, [r1, #9]	@ zero_extendqisi2
- 397              		.loc 1 88 57 view .LVU146
- 398 0032 8A7A     		ldrb	r2, [r1, #10]	@ zero_extendqisi2
- 399              		.loc 1 88 62 view .LVU147
- 400 0034 1204     		lsls	r2, r2, #16
- 401              		.loc 1 88 43 view .LVU148
- 402 0036 42EA0C62 		orr	r2, r2, ip, lsl #24
- 403              		.loc 1 88 82 view .LVU149
- 404 003a 91F80BC0 		ldrb	ip, [r1, #11]	@ zero_extendqisi2
- 405              		.loc 1 88 68 view .LVU150
- 406 003e 42EA0C22 		orr	r2, r2, ip, lsl #8
- 407              		.loc 1 88 106 view .LVU151
- 408 0042 91F80CC0 		ldrb	ip, [r1, #12]	@ zero_extendqisi2
- 409              		.loc 1 88 92 view .LVU152
- 410 0046 42EA0C02 		orr	r2, r2, ip
- 411              		.loc 1 88 19 view .LVU153
- 412 004a C260     		str	r2, [r0, #12]
-  89:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->K_P = spi_sbus_buf[13] << 8 | spi_sbus_buf[14];
- 413              		.loc 1 89 5 is_stmt 1 view .LVU154
- 414              		.loc 1 89 33 is_stmt 0 view .LVU155
- 415 004c 91F80DC0 		ldrb	ip, [r1, #13]	@ zero_extendqisi2
- 416              		.loc 1 89 57 view .LVU156
- 417 0050 8A7B     		ldrb	r2, [r1, #14]	@ zero_extendqisi2
- 418              		.loc 1 89 43 view .LVU157
- 419 0052 42EA0C22 		orr	r2, r2, ip, lsl #8
- 420              		.loc 1 89 19 view .LVU158
- 421 0056 0282     		strh	r2, [r0, #16]	@ movhi
-  90:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->K_W = spi_sbus_buf[15] << 8 | spi_sbus_buf[16];
- 422              		.loc 1 90 5 is_stmt 1 view .LVU159
- 423              		.loc 1 90 33 is_stmt 0 view .LVU160
- 424 0058 91F80FC0 		ldrb	ip, [r1, #15]	@ zero_extendqisi2
- 425              		.loc 1 90 57 view .LVU161
- 426 005c 0A7C     		ldrb	r2, [r1, #16]	@ zero_extendqisi2
- 427              		.loc 1 90 43 view .LVU162
- 428 005e 42EA0C22 		orr	r2, r2, ip, lsl #8
- 429              		.loc 1 90 19 view .LVU163
- 430 0062 4282     		strh	r2, [r0, #18]	@ movhi
-  91:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->SumCheck = spi_sbus_buf[17] << 24 | spi_sbus_buf[18] << 16 | spi_sbus_buf[19] << 8 | 
- 431              		.loc 1 91 5 is_stmt 1 view .LVU164
- 432              		.loc 1 91 38 is_stmt 0 view .LVU165
- 433 0064 91F811C0 		ldrb	ip, [r1, #17]	@ zero_extendqisi2
- 434              		.loc 1 91 63 view .LVU166
- 435 0068 8A7C     		ldrb	r2, [r1, #18]	@ zero_extendqisi2
- 436              		.loc 1 91 68 view .LVU167
- 437 006a 1204     		lsls	r2, r2, #16
- 438              		.loc 1 91 49 view .LVU168
- 439 006c 42EA0C62 		orr	r2, r2, ip, lsl #24
- 440              		.loc 1 91 88 view .LVU169
- 441 0070 91F813C0 		ldrb	ip, [r1, #19]	@ zero_extendqisi2
- 442              		.loc 1 91 74 view .LVU170
- 443 0074 42EA0C22 		orr	r2, r2, ip, lsl #8
-ARM GAS  /tmp/ccNaxIvK.s 			page 12
+ 392 0020 A0F80520 		strh	r2, [r0, #5]	@ unaligned
+  83:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->W = spi_sbus_buf[7] << 8 | spi_sbus_buf[8];
+ 393              		.loc 1 83 5 is_stmt 1 view .LVU144
+ 394              		.loc 1 83 31 is_stmt 0 view .LVU145
+ 395 0024 91F807C0 		ldrb	ip, [r1, #7]	@ zero_extendqisi2
+ 396              		.loc 1 83 54 view .LVU146
+ 397 0028 0A7A     		ldrb	r2, [r1, #8]	@ zero_extendqisi2
+ 398              		.loc 1 83 40 view .LVU147
+ 399 002a 42EA0C22 		orr	r2, r2, ip, lsl #8
+ 400              		.loc 1 83 17 view .LVU148
+ 401 002e A0F80720 		strh	r2, [r0, #7]	@ unaligned
+  84:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->Pos = spi_sbus_buf[9] << 24 | spi_sbus_buf[10] << 16 | spi_sbus_buf[11] << 8 | spi_sb
+ 402              		.loc 1 84 5 is_stmt 1 view .LVU149
+ 403              		.loc 1 84 33 is_stmt 0 view .LVU150
+ 404 0032 91F809C0 		ldrb	ip, [r1, #9]	@ zero_extendqisi2
+ 405              		.loc 1 84 57 view .LVU151
+ 406 0036 8A7A     		ldrb	r2, [r1, #10]	@ zero_extendqisi2
+ 407              		.loc 1 84 62 view .LVU152
+ 408 0038 1204     		lsls	r2, r2, #16
+ 409              		.loc 1 84 43 view .LVU153
+ 410 003a 42EA0C62 		orr	r2, r2, ip, lsl #24
+ 411              		.loc 1 84 82 view .LVU154
+ 412 003e 91F80BC0 		ldrb	ip, [r1, #11]	@ zero_extendqisi2
+ 413              		.loc 1 84 68 view .LVU155
+ 414 0042 42EA0C22 		orr	r2, r2, ip, lsl #8
+ 415              		.loc 1 84 106 view .LVU156
+ 416 0046 91F80CC0 		ldrb	ip, [r1, #12]	@ zero_extendqisi2
+ 417              		.loc 1 84 92 view .LVU157
+ 418 004a 42EA0C02 		orr	r2, r2, ip
+ 419              		.loc 1 84 19 view .LVU158
+ 420 004e C0F80920 		str	r2, [r0, #9]	@ unaligned
+  85:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->K_P = spi_sbus_buf[13] << 8 | spi_sbus_buf[14];
+ 421              		.loc 1 85 5 is_stmt 1 view .LVU159
+ 422              		.loc 1 85 33 is_stmt 0 view .LVU160
+ 423 0052 91F80DC0 		ldrb	ip, [r1, #13]	@ zero_extendqisi2
+ 424              		.loc 1 85 57 view .LVU161
+ 425 0056 8A7B     		ldrb	r2, [r1, #14]	@ zero_extendqisi2
+ 426              		.loc 1 85 43 view .LVU162
+ 427 0058 42EA0C22 		orr	r2, r2, ip, lsl #8
+ 428              		.loc 1 85 19 view .LVU163
+ 429 005c A0F80D20 		strh	r2, [r0, #13]	@ unaligned
+  86:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->K_W = spi_sbus_buf[15] << 8 | spi_sbus_buf[16];
+ 430              		.loc 1 86 5 is_stmt 1 view .LVU164
+ 431              		.loc 1 86 33 is_stmt 0 view .LVU165
+ 432 0060 91F80FC0 		ldrb	ip, [r1, #15]	@ zero_extendqisi2
+ 433              		.loc 1 86 57 view .LVU166
+ 434 0064 0A7C     		ldrb	r2, [r1, #16]	@ zero_extendqisi2
+ 435              		.loc 1 86 43 view .LVU167
+ 436 0066 42EA0C22 		orr	r2, r2, ip, lsl #8
+ 437              		.loc 1 86 19 view .LVU168
+ 438 006a A0F80F20 		strh	r2, [r0, #15]	@ unaligned
+  87:Lib/SPI_Bus/Src/spi_deal.c ****     modf_buf->SumCheck = spi_sbus_buf[17] << 24 | spi_sbus_buf[18] << 16 | spi_sbus_buf[19] << 8 | 
+ 439              		.loc 1 87 5 is_stmt 1 view .LVU169
+ 440              		.loc 1 87 38 is_stmt 0 view .LVU170
+ 441 006e 91F811C0 		ldrb	ip, [r1, #17]	@ zero_extendqisi2
+ 442              		.loc 1 87 63 view .LVU171
+ 443 0072 8A7C     		ldrb	r2, [r1, #18]	@ zero_extendqisi2
+ARM GAS  /tmp/ccW2cv6a.s 			page 12
 
 
- 444              		.loc 1 91 112 view .LVU171
- 445 0078 097D     		ldrb	r1, [r1, #20]	@ zero_extendqisi2
- 446              	.LVL7:
- 447              		.loc 1 91 98 view .LVU172
- 448 007a 0A43     		orrs	r2, r2, r1
- 449              		.loc 1 91 24 view .LVU173
- 450 007c 4261     		str	r2, [r0, #20]
-  92:Lib/SPI_Bus/Src/spi_deal.c ****     DateCheck_DateModfy(modf_buf);
- 451              		.loc 1 92 5 is_stmt 1 view .LVU174
- 452 007e FFF7FEFF 		bl	DateCheck_DateModfy
- 453              	.LVL8:
-  93:Lib/SPI_Bus/Src/spi_deal.c **** }
- 454              		.loc 1 93 1 is_stmt 0 view .LVU175
- 455 0082 08BD     		pop	{r3, pc}
- 456              		.cfi_endproc
- 457              	.LFE135:
- 459              		.section	.text.ecat_NS_L,"ax",%progbits
- 460              		.align	1
- 461              		.global	ecat_NS_L
- 462              		.syntax unified
- 463              		.thumb
- 464              		.thumb_func
- 466              	ecat_NS_L:
- 467              	.LFB136:
-  94:Lib/SPI_Bus/Src/spi_deal.c **** 
-  95:Lib/SPI_Bus/Src/spi_deal.c **** 
-  96:Lib/SPI_Bus/Src/spi_deal.c **** void ecat_NS_L (void)
-  97:Lib/SPI_Bus/Src/spi_deal.c **** {
- 468              		.loc 1 97 1 is_stmt 1 view -0
- 469              		.cfi_startproc
- 470              		@ args = 0, pretend = 0, frame = 0
- 471              		@ frame_needed = 0, uses_anonymous_args = 0
- 472 0000 08B5     		push	{r3, lr}
- 473              		.cfi_def_cfa_offset 8
- 474              		.cfi_offset 3, -8
- 475              		.cfi_offset 14, -4
-  98:Lib/SPI_Bus/Src/spi_deal.c ****     HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_RESET);
- 476              		.loc 1 98 5 view .LVU177
- 477 0002 0022     		movs	r2, #0
- 478 0004 4FF48051 		mov	r1, #4096
- 479 0008 0148     		ldr	r0, .L16
- 480 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
- 481              	.LVL9:
-  99:Lib/SPI_Bus/Src/spi_deal.c **** 
+ 444              		.loc 1 87 68 view .LVU172
+ 445 0074 1204     		lsls	r2, r2, #16
+ 446              		.loc 1 87 49 view .LVU173
+ 447 0076 42EA0C62 		orr	r2, r2, ip, lsl #24
+ 448              		.loc 1 87 88 view .LVU174
+ 449 007a 91F813C0 		ldrb	ip, [r1, #19]	@ zero_extendqisi2
+ 450              		.loc 1 87 74 view .LVU175
+ 451 007e 42EA0C22 		orr	r2, r2, ip, lsl #8
+ 452              		.loc 1 87 112 view .LVU176
+ 453 0082 097D     		ldrb	r1, [r1, #20]	@ zero_extendqisi2
+ 454              	.LVL7:
+ 455              		.loc 1 87 98 view .LVU177
+ 456 0084 0A43     		orrs	r2, r2, r1
+ 457              		.loc 1 87 24 view .LVU178
+ 458 0086 C0F81120 		str	r2, [r0, #17]	@ unaligned
+  88:Lib/SPI_Bus/Src/spi_deal.c ****     DateCheck_DateModfy(modf_buf);
+ 459              		.loc 1 88 5 is_stmt 1 view .LVU179
+ 460 008a FFF7FEFF 		bl	DateCheck_DateModfy
+ 461              	.LVL8:
+  89:Lib/SPI_Bus/Src/spi_deal.c **** }
+ 462              		.loc 1 89 1 is_stmt 0 view .LVU180
+ 463 008e 08BD     		pop	{r3, pc}
+ 464              		.cfi_endproc
+ 465              	.LFE135:
+ 467              		.section	.text.ecat_NS_L,"ax",%progbits
+ 468              		.align	1
+ 469              		.global	ecat_NS_L
+ 470              		.syntax unified
+ 471              		.thumb
+ 472              		.thumb_func
+ 474              	ecat_NS_L:
+ 475              	.LFB136:
+  90:Lib/SPI_Bus/Src/spi_deal.c **** 
+  91:Lib/SPI_Bus/Src/spi_deal.c **** // 拉底片选
+  92:Lib/SPI_Bus/Src/spi_deal.c **** void ecat_NS_L(void)
+  93:Lib/SPI_Bus/Src/spi_deal.c **** {
+ 476              		.loc 1 93 1 is_stmt 1 view -0
+ 477              		.cfi_startproc
+ 478              		@ args = 0, pretend = 0, frame = 0
+ 479              		@ frame_needed = 0, uses_anonymous_args = 0
+ 480 0000 08B5     		push	{r3, lr}
+ 481              		.cfi_def_cfa_offset 8
+ 482              		.cfi_offset 3, -8
+ 483              		.cfi_offset 14, -4
+  94:Lib/SPI_Bus/Src/spi_deal.c ****     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_RESET);
+ 484              		.loc 1 94 5 view .LVU182
+ 485 0002 0022     		movs	r2, #0
+ 486 0004 4FF48051 		mov	r1, #4096
+ 487 0008 0148     		ldr	r0, .L16
+ 488 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 489              	.LVL9:
+  95:Lib/SPI_Bus/Src/spi_deal.c **** }
+ 490              		.loc 1 95 1 is_stmt 0 view .LVU183
+ 491 000e 08BD     		pop	{r3, pc}
+ 492              	.L17:
+ 493              		.align	2
+ 494              	.L16:
+ARM GAS  /tmp/ccW2cv6a.s 			page 13
+
+
+ 495 0010 00040240 		.word	1073873920
+ 496              		.cfi_endproc
+ 497              	.LFE136:
+ 499              		.section	.text.ecat_NS_H,"ax",%progbits
+ 500              		.align	1
+ 501              		.global	ecat_NS_H
+ 502              		.syntax unified
+ 503              		.thumb
+ 504              		.thumb_func
+ 506              	ecat_NS_H:
+ 507              	.LFB137:
+  96:Lib/SPI_Bus/Src/spi_deal.c **** // 拉高片选
+  97:Lib/SPI_Bus/Src/spi_deal.c **** void ecat_NS_H(void)
+  98:Lib/SPI_Bus/Src/spi_deal.c **** {
+ 508              		.loc 1 98 1 is_stmt 1 view -0
+ 509              		.cfi_startproc
+ 510              		@ args = 0, pretend = 0, frame = 0
+ 511              		@ frame_needed = 0, uses_anonymous_args = 0
+ 512 0000 08B5     		push	{r3, lr}
+ 513              		.cfi_def_cfa_offset 8
+ 514              		.cfi_offset 3, -8
+ 515              		.cfi_offset 14, -4
+  99:Lib/SPI_Bus/Src/spi_deal.c ****     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_12, GPIO_PIN_SET);
+ 516              		.loc 1 99 5 view .LVU185
+ 517 0002 0122     		movs	r2, #1
+ 518 0004 4FF48051 		mov	r1, #4096
+ 519 0008 0148     		ldr	r0, .L20
+ 520 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
+ 521              	.LVL10:
  100:Lib/SPI_Bus/Src/spi_deal.c **** }
- 482              		.loc 1 100 1 is_stmt 0 view .LVU178
- 483 000e 08BD     		pop	{r3, pc}
- 484              	.L17:
- 485              		.align	2
- 486              	.L16:
- 487 0010 00040240 		.word	1073873920
- 488              		.cfi_endproc
- 489              	.LFE136:
- 491              		.section	.text.ecat_NS_H,"ax",%progbits
- 492              		.align	1
- 493              		.global	ecat_NS_H
- 494              		.syntax unified
-ARM GAS  /tmp/ccNaxIvK.s 			page 13
-
-
- 495              		.thumb
- 496              		.thumb_func
- 498              	ecat_NS_H:
- 499              	.LFB137:
+ 522              		.loc 1 100 1 is_stmt 0 view .LVU186
+ 523 000e 08BD     		pop	{r3, pc}
+ 524              	.L21:
+ 525              		.align	2
+ 526              	.L20:
+ 527 0010 00040240 		.word	1073873920
+ 528              		.cfi_endproc
+ 529              	.LFE137:
+ 531              		.section	.text.MASTER_Synchro,"ax",%progbits
+ 532              		.align	1
+ 533              		.global	MASTER_Synchro
+ 534              		.syntax unified
+ 535              		.thumb
+ 536              		.thumb_func
+ 538              	MASTER_Synchro:
+ 539              	.LFB138:
  101:Lib/SPI_Bus/Src/spi_deal.c **** 
- 102:Lib/SPI_Bus/Src/spi_deal.c **** void ecat_NS_H (void)
- 103:Lib/SPI_Bus/Src/spi_deal.c **** {
- 500              		.loc 1 103 1 is_stmt 1 view -0
- 501              		.cfi_startproc
- 502              		@ args = 0, pretend = 0, frame = 0
- 503              		@ frame_needed = 0, uses_anonymous_args = 0
- 504 0000 08B5     		push	{r3, lr}
- 505              		.cfi_def_cfa_offset 8
- 506              		.cfi_offset 3, -8
- 507              		.cfi_offset 14, -4
- 104:Lib/SPI_Bus/Src/spi_deal.c ****     HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_SET);
- 508              		.loc 1 104 5 view .LVU180
- 509 0002 0122     		movs	r2, #1
- 510 0004 4FF48051 		mov	r1, #4096
- 511 0008 0148     		ldr	r0, .L20
- 512 000a FFF7FEFF 		bl	HAL_GPIO_WritePin
- 513              	.LVL10:
- 105:Lib/SPI_Bus/Src/spi_deal.c **** }
- 514              		.loc 1 105 1 is_stmt 0 view .LVU181
- 515 000e 08BD     		pop	{r3, pc}
- 516              	.L21:
- 517              		.align	2
- 518              	.L20:
- 519 0010 00040240 		.word	1073873920
- 520              		.cfi_endproc
- 521              	.LFE137:
- 523              		.section	.text.sendToEcat,"ax",%progbits
- 524              		.align	1
- 525              		.global	sendToEcat
- 526              		.syntax unified
- 527              		.thumb
- 528              		.thumb_func
- 530              	sendToEcat:
- 531              	.LVL11:
- 532              	.LFB138:
- 106:Lib/SPI_Bus/Src/spi_deal.c **** 
- 107:Lib/SPI_Bus/Src/spi_deal.c **** 
- 108:Lib/SPI_Bus/Src/spi_deal.c **** void sendToEcat(int leg_id)
- 109:Lib/SPI_Bus/Src/spi_deal.c **** {   
- 533              		.loc 1 109 1 is_stmt 1 view -0
- 534              		.cfi_startproc
- 535              		@ args = 0, pretend = 0, frame = 48
- 536              		@ frame_needed = 0, uses_anonymous_args = 0
- 537              		.loc 1 109 1 is_stmt 0 view .LVU183
- 538 0000 10B5     		push	{r4, lr}
- 539              		.cfi_def_cfa_offset 8
- 540              		.cfi_offset 4, -8
- 541              		.cfi_offset 14, -4
- 542 0002 8EB0     		sub	sp, sp, #56
- 543              		.cfi_def_cfa_offset 64
- 544 0004 0446     		mov	r4, r0
- 110:Lib/SPI_Bus/Src/spi_deal.c ****     ecat_NS_L();
-ARM GAS  /tmp/ccNaxIvK.s 			page 14
+ 102:Lib/SPI_Bus/Src/spi_deal.c **** /// @brief 主从同步读写
+ 103:Lib/SPI_Bus/Src/spi_deal.c **** /// @param
+ 104:Lib/SPI_Bus/Src/spi_deal.c **** void MASTER_Synchro(void)
+ 105:Lib/SPI_Bus/Src/spi_deal.c **** {
+ 540              		.loc 1 105 1 is_stmt 1 view -0
+ 541              		.cfi_startproc
+ 542              		@ args = 0, pretend = 0, frame = 8
+ 543              		@ frame_needed = 0, uses_anonymous_args = 0
+ 544 0000 00B5     		push	{lr}
+ 545              		.cfi_def_cfa_offset 4
+ARM GAS  /tmp/ccW2cv6a.s 			page 14
 
 
- 545              		.loc 1 110 5 is_stmt 1 view .LVU184
- 546 0006 FFF7FEFF 		bl	ecat_NS_L
- 547              	.LVL12:
- 111:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t rxdate[21];
- 548              		.loc 1 111 5 view .LVU185
- 112:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t txdate[21];//= {1,1,1,1,1,1,1,1,11,1,1,1,1,1,1,1,1};
- 549              		.loc 1 112 5 view .LVU186
- 113:Lib/SPI_Bus/Src/spi_deal.c ****     memcpy(txdate ,&A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID],21);
- 550              		.loc 1 113 5 view .LVU187
- 551              		.loc 1 113 73 is_stmt 0 view .LVU188
- 552 000a 04EB0412 		add	r2, r4, r4, lsl #4
- 553 000e 184B     		ldr	r3, .L24
- 554 0010 03EBC203 		add	r3, r3, r2, lsl #3
- 555 0014 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
- 556              		.loc 1 113 20 view .LVU189
- 557 0016 174A     		ldr	r2, .L24+4
- 558 0018 03EB4303 		add	r3, r3, r3, lsl #1
- 559 001c 04EBC404 		add	r4, r4, r4, lsl #3
- 560              	.LVL13:
- 561              		.loc 1 113 20 view .LVU190
- 562 0020 E400     		lsls	r4, r4, #3
- 563 0022 04EBC304 		add	r4, r4, r3, lsl #3
- 564 0026 02EB040E 		add	lr, r2, r4
- 565              		.loc 1 113 5 view .LVU191
- 566 002a 0DF1080C 		add	ip, sp, #8
- 567 002e 1059     		ldr	r0, [r2, r4]	@ unaligned
- 568 0030 DEF80410 		ldr	r1, [lr, #4]	@ unaligned
- 569 0034 DEF80820 		ldr	r2, [lr, #8]	@ unaligned
- 570 0038 DEF80C30 		ldr	r3, [lr, #12]	@ unaligned
- 571 003c ACE80F00 		stmia	ip!, {r0, r1, r2, r3}
- 572 0040 DEF81000 		ldr	r0, [lr, #16]	@ unaligned
- 573 0044 CCF80000 		str	r0, [ip]
- 574 0048 9EF81430 		ldrb	r3, [lr, #20]	@ zero_extendqisi2
- 575 004c 8CF80430 		strb	r3, [ip, #4]
- 114:Lib/SPI_Bus/Src/spi_deal.c ****     HAL_SPI_TransmitReceive(&hspi2,txdate,rxdate,21,0x10);
- 576              		.loc 1 114 5 is_stmt 1 view .LVU192
- 577 0050 1023     		movs	r3, #16
- 578 0052 0093     		str	r3, [sp]
- 579 0054 1523     		movs	r3, #21
- 580 0056 08AA     		add	r2, sp, #32
- 581 0058 02A9     		add	r1, sp, #8
- 582 005a 0748     		ldr	r0, .L24+8
- 583 005c FFF7FEFF 		bl	HAL_SPI_TransmitReceive
- 584              	.LVL14:
+ 546              		.cfi_offset 14, -4
+ 547 0002 83B0     		sub	sp, sp, #12
+ 548              		.cfi_def_cfa_offset 16
+ 106:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t txbety = 0xD2;
+ 549              		.loc 1 106 5 view .LVU188
+ 550              		.loc 1 106 13 is_stmt 0 view .LVU189
+ 551 0004 D223     		movs	r3, #210
+ 552 0006 8DF80730 		strb	r3, [sp, #7]
+ 107:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t rxbety = 0x00;
+ 553              		.loc 1 107 5 is_stmt 1 view .LVU190
+ 554              		.loc 1 107 13 is_stmt 0 view .LVU191
+ 555 000a 0023     		movs	r3, #0
+ 556 000c 8DF80630 		strb	r3, [sp, #6]
+ 557 0010 0AE0     		b	.L25
+ 558              	.L24:
+ 108:Lib/SPI_Bus/Src/spi_deal.c **** 
+ 109:Lib/SPI_Bus/Src/spi_deal.c ****     do
+ 110:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 111:Lib/SPI_Bus/Src/spi_deal.c ****         if (HAL_SPI_TransmitReceive_IT(&hspi2, &txbety, &rxbety, 1) != HAL_OK)
+ 112:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 113:Lib/SPI_Bus/Src/spi_deal.c ****             Error_Handler();
+ 114:Lib/SPI_Bus/Src/spi_deal.c ****         }
  115:Lib/SPI_Bus/Src/spi_deal.c **** 
- 116:Lib/SPI_Bus/Src/spi_deal.c ****     SPI_RXdate(&RXA1cmd,rxdate);
- 585              		.loc 1 116 5 view .LVU193
- 586 0060 08A9     		add	r1, sp, #32
- 587 0062 0648     		ldr	r0, .L24+12
- 588 0064 FFF7FEFF 		bl	SPI_RXdate
- 589              	.LVL15:
- 117:Lib/SPI_Bus/Src/spi_deal.c ****     ecat_NS_H();
- 590              		.loc 1 117 5 view .LVU194
- 591 0068 FFF7FEFF 		bl	ecat_NS_H
- 592              	.LVL16:
- 118:Lib/SPI_Bus/Src/spi_deal.c **** }
- 593              		.loc 1 118 1 is_stmt 0 view .LVU195
-ARM GAS  /tmp/ccNaxIvK.s 			page 15
+ 116:Lib/SPI_Bus/Src/spi_deal.c ****         while (HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
+ 117:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 118:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 559              		.loc 1 118 9 is_stmt 1 discriminator 1 view .LVU192
+ 116:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 560              		.loc 1 116 15 discriminator 1 view .LVU193
+ 116:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 561              		.loc 1 116 16 is_stmt 0 discriminator 1 view .LVU194
+ 562 0012 0D48     		ldr	r0, .L28
+ 563 0014 FFF7FEFF 		bl	HAL_SPI_GetState
+ 564              	.LVL11:
+ 116:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 565              		.loc 1 116 15 discriminator 1 view .LVU195
+ 566 0018 0128     		cmp	r0, #1
+ 567 001a FAD1     		bne	.L24
+ 119:Lib/SPI_Bus/Src/spi_deal.c ****     } while (rxbety != txbety);
+ 568              		.loc 1 119 13 is_stmt 1 view .LVU196
+ 569              		.loc 1 119 21 is_stmt 0 view .LVU197
+ 570 001c 9DF80620 		ldrb	r2, [sp, #6]	@ zero_extendqisi2
+ 571 0020 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
+ 572              		.loc 1 119 5 view .LVU198
+ 573 0024 9A42     		cmp	r2, r3
+ 574 0026 0CD0     		beq	.L27
+ 575              	.L25:
+ 109:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 576              		.loc 1 109 5 is_stmt 1 view .LVU199
+ 111:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 577              		.loc 1 111 9 view .LVU200
+ 111:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 578              		.loc 1 111 13 is_stmt 0 view .LVU201
+ 579 0028 0123     		movs	r3, #1
+ 580 002a 0DF10602 		add	r2, sp, #6
+ 581 002e 0DF10701 		add	r1, sp, #7
+ 582 0032 0548     		ldr	r0, .L28
+ARM GAS  /tmp/ccW2cv6a.s 			page 15
 
 
- 594 006c 0EB0     		add	sp, sp, #56
- 595              		.cfi_def_cfa_offset 8
+ 583 0034 FFF7FEFF 		bl	HAL_SPI_TransmitReceive_IT
+ 584              	.LVL12:
+ 111:Lib/SPI_Bus/Src/spi_deal.c ****         {
+ 585              		.loc 1 111 12 view .LVU202
+ 586 0038 0028     		cmp	r0, #0
+ 587 003a EAD0     		beq	.L24
+ 113:Lib/SPI_Bus/Src/spi_deal.c ****         }
+ 588              		.loc 1 113 13 is_stmt 1 view .LVU203
+ 589 003c FFF7FEFF 		bl	Error_Handler
+ 590              	.LVL13:
+ 591 0040 E7E7     		b	.L24
+ 592              	.L27:
+ 120:Lib/SPI_Bus/Src/spi_deal.c **** }
+ 593              		.loc 1 120 1 is_stmt 0 view .LVU204
+ 594 0042 03B0     		add	sp, sp, #12
+ 595              		.cfi_def_cfa_offset 4
  596              		@ sp needed
- 597 006e 10BD     		pop	{r4, pc}
- 598              	.L25:
+ 597 0044 5DF804FB 		ldr	pc, [sp], #4
+ 598              	.L29:
  599              		.align	2
- 600              	.L24:
- 601 0070 00000000 		.word	data_leg
- 602 0074 00000000 		.word	.LANCHOR0
- 603 0078 00000000 		.word	hspi2
- 604 007c 00000000 		.word	.LANCHOR1
- 605              		.cfi_endproc
- 606              	.LFE138:
- 608              		.section	.text.MASTER_Synchro,"ax",%progbits
- 609              		.align	1
- 610              		.global	MASTER_Synchro
- 611              		.syntax unified
- 612              		.thumb
- 613              		.thumb_func
- 615              	MASTER_Synchro:
- 616              	.LFB140:
- 119:Lib/SPI_Bus/Src/spi_deal.c **** 
- 120:Lib/SPI_Bus/Src/spi_deal.c **** void SPI_TRANSMIT(int leg_id)
- 121:Lib/SPI_Bus/Src/spi_deal.c **** {   
- 122:Lib/SPI_Bus/Src/spi_deal.c ****     ecat_NS_L();
- 123:Lib/SPI_Bus/Src/spi_deal.c ****     MASTER_Synchro();
- 124:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t txdate[21]= {54,11,91,13,87,55,1,11,11,98,1,1,1,1,1,1,1};
- 125:Lib/SPI_Bus/Src/spi_deal.c ****     //memcpy(txdate ,&A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID],21);
- 126:Lib/SPI_Bus/Src/spi_deal.c **** 
- 127:Lib/SPI_Bus/Src/spi_deal.c ****     if(HAL_SPI_Transmit_IT(&hspi2,txdate,21) != HAL_OK)
- 128:Lib/SPI_Bus/Src/spi_deal.c ****     {
- 129:Lib/SPI_Bus/Src/spi_deal.c ****         Error_Handler();
- 130:Lib/SPI_Bus/Src/spi_deal.c ****     }
- 131:Lib/SPI_Bus/Src/spi_deal.c ****     while ( HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
- 132:Lib/SPI_Bus/Src/spi_deal.c ****     {}
- 133:Lib/SPI_Bus/Src/spi_deal.c ****     ecat_NS_H();
- 134:Lib/SPI_Bus/Src/spi_deal.c **** }
- 135:Lib/SPI_Bus/Src/spi_deal.c **** 
- 136:Lib/SPI_Bus/Src/spi_deal.c **** void MASTER_Synchro(void)
- 137:Lib/SPI_Bus/Src/spi_deal.c **** {
- 617              		.loc 1 137 1 is_stmt 1 view -0
- 618              		.cfi_startproc
- 619              		@ args = 0, pretend = 0, frame = 8
- 620              		@ frame_needed = 0, uses_anonymous_args = 0
- 621 0000 00B5     		push	{lr}
- 622              		.cfi_def_cfa_offset 4
- 623              		.cfi_offset 14, -4
- 624 0002 83B0     		sub	sp, sp, #12
- 625              		.cfi_def_cfa_offset 16
- 138:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t txbety = 0xD2;
- 626              		.loc 1 138 5 view .LVU197
- 627              		.loc 1 138 13 is_stmt 0 view .LVU198
- 628 0004 D223     		movs	r3, #210
- 629 0006 8DF80730 		strb	r3, [sp, #7]
- 139:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t rxbety = 0x00;
- 630              		.loc 1 139 5 is_stmt 1 view .LVU199
- 631              		.loc 1 139 13 is_stmt 0 view .LVU200
-ARM GAS  /tmp/ccNaxIvK.s 			page 16
+ 600              	.L28:
+ 601 0048 00000000 		.word	hspi2
+ 602              		.cfi_endproc
+ 603              	.LFE138:
+ 605              		.section	.text.SPI_RECEIVE,"ax",%progbits
+ 606              		.align	1
+ 607              		.global	SPI_RECEIVE
+ 608              		.syntax unified
+ 609              		.thumb
+ 610              		.thumb_func
+ 612              	SPI_RECEIVE:
+ 613              	.LFB139:
+ 121:Lib/SPI_Bus/Src/spi_deal.c **** 
+ 122:Lib/SPI_Bus/Src/spi_deal.c **** /// @brief 进行一次中断形式的接收,并尝试赋值给发送电机数据结构体
+ 123:Lib/SPI_Bus/Src/spi_deal.c **** /// @param
+ 124:Lib/SPI_Bus/Src/spi_deal.c **** void SPI_RECEIVE(void)
+ 125:Lib/SPI_Bus/Src/spi_deal.c **** {
+ 614              		.loc 1 125 1 is_stmt 1 view -0
+ 615              		.cfi_startproc
+ 616              		@ args = 0, pretend = 0, frame = 24
+ 617              		@ frame_needed = 0, uses_anonymous_args = 0
+ 618 0000 00B5     		push	{lr}
+ 619              		.cfi_def_cfa_offset 4
+ 620              		.cfi_offset 14, -4
+ 621 0002 87B0     		sub	sp, sp, #28
+ 622              		.cfi_def_cfa_offset 32
+ 126:Lib/SPI_Bus/Src/spi_deal.c ****     ecat_NS_L();
+ 623              		.loc 1 126 5 view .LVU206
+ 624 0004 FFF7FEFF 		bl	ecat_NS_L
+ 625              	.LVL14:
+ 127:Lib/SPI_Bus/Src/spi_deal.c ****     MASTER_Synchro();
+ 626              		.loc 1 127 5 view .LVU207
+ 627 0008 FFF7FEFF 		bl	MASTER_Synchro
+ 628              	.LVL15:
+ 128:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t rxdate[21];
+ 629              		.loc 1 128 5 view .LVU208
+ 129:Lib/SPI_Bus/Src/spi_deal.c ****     if (HAL_SPI_Receive_IT(&hspi2, rxdate, 21) != HAL_OK)
+ARM GAS  /tmp/ccW2cv6a.s 			page 16
 
 
- 632 000a 0023     		movs	r3, #0
- 633 000c 8DF80630 		strb	r3, [sp, #6]
- 634 0010 0AE0     		b	.L29
- 635              	.L28:
+ 630              		.loc 1 129 5 view .LVU209
+ 631              		.loc 1 129 9 is_stmt 0 view .LVU210
+ 632 000c 1522     		movs	r2, #21
+ 633 000e 6946     		mov	r1, sp
+ 634 0010 0A48     		ldr	r0, .L35
+ 635 0012 FFF7FEFF 		bl	HAL_SPI_Receive_IT
+ 636              	.LVL16:
+ 637              		.loc 1 129 8 view .LVU211
+ 638 0016 68B9     		cbnz	r0, .L34
+ 639              	.L32:
+ 130:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 131:Lib/SPI_Bus/Src/spi_deal.c ****         Error_Handler();
+ 132:Lib/SPI_Bus/Src/spi_deal.c ****     }
+ 133:Lib/SPI_Bus/Src/spi_deal.c ****     while (HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
+ 134:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 135:Lib/SPI_Bus/Src/spi_deal.c ****     }
+ 640              		.loc 1 135 5 is_stmt 1 discriminator 1 view .LVU212
+ 133:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 641              		.loc 1 133 11 discriminator 1 view .LVU213
+ 133:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 642              		.loc 1 133 12 is_stmt 0 discriminator 1 view .LVU214
+ 643 0018 0848     		ldr	r0, .L35
+ 644 001a FFF7FEFF 		bl	HAL_SPI_GetState
+ 645              	.LVL17:
+ 133:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 646              		.loc 1 133 11 discriminator 1 view .LVU215
+ 647 001e 0128     		cmp	r0, #1
+ 648 0020 FAD1     		bne	.L32
+ 136:Lib/SPI_Bus/Src/spi_deal.c **** 
+ 137:Lib/SPI_Bus/Src/spi_deal.c ****     SPI_RXdate(&RXA1cmd, rxdate);
+ 649              		.loc 1 137 5 is_stmt 1 view .LVU216
+ 650 0022 6946     		mov	r1, sp
+ 651 0024 0648     		ldr	r0, .L35+4
+ 652 0026 FFF7FEFF 		bl	SPI_RXdate
+ 653              	.LVL18:
+ 138:Lib/SPI_Bus/Src/spi_deal.c ****     ecat_NS_H();
+ 654              		.loc 1 138 5 view .LVU217
+ 655 002a FFF7FEFF 		bl	ecat_NS_H
+ 656              	.LVL19:
+ 139:Lib/SPI_Bus/Src/spi_deal.c **** }
+ 657              		.loc 1 139 1 is_stmt 0 view .LVU218
+ 658 002e 07B0     		add	sp, sp, #28
+ 659              		.cfi_remember_state
+ 660              		.cfi_def_cfa_offset 4
+ 661              		@ sp needed
+ 662 0030 5DF804FB 		ldr	pc, [sp], #4
+ 663              	.L34:
+ 664              		.cfi_restore_state
+ 131:Lib/SPI_Bus/Src/spi_deal.c ****     }
+ 665              		.loc 1 131 9 is_stmt 1 view .LVU219
+ 666 0034 FFF7FEFF 		bl	Error_Handler
+ 667              	.LVL20:
+ 668 0038 EEE7     		b	.L32
+ 669              	.L36:
+ 670 003a 00BF     		.align	2
+ 671              	.L35:
+ 672 003c 00000000 		.word	hspi2
+ARM GAS  /tmp/ccW2cv6a.s 			page 17
+
+
+ 673 0040 00000000 		.word	.LANCHOR0
+ 674              		.cfi_endproc
+ 675              	.LFE139:
+ 677              		.section	.text.link_2array,"ax",%progbits
+ 678              		.align	1
+ 679              		.global	link_2array
+ 680              		.syntax unified
+ 681              		.thumb
+ 682              		.thumb_func
+ 684              	link_2array:
+ 685              	.LVL21:
+ 686              	.LFB141:
  140:Lib/SPI_Bus/Src/spi_deal.c **** 
- 141:Lib/SPI_Bus/Src/spi_deal.c ****     do
- 142:Lib/SPI_Bus/Src/spi_deal.c ****     {
- 143:Lib/SPI_Bus/Src/spi_deal.c ****         if (HAL_SPI_TransmitReceive_IT(&hspi2,&txbety,&rxbety,1) != HAL_OK)
- 144:Lib/SPI_Bus/Src/spi_deal.c ****         {
- 145:Lib/SPI_Bus/Src/spi_deal.c ****             Error_Handler();
- 146:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 147:Lib/SPI_Bus/Src/spi_deal.c **** 
- 148:Lib/SPI_Bus/Src/spi_deal.c ****     while ( HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
- 149:Lib/SPI_Bus/Src/spi_deal.c ****     {}
- 636              		.loc 1 149 6 is_stmt 1 discriminator 1 view .LVU201
- 148:Lib/SPI_Bus/Src/spi_deal.c ****     {}
- 637              		.loc 1 148 11 discriminator 1 view .LVU202
- 148:Lib/SPI_Bus/Src/spi_deal.c ****     {}
- 638              		.loc 1 148 13 is_stmt 0 discriminator 1 view .LVU203
- 639 0012 0D48     		ldr	r0, .L32
- 640 0014 FFF7FEFF 		bl	HAL_SPI_GetState
- 641              	.LVL17:
- 148:Lib/SPI_Bus/Src/spi_deal.c ****     {}
- 642              		.loc 1 148 11 discriminator 1 view .LVU204
- 643 0018 0128     		cmp	r0, #1
- 644 001a FAD1     		bne	.L28
- 150:Lib/SPI_Bus/Src/spi_deal.c ****     } while (rxbety != txbety);
- 645              		.loc 1 150 13 is_stmt 1 view .LVU205
- 646              		.loc 1 150 21 is_stmt 0 view .LVU206
- 647 001c 9DF80620 		ldrb	r2, [sp, #6]	@ zero_extendqisi2
- 648 0020 9DF80730 		ldrb	r3, [sp, #7]	@ zero_extendqisi2
- 649              		.loc 1 150 5 view .LVU207
- 650 0024 9A42     		cmp	r2, r3
- 651 0026 0CD0     		beq	.L31
- 652              	.L29:
- 141:Lib/SPI_Bus/Src/spi_deal.c ****     {
- 653              		.loc 1 141 5 is_stmt 1 view .LVU208
- 143:Lib/SPI_Bus/Src/spi_deal.c ****         {
- 654              		.loc 1 143 9 view .LVU209
- 143:Lib/SPI_Bus/Src/spi_deal.c ****         {
- 655              		.loc 1 143 13 is_stmt 0 view .LVU210
- 656 0028 0123     		movs	r3, #1
- 657 002a 0DF10602 		add	r2, sp, #6
- 658 002e 0DF10701 		add	r1, sp, #7
- 659 0032 0548     		ldr	r0, .L32
- 660 0034 FFF7FEFF 		bl	HAL_SPI_TransmitReceive_IT
- 661              	.LVL18:
- 143:Lib/SPI_Bus/Src/spi_deal.c ****         {
- 662              		.loc 1 143 12 view .LVU211
- 663 0038 0028     		cmp	r0, #0
- 664 003a EAD0     		beq	.L28
- 145:Lib/SPI_Bus/Src/spi_deal.c ****         }
- 665              		.loc 1 145 13 is_stmt 1 view .LVU212
- 666 003c FFF7FEFF 		bl	Error_Handler
- 667              	.LVL19:
- 668 0040 E7E7     		b	.L28
- 669              	.L31:
-ARM GAS  /tmp/ccNaxIvK.s 			page 17
-
-
- 151:Lib/SPI_Bus/Src/spi_deal.c **** }
- 670              		.loc 1 151 1 is_stmt 0 view .LVU213
- 671 0042 03B0     		add	sp, sp, #12
- 672              		.cfi_def_cfa_offset 4
- 673              		@ sp needed
- 674 0044 5DF804FB 		ldr	pc, [sp], #4
- 675              	.L33:
- 676              		.align	2
- 677              	.L32:
- 678 0048 00000000 		.word	hspi2
- 679              		.cfi_endproc
- 680              	.LFE140:
- 682              		.section	.text.SPI_TRANSMIT,"ax",%progbits
- 683              		.align	1
- 684              		.global	SPI_TRANSMIT
- 685              		.syntax unified
- 686              		.thumb
- 687              		.thumb_func
- 689              	SPI_TRANSMIT:
- 690              	.LVL20:
- 691              	.LFB139:
- 121:Lib/SPI_Bus/Src/spi_deal.c ****     ecat_NS_L();
- 692              		.loc 1 121 1 is_stmt 1 view -0
- 693              		.cfi_startproc
- 694              		@ args = 0, pretend = 0, frame = 24
- 695              		@ frame_needed = 0, uses_anonymous_args = 0
- 121:Lib/SPI_Bus/Src/spi_deal.c ****     ecat_NS_L();
- 696              		.loc 1 121 1 is_stmt 0 view .LVU215
- 697 0000 10B5     		push	{r4, lr}
- 698              		.cfi_def_cfa_offset 8
- 699              		.cfi_offset 4, -8
- 700              		.cfi_offset 14, -4
- 701 0002 86B0     		sub	sp, sp, #24
- 702              		.cfi_def_cfa_offset 32
- 122:Lib/SPI_Bus/Src/spi_deal.c ****     MASTER_Synchro();
- 703              		.loc 1 122 5 is_stmt 1 view .LVU216
- 704 0004 FFF7FEFF 		bl	ecat_NS_L
- 705              	.LVL21:
- 123:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t txdate[21]= {54,11,91,13,87,55,1,11,11,98,1,1,1,1,1,1,1};
- 706              		.loc 1 123 5 view .LVU217
- 707 0008 FFF7FEFF 		bl	MASTER_Synchro
- 708              	.LVL22:
- 124:Lib/SPI_Bus/Src/spi_deal.c ****     //memcpy(txdate ,&A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID],21);
- 709              		.loc 1 124 5 view .LVU218
- 124:Lib/SPI_Bus/Src/spi_deal.c ****     //memcpy(txdate ,&A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID],21);
- 710              		.loc 1 124 13 is_stmt 0 view .LVU219
- 711 000c EC46     		mov	ip, sp
- 712 000e 0F4C     		ldr	r4, .L39
- 713 0010 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
- 714 0012 ACE80F00 		stmia	ip!, {r0, r1, r2, r3}
- 715 0016 2368     		ldr	r3, [r4]
- 716 0018 ACF80030 		strh	r3, [ip]	@ movhi
- 717 001c 0023     		movs	r3, #0
- 718 001e ADF81230 		strh	r3, [sp, #18]	@ movhi
- 719 0022 8DF81430 		strb	r3, [sp, #20]
- 127:Lib/SPI_Bus/Src/spi_deal.c ****     {
- 720              		.loc 1 127 5 is_stmt 1 view .LVU220
-ARM GAS  /tmp/ccNaxIvK.s 			page 18
-
-
- 127:Lib/SPI_Bus/Src/spi_deal.c ****     {
- 721              		.loc 1 127 8 is_stmt 0 view .LVU221
- 722 0026 1522     		movs	r2, #21
- 723 0028 6946     		mov	r1, sp
- 724 002a 0948     		ldr	r0, .L39+4
- 725 002c FFF7FEFF 		bl	HAL_SPI_Transmit_IT
- 726              	.LVL23:
- 127:Lib/SPI_Bus/Src/spi_deal.c ****     {
- 727              		.loc 1 127 7 view .LVU222
- 728 0030 40B9     		cbnz	r0, .L38
- 729              	.L36:
- 132:Lib/SPI_Bus/Src/spi_deal.c ****     ecat_NS_H();
- 730              		.loc 1 132 6 is_stmt 1 discriminator 1 view .LVU223
- 131:Lib/SPI_Bus/Src/spi_deal.c ****     {}
- 731              		.loc 1 131 11 discriminator 1 view .LVU224
- 131:Lib/SPI_Bus/Src/spi_deal.c ****     {}
- 732              		.loc 1 131 13 is_stmt 0 discriminator 1 view .LVU225
- 733 0032 0748     		ldr	r0, .L39+4
- 734 0034 FFF7FEFF 		bl	HAL_SPI_GetState
- 735              	.LVL24:
- 131:Lib/SPI_Bus/Src/spi_deal.c ****     {}
- 736              		.loc 1 131 11 discriminator 1 view .LVU226
- 737 0038 0128     		cmp	r0, #1
- 738 003a FAD1     		bne	.L36
- 133:Lib/SPI_Bus/Src/spi_deal.c **** }
- 739              		.loc 1 133 5 is_stmt 1 view .LVU227
- 740 003c FFF7FEFF 		bl	ecat_NS_H
- 741              	.LVL25:
- 134:Lib/SPI_Bus/Src/spi_deal.c **** 
- 742              		.loc 1 134 1 is_stmt 0 view .LVU228
- 743 0040 06B0     		add	sp, sp, #24
- 744              		.cfi_remember_state
- 745              		.cfi_def_cfa_offset 8
- 746              		@ sp needed
- 747 0042 10BD     		pop	{r4, pc}
- 748              	.L38:
- 749              		.cfi_restore_state
- 129:Lib/SPI_Bus/Src/spi_deal.c ****     }
- 750              		.loc 1 129 9 is_stmt 1 view .LVU229
- 751 0044 FFF7FEFF 		bl	Error_Handler
- 752              	.LVL26:
- 753 0048 F3E7     		b	.L36
- 754              	.L40:
- 755 004a 00BF     		.align	2
- 756              	.L39:
- 757 004c 00000000 		.word	.LANCHOR2
- 758 0050 00000000 		.word	hspi2
- 759              		.cfi_endproc
- 760              	.LFE139:
- 762              		.section	.text.SPI_RECEIVE,"ax",%progbits
- 763              		.align	1
- 764              		.global	SPI_RECEIVE
- 765              		.syntax unified
- 766              		.thumb
- 767              		.thumb_func
- 769              	SPI_RECEIVE:
- 770              	.LFB141:
-ARM GAS  /tmp/ccNaxIvK.s 			page 19
-
-
- 152:Lib/SPI_Bus/Src/spi_deal.c **** 
- 153:Lib/SPI_Bus/Src/spi_deal.c **** void SPI_RECEIVE(void)
- 154:Lib/SPI_Bus/Src/spi_deal.c **** {   ecat_NS_L();
- 771              		.loc 1 154 1 view -0
- 772              		.cfi_startproc
- 773              		@ args = 0, pretend = 0, frame = 24
- 774              		@ frame_needed = 0, uses_anonymous_args = 0
- 775 0000 00B5     		push	{lr}
- 776              		.cfi_def_cfa_offset 4
- 777              		.cfi_offset 14, -4
- 778 0002 87B0     		sub	sp, sp, #28
- 779              		.cfi_def_cfa_offset 32
- 780              		.loc 1 154 5 view .LVU231
- 781 0004 FFF7FEFF 		bl	ecat_NS_L
- 782              	.LVL27:
- 155:Lib/SPI_Bus/Src/spi_deal.c ****     MASTER_Synchro();
- 783              		.loc 1 155 5 view .LVU232
- 784 0008 FFF7FEFF 		bl	MASTER_Synchro
- 785              	.LVL28:
- 156:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t rxdate[21];
- 786              		.loc 1 156 5 view .LVU233
- 157:Lib/SPI_Bus/Src/spi_deal.c ****     HAL_SPI_Receive_IT(&hspi2,rxdate,21);
- 787              		.loc 1 157 5 view .LVU234
- 788 000c 1522     		movs	r2, #21
- 789 000e 6946     		mov	r1, sp
- 790 0010 0548     		ldr	r0, .L43
- 791 0012 FFF7FEFF 		bl	HAL_SPI_Receive_IT
- 792              	.LVL29:
- 158:Lib/SPI_Bus/Src/spi_deal.c ****     SPI_RXdate(&RXA1cmd,rxdate);
- 793              		.loc 1 158 5 view .LVU235
- 794 0016 6946     		mov	r1, sp
- 795 0018 0448     		ldr	r0, .L43+4
- 796 001a FFF7FEFF 		bl	SPI_RXdate
- 797              	.LVL30:
+ 141:Lib/SPI_Bus/Src/spi_deal.c **** /// @brief 进行一次中断形式的发送
+ 142:Lib/SPI_Bus/Src/spi_deal.c **** /// @param leg_id 对应腿的ID
+ 143:Lib/SPI_Bus/Src/spi_deal.c **** void SPI_TRANSMIT(int leg_id)
+ 144:Lib/SPI_Bus/Src/spi_deal.c **** {
+ 145:Lib/SPI_Bus/Src/spi_deal.c ****     ecat_NS_L();
+ 146:Lib/SPI_Bus/Src/spi_deal.c ****     MASTER_Synchro();
+ 147:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t TXdate[42];
+ 148:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t txdate_1[21];
+ 149:Lib/SPI_Bus/Src/spi_deal.c ****     memcpy(txdate_1, &A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID], 21);
+ 150:Lib/SPI_Bus/Src/spi_deal.c ****     link_2array(txdate_1,TXdate);
+ 151:Lib/SPI_Bus/Src/spi_deal.c **** 
+ 152:Lib/SPI_Bus/Src/spi_deal.c ****     if (HAL_SPI_Transmit_IT(&hspi2, TXdate, 41) != HAL_OK)
+ 153:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 154:Lib/SPI_Bus/Src/spi_deal.c ****         Error_Handler();
+ 155:Lib/SPI_Bus/Src/spi_deal.c ****     }
+ 156:Lib/SPI_Bus/Src/spi_deal.c ****     while (HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
+ 157:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 158:Lib/SPI_Bus/Src/spi_deal.c ****     }
  159:Lib/SPI_Bus/Src/spi_deal.c ****     ecat_NS_H();
- 798              		.loc 1 159 5 view .LVU236
- 799 001e FFF7FEFF 		bl	ecat_NS_H
- 800              	.LVL31:
+ 160:Lib/SPI_Bus/Src/spi_deal.c **** }
+ 161:Lib/SPI_Bus/Src/spi_deal.c **** 
+ 162:Lib/SPI_Bus/Src/spi_deal.c **** void link_2array(uint8_t *array1,uint8_t *array3)
+ 163:Lib/SPI_Bus/Src/spi_deal.c **** {
+ 687              		.loc 1 163 1 view -0
+ 688              		.cfi_startproc
+ 689              		@ args = 0, pretend = 0, frame = 0
+ 690              		@ frame_needed = 0, uses_anonymous_args = 0
+ 691              		@ link register save eliminated.
+ 164:Lib/SPI_Bus/Src/spi_deal.c ****     for (int i = 0; i < 20; i++)
+ 692              		.loc 1 164 5 view .LVU221
+ 693              	.LBB6:
+ 694              		.loc 1 164 10 view .LVU222
+ 695              		.loc 1 164 14 is_stmt 0 view .LVU223
+ 696 0000 0023     		movs	r3, #0
+ 697              		.loc 1 164 5 view .LVU224
+ 698 0002 05E0     		b	.L38
+ 699              	.LVL22:
+ 700              	.L39:
+ 165:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 166:Lib/SPI_Bus/Src/spi_deal.c ****         *(array3 + i) = *(array1 + i + 1);
+ 701              		.loc 1 166 9 is_stmt 1 discriminator 3 view .LVU225
+ 702              		.loc 1 166 38 is_stmt 0 discriminator 3 view .LVU226
+ 703 0004 5A1C     		adds	r2, r3, #1
+ 704              		.loc 1 166 25 discriminator 3 view .LVU227
+ARM GAS  /tmp/ccW2cv6a.s 			page 18
+
+
+ 705 0006 10F802C0 		ldrb	ip, [r0, r2]	@ zero_extendqisi2
+ 706              		.loc 1 166 23 discriminator 3 view .LVU228
+ 707 000a 01F803C0 		strb	ip, [r1, r3]
+ 164:Lib/SPI_Bus/Src/spi_deal.c ****     for (int i = 0; i < 20; i++)
+ 708              		.loc 1 164 29 is_stmt 1 discriminator 3 view .LVU229
+ 164:Lib/SPI_Bus/Src/spi_deal.c ****     for (int i = 0; i < 20; i++)
+ 709              		.loc 1 164 30 is_stmt 0 discriminator 3 view .LVU230
+ 710 000e 1346     		mov	r3, r2
+ 711              	.LVL23:
+ 712              	.L38:
+ 164:Lib/SPI_Bus/Src/spi_deal.c ****     for (int i = 0; i < 20; i++)
+ 713              		.loc 1 164 21 is_stmt 1 discriminator 1 view .LVU231
+ 164:Lib/SPI_Bus/Src/spi_deal.c ****     for (int i = 0; i < 20; i++)
+ 714              		.loc 1 164 5 is_stmt 0 discriminator 1 view .LVU232
+ 715 0010 132B     		cmp	r3, #19
+ 716 0012 F7DD     		ble	.L39
+ 717              	.LBE6:
+ 718              	.LBB7:
+ 167:Lib/SPI_Bus/Src/spi_deal.c ****     }
+ 168:Lib/SPI_Bus/Src/spi_deal.c **** 
+ 169:Lib/SPI_Bus/Src/spi_deal.c ****     for (int i = 0; i < 21; i++)
+ 719              		.loc 1 169 14 view .LVU233
+ 720 0014 0023     		movs	r3, #0
+ 721              	.LVL24:
+ 722              		.loc 1 169 14 view .LVU234
+ 723 0016 06E0     		b	.L40
+ 724              	.LVL25:
+ 725              	.L41:
+ 170:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 171:Lib/SPI_Bus/Src/spi_deal.c ****         *(array3 + i + 20) = *(array1 + i);
+ 726              		.loc 1 171 9 is_stmt 1 discriminator 3 view .LVU235
+ 727              		.loc 1 171 22 is_stmt 0 discriminator 3 view .LVU236
+ 728 0018 03F11402 		add	r2, r3, #20
+ 729              		.loc 1 171 30 discriminator 3 view .LVU237
+ 730 001c 10F803C0 		ldrb	ip, [r0, r3]	@ zero_extendqisi2
+ 731              		.loc 1 171 28 discriminator 3 view .LVU238
+ 732 0020 01F802C0 		strb	ip, [r1, r2]
+ 169:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 733              		.loc 1 169 29 is_stmt 1 discriminator 3 view .LVU239
+ 169:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 734              		.loc 1 169 30 is_stmt 0 discriminator 3 view .LVU240
+ 735 0024 0133     		adds	r3, r3, #1
+ 736              	.LVL26:
+ 737              	.L40:
+ 169:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 738              		.loc 1 169 21 is_stmt 1 discriminator 1 view .LVU241
+ 169:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 739              		.loc 1 169 5 is_stmt 0 discriminator 1 view .LVU242
+ 740 0026 142B     		cmp	r3, #20
+ 741 0028 F6DD     		ble	.L41
+ 742              	.LBE7:
+ 172:Lib/SPI_Bus/Src/spi_deal.c ****     }
+ 173:Lib/SPI_Bus/Src/spi_deal.c **** 
+ 174:Lib/SPI_Bus/Src/spi_deal.c ****     *(array3) = 0xFE;
+ 743              		.loc 1 174 5 is_stmt 1 view .LVU243
+ 744              		.loc 1 174 15 is_stmt 0 view .LVU244
+ 745 002a FE23     		movs	r3, #254
+ARM GAS  /tmp/ccW2cv6a.s 			page 19
+
+
+ 746              	.LVL27:
+ 747              		.loc 1 174 15 view .LVU245
+ 748 002c 0B70     		strb	r3, [r1]
+ 175:Lib/SPI_Bus/Src/spi_deal.c ****     *(array3 + 20) = 0xD2;
+ 749              		.loc 1 175 5 is_stmt 1 view .LVU246
+ 750              		.loc 1 175 20 is_stmt 0 view .LVU247
+ 751 002e D222     		movs	r2, #210
+ 752 0030 0A75     		strb	r2, [r1, #20]
+ 176:Lib/SPI_Bus/Src/spi_deal.c ****     *(array3 + 21) = 0xFE;
+ 753              		.loc 1 176 5 is_stmt 1 view .LVU248
+ 754              		.loc 1 176 20 is_stmt 0 view .LVU249
+ 755 0032 4B75     		strb	r3, [r1, #21]
+ 177:Lib/SPI_Bus/Src/spi_deal.c ****     /*
+ 178:Lib/SPI_Bus/Src/spi_deal.c ****     int length1 = sizeof(array1) / sizeof(array1[0]);
+ 179:Lib/SPI_Bus/Src/spi_deal.c ****     int length2 = sizeof(array2) / sizeof(array2[0]);
+ 180:Lib/SPI_Bus/Src/spi_deal.c **** 
+ 181:Lib/SPI_Bus/Src/spi_deal.c ****     // 创建新数组
+ 182:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t *mergedArray = (uint8_t *)malloc((length1 + length2) * sizeof(int));
+ 183:Lib/SPI_Bus/Src/spi_deal.c ****     if (mergedArray == NULL) {
+ 184:Lib/SPI_Bus/Src/spi_deal.c ****         // 内存分配失败处理
+ 185:Lib/SPI_Bus/Src/spi_deal.c ****         //printf("Memory allocation failed!\n");
+ 186:Lib/SPI_Bus/Src/spi_deal.c ****         return 1;
+ 187:Lib/SPI_Bus/Src/spi_deal.c ****     }
+ 188:Lib/SPI_Bus/Src/spi_deal.c **** 
+ 189:Lib/SPI_Bus/Src/spi_deal.c ****     // 复制数组元素
+ 190:Lib/SPI_Bus/Src/spi_deal.c ****     int index = 0;
+ 191:Lib/SPI_Bus/Src/spi_deal.c ****     for (int i = 0; i < length1; i++) {
+ 192:Lib/SPI_Bus/Src/spi_deal.c ****         mergedArray[index++] = array1[i];
+ 193:Lib/SPI_Bus/Src/spi_deal.c ****     }
+ 194:Lib/SPI_Bus/Src/spi_deal.c ****     for (int i = 0; i < length2; i++) {
+ 195:Lib/SPI_Bus/Src/spi_deal.c ****         mergedArray[index++] = array2[i];
+ 196:Lib/SPI_Bus/Src/spi_deal.c ****     }
+ 197:Lib/SPI_Bus/Src/spi_deal.c **** 
+ 198:Lib/SPI_Bus/Src/spi_deal.c ****     array3 = mergedArray;
+ 199:Lib/SPI_Bus/Src/spi_deal.c ****     // 释放内存
+ 200:Lib/SPI_Bus/Src/spi_deal.c ****     free(mergedArray);
+ 201:Lib/SPI_Bus/Src/spi_deal.c ****     */
+ 202:Lib/SPI_Bus/Src/spi_deal.c **** }
+ 756              		.loc 1 202 1 view .LVU250
+ 757 0034 7047     		bx	lr
+ 758              		.cfi_endproc
+ 759              	.LFE141:
+ 761              		.section	.text.SPI_TRANSMIT,"ax",%progbits
+ 762              		.align	1
+ 763              		.global	SPI_TRANSMIT
+ 764              		.syntax unified
+ 765              		.thumb
+ 766              		.thumb_func
+ 768              	SPI_TRANSMIT:
+ 769              	.LVL28:
+ 770              	.LFB140:
+ 144:Lib/SPI_Bus/Src/spi_deal.c ****     ecat_NS_L();
+ 771              		.loc 1 144 1 is_stmt 1 view -0
+ 772              		.cfi_startproc
+ 773              		@ args = 0, pretend = 0, frame = 72
+ 774              		@ frame_needed = 0, uses_anonymous_args = 0
+ 144:Lib/SPI_Bus/Src/spi_deal.c ****     ecat_NS_L();
+ARM GAS  /tmp/ccW2cv6a.s 			page 20
+
+
+ 775              		.loc 1 144 1 is_stmt 0 view .LVU252
+ 776 0000 10B5     		push	{r4, lr}
+ 777              		.cfi_def_cfa_offset 8
+ 778              		.cfi_offset 4, -8
+ 779              		.cfi_offset 14, -4
+ 780 0002 92B0     		sub	sp, sp, #72
+ 781              		.cfi_def_cfa_offset 80
+ 782 0004 0446     		mov	r4, r0
+ 145:Lib/SPI_Bus/Src/spi_deal.c ****     MASTER_Synchro();
+ 783              		.loc 1 145 5 is_stmt 1 view .LVU253
+ 784 0006 FFF7FEFF 		bl	ecat_NS_L
+ 785              	.LVL29:
+ 146:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t TXdate[42];
+ 786              		.loc 1 146 5 view .LVU254
+ 787 000a FFF7FEFF 		bl	MASTER_Synchro
+ 788              	.LVL30:
+ 147:Lib/SPI_Bus/Src/spi_deal.c ****     uint8_t txdate_1[21];
+ 789              		.loc 1 147 5 view .LVU255
+ 148:Lib/SPI_Bus/Src/spi_deal.c ****     memcpy(txdate_1, &A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID], 21);
+ 790              		.loc 1 148 5 view .LVU256
+ 149:Lib/SPI_Bus/Src/spi_deal.c ****     link_2array(txdate_1,TXdate);
+ 791              		.loc 1 149 5 view .LVU257
+ 149:Lib/SPI_Bus/Src/spi_deal.c ****     link_2array(txdate_1,TXdate);
+ 792              		.loc 1 149 75 is_stmt 0 view .LVU258
+ 793 000e 04EB0412 		add	r2, r4, r4, lsl #4
+ 794 0012 184B     		ldr	r3, .L47
+ 795 0014 03EBC203 		add	r3, r3, r2, lsl #3
+ 796 0018 9B78     		ldrb	r3, [r3, #2]	@ zero_extendqisi2
+ 149:Lib/SPI_Bus/Src/spi_deal.c ****     link_2array(txdate_1,TXdate);
+ 797              		.loc 1 149 22 view .LVU259
+ 798 001a 174A     		ldr	r2, .L47+4
+ 799 001c 03EB4303 		add	r3, r3, r3, lsl #1
+ 800 0020 C3EBC303 		rsb	r3, r3, r3, lsl #3
+ 801 0024 C4EB8414 		rsb	r4, r4, r4, lsl #6
+ 802              	.LVL31:
+ 149:Lib/SPI_Bus/Src/spi_deal.c ****     link_2array(txdate_1,TXdate);
+ 803              		.loc 1 149 22 view .LVU260
+ 804 0028 2344     		add	r3, r3, r4
+ 805 002a D418     		adds	r4, r2, r3
+ 149:Lib/SPI_Bus/Src/spi_deal.c ****     link_2array(txdate_1,TXdate);
+ 806              		.loc 1 149 5 view .LVU261
+ 807 002c 0DF1040C 		add	ip, sp, #4
+ 808 0030 D058     		ldr	r0, [r2, r3]	@ unaligned
+ 809 0032 6168     		ldr	r1, [r4, #4]	@ unaligned
+ 810 0034 A268     		ldr	r2, [r4, #8]	@ unaligned
+ 811 0036 E368     		ldr	r3, [r4, #12]	@ unaligned
+ 812 0038 ACE80F00 		stmia	ip!, {r0, r1, r2, r3}
+ 813 003c 2069     		ldr	r0, [r4, #16]	@ unaligned
+ 814 003e CCF80000 		str	r0, [ip]
+ 815 0042 237D     		ldrb	r3, [r4, #20]	@ zero_extendqisi2
+ 816 0044 8CF80430 		strb	r3, [ip, #4]
+ 150:Lib/SPI_Bus/Src/spi_deal.c **** 
+ 817              		.loc 1 150 5 is_stmt 1 view .LVU262
+ 818 0048 07A9     		add	r1, sp, #28
+ 819 004a 01A8     		add	r0, sp, #4
+ 820 004c FFF7FEFF 		bl	link_2array
+ 821              	.LVL32:
+ARM GAS  /tmp/ccW2cv6a.s 			page 21
+
+
+ 152:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 822              		.loc 1 152 5 view .LVU263
+ 152:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 823              		.loc 1 152 9 is_stmt 0 view .LVU264
+ 824 0050 2922     		movs	r2, #41
+ 825 0052 07A9     		add	r1, sp, #28
+ 826 0054 0948     		ldr	r0, .L47+8
+ 827 0056 FFF7FEFF 		bl	HAL_SPI_Transmit_IT
+ 828              	.LVL33:
+ 152:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 829              		.loc 1 152 8 view .LVU265
+ 830 005a 40B9     		cbnz	r0, .L46
+ 831              	.L44:
+ 158:Lib/SPI_Bus/Src/spi_deal.c ****     ecat_NS_H();
+ 832              		.loc 1 158 5 is_stmt 1 discriminator 1 view .LVU266
+ 156:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 833              		.loc 1 156 11 discriminator 1 view .LVU267
+ 156:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 834              		.loc 1 156 12 is_stmt 0 discriminator 1 view .LVU268
+ 835 005c 0748     		ldr	r0, .L47+8
+ 836 005e FFF7FEFF 		bl	HAL_SPI_GetState
+ 837              	.LVL34:
+ 156:Lib/SPI_Bus/Src/spi_deal.c ****     {
+ 838              		.loc 1 156 11 discriminator 1 view .LVU269
+ 839 0062 0128     		cmp	r0, #1
+ 840 0064 FAD1     		bne	.L44
+ 159:Lib/SPI_Bus/Src/spi_deal.c **** }
+ 841              		.loc 1 159 5 is_stmt 1 view .LVU270
+ 842 0066 FFF7FEFF 		bl	ecat_NS_H
+ 843              	.LVL35:
  160:Lib/SPI_Bus/Src/spi_deal.c **** 
- 161:Lib/SPI_Bus/Src/spi_deal.c **** }
- 801              		.loc 1 161 1 is_stmt 0 view .LVU237
- 802 0022 07B0     		add	sp, sp, #28
- 803              		.cfi_def_cfa_offset 4
- 804              		@ sp needed
- 805 0024 5DF804FB 		ldr	pc, [sp], #4
- 806              	.L44:
- 807              		.align	2
- 808              	.L43:
- 809 0028 00000000 		.word	hspi2
- 810 002c 00000000 		.word	.LANCHOR1
- 811              		.cfi_endproc
- 812              	.LFE141:
- 814              		.global	RXA1cmd
- 815              		.global	A1date
- 816              		.global	RxComplete
- 817              		.section	.rodata
- 818              		.align	2
-ARM GAS  /tmp/ccNaxIvK.s 			page 20
+ 844              		.loc 1 160 1 is_stmt 0 view .LVU271
+ 845 006a 12B0     		add	sp, sp, #72
+ 846              		.cfi_remember_state
+ 847              		.cfi_def_cfa_offset 8
+ 848              		@ sp needed
+ 849 006c 10BD     		pop	{r4, pc}
+ 850              	.L46:
+ 851              		.cfi_restore_state
+ 154:Lib/SPI_Bus/Src/spi_deal.c ****     }
+ 852              		.loc 1 154 9 is_stmt 1 view .LVU272
+ 853 006e FFF7FEFF 		bl	Error_Handler
+ 854              	.LVL36:
+ 855 0072 F3E7     		b	.L44
+ 856              	.L48:
+ 857              		.align	2
+ 858              	.L47:
+ 859 0074 00000000 		.word	data_leg
+ 860 0078 00000000 		.word	.LANCHOR1
+ 861 007c 00000000 		.word	hspi2
+ 862              		.cfi_endproc
+ 863              	.LFE140:
+ 865              		.global	RXA1cmd
+ 866              		.global	A1date
+ 867              		.global	RxComplete
+ 868              		.section	.bss.A1date,"aw",%nobits
+ 869              		.align	2
+ARM GAS  /tmp/ccW2cv6a.s 			page 22
 
 
- 819              		.set	.LANCHOR2,. + 0
- 820              	.LC0:
- 821 0000 360B5B0D 		.ascii	"6\013[\015W7\001\013\013b\001\001\001\001\001\001\001"
- 821      5737010B 
- 821      0B620101 
- 821      01010101 
- 821      01
- 822 0011 00       		.ascii	"\000"
- 823 0012 000000   		.space	3
- 824              		.section	.bss.A1date,"aw",%nobits
- 825              		.align	2
- 826              		.set	.LANCHOR0,. + 0
- 829              	A1date:
- 830 0000 00000000 		.space	288
- 830      00000000 
- 830      00000000 
- 830      00000000 
- 830      00000000 
- 831              		.section	.bss.RXA1cmd,"aw",%nobits
- 832              		.align	2
- 833              		.set	.LANCHOR1,. + 0
- 836              	RXA1cmd:
- 837 0000 00000000 		.space	24
- 837      00000000 
- 837      00000000 
- 837      00000000 
- 837      00000000 
- 838              		.section	.bss.RxComplete,"aw",%nobits
- 841              	RxComplete:
- 842 0000 00       		.space	1
- 843              		.text
- 844              	.Letext0:
- 845              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
- 846              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
- 847              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f405xx.h"
- 848              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 849              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
- 850              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 851              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
- 852              		.file 9 "Lib/Motor/Inc/unitreeA1_msg.h"
- 853              		.file 10 "Core/Inc/spi.h"
- 854              		.file 11 "Lib/Motor/Inc/unitreeA1_cmd.h"
- 855              		.file 12 "Lib/SPI_Bus/Inc/data_def.h"
- 856              		.file 13 "Core/Inc/main.h"
-ARM GAS  /tmp/ccNaxIvK.s 			page 21
+ 870              		.set	.LANCHOR1,. + 0
+ 873              	A1date:
+ 874 0000 00000000 		.space	252
+ 874      00000000 
+ 874      00000000 
+ 874      00000000 
+ 874      00000000 
+ 875              		.section	.bss.RXA1cmd,"aw",%nobits
+ 876              		.align	2
+ 877              		.set	.LANCHOR0,. + 0
+ 880              	RXA1cmd:
+ 881 0000 00000000 		.space	21
+ 881      00000000 
+ 881      00000000 
+ 881      00000000 
+ 881      00000000 
+ 882              		.section	.bss.RxComplete,"aw",%nobits
+ 885              	RxComplete:
+ 886 0000 00       		.space	1
+ 887              		.text
+ 888              	.Letext0:
+ 889              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 890              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 891              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f405xx.h"
+ 892              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 893              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_gpio.h"
+ 894              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 895              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_spi.h"
+ 896              		.file 9 "Lib/Motor/Inc/unitreeA1_msg.h"
+ 897              		.file 10 "Core/Inc/spi.h"
+ 898              		.file 11 "Lib/Motor/Inc/unitreeA1_cmd.h"
+ 899              		.file 12 "Lib/SPI_Bus/Inc/data_def.h"
+ 900              		.file 13 "Core/Inc/main.h"
+ARM GAS  /tmp/ccW2cv6a.s 			page 23
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 spi_deal.c
-     /tmp/ccNaxIvK.s:20     .text.DateCheck_DateModfy:0000000000000000 $t
-     /tmp/ccNaxIvK.s:26     .text.DateCheck_DateModfy:0000000000000000 DateCheck_DateModfy
-     /tmp/ccNaxIvK.s:331    .text.DateCheck_DateModfy:0000000000000200 $d
-     /tmp/ccNaxIvK.s:337    .text.SPI_RXdate:0000000000000000 $t
-     /tmp/ccNaxIvK.s:343    .text.SPI_RXdate:0000000000000000 SPI_RXdate
-     /tmp/ccNaxIvK.s:460    .text.ecat_NS_L:0000000000000000 $t
-     /tmp/ccNaxIvK.s:466    .text.ecat_NS_L:0000000000000000 ecat_NS_L
-     /tmp/ccNaxIvK.s:487    .text.ecat_NS_L:0000000000000010 $d
-     /tmp/ccNaxIvK.s:492    .text.ecat_NS_H:0000000000000000 $t
-     /tmp/ccNaxIvK.s:498    .text.ecat_NS_H:0000000000000000 ecat_NS_H
-     /tmp/ccNaxIvK.s:519    .text.ecat_NS_H:0000000000000010 $d
-     /tmp/ccNaxIvK.s:524    .text.sendToEcat:0000000000000000 $t
-     /tmp/ccNaxIvK.s:530    .text.sendToEcat:0000000000000000 sendToEcat
-     /tmp/ccNaxIvK.s:601    .text.sendToEcat:0000000000000070 $d
-     /tmp/ccNaxIvK.s:609    .text.MASTER_Synchro:0000000000000000 $t
-     /tmp/ccNaxIvK.s:615    .text.MASTER_Synchro:0000000000000000 MASTER_Synchro
-     /tmp/ccNaxIvK.s:678    .text.MASTER_Synchro:0000000000000048 $d
-     /tmp/ccNaxIvK.s:683    .text.SPI_TRANSMIT:0000000000000000 $t
-     /tmp/ccNaxIvK.s:689    .text.SPI_TRANSMIT:0000000000000000 SPI_TRANSMIT
-     /tmp/ccNaxIvK.s:757    .text.SPI_TRANSMIT:000000000000004c $d
-     /tmp/ccNaxIvK.s:763    .text.SPI_RECEIVE:0000000000000000 $t
-     /tmp/ccNaxIvK.s:769    .text.SPI_RECEIVE:0000000000000000 SPI_RECEIVE
-     /tmp/ccNaxIvK.s:809    .text.SPI_RECEIVE:0000000000000028 $d
-     /tmp/ccNaxIvK.s:836    .bss.RXA1cmd:0000000000000000 RXA1cmd
-     /tmp/ccNaxIvK.s:829    .bss.A1date:0000000000000000 A1date
-     /tmp/ccNaxIvK.s:841    .bss.RxComplete:0000000000000000 RxComplete
-     /tmp/ccNaxIvK.s:818    .rodata:0000000000000000 $d
-     /tmp/ccNaxIvK.s:825    .bss.A1date:0000000000000000 $d
-     /tmp/ccNaxIvK.s:832    .bss.RXA1cmd:0000000000000000 $d
-     /tmp/ccNaxIvK.s:842    .bss.RxComplete:0000000000000000 $d
+     /tmp/ccW2cv6a.s:20     .text.DateCheck_DateModfy:0000000000000000 $t
+     /tmp/ccW2cv6a.s:26     .text.DateCheck_DateModfy:0000000000000000 DateCheck_DateModfy
+     /tmp/ccW2cv6a.s:339    .text.DateCheck_DateModfy:0000000000000214 $d
+     /tmp/ccW2cv6a.s:345    .text.SPI_RXdate:0000000000000000 $t
+     /tmp/ccW2cv6a.s:351    .text.SPI_RXdate:0000000000000000 SPI_RXdate
+     /tmp/ccW2cv6a.s:468    .text.ecat_NS_L:0000000000000000 $t
+     /tmp/ccW2cv6a.s:474    .text.ecat_NS_L:0000000000000000 ecat_NS_L
+     /tmp/ccW2cv6a.s:495    .text.ecat_NS_L:0000000000000010 $d
+     /tmp/ccW2cv6a.s:500    .text.ecat_NS_H:0000000000000000 $t
+     /tmp/ccW2cv6a.s:506    .text.ecat_NS_H:0000000000000000 ecat_NS_H
+     /tmp/ccW2cv6a.s:527    .text.ecat_NS_H:0000000000000010 $d
+     /tmp/ccW2cv6a.s:532    .text.MASTER_Synchro:0000000000000000 $t
+     /tmp/ccW2cv6a.s:538    .text.MASTER_Synchro:0000000000000000 MASTER_Synchro
+     /tmp/ccW2cv6a.s:601    .text.MASTER_Synchro:0000000000000048 $d
+     /tmp/ccW2cv6a.s:606    .text.SPI_RECEIVE:0000000000000000 $t
+     /tmp/ccW2cv6a.s:612    .text.SPI_RECEIVE:0000000000000000 SPI_RECEIVE
+     /tmp/ccW2cv6a.s:672    .text.SPI_RECEIVE:000000000000003c $d
+     /tmp/ccW2cv6a.s:678    .text.link_2array:0000000000000000 $t
+     /tmp/ccW2cv6a.s:684    .text.link_2array:0000000000000000 link_2array
+     /tmp/ccW2cv6a.s:762    .text.SPI_TRANSMIT:0000000000000000 $t
+     /tmp/ccW2cv6a.s:768    .text.SPI_TRANSMIT:0000000000000000 SPI_TRANSMIT
+     /tmp/ccW2cv6a.s:859    .text.SPI_TRANSMIT:0000000000000074 $d
+     /tmp/ccW2cv6a.s:880    .bss.RXA1cmd:0000000000000000 RXA1cmd
+     /tmp/ccW2cv6a.s:873    .bss.A1date:0000000000000000 A1date
+     /tmp/ccW2cv6a.s:885    .bss.RxComplete:0000000000000000 RxComplete
+     /tmp/ccW2cv6a.s:869    .bss.A1date:0000000000000000 $d
+     /tmp/ccW2cv6a.s:876    .bss.RXA1cmd:0000000000000000 $d
+     /tmp/ccW2cv6a.s:886    .bss.RxComplete:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 cmd_leg
 HAL_GPIO_WritePin
-HAL_SPI_TransmitReceive
-data_leg
-hspi2
 HAL_SPI_GetState
 HAL_SPI_TransmitReceive_IT
 Error_Handler
-HAL_SPI_Transmit_IT
+hspi2
 HAL_SPI_Receive_IT
+HAL_SPI_Transmit_IT
+data_leg

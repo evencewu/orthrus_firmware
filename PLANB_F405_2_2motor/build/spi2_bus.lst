@@ -1,0 +1,170 @@
+ARM GAS  /tmp/ccu5X7jb.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"spi2_bus.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.GetMotorMsg,"ax",%progbits
+  20              		.align	1
+  21              		.global	GetMotorMsg
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	GetMotorMsg:
+  27              	.LVL0:
+  28              	.LFB0:
+  29              		.file 1 "Lib/application/src/spi2_bus.c"
+   1:Lib/application/src/spi2_bus.c **** #include "spi2_bus.h"
+   2:Lib/application/src/spi2_bus.c **** 
+   3:Lib/application/src/spi2_bus.c **** A1PackageSpiTx motor_tx[4][3];
+   4:Lib/application/src/spi2_bus.c **** A1PackageSpiRx motor_rx[4][3];
+   5:Lib/application/src/spi2_bus.c **** 
+   6:Lib/application/src/spi2_bus.c **** A1msgTxTransform tx_transform;
+   7:Lib/application/src/spi2_bus.c **** A1msgRxTransform rx_transform;
+   8:Lib/application/src/spi2_bus.c **** 
+   9:Lib/application/src/spi2_bus.c **** void GetMotorMsg(uint8_t *input)
+  10:Lib/application/src/spi2_bus.c **** {
+  30              		.loc 1 10 1 view -0
+  31              		.cfi_startproc
+  32              		@ args = 0, pretend = 0, frame = 0
+  33              		@ frame_needed = 0, uses_anonymous_args = 0
+  34              		.loc 1 10 1 is_stmt 0 view .LVU1
+  35 0000 70B5     		push	{r4, r5, r6, lr}
+  36              		.cfi_def_cfa_offset 16
+  37              		.cfi_offset 4, -16
+  38              		.cfi_offset 5, -12
+  39              		.cfi_offset 6, -8
+  40              		.cfi_offset 14, -4
+  41 0002 0446     		mov	r4, r0
+  11:Lib/application/src/spi2_bus.c ****     memcpy(&rx_transform.u8[0],input,21);
+  42              		.loc 1 11 5 is_stmt 1 view .LVU2
+  43 0004 DFF854C0 		ldr	ip, .L3+4
+  44 0008 E646     		mov	lr, ip
+  45 000a 0068     		ldr	r0, [r0]	@ unaligned
+  46              	.LVL1:
+  47              		.loc 1 11 5 is_stmt 0 view .LVU3
+ARM GAS  /tmp/ccu5X7jb.s 			page 2
+
+
+  48 000c 6168     		ldr	r1, [r4, #4]	@ unaligned
+  49 000e A268     		ldr	r2, [r4, #8]	@ unaligned
+  50 0010 E368     		ldr	r3, [r4, #12]	@ unaligned
+  51 0012 AEE80F00 		stmia	lr!, {r0, r1, r2, r3}
+  52 0016 2069     		ldr	r0, [r4, #16]	@ unaligned
+  53 0018 CEF80000 		str	r0, [lr]
+  54 001c 237D     		ldrb	r3, [r4, #20]	@ zero_extendqisi2
+  55 001e 8EF80430 		strb	r3, [lr, #4]
+  12:Lib/application/src/spi2_bus.c ****     memcpy(&motor_rx[rx_transform.a1msg.leg_id][rx_transform.a1msg.motor_id],&rx_transform.a1msg.st
+  56              		.loc 1 12 5 is_stmt 1 view .LVU4
+  57              		.loc 1 12 40 is_stmt 0 view .LVU5
+  58 0022 9CF80230 		ldrb	r3, [ip, #2]	@ zero_extendqisi2
+  59              		.loc 1 12 67 view .LVU6
+  60 0026 9CF80340 		ldrb	r4, [ip, #3]	@ zero_extendqisi2
+  61              	.LVL2:
+  62              		.loc 1 12 12 view .LVU7
+  63 002a 0B4E     		ldr	r6, .L3
+  64 002c 04EB4404 		add	r4, r4, r4, lsl #1
+  65 0030 C4EBC404 		rsb	r4, r4, r4, lsl #3
+  66 0034 C3EB8313 		rsb	r3, r3, r3, lsl #6
+  67 0038 1C44     		add	r4, r4, r3
+  68 003a 3519     		adds	r5, r6, r4
+  69              		.loc 1 12 5 view .LVU8
+  70 003c BCE80F00 		ldmia	ip!, {r0, r1, r2, r3}
+  71 0040 3051     		str	r0, [r6, r4]	@ unaligned
+  72 0042 6960     		str	r1, [r5, #4]	@ unaligned
+  73 0044 AA60     		str	r2, [r5, #8]	@ unaligned
+  74 0046 EB60     		str	r3, [r5, #12]	@ unaligned
+  75 0048 DEF80000 		ldr	r0, [lr]
+  76 004c 2861     		str	r0, [r5, #16]	@ unaligned
+  77 004e 9EF80430 		ldrb	r3, [lr, #4]	@ zero_extendqisi2
+  78 0052 2B75     		strb	r3, [r5, #20]
+  13:Lib/application/src/spi2_bus.c **** }...
+  79              		.loc 1 13 1 view .LVU9
+  80 0054 70BD     		pop	{r4, r5, r6, pc}
+  81              	.L4:
+  82 0056 00BF     		.align	2
+  83              	.L3:
+  84 0058 00000000 		.word	.LANCHOR1
+  85 005c 00000000 		.word	.LANCHOR0
+  86              		.cfi_endproc
+  87              	.LFE0:
+  89              		.global	rx_transform
+  90              		.global	tx_transform
+  91              		.global	motor_rx
+  92              		.global	motor_tx
+  93              		.section	.bss.motor_rx,"aw",%nobits
+  94              		.align	2
+  95              		.set	.LANCHOR1,. + 0
+  98              	motor_rx:
+  99 0000 00000000 		.space	252
+  99      00000000 
+  99      00000000 
+  99      00000000 
+  99      00000000 
+ 100              		.section	.bss.motor_tx,"aw",%nobits
+ 101              		.align	2
+ARM GAS  /tmp/ccu5X7jb.s 			page 3
+
+
+ 104              	motor_tx:
+ 105 0000 00000000 		.space	252
+ 105      00000000 
+ 105      00000000 
+ 105      00000000 
+ 105      00000000 
+ 106              		.section	.bss.rx_transform,"aw",%nobits
+ 107              		.align	2
+ 108              		.set	.LANCHOR0,. + 0
+ 111              	rx_transform:
+ 112 0000 00000000 		.space	21
+ 112      00000000 
+ 112      00000000 
+ 112      00000000 
+ 112      00000000 
+ 113              		.section	.bss.tx_transform,"aw",%nobits
+ 114              		.align	2
+ 117              	tx_transform:
+ 118 0000 00000000 		.space	21
+ 118      00000000 
+ 118      00000000 
+ 118      00000000 
+ 118      00000000 
+ 119              		.text
+ 120              	.Letext0:
+ 121              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 122              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 123              		.file 4 "Lib/application/include/spi2_bus.h"
+ 124              		.file 5 "<built-in>"
+ARM GAS  /tmp/ccu5X7jb.s 			page 4
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 spi2_bus.c
+     /tmp/ccu5X7jb.s:20     .text.GetMotorMsg:0000000000000000 $t
+     /tmp/ccu5X7jb.s:26     .text.GetMotorMsg:0000000000000000 GetMotorMsg
+     /tmp/ccu5X7jb.s:84     .text.GetMotorMsg:0000000000000058 $d
+     /tmp/ccu5X7jb.s:111    .bss.rx_transform:0000000000000000 rx_transform
+     /tmp/ccu5X7jb.s:117    .bss.tx_transform:0000000000000000 tx_transform
+     /tmp/ccu5X7jb.s:98     .bss.motor_rx:0000000000000000 motor_rx
+     /tmp/ccu5X7jb.s:104    .bss.motor_tx:0000000000000000 motor_tx
+     /tmp/ccu5X7jb.s:94     .bss.motor_rx:0000000000000000 $d
+     /tmp/ccu5X7jb.s:101    .bss.motor_tx:0000000000000000 $d
+     /tmp/ccu5X7jb.s:107    .bss.rx_transform:0000000000000000 $d
+     /tmp/ccu5X7jb.s:114    .bss.tx_transform:0000000000000000 $d
+
+NO UNDEFINED SYMBOLS
