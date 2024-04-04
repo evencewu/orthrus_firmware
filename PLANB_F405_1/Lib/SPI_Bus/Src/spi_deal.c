@@ -73,7 +73,6 @@ void DateCheck_DateModfy(A1PackageSpiRx *modf_buf)
 }
 void SPI_RXdate(A1PackageSpiRx *modf_buf, uint8_t *spi_sbus_buf)
 {
-
     modf_buf->start[0] = spi_sbus_buf[0];
     modf_buf->start[1] = spi_sbus_buf[1];
     modf_buf->LegID = spi_sbus_buf[2];
@@ -132,11 +131,14 @@ void SPI_RECEIVE(void)
     }
     while (HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
     {
+
     }
 
     //SPI_RXdate(&RXA1cmd, rxdate);
     ecat_NS_H();
 }
+
+uint8_t rx_data[41];
 
 /// @brief 进行一次中断形式的发送
 /// @param leg_id 对应腿的ID
@@ -152,14 +154,16 @@ void SPI_TRANSMIT(int leg_id)
     
     link_2array(motor_data,tx_data);
 
-    if (HAL_SPI_Transmit_IT(&hspi2, tx_data,41) != HAL_OK)
+    if (HAL_SPI_TransmitReceive_IT(&hspi2, tx_data,rx_data,41) != HAL_OK)
     {
         Error_Handler();
     }
 
     while (HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
     {
+        
     }
+
     ecat_NS_H();
 }
 
