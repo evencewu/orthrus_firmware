@@ -577,7 +577,7 @@ void APPL_Application(void)
     {
         for (int i = 0; i < 41; i++)
         {
-            motormsg[i] = spi2_r_cmd();
+            motormsg[i] = spi2_wr_cmd(0x01);
         }
 
         for (int i = 0; i < 21; i++)

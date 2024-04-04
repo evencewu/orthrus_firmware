@@ -125,8 +125,8 @@ void SPI_RECEIVE(void)
 {
     ecat_NS_L();
     MASTER_Synchro();
-    uint8_t rxdate[21];
-    if (HAL_SPI_Receive_IT(&hspi2, rxdate, 21) != HAL_OK)
+    uint8_t rxdate[41];
+    if (HAL_SPI_Receive_IT(&hspi2, rxdate, 41) != HAL_OK)
     {
         Error_Handler();
     }
@@ -134,7 +134,7 @@ void SPI_RECEIVE(void)
     {
     }
 
-    SPI_RXdate(&RXA1cmd, rxdate);
+    //SPI_RXdate(&RXA1cmd, rxdate);
     ecat_NS_H();
 }
 
@@ -144,15 +144,19 @@ void SPI_TRANSMIT(int leg_id)
 {
     ecat_NS_L();
     MASTER_Synchro();
-    uint8_t TXdate[42];
-    uint8_t txdate_1[21];
-    memcpy(txdate_1, &A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID], 21);
-    link_2array(txdate_1,TXdate);
+    uint8_t tx_data[41];
 
-    if (HAL_SPI_Transmit_IT(&hspi2, TXdate, 41) != HAL_OK)
+    uint8_t motor_data[21];
+
+    memcpy(motor_data, &A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID], 21);
+    
+    link_2array(motor_data,tx_data);
+
+    if (HAL_SPI_Transmit_IT(&hspi2, tx_data,41) != HAL_OK)
     {
         Error_Handler();
     }
+
     while (HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
     {
     }
@@ -174,29 +178,4 @@ void link_2array(uint8_t *array1,uint8_t *array3)
     *(array3) = 0xFE;
     *(array3 + 20) = 0xD2;
     *(array3 + 21) = 0xFE;
-    /*
-    int length1 = sizeof(array1) / sizeof(array1[0]);
-    int length2 = sizeof(array2) / sizeof(array2[0]);
-
-    // 创建新数组
-    uint8_t *mergedArray = (uint8_t *)malloc((length1 + length2) * sizeof(int));
-    if (mergedArray == NULL) {
-        // 内存分配失败处理
-        //printf("Memory allocation failed!\n");
-        return 1;
-    }
-
-    // 复制数组元素
-    int index = 0;
-    for (int i = 0; i < length1; i++) {
-        mergedArray[index++] = array1[i];
-    }
-    for (int i = 0; i < length2; i++) {
-        mergedArray[index++] = array2[i];
-    }
-
-    array3 = mergedArray;
-    // 释放内存
-    free(mergedArray);
-    */
 }
