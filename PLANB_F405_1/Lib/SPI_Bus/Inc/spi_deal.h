@@ -3,6 +3,8 @@
 
 #include "data_def.h"
 
+extern uint8_t spi_sbus_buf[21];
+
 typedef __packed struct
 {
     int8_t start[2];
@@ -21,11 +23,16 @@ typedef __packed struct
 
 } modf_temp_buf;
 
-void send_A1msgToEcat(int leg_id);
-void EcatChat_Init(void);
-static void sbus_to_rc_spi(volatile const uint8_t *sbus_buf, A1PackageSpiRx *modf_buf);
- void DateCheck_DateModfy(A1PackageSpiRx *modf_buf);
+// void EcatChat_Init(void);
+// static void sbus_to_rc_spi(volatile const uint8_t *sbus_buf, A1PackageSpiRx *modf_buf);
+void DateCheck_DateModfy(A1PackageSpiRx *modf_buf);
+void SPI_RXdate(A1PackageSpiRx *modf_buf, uint8_t *spi_sbus_buf);
+void ecat_NS_L (void);
+void ecat_NS_H (void);
+void sendToEcat(int leg_id);
+
+void SPI_TRANSMIT(int leg_id);
+
+void MASTER_Synchro(void);
 
 #endif
-
-

@@ -7,8 +7,8 @@
 #include "string.h"
 #include "spi_deal.h"
 
-#define RXBufsize 20
-#define RealRxBufsize 36
+
+volatile uint8_t RxComplete = 0;
 
 extern DMA_HandleTypeDef hdma_spi2_rx;
 extern DMA_HandleTypeDef hdma_spi2_tx;
@@ -19,121 +19,6 @@ A1PackageSpiRx RXA1cmd;
 extern motor_recv_t data_motor[4][3];
 extern motor_recv_t data_leg[4];
 extern motor_send_t cmd_leg[4];
-
-static uint8_t SPI2RXBuf[2][RXBufsize];
-
-
-void send_A1msgToEcat(int leg_id)
-{
-    uint8_t txdate[16];
-    memcpy(txdate ,&A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID],16);
-    HAL_SPI_Transmit_DMA(&hspi2,txdate,16);
-}
-
-void EcatChat_Init (void)
-{
-    RC_spi_Init(SPI2RXBuf[0],SPI2RXBuf[1],RXBufsize);
-}
-
-void SPI2_IRQHandler(void)
-{
-
-  //HAL_SPI_IRQHandler(&hspi2);
-
-    if (SPI2->SR & SPI_FLAG_RXNE)
-    {
-        static uint16_t this_time_rx_len = 0;
-
-        __HAL_SPI_CLEAR_FREFLAG(&hspi2);
-
-        if ((hdma_spi2_rx.Instance->CR & DMA_SxCR_CT) == RESET)
-        {
-            /* Current memory buffer used is Memory 0 */
-
-            // disable DMA
-            // 失效DMA
-            __HAL_DMA_DISABLE(&hdma_spi2_rx);
-
-            // get receive data length, length = set_data_length - remain_length
-            // 获取接收数据长度,长度 = 设定长度 - 剩余长度
-            this_time_rx_len = RealRxBufsize - hdma_spi2_rx.Instance->NDTR;
-
-            // reset set_data_lenght
-            // 重新设定数据长度
-            hdma_spi2_rx.Instance->NDTR = RealRxBufsize;
-
-            // set memory buffer 1
-            // 设定缓冲区1
-            hdma_spi2_rx.Instance->CR |= DMA_SxCR_CT;
-
-            // enable DMA
-            // 使能DMA
-            __HAL_DMA_ENABLE(&hdma_usart6_rx);
-
-            if (this_time_rx_len == RXBufsize)
-            {
-                sbus_to_rc_spi(SPI2RXBuf[0],&RXA1cmd);
-                DateCheck_DateModfy(&RXA1cmd);
-            }
-        }
-        else
-        {
-            /* Current memory buffer used is Memory 1 */
-            // disable DMA
-            // 失效DMA
-            __HAL_DMA_DISABLE(&hdma_spi2_rx);
-
-            // get receive data length, length = set_data_length - remain_length
-            // 获取接收数据长度,长度 = 设定长度 - 剩余长度
-            this_time_rx_len = RealRxBufsize - hdma_spi2_rx.Instance->NDTR;
-
-            // reset set_data_lenght
-            // 重新设定数据长度
-            hdma_spi2_rx.Instance->NDTR = RealRxBufsize;
-
-            // set memory buffer 0
-            // 设定缓冲区0
-            DMA1_Stream3->CR &= ~(DMA_SxCR_CT);
-
-            // enable DMA
-            // 使能DMA
-            __HAL_DMA_ENABLE(&hdma_spi2_rx);
-
-            if (this_time_rx_len == RXBufsize)
-            {
-                // 处理数据
-                sbus_to_rc_spi(SPI2RXBuf[1],&RXA1cmd);
-                DateCheck_DateModfy(&RXA1cmd);
-            }
-        }
-    }
-}
-
-
-static void sbus_to_rc_spi(volatile const uint8_t *sbus_buf, A1PackageSpiRx *modf_buf)
-{
-    if (sbus_buf == NULL || modf_buf == NULL)
-    {
-        return;
-    }
-    modf_buf->start[0] = sbus_buf[0];
-    modf_buf->start[1] = sbus_buf[1];
-    modf_buf->motorID = sbus_buf[2];
-    modf_buf->LegID = sbus_buf[3];
-    modf_buf->mode = sbus_buf[4];
-    modf_buf->T = sbus_buf[5] << 8 | sbus_buf[6];
-    modf_buf->W = sbus_buf[7] << 8 | sbus_buf[8];
-    modf_buf->Pos = sbus_buf[9] << 24 | sbus_buf[10] << 16 | sbus_buf[11] << 8 | sbus_buf[12];
-    modf_buf->K_P = sbus_buf[13] << 8 | sbus_buf[14];
-    modf_buf->K_W = sbus_buf[15] << 8 | sbus_buf[16];
-    modf_buf->SumCheck = sbus_buf[17] << 24 | sbus_buf[18] << 16 | sbus_buf[19] << 8 | sbus_buf[20];
-
-    if (sbus_buf[0] == 0x01)
-    {
-        HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_14);
-    }
-}
-
 
 
 void DateCheck_DateModfy (A1PackageSpiRx *modf_buf)
@@ -190,4 +75,87 @@ void DateCheck_DateModfy (A1PackageSpiRx *modf_buf)
     }
 
 }
+void SPI_RXdate(A1PackageSpiRx *modf_buf,uint8_t *spi_sbus_buf)
+{
     
+    modf_buf->start[0] = spi_sbus_buf[0];
+    modf_buf->start[1] = spi_sbus_buf[1];
+    modf_buf->LegID = spi_sbus_buf[2];
+    modf_buf->motorID = spi_sbus_buf[3];
+    modf_buf->mode = spi_sbus_buf[4];
+    modf_buf->T = spi_sbus_buf[5] << 8 | spi_sbus_buf[6];
+    modf_buf->W = spi_sbus_buf[7] << 8 | spi_sbus_buf[8];
+    modf_buf->Pos = spi_sbus_buf[9] << 24 | spi_sbus_buf[10] << 16 | spi_sbus_buf[11] << 8 | spi_sbus_buf[12];
+    modf_buf->K_P = spi_sbus_buf[13] << 8 | spi_sbus_buf[14];
+    modf_buf->K_W = spi_sbus_buf[15] << 8 | spi_sbus_buf[16];
+    modf_buf->SumCheck = spi_sbus_buf[17] << 24 | spi_sbus_buf[18] << 16 | spi_sbus_buf[19] << 8 | spi_sbus_buf[20];
+    DateCheck_DateModfy(modf_buf);
+}
+
+
+void ecat_NS_L (void)
+{
+    HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_RESET);
+
+}
+
+void ecat_NS_H (void)
+{
+    HAL_GPIO_WritePin(GPIOB,GPIO_PIN_12,GPIO_PIN_SET);
+}
+
+
+void sendToEcat(int leg_id)
+{   
+    ecat_NS_L();
+    uint8_t rxdate[21];
+    uint8_t txdate[21];//= {1,1,1,1,1,1,1,1,11,1,1,1,1,1,1,1,1};
+    memcpy(txdate ,&A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID],21);
+    HAL_SPI_TransmitReceive(&hspi2,txdate,rxdate,21,0x10);
+
+    SPI_RXdate(&RXA1cmd,rxdate);
+    ecat_NS_H();
+}
+
+void SPI_TRANSMIT(int leg_id)
+{   
+    ecat_NS_L();
+    MASTER_Synchro();
+    uint8_t txdate[21]= {54,11,91,13,87,55,1,11,11,98,1,1,1,1,1,1,1};
+    //memcpy(txdate ,&A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID],21);
+
+    if(HAL_SPI_Transmit_IT(&hspi2,txdate,21) != HAL_OK)
+    {
+        Error_Handler();
+    }
+    while ( HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
+    {}
+    ecat_NS_H();
+}
+
+void MASTER_Synchro(void)
+{
+    uint8_t txbety = 0xD2;
+    uint8_t rxbety = 0x00;
+
+    do
+    {
+        if (HAL_SPI_TransmitReceive_IT(&hspi2,&txbety,&rxbety,1) != HAL_OK)
+        {
+            Error_Handler();
+        }
+
+    while ( HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
+    {}
+    } while (rxbety != txbety);
+}
+
+void SPI_RECEIVE(void)
+{   ecat_NS_L();
+    MASTER_Synchro();
+    uint8_t rxdate[21];
+    HAL_SPI_Receive_IT(&hspi2,rxdate,21);
+    SPI_RXdate(&RXA1cmd,rxdate);
+    ecat_NS_H();
+
+}

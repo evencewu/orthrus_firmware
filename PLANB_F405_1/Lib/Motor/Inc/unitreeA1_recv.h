@@ -12,13 +12,17 @@
 typedef __packed struct
 {
     uint8_t motorID;
-	uint8_t MError;
+    uint8_t mode;
+    int8_t Temp;     // 电机当前平均温度
+	
+    uint8_t MError;  // 电机错误 标识
+
 	uint16_t T;
 	uint16_t W;
 	uint16_t Acc;
 	uint32_t Pos;
 
-} A1_buf;
+} A1_buf;//17
 
 typedef struct MotorCan 
 {

@@ -66,7 +66,7 @@ void USART1_IRQHandler(void)
             {
                 sbus_to_rc(sbus_rx_buf_LF[0], &leg[LF].a1_buf);
                 unitreeA1_rx(0);
-                send_A1msgToEcat(0);
+                
             }
         }
         else
@@ -97,7 +97,7 @@ void USART1_IRQHandler(void)
                 // 处理数据
                 sbus_to_rc(sbus_rx_buf_LF[1], &leg[LF].a1_buf);
                 unitreeA1_rx(0);
-                send_A1msgToEcat(0);
+                
             }
         }
     }
@@ -144,7 +144,7 @@ void USART2_IRQHandler(void)
             {
                 sbus_to_rc(sbus_rx_buf_LB[0], &leg[LB].a1_buf);
                 unitreeA1_rx(1);
-                send_A1msgToEcat(1);
+                
             }
         }
         else
@@ -175,7 +175,7 @@ void USART2_IRQHandler(void)
                 // 处理数据
                 sbus_to_rc(sbus_rx_buf_LB[1], &leg[LB].a1_buf);
                 unitreeA1_rx(1);
-                send_A1msgToEcat(1);
+                
             }
         }
     }
@@ -222,7 +222,7 @@ void USART3_IRQHandler(void)
             {
                 sbus_to_rc(sbus_rx_buf_RB[0], &leg[RB].a1_buf);
                 unitreeA1_rx(3);
-                send_A1msgToEcat(3);
+                
             }
         }
         else
@@ -253,7 +253,7 @@ void USART3_IRQHandler(void)
                 // 处理数据
                 sbus_to_rc(sbus_rx_buf_RB[1], &leg[RB].a1_buf);
                 unitreeA1_rx(3);
-                send_A1msgToEcat(3);
+               
             }
         }
     }
@@ -300,7 +300,7 @@ void USART6_IRQHandler(void)
             {
                 sbus_to_rc(sbus_rx_buf_RF[0], &leg[RF].a1_buf);
                 unitreeA1_rx(2);
-                send_A1msgToEcat(2);
+               
             }
         }
         else
@@ -331,7 +331,7 @@ void USART6_IRQHandler(void)
                 // 处理数据
                 sbus_to_rc(sbus_rx_buf_RF[1], &leg[RF].a1_buf);
                 unitreeA1_rx(2);
-                send_A1msgToEcat(2);
+               
             }
         }
     }
@@ -341,20 +341,28 @@ void unitreeA1_rx(int leg_id)
 {
     data_leg[leg_id].motor_recv_data.head.motorID = leg[leg_id].a1_buf.motorID;
     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
+    data_leg[leg_id].motor_recv_data.Mdata.mode = leg[leg_id].a1_buf.mode;
+    data_leg[leg_id].motor_recv_data.Mdata.Temp = leg[leg_id].a1_buf.Temp;
+    data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
     data_leg[leg_id].motor_recv_data.Mdata.T = leg[leg_id].a1_buf.T;
     data_leg[leg_id].motor_recv_data.Mdata.W = leg[leg_id].a1_buf.W;
     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
 
+
+
     A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[0] = 0xff; 
     A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[1] = 0xfe;
     A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].LegID = leg_id;
     A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MotorID = data_leg[leg_id].motor_recv_data.head.motorID;
+    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
+    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].mode = data_leg[leg_id].motor_recv_data.Mdata.mode;
+    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Temp = data_leg[leg_id].motor_recv_data.Mdata.Temp;
     A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].T = data_leg[leg_id].motor_recv_data.Mdata.T;
     A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].W = data_leg[leg_id].motor_recv_data.Mdata.W;
     A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Acc = data_leg[leg_id].motor_recv_data.Mdata.Acc;
     A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Pos = data_leg[leg_id].motor_recv_data.Mdata.Pos;
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].SumCheck = 0xff + 0xfe + leg_id +data_leg[leg_id].motor_recv_data.head.motorID+data_leg[leg_id].motor_recv_data.Mdata.T + data_leg[leg_id].motor_recv_data.Mdata.W + data_leg[leg_id].motor_recv_data.Mdata.Acc + data_leg[leg_id].motor_recv_data.Mdata.Pos;
+    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].SumCheck = 0xff + 0xfe + leg_id +data_leg[leg_id].motor_recv_data.head.motorID +data_leg[leg_id].motor_recv_data.Mdata.mode + data_leg[leg_id].motor_recv_data.Mdata.Temp+data_leg[leg_id].motor_recv_data.Mdata.T + data_leg[leg_id].motor_recv_data.Mdata.W + data_leg[leg_id].motor_recv_data.Mdata.Acc + data_leg[leg_id].motor_recv_data.Mdata.Pos;
 
 
 /*
@@ -390,6 +398,8 @@ static void sbus_to_rc(volatile const uint8_t *sbus_buf, A1_buf *a1_buf)
     }
 
     a1_buf->motorID = sbus_buf[2];
+    a1_buf->mode = sbus_buf[4];
+    a1_buf->Temp = sbus_buf[6];
     a1_buf->MError = sbus_buf[7];
     a1_buf->T = sbus_buf[13] << 8 | sbus_buf[12];
     a1_buf->W = sbus_buf[15] << 8 | sbus_buf[14];

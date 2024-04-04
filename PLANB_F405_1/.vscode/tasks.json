@@ -1,50 +1,70 @@
 {
-	"version": "2.0.0",
-	"tasks": [
-		{
-			"label": "Build STM",
-			"type": "process",
-			"command": "${command:stm32-for-vscode.build}",
-			"options": {
-				"cwd": "${workspaceRoot}"
-			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
-		},
-		{
-			"label": "Build Clean STM",
-			"type": "process",
-			"command": "${command:stm32-for-vscode.cleanBuild}",
-			"options": {
-				"cwd": "${workspaceRoot}"
-			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
-		},
-		{
-			"label": "Flash STM",
-			"type": "process",
-			"command": "${command:stm32-for-vscode.flash}",
-			"options": {
-				"cwd": "${workspaceRoot}"
-			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
-			"problemMatcher": [
-				"$gcc"
-			]
-		}
-	]
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build STM",
+            "type": "process",
+            "command": "${command:stm32-for-vscode.build}",
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Build Clean STM",
+            "type": "process",
+            "command": "${command:stm32-for-vscode.cleanBuild}",
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "label": "Flash STM",
+            "type": "process",
+            "command": "${command:stm32-for-vscode.flash}",
+            "options": {
+                "cwd": "${workspaceRoot}"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "problemMatcher": [
+                "$gcc"
+            ]
+        },
+        {
+            "type": "cppbuild",
+            "label": "C/C++: arm-none-eabi-gcc 生成活动文件",
+            "command": "/usr/bin/arm-none-eabi-gcc",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${file}",
+                "-o",
+                "${fileDirname}/${fileBasenameNoExtension}"
+            ],
+            "options": {
+                "cwd": "${fileDirname}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": "build",
+            "detail": "调试器生成的任务。"
+        }
+    ]
 }

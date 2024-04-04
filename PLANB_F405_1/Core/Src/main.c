@@ -70,6 +70,7 @@ int main(void)
 {
   /* USER CODE BEGIN 1 */
 
+
   /* USER CODE END 1 */
 
   /* MCU Configuration--------------------------------------------------------*/
@@ -99,18 +100,22 @@ int main(void)
   /* USER CODE BEGIN 2 */
   
   remote_control_init();
-  EcatChat_Init();
+  //EcatChat_Init();
+ 
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
-  {
-      
-      unitreeA1_tx(0);
-      unitreeA1_tx(1);
-      unitreeA1_tx(2);
-      unitreeA1_tx(3);
+  { 
+
+    //sendToEcat(0);
+    SPI_TRANSMIT(0);
+
+      //unitreeA1_tx(0);
+      //unitreeA1_tx(1);
+      //unitreeA1_tx(2);
+      //unitreeA1_tx(3);
     
     /* USER CODE END WHILE */
 

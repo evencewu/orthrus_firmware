@@ -66,7 +66,7 @@ typedef struct
 
     int32_t SumCheck;  //四位和校验
 
-}A1PackageSpiRx;//20
+}A1PackageSpiRx;//21
 
 
 typedef struct
@@ -75,14 +75,19 @@ typedef struct
     uint8_t LegID;
     uint8_t MotorID;
 
-
+    uint8_t mode;
+    int8_t Temp;     // 电机当前平均温度
+    uint8_t MError;  // 电机错误 标识
+    //7
     int16_t T;      // 当前实际电机输出力矩       7 + 8 描述
     int16_t W; // 当前实际电机速度（高速）   8 + 7 描述
+    
     int16_t Acc;    // 电机转子加速度       15+0 描述  惯量较小
     int32_t Pos;  // 当前电机位置（主控0点修正，电机关节还是以编码器0点为准）
-  
+    
+
     int32_t SumCheck;  //四位和校验
 	
-}A1PackageSpiTx;//16位一个电机
+}A1PackageSpiTx;//21位一个电机
 
 #endif

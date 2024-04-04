@@ -152,12 +152,12 @@ void RC6_init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
     __HAL_DMA_ENABLE(&hdma_usart6_rx);
 
 }
-
+/*
 void RC_spi_Init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
 {
     __HAL_DMA_DISABLE(&hdma_spi2_rx);
     //enable the DMA transfer for the receiver request
-    //使能DMA串口接收
+    //使能DMAspi接收
     SET_BIT(SPI2->CR2, SPI_CR2_RXDMAEN);
 
     //enalbe idle interrupt
@@ -191,5 +191,5 @@ void RC_spi_Init(uint8_t *rx1_buf, uint8_t *rx2_buf, uint16_t dma_buf_num)
     //使能DMA
     __HAL_DMA_ENABLE(&hdma_spi2_rx);
 
-}
+}*/
 
