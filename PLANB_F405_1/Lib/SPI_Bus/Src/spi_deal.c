@@ -128,17 +128,18 @@ void MASTER_Synchro(void)
 
 uint8_t spi2_tx_original_data[41];
 uint8_t spi2_rx_original_data[41];
-uint8_t spi2_tx_data[21];
-uint8_t spi2_rx_recv[21];
+uint8_t spi2_tx_data_u8[21];
+uint8_t spi2_rx_data_u8[21];
 
 /// @brief SPI 数据交换
 /// @param leg_id 对应腿的ID
-void SPI_TRANSMIT(int leg_id)
+void SPI_TRANSMIT(int leg_id,int motor_id)
 {
     ecat_NS_L();
     MASTER_Synchro();
-    //memcpy(spi2_tx_data, &A1data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID], 21);
-    MotorTxDeal(spi2_tx_data, spi2_tx_original_data);
+    
+    memcpy(spi2_tx_data_u8,&spi_tx_data[leg_id][motor_id],21);
+    MotorTxDeal(spi2_tx_data_u8, spi2_tx_original_data);
     if (HAL_SPI_TransmitReceive_IT(&hspi2, spi2_tx_original_data, spi2_rx_original_data, 41) != HAL_OK)
     {
         Error_Handler();
@@ -150,9 +151,9 @@ void SPI_TRANSMIT(int leg_id)
         {
             for (int j = 0; j < 21; j++)
             {
-                spi2_rx_recv[j] = spi2_rx_original_data[i + j];
+                spi2_rx_data_u8[j] = spi2_rx_original_data[i + j];
             }
-            SpiMotorRxArchive(spi2_rx_recv);
+            SpiMotorRxArchive(spi2_rx_data_u8);
         }
     }
 
@@ -163,16 +164,21 @@ void SPI_TRANSMIT(int leg_id)
     ecat_NS_H();
 }
 
-/// @brief 处理21字节uint8列表，将电机数据归档到usart发送缓冲区
-/// @param spi2_rx_recv
-void SpiMotorRxArchive(uint8_t *spi2_rx_recv)
+/// @brief 处理21字节uint8列表，将电机数据归档到usart发送数据列表
+/// @param rx_recv_data
+void SpiMotorRxArchive(uint8_t *rx_recv_data)
 {
-    memcpy(&a1_msg_rx_transform.u8[0], spi2_rx_recv, 21);
+    memcpy(&a1_msg_rx_transform.u8[0], rx_recv_data, 21);
     int leg_id = a1_msg_rx_transform.a1msg.LegID;
     int motor_id = a1_msg_rx_transform.a1msg.motorID;
-    if (leg_id < 4 && leg_id >= 0 && motor_id < 4 && motor_id >= 0 )
+    uint32_t sum = a1_msg_rx_transform.a1msg.start[0] + a1_msg_rx_transform.a1msg.start[1] + a1_msg_rx_transform.a1msg.LegID + a1_msg_rx_transform.a1msg.motorID + a1_msg_rx_transform.a1msg.mode + a1_msg_rx_transform.a1msg.Pos + a1_msg_rx_transform.a1msg.T + a1_msg_rx_transform.a1msg.W + a1_msg_rx_transform.a1msg.K_P + a1_msg_rx_transform.a1msg.K_W;
+
+    if (a1_msg_rx_transform.a1msg.SumCheck == sum)
     {
-        memcpy(&spi_rx_data[leg_id][motor_id],&a1_msg_rx_transform.a1msg.start[0], 21);
+        if (leg_id < 4 && leg_id >= 0 && motor_id < 4 && motor_id >= 0)
+        {
+            memcpy(&spi_rx_data[leg_id][motor_id], &a1_msg_rx_transform.a1msg.start[0], 21);
+        }
     }
 }
 

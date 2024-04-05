@@ -16,34 +16,32 @@ motor_send_t cmd_leg[4];
 void unitreeA1_tx(int leg_id,int motor_id)
 {
     /*—————————————————————————————————————————左前腿代码范围————————————————————————————————————————————————*/
-    MasterComdDataV3 motor_send_data;
-    COMData32 Res;
 
     uint8_t A1cmd[34];
 
     // 此处为左腿电机结构体//
-    motor_send_data.head.start[0] = 0xFE;
-    motor_send_data.head.start[1] = 0xEE;
-    motor_send_data.head.motorID = motor_id;
-    motor_send_data.head.reserved = 0x00;
+    cmd_motor[leg_id][motor_id].motor_send_data.head.start[0] = 0xFE;
+    cmd_motor[leg_id][motor_id].motor_send_data.head.start[1] = 0xEE;
+    cmd_motor[leg_id][motor_id].motor_send_data.head.motorID = motor_id;
+    cmd_motor[leg_id][motor_id].motor_send_data.head.reserved = 0x00;
 
-    motor_send_data.Mdata.mode = spi_rx_data[leg_id][motor_id].mode;
-    motor_send_data.Mdata.ModifyBit = 0xFF;
-    motor_send_data.Mdata.ReadBit = 0x00;
-    motor_send_data.Mdata.reserved = 0x00;
-    motor_send_data.Mdata.Modify.F = 0;
-    motor_send_data.Mdata.T = spi_rx_data[leg_id][motor_id].T;
-    motor_send_data.Mdata.W = spi_rx_data[leg_id][motor_id].W;
-    motor_send_data.Mdata.Pos = spi_rx_data[leg_id][motor_id].Pos;
-    motor_send_data.Mdata.K_P = spi_rx_data[leg_id][motor_id].K_P;
-    motor_send_data.Mdata.K_W = spi_rx_data[leg_id][motor_id].K_W;
-    motor_send_data.Mdata.LowHzMotorCmdIndex = 0;
-    motor_send_data.Mdata.LowHzMotorCmdByte = 0;
-    motor_send_data.Mdata.Res[0] = Res;
+    cmd_motor[leg_id][motor_id].motor_send_data.Mdata.mode = spi_rx_data[leg_id][motor_id].mode;
+    cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ModifyBit = 0xFF;
+    cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ReadBit = 0x00;
+    cmd_motor[leg_id][motor_id].motor_send_data.Mdata.reserved = 0x00;
+    cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Modify.F = 0;
+    cmd_motor[leg_id][motor_id].motor_send_data.Mdata.T = spi_rx_data[leg_id][motor_id].T;
+    cmd_motor[leg_id][motor_id].motor_send_data.Mdata.W = spi_rx_data[leg_id][motor_id].W;
+    cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Pos = spi_rx_data[leg_id][motor_id].Pos;
+    cmd_motor[leg_id][motor_id].motor_send_data.Mdata.K_P = spi_rx_data[leg_id][motor_id].K_P;
+    cmd_motor[leg_id][motor_id].motor_send_data.Mdata.K_W = spi_rx_data[leg_id][motor_id].K_W;
+    cmd_motor[leg_id][motor_id].motor_send_data.Mdata.LowHzMotorCmdIndex = 0;
+    cmd_motor[leg_id][motor_id].motor_send_data.Mdata.LowHzMotorCmdByte = 0;
+    cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Res[0] = cmd_motor[leg_id][motor_id].Res;
 
-    motor_send_data.CRCdata.u32 = crc32_core((uint32_t *)(&motor_send_data), 7);
+    cmd_motor[leg_id][motor_id].motor_send_data.CRCdata.u32 = crc32_core((uint32_t *)(&cmd_motor[leg_id][motor_id].motor_send_data), 7);
 
-    memcpy(A1cmd, &cmd_leg[leg_id].motor_send_data, 34);
+    memcpy(A1cmd, &cmd_motor[leg_id][motor_id].motor_send_data, 34);
 
     switch (leg_id)
     {

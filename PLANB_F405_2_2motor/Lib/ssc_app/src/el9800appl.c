@@ -481,12 +481,8 @@ void APPL_OutputMapping(UINT16 *pData)
 
 #include "spi2_bus.h"
 
-uint8_t motor_original_rx[41];
-uint8_t motor_original_tx[41];
-uint8_t motormsg_get[21];
-
-uint8_t spi2_flag;
-uint8_t call_flag;
+void ecat_motor_data_rx();
+void ecat_can_rx();
 
 void APPL_Application(void)
 {
@@ -517,96 +513,9 @@ void APPL_Application(void)
         GPIO_ResetBits(GPIOB, GPIO_Pin_13);
     }
 
-    Can1_TxMessage.StdId = sDOOutputs.can1_h0;
-    Can1_TxMessage.ExtId = sDOOutputs.can1_h1;
-    Can1_TxMessage.IDE = sDOOutputs.can1_h2;
-    Can1_TxMessage.RTR = sDOOutputs.can1_h3;
-    Can1_TxMessage.DLC = sDOOutputs.can1_h4;
-
-    Can1_TxMessage.Data[0] = sDOOutputs.can1_d0;
-    Can1_TxMessage.Data[1] = sDOOutputs.can1_d1;
-    Can1_TxMessage.Data[2] = sDOOutputs.can1_d2;
-    Can1_TxMessage.Data[3] = sDOOutputs.can1_d3;
-    Can1_TxMessage.Data[4] = sDOOutputs.can1_d4;
-    Can1_TxMessage.Data[5] = sDOOutputs.can1_d5;
-    Can1_TxMessage.Data[6] = sDOOutputs.can1_d6;
-    Can1_TxMessage.Data[7] = sDOOutputs.can1_d7;
-
-    CAN_Transmit(CAN1, &Can1_TxMessage);
-
-    Can2_TxMessage.StdId = sDOOutputs.can2_h0;
-    Can2_TxMessage.ExtId = sDOOutputs.can2_h1;
-    Can2_TxMessage.IDE = sDOOutputs.can2_h2;
-    Can2_TxMessage.RTR = sDOOutputs.can2_h3;
-    Can2_TxMessage.DLC = sDOOutputs.can2_h4;
-
-    Can2_TxMessage.Data[0] = sDOOutputs.can2_d0;
-    Can2_TxMessage.Data[1] = sDOOutputs.can2_d1;
-    Can2_TxMessage.Data[2] = sDOOutputs.can2_d2;
-    Can2_TxMessage.Data[3] = sDOOutputs.can2_d3;
-    Can2_TxMessage.Data[4] = sDOOutputs.can2_d4;
-    Can2_TxMessage.Data[5] = sDOOutputs.can2_d5;
-    Can2_TxMessage.Data[6] = sDOOutputs.can2_d6;
-    Can2_TxMessage.Data[7] = sDOOutputs.can2_d7;
-
-    CAN_Transmit(CAN2, &Can2_TxMessage);
-
-    sDIInputs.bSwitch1 = 0;
-    sDIInputs.bSwitch2 = 0;
-    sDIInputs.bSwitch3 = 0;
-    sDIInputs.bSwitch4 = 0;
-    sDIInputs.bSwitch5 = 0;
-    sDIInputs.bSwitch6 = 0;
-    sDIInputs.bSwitch7 = 0;
-    sDIInputs.bSwitch8 = 0;
-
-    motor_tx[0][0].start[0] = 0xd2;
-    motor_tx[0][0].start[1] = 0xFE;
-    motor_tx[0][0].leg_id = 0;
-    motor_tx[0][0].motor_id = 1;
-    motor_tx[0][0].mode = 10;
-    motor_tx[0][0].T = 0;
-    motor_tx[0][0].W = 0;
-    motor_tx[0][0].Pos = 0;
-    motor_tx[0][0].K_P = 0;
-    motor_tx[0][0].K_W = 0;
-
-    motor_tx[0][0].SumCheck = motor_tx[0][0].start[0] + motor_tx[0][0].start[1] + motor_tx[0][0].leg_id + motor_tx[0][0].motor_id + motor_tx[0][0].mode + motor_tx[0][0].T + motor_tx[0][0].W + motor_tx[0][0].Pos + motor_tx[0][0].K_P + motor_tx[0][0].K_W;
-
-    PreparMotorMsg(motor_tx[0][0], motor_original_tx);
-
-    spi2_flag = 0;
-
-    if (call_flag == 0)
-    {
-        spi2_w_cmd(0xD2);
-        call_flag = 1;
-    }
-
-    spi2_flag = spi2_r_cmd();
-
-    // spi
-    if (spi2_flag == 0xD2)
-    {
-        for (int i = 0; i < 41; i++)
-        {
-            motor_original_rx[i] = spi2_wr_cmd(motor_original_tx[i]);
-        }
-
-        for (int i = 0; i < 21; i++)
-        {
-            if (motor_original_rx[i] == 0xD2 && motor_original_rx[i + 1] == 0xFE)
-            {
-                for (int j = 0; j < 21; j++)
-                {
-                    motormsg_get[j] = motor_original_rx[i + j];
-                }
-                GetMotorMsg(&motormsg_get[0]);
-            }
-        }
-
-        call_flag = 0;
-    }
+    ecat_can_rx();
+    ecat_motor_data_rx();
+    ecat_spi_motor(0, 0);
 
     // uint8_t dummy = spi2_wr_cmd(0x01);
 
@@ -666,6 +575,58 @@ void APPL_Application(void)
         sAIInputs.bTxPDOState = 0;
 }
 
+void ecat_motor_data_rx()
+{
+    motor_tx[0][0].start[0] = 0xD2;
+    motor_tx[0][0].start[1] = 0xFE;
+    motor_tx[0][0].leg_id = 0;
+    motor_tx[0][0].motor_id = 0;
+    motor_tx[0][0].mode = sDOOutputs.motor1_mode;
+    motor_tx[0][0].T = sDOOutputs.motor1_t;
+    motor_tx[0][0].W = sDOOutputs.motor1_w;
+    motor_tx[0][0].Pos = sDOOutputs.motor1_pos;
+    motor_tx[0][0].K_P = sDOOutputs.motor1_kp;
+    motor_tx[0][0].K_W = sDOOutputs.motor1_kd;
+
+    motor_tx[0][0].SumCheck = motor_tx[0][0].start[0] + motor_tx[0][0].start[1] + motor_tx[0][0].leg_id + motor_tx[0][0].motor_id + motor_tx[0][0].mode + motor_tx[0][0].T + motor_tx[0][0].W + motor_tx[0][0].Pos + motor_tx[0][0].K_P + motor_tx[0][0].K_W;
+}
+
+void ecat_can_rx()
+{
+    Can1_TxMessage.StdId = sDOOutputs.can1_h0;
+    Can1_TxMessage.ExtId = sDOOutputs.can1_h1;
+    Can1_TxMessage.IDE = sDOOutputs.can1_h2;
+    Can1_TxMessage.RTR = sDOOutputs.can1_h3;
+    Can1_TxMessage.DLC = sDOOutputs.can1_h4;
+
+    Can1_TxMessage.Data[0] = sDOOutputs.can1_d0;
+    Can1_TxMessage.Data[1] = sDOOutputs.can1_d1;
+    Can1_TxMessage.Data[2] = sDOOutputs.can1_d2;
+    Can1_TxMessage.Data[3] = sDOOutputs.can1_d3;
+    Can1_TxMessage.Data[4] = sDOOutputs.can1_d4;
+    Can1_TxMessage.Data[5] = sDOOutputs.can1_d5;
+    Can1_TxMessage.Data[6] = sDOOutputs.can1_d6;
+    Can1_TxMessage.Data[7] = sDOOutputs.can1_d7;
+
+    CAN_Transmit(CAN1, &Can1_TxMessage);
+
+    Can2_TxMessage.StdId = sDOOutputs.can2_h0;
+    Can2_TxMessage.ExtId = sDOOutputs.can2_h1;
+    Can2_TxMessage.IDE = sDOOutputs.can2_h2;
+    Can2_TxMessage.RTR = sDOOutputs.can2_h3;
+    Can2_TxMessage.DLC = sDOOutputs.can2_h4;
+
+    Can2_TxMessage.Data[0] = sDOOutputs.can2_d0;
+    Can2_TxMessage.Data[1] = sDOOutputs.can2_d1;
+    Can2_TxMessage.Data[2] = sDOOutputs.can2_d2;
+    Can2_TxMessage.Data[3] = sDOOutputs.can2_d3;
+    Can2_TxMessage.Data[4] = sDOOutputs.can2_d4;
+    Can2_TxMessage.Data[5] = sDOOutputs.can2_d5;
+    Can2_TxMessage.Data[6] = sDOOutputs.can2_d6;
+    Can2_TxMessage.Data[7] = sDOOutputs.can2_d7;
+
+    CAN_Transmit(CAN2, &Can2_TxMessage);
+}
 /////////////////////////////////////////////////////////////////////////////////////////
 /**
  \param     index               index of the requested object.

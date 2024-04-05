@@ -58,7 +58,15 @@ typedef union
 extern A1PackageSpiTx motor_tx[4][3];
 extern A1PackageSpiRx motor_rx[4][3];
 
+extern uint8_t motor_original_rx[41];
+extern uint8_t motor_original_tx[41];
+extern uint8_t motormsg_get[21];
+
+extern uint8_t spi2_flag;
+extern uint8_t call_flag;
+
 void GetMotorMsg(uint8_t *input);
 void PreparMotorMsg(A1PackageSpiTx motor_tx_pack,uint8_t *motor_original_tx);
+void ecat_spi_motor(int leg_id, int motor_id);
 
 #endif

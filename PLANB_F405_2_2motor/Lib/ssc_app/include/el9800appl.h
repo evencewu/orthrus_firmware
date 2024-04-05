@@ -164,7 +164,6 @@ typedef struct OBJ_STRUCT_PACKED_START {
 } OBJ_STRUCT_PACKED_END
 TOBJ6020;
 
-
 /** \brief 0x7010 (Digital output object) data structure*/
 typedef struct OBJ_STRUCT_PACKED_START {
    UINT16   u16SubIndex0; /**< \brief SubIndex 0*/
@@ -216,7 +215,7 @@ typedef struct OBJ_STRUCT_PACKED_START {
    UINT32 motor2_kd;
    UINT32 motor2_t;
    //ALIGN8(SubIndex008) /**< \brief 8Bit alignment*/
-} OBJ_STRUCT_PACKED_END
+}OBJ_STRUCT_PACKED_END
 TOBJ7010;
 /** @}*/
 

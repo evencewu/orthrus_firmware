@@ -21,9 +21,9 @@ void sendToEcat(int leg_id);
 
 
 void MASTER_Synchro(void);
-void SPI_TRANSMIT(int leg_id);
+void SPI_TRANSMIT(int leg_id,int motor_id);
 
 void MotorTxDeal(uint8_t *array1, uint8_t *array3);
-void SpiMotorRxArchive(uint8_t *spi2_rx_recv);
+void SpiMotorRxArchive(uint8_t *rx_recv_data);
 
 #endif
