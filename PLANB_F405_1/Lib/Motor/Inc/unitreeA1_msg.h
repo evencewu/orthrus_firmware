@@ -152,8 +152,6 @@ typedef struct
       //电机控制数据结构体，详见motor_msg.h
 }motor_send_t;
 
-
-
 //总的电机接收数据//
 typedef struct
 {

@@ -563,8 +563,8 @@ void APPL_Application(void)
     motor_tx[0][0].start[0] = 0xd2;
     motor_tx[0][0].start[1] = 0xFE;
     motor_tx[0][0].leg_id = 0;
-    motor_tx[0][0].motor_id = 0;
-    motor_tx[0][0].mode = 0;
+    motor_tx[0][0].motor_id = 1;
+    motor_tx[0][0].mode = 10;
     motor_tx[0][0].T = 0;
     motor_tx[0][0].W = 0;
     motor_tx[0][0].Pos = 0;

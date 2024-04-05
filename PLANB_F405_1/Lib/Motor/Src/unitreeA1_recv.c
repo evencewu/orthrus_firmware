@@ -350,21 +350,18 @@ void unitreeA1_rx(int leg_id)
     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
 
-
-
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[0] = 0xD2; 
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[1] = 0xFE;
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].LegID = leg_id;
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MotorID = data_leg[leg_id].motor_recv_data.head.motorID;
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].mode = data_leg[leg_id].motor_recv_data.Mdata.mode;
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Temp = data_leg[leg_id].motor_recv_data.Mdata.Temp;
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].T = data_leg[leg_id].motor_recv_data.Mdata.T;
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].W = data_leg[leg_id].motor_recv_data.Mdata.W;
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Acc = data_leg[leg_id].motor_recv_data.Mdata.Acc;
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Pos = data_leg[leg_id].motor_recv_data.Mdata.Pos;
-    A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].SumCheck = 0xff + 0xfe + leg_id +data_leg[leg_id].motor_recv_data.head.motorID +data_leg[leg_id].motor_recv_data.Mdata.mode + data_leg[leg_id].motor_recv_data.Mdata.Temp+data_leg[leg_id].motor_recv_data.Mdata.T + data_leg[leg_id].motor_recv_data.Mdata.W + data_leg[leg_id].motor_recv_data.Mdata.Acc + data_leg[leg_id].motor_recv_data.Mdata.Pos;
-
+    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[0] = 0xD2; 
+    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[1] = 0xFE;
+    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].LegID = leg_id;
+    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MotorID = data_leg[leg_id].motor_recv_data.head.motorID;
+    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
+    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].mode = data_leg[leg_id].motor_recv_data.Mdata.mode;
+    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Temp = data_leg[leg_id].motor_recv_data.Mdata.Temp;
+    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].T = data_leg[leg_id].motor_recv_data.Mdata.T;
+    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].W = data_leg[leg_id].motor_recv_data.Mdata.W;
+    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Acc = data_leg[leg_id].motor_recv_data.Mdata.Acc;
+    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Pos = data_leg[leg_id].motor_recv_data.Mdata.Pos;
+    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].SumCheck = 0xff + 0xfe + leg_id +data_leg[leg_id].motor_recv_data.head.motorID +data_leg[leg_id].motor_recv_data.Mdata.mode + data_leg[leg_id].motor_recv_data.Mdata.Temp+data_leg[leg_id].motor_recv_data.Mdata.T + data_leg[leg_id].motor_recv_data.Mdata.W + data_leg[leg_id].motor_recv_data.Mdata.Acc + data_leg[leg_id].motor_recv_data.Mdata.Pos;
 
 /*
     data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;

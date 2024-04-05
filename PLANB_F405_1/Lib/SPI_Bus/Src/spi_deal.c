@@ -1,21 +1,26 @@
 #include "main.h"
 #include "spi.h"
+#include "string.h"
+
 #include "unitreeA1_msg.h"
 #include "unitreeA1_recv.h"
 #include "unitreeA1_cmd.h"
+
 #include "data_def.h"
-#include "string.h"
 #include "spi_deal.h"
 
 A1msgTxTransform a1_msg_tx_transform;
 A1msgRxTransform a1_msg_rx_transform;
 
+A1PackageSpiTx spi_tx_data[4][3];
+A1PackageSpiRx spi_rx_data[4][3];
+
+//
 volatile uint8_t RxComplete = 0;
 
 extern DMA_HandleTypeDef hdma_spi2_rx;
 extern DMA_HandleTypeDef hdma_spi2_tx;
 
-A1PackageSpiTx A1date[4][3];
 A1PackageSpiRx RXA1cmd;
 
 extern motor_recv_t data_motor[4][3];
@@ -121,46 +126,27 @@ void MASTER_Synchro(void)
     } while (rxbety != txbety);
 }
 
-/// @brief 进行一次中断形式的接收,并尝试赋值给发送电机数据结构体
-/// @param
-void SPI_RECEIVE(void)
-{
-    ecat_NS_L();
-    MASTER_Synchro();
-    uint8_t rxdate[41];
-    if (HAL_SPI_Receive_IT(&hspi2, rxdate, 41) != HAL_OK)
-    {
-        Error_Handler();
-    }
-    while (HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
-    {
-    }
-
-    // SPI_RXdate(&RXA1cmd, rxdate);
-    ecat_NS_H();
-}
-
 uint8_t spi2_tx_original_data[41];
 uint8_t spi2_rx_original_data[41];
 uint8_t spi2_tx_data[21];
 uint8_t spi2_rx_recv[21];
 
-/// @brief 进行一次中断形式的发送
+/// @brief SPI 数据交换
 /// @param leg_id 对应腿的ID
 void SPI_TRANSMIT(int leg_id)
 {
     ecat_NS_L();
     MASTER_Synchro();
-    memcpy(spi2_tx_data, &A1date[leg_id][data_leg[leg_id].motor_recv_data.head.motorID], 21);
+    //memcpy(spi2_tx_data, &A1data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID], 21);
     MotorTxDeal(spi2_tx_data, spi2_tx_original_data);
     if (HAL_SPI_TransmitReceive_IT(&hspi2, spi2_tx_original_data, spi2_rx_original_data, 41) != HAL_OK)
     {
         Error_Handler();
     }
-    
+
     for (int i = 0; i < 21; i++)
     {
-        if (spi2_rx_original_data[i] == 0xD2 && spi2_rx_original_data[i+1] == 0xFE)
+        if (spi2_rx_original_data[i] == 0xD2 && spi2_rx_original_data[i + 1] == 0xFE)
         {
             for (int j = 0; j < 21; j++)
             {
@@ -169,7 +155,7 @@ void SPI_TRANSMIT(int leg_id)
             SpiMotorRxArchive(spi2_rx_recv);
         }
     }
-    
+
     while (HAL_SPI_GetState(&hspi2) != HAL_SPI_STATE_READY)
     {
     }
@@ -178,17 +164,16 @@ void SPI_TRANSMIT(int leg_id)
 }
 
 /// @brief 处理21字节uint8列表，将电机数据归档到usart发送缓冲区
-/// @param spi2_rx_recv 
+/// @param spi2_rx_recv
 void SpiMotorRxArchive(uint8_t *spi2_rx_recv)
 {
-    memcpy(&a1_msg_rx_transform.u8[0],spi2_rx_recv,21);
-    a1_msg_rx_transform.a1msg.LegID;
-    a1_msg_rx_transform.a1msg.motorID;
-    a1_msg_rx_transform.a1msg.mode;
-    a1_msg_rx_transform.a1msg.T;
-    a1_msg_rx_transform.a1msg.Pos;
-    a1_msg_rx_transform.a1msg.K_P;
-    a1_msg_rx_transform.a1msg.K_W;
+    memcpy(&a1_msg_rx_transform.u8[0], spi2_rx_recv, 21);
+    int leg_id = a1_msg_rx_transform.a1msg.LegID;
+    int motor_id = a1_msg_rx_transform.a1msg.motorID;
+    if (leg_id < 4 && leg_id >= 0 && motor_id < 4 && motor_id >= 0 )
+    {
+        memcpy(&spi_rx_data[leg_id][motor_id],&a1_msg_rx_transform.a1msg.start[0], 21);
+    }
 }
 
 /// @brief 21字节数据转为双倍41字节数据
@@ -198,7 +183,7 @@ void MotorTxDeal(uint8_t *data, uint8_t *original_data)
 {
     for (int i = 0; i < 20; i++)
     {
-        *(original_data+ i) = *(data + i + 1);
+        *(original_data + i) = *(data + i + 1);
     }
 
     for (int i = 0; i < 21; i++)
