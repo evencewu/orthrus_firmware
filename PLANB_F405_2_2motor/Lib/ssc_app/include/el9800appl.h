@@ -203,17 +203,17 @@ typedef struct OBJ_STRUCT_PACKED_START {
    UINT8 can2_d7;
    UINT8 null_no;
    UINT16 motor1_mode;
-   UINT32 motor1_pos;
-   UINT32 motor1_w;
-   UINT32 motor1_kp;
-   UINT32 motor1_kd;
-   UINT32 motor1_t;
+   float motor1_pos;
+   float motor1_w;
+   float motor1_kp;
+   float motor1_kd;
+   float motor1_t;
    UINT16 motor2_mode;
-   UINT32 motor2_pos;
-   UINT32 motor2_w;
-   UINT32 motor2_kp;
-   UINT32 motor2_kd;
-   UINT32 motor2_t;
+   float motor2_pos;
+   float motor2_w;
+   float motor2_kp;
+   float motor2_kd;
+   float motor2_t;
    //ALIGN8(SubIndex008) /**< \brief 8Bit alignment*/
 }OBJ_STRUCT_PACKED_END
 TOBJ7010;

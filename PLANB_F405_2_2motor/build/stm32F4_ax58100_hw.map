@@ -30,6 +30,14 @@ Archive member included to satisfy reference by file (symbol)
                               /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-sbrkr.o) (_sbrk)
 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(_exit.o)
                               /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-exit.o) (_exit)
+/usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldf3.o)
+                              build/el9800appl.o (__aeabi_dmul)
+/usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+                              build/el9800appl.o (__aeabi_f2d)
+/usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldivdf3.o)
+                              build/el9800appl.o (__aeabi_ddiv)
+/usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_fixdfsi.o)
+                              build/el9800appl.o (__aeabi_d2iz)
 
 Discarded input sections
 
@@ -789,6 +797,8 @@ Discarded input sections
                 0x0000000000000000        0xa build/stm32f4xx_gpio.o
  .text.GPIO_Write
                 0x0000000000000000        0x4 build/stm32f4xx_gpio.o
+ .text.GPIO_ToggleBits
+                0x0000000000000000        0x8 build/stm32f4xx_gpio.o
  .text          0x0000000000000000        0x0 build/stm32f4xx_hash.o
  .data          0x0000000000000000        0x0 build/stm32f4xx_hash.o
  .bss           0x0000000000000000        0x0 build/stm32f4xx_hash.o
@@ -2188,6 +2198,18 @@ Discarded input sections
  .debug_frame   0x0000000000000000       0x20 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(_exit.o)
  .ARM.attributes
                 0x0000000000000000       0x34 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(_exit.o)
+ .text          0x0000000000000000      0x254 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldf3.o)
+ .data          0x0000000000000000        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldf3.o)
+ .bss           0x0000000000000000        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldf3.o)
+ .debug_frame   0x0000000000000000       0x30 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldf3.o)
+ .ARM.attributes
+                0x0000000000000000       0x1e /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldf3.o)
+ .data          0x0000000000000000        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+ .bss           0x0000000000000000        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+ .data          0x0000000000000000        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldivdf3.o)
+ .bss           0x0000000000000000        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldivdf3.o)
+ .data          0x0000000000000000        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_fixdfsi.o)
+ .bss           0x0000000000000000        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_fixdfsi.o)
  .text          0x0000000000000000        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtend.o
  .data          0x0000000000000000        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtend.o
  .bss           0x0000000000000000        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtend.o
@@ -2308,879 +2330,900 @@ LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3
                 0x0000000008000000                g_pfnVectors
                 0x0000000008000188                . = ALIGN (0x4)
 
-.text           0x0000000008000188     0x6310
+.text           0x0000000008000188     0x6c2c
                 0x0000000008000188                . = ALIGN (0x4)
  *(.text)
  .text          0x0000000008000188       0x40 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
  .text          0x00000000080001c8       0x10 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-strlen.o)
                 0x00000000080001c8                strlen
+ .text          0x00000000080001d8      0x378 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+                0x00000000080001d8                __aeabi_drsub
+                0x00000000080001e0                __aeabi_dsub
+                0x00000000080001e0                __subdf3
+                0x00000000080001e4                __adddf3
+                0x00000000080001e4                __aeabi_dadd
+                0x000000000800045c                __aeabi_ui2d
+                0x000000000800045c                __floatunsidf
+                0x000000000800047c                __floatsidf
+                0x000000000800047c                __aeabi_i2d
+                0x00000000080004a0                __extendsfdf2
+                0x00000000080004a0                __aeabi_f2d
+                0x00000000080004e4                __aeabi_ul2d
+                0x00000000080004e4                __floatundidf
+                0x00000000080004f4                __floatdidf
+                0x00000000080004f4                __aeabi_l2d
+ .text          0x0000000008000550      0x424 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldivdf3.o)
+                0x0000000008000550                __aeabi_dmul
+                0x0000000008000550                __muldf3
+                0x00000000080007a4                __aeabi_ddiv
+                0x00000000080007a4                __divdf3
+ .text          0x0000000008000974       0x50 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_fixdfsi.o)
+                0x0000000008000974                __fixdfsi
+                0x0000000008000974                __aeabi_d2iz
  *(.text*)
  .text.NMI_Handler
-                0x00000000080001d8        0x2 build/stm32f4xx_it.o
-                0x00000000080001d8                NMI_Handler
+                0x00000000080009c4        0x2 build/stm32f4xx_it.o
+                0x00000000080009c4                NMI_Handler
  .text.HardFault_Handler
-                0x00000000080001da        0x2 build/stm32f4xx_it.o
-                0x00000000080001da                HardFault_Handler
+                0x00000000080009c6        0x2 build/stm32f4xx_it.o
+                0x00000000080009c6                HardFault_Handler
  .text.MemManage_Handler
-                0x00000000080001dc        0x2 build/stm32f4xx_it.o
-                0x00000000080001dc                MemManage_Handler
+                0x00000000080009c8        0x2 build/stm32f4xx_it.o
+                0x00000000080009c8                MemManage_Handler
  .text.BusFault_Handler
-                0x00000000080001de        0x2 build/stm32f4xx_it.o
-                0x00000000080001de                BusFault_Handler
+                0x00000000080009ca        0x2 build/stm32f4xx_it.o
+                0x00000000080009ca                BusFault_Handler
  .text.UsageFault_Handler
-                0x00000000080001e0        0x2 build/stm32f4xx_it.o
-                0x00000000080001e0                UsageFault_Handler
+                0x00000000080009cc        0x2 build/stm32f4xx_it.o
+                0x00000000080009cc                UsageFault_Handler
  .text.SVC_Handler
-                0x00000000080001e2        0x2 build/stm32f4xx_it.o
-                0x00000000080001e2                SVC_Handler
+                0x00000000080009ce        0x2 build/stm32f4xx_it.o
+                0x00000000080009ce                SVC_Handler
  .text.DebugMon_Handler
-                0x00000000080001e4        0x2 build/stm32f4xx_it.o
-                0x00000000080001e4                DebugMon_Handler
+                0x00000000080009d0        0x2 build/stm32f4xx_it.o
+                0x00000000080009d0                DebugMon_Handler
  .text.PendSV_Handler
-                0x00000000080001e6        0x2 build/stm32f4xx_it.o
-                0x00000000080001e6                PendSV_Handler
+                0x00000000080009d2        0x2 build/stm32f4xx_it.o
+                0x00000000080009d2                PendSV_Handler
  .text.SysTick_Handler
-                0x00000000080001e8        0x2 build/stm32f4xx_it.o
-                0x00000000080001e8                SysTick_Handler
- *fill*         0x00000000080001ea        0x2 
+                0x00000000080009d4        0x2 build/stm32f4xx_it.o
+                0x00000000080009d4                SysTick_Handler
+ *fill*         0x00000000080009d6        0x2 
  .text.NVIC_PriorityGroupConfig
-                0x00000000080001ec       0x14 build/misc.o
-                0x00000000080001ec                NVIC_PriorityGroupConfig
+                0x00000000080009d8       0x14 build/misc.o
+                0x00000000080009d8                NVIC_PriorityGroupConfig
  .text.NVIC_Init
-                0x0000000008000200       0x64 build/misc.o
-                0x0000000008000200                NVIC_Init
+                0x00000000080009ec       0x64 build/misc.o
+                0x00000000080009ec                NVIC_Init
  .text.CAN_DeInit
-                0x0000000008000264       0x38 build/stm32f4xx_can.o
-                0x0000000008000264                CAN_DeInit
+                0x0000000008000a50       0x38 build/stm32f4xx_can.o
+                0x0000000008000a50                CAN_DeInit
  .text.CAN_Init
-                0x000000000800029c      0x10e build/stm32f4xx_can.o
-                0x000000000800029c                CAN_Init
- *fill*         0x00000000080003aa        0x2 
+                0x0000000008000a88      0x10e build/stm32f4xx_can.o
+                0x0000000008000a88                CAN_Init
+ *fill*         0x0000000008000b96        0x2 
  .text.CAN_FilterInit
-                0x00000000080003ac      0x10c build/stm32f4xx_can.o
-                0x00000000080003ac                CAN_FilterInit
+                0x0000000008000b98      0x10c build/stm32f4xx_can.o
+                0x0000000008000b98                CAN_FilterInit
  .text.CAN_StructInit
-                0x00000000080004b8       0x20 build/stm32f4xx_can.o
-                0x00000000080004b8                CAN_StructInit
+                0x0000000008000ca4       0x20 build/stm32f4xx_can.o
+                0x0000000008000ca4                CAN_StructInit
  .text.CAN_Transmit
-                0x00000000080004d8       0xd6 build/stm32f4xx_can.o
-                0x00000000080004d8                CAN_Transmit
+                0x0000000008000cc4       0xd6 build/stm32f4xx_can.o
+                0x0000000008000cc4                CAN_Transmit
  .text.CAN_Receive
-                0x00000000080005ae       0xac build/stm32f4xx_can.o
-                0x00000000080005ae                CAN_Receive
+                0x0000000008000d9a       0xac build/stm32f4xx_can.o
+                0x0000000008000d9a                CAN_Receive
  .text.CAN_ITConfig
-                0x000000000800065a       0x14 build/stm32f4xx_can.o
-                0x000000000800065a                CAN_ITConfig
- *fill*         0x000000000800066e        0x2 
+                0x0000000008000e46       0x14 build/stm32f4xx_can.o
+                0x0000000008000e46                CAN_ITConfig
+ *fill*         0x0000000008000e5a        0x2 
  .text.EXTI_Init
-                0x0000000008000670       0x90 build/stm32f4xx_exti.o
-                0x0000000008000670                EXTI_Init
+                0x0000000008000e5c       0x90 build/stm32f4xx_exti.o
+                0x0000000008000e5c                EXTI_Init
  .text.EXTI_ClearITPendingBit
-                0x0000000008000700        0xc build/stm32f4xx_exti.o
-                0x0000000008000700                EXTI_ClearITPendingBit
+                0x0000000008000eec        0xc build/stm32f4xx_exti.o
+                0x0000000008000eec                EXTI_ClearITPendingBit
  .text.GPIO_Init
-                0x000000000800070c       0xa6 build/stm32f4xx_gpio.o
-                0x000000000800070c                GPIO_Init
+                0x0000000008000ef8       0xa6 build/stm32f4xx_gpio.o
+                0x0000000008000ef8                GPIO_Init
  .text.GPIO_SetBits
-                0x00000000080007b2        0x4 build/stm32f4xx_gpio.o
-                0x00000000080007b2                GPIO_SetBits
+                0x0000000008000f9e        0x4 build/stm32f4xx_gpio.o
+                0x0000000008000f9e                GPIO_SetBits
  .text.GPIO_ResetBits
-                0x00000000080007b6        0x4 build/stm32f4xx_gpio.o
-                0x00000000080007b6                GPIO_ResetBits
- .text.GPIO_ToggleBits
-                0x00000000080007ba        0x8 build/stm32f4xx_gpio.o
-                0x00000000080007ba                GPIO_ToggleBits
+                0x0000000008000fa2        0x4 build/stm32f4xx_gpio.o
+                0x0000000008000fa2                GPIO_ResetBits
  .text.GPIO_PinAFConfig
-                0x00000000080007c2       0x34 build/stm32f4xx_gpio.o
-                0x00000000080007c2                GPIO_PinAFConfig
- *fill*         0x00000000080007f6        0x2 
+                0x0000000008000fa6       0x34 build/stm32f4xx_gpio.o
+                0x0000000008000fa6                GPIO_PinAFConfig
+ *fill*         0x0000000008000fda        0x2 
  .text.RCC_AHB1PeriphClockCmd
-                0x00000000080007f8       0x1c build/stm32f4xx_rcc.o
-                0x00000000080007f8                RCC_AHB1PeriphClockCmd
+                0x0000000008000fdc       0x1c build/stm32f4xx_rcc.o
+                0x0000000008000fdc                RCC_AHB1PeriphClockCmd
  .text.RCC_APB1PeriphClockCmd
-                0x0000000008000814       0x1c build/stm32f4xx_rcc.o
-                0x0000000008000814                RCC_APB1PeriphClockCmd
+                0x0000000008000ff8       0x1c build/stm32f4xx_rcc.o
+                0x0000000008000ff8                RCC_APB1PeriphClockCmd
  .text.RCC_APB2PeriphClockCmd
-                0x0000000008000830       0x1c build/stm32f4xx_rcc.o
-                0x0000000008000830                RCC_APB2PeriphClockCmd
+                0x0000000008001014       0x1c build/stm32f4xx_rcc.o
+                0x0000000008001014                RCC_APB2PeriphClockCmd
  .text.RCC_APB1PeriphResetCmd
-                0x000000000800084c       0x1c build/stm32f4xx_rcc.o
-                0x000000000800084c                RCC_APB1PeriphResetCmd
+                0x0000000008001030       0x1c build/stm32f4xx_rcc.o
+                0x0000000008001030                RCC_APB1PeriphResetCmd
  .text.RCC_APB2PeriphResetCmd
-                0x0000000008000868       0x1c build/stm32f4xx_rcc.o
-                0x0000000008000868                RCC_APB2PeriphResetCmd
+                0x000000000800104c       0x1c build/stm32f4xx_rcc.o
+                0x000000000800104c                RCC_APB2PeriphResetCmd
  .text.SPI_I2S_DeInit
-                0x0000000008000884       0xc4 build/stm32f4xx_spi.o
-                0x0000000008000884                SPI_I2S_DeInit
+                0x0000000008001068       0xc4 build/stm32f4xx_spi.o
+                0x0000000008001068                SPI_I2S_DeInit
  .text.SPI_Init
-                0x0000000008000948       0x4e build/stm32f4xx_spi.o
-                0x0000000008000948                SPI_Init
- .text.SPI_Cmd  0x0000000008000996       0x1c build/stm32f4xx_spi.o
-                0x0000000008000996                SPI_Cmd
+                0x000000000800112c       0x4e build/stm32f4xx_spi.o
+                0x000000000800112c                SPI_Init
+ .text.SPI_Cmd  0x000000000800117a       0x1c build/stm32f4xx_spi.o
+                0x000000000800117a                SPI_Cmd
  .text.SPI_I2S_ReceiveData
-                0x00000000080009b2        0x6 build/stm32f4xx_spi.o
-                0x00000000080009b2                SPI_I2S_ReceiveData
+                0x0000000008001196        0x6 build/stm32f4xx_spi.o
+                0x0000000008001196                SPI_I2S_ReceiveData
  .text.SPI_I2S_SendData
-                0x00000000080009b8        0x4 build/stm32f4xx_spi.o
-                0x00000000080009b8                SPI_I2S_SendData
+                0x000000000800119c        0x4 build/stm32f4xx_spi.o
+                0x000000000800119c                SPI_I2S_SendData
  .text.SPI_I2S_GetFlagStatus
-                0x00000000080009bc        0xe build/stm32f4xx_spi.o
-                0x00000000080009bc                SPI_I2S_GetFlagStatus
- *fill*         0x00000000080009ca        0x2 
+                0x00000000080011a0        0xe build/stm32f4xx_spi.o
+                0x00000000080011a0                SPI_I2S_GetFlagStatus
+ *fill*         0x00000000080011ae        0x2 
  .text.SYSCFG_EXTILineConfig
-                0x00000000080009cc       0x38 build/stm32f4xx_syscfg.o
-                0x00000000080009cc                SYSCFG_EXTILineConfig
+                0x00000000080011b0       0x38 build/stm32f4xx_syscfg.o
+                0x00000000080011b0                SYSCFG_EXTILineConfig
  .text.TIM_DeInit
-                0x0000000008000a04      0x198 build/stm32f4xx_tim.o
-                0x0000000008000a04                TIM_DeInit
+                0x00000000080011e8      0x198 build/stm32f4xx_tim.o
+                0x00000000080011e8                TIM_DeInit
  .text.TIM_TimeBaseInit
-                0x0000000008000b9c       0x7c build/stm32f4xx_tim.o
-                0x0000000008000b9c                TIM_TimeBaseInit
- .text.TIM_Cmd  0x0000000008000c18       0x1c build/stm32f4xx_tim.o
-                0x0000000008000c18                TIM_Cmd
+                0x0000000008001380       0x7c build/stm32f4xx_tim.o
+                0x0000000008001380                TIM_TimeBaseInit
+ .text.TIM_Cmd  0x00000000080013fc       0x1c build/stm32f4xx_tim.o
+                0x00000000080013fc                TIM_Cmd
  .text.TIM_ITConfig
-                0x0000000008000c34       0x18 build/stm32f4xx_tim.o
-                0x0000000008000c34                TIM_ITConfig
+                0x0000000008001418       0x18 build/stm32f4xx_tim.o
+                0x0000000008001418                TIM_ITConfig
  .text.TIM_ClearFlag
-                0x0000000008000c4c        0x8 build/stm32f4xx_tim.o
-                0x0000000008000c4c                TIM_ClearFlag
+                0x0000000008001430        0x8 build/stm32f4xx_tim.o
+                0x0000000008001430                TIM_ClearFlag
  .text.TIM_ClearITPendingBit
-                0x0000000008000c54        0x8 build/stm32f4xx_tim.o
-                0x0000000008000c54                TIM_ClearITPendingBit
+                0x0000000008001438        0x8 build/stm32f4xx_tim.o
+                0x0000000008001438                TIM_ClearITPendingBit
  .text.GetMotorMsg
-                0x0000000008000c5c       0x60 build/spi2_bus.o
-                0x0000000008000c5c                GetMotorMsg
+                0x0000000008001440       0x60 build/spi2_bus.o
+                0x0000000008001440                GetMotorMsg
  .text.PreparMotorMsg
-                0x0000000008000cbc       0x66 build/spi2_bus.o
-                0x0000000008000cbc                PreparMotorMsg
- *fill*         0x0000000008000d22        0x2 
+                0x00000000080014a0       0x66 build/spi2_bus.o
+                0x00000000080014a0                PreparMotorMsg
+ *fill*         0x0000000008001506        0x2 
  .text.ecat_spi_motor
-                0x0000000008000d24       0xc8 build/spi2_bus.o
-                0x0000000008000d24                ecat_spi_motor
+                0x0000000008001508       0xc8 build/spi2_bus.o
+                0x0000000008001508                ecat_spi_motor
  .text.EXTI8_Configuration
-                0x0000000008000dec       0x78 build/EXIT.o
-                0x0000000008000dec                EXTI8_Configuration
+                0x00000000080015d0       0x78 build/EXIT.o
+                0x00000000080015d0                EXTI8_Configuration
  .text.EXTI0_Configuration
-                0x0000000008000e64       0x74 build/EXIT.o
-                0x0000000008000e64                EXTI0_Configuration
+                0x0000000008001648       0x74 build/EXIT.o
+                0x0000000008001648                EXTI0_Configuration
  .text.EXTI1_Configuration
-                0x0000000008000ed8       0x74 build/EXIT.o
-                0x0000000008000ed8                EXTI1_Configuration
+                0x00000000080016bc       0x74 build/EXIT.o
+                0x00000000080016bc                EXTI1_Configuration
  .text.rst_high
-                0x0000000008000f4c       0x10 build/RST.o
-                0x0000000008000f4c                rst_high
+                0x0000000008001730       0x10 build/RST.o
+                0x0000000008001730                rst_high
  .text.rst_setup
-                0x0000000008000f5c       0x3c build/RST.o
-                0x0000000008000f5c                rst_setup
+                0x0000000008001740       0x3c build/RST.o
+                0x0000000008001740                rst_setup
  .text.SPI1_Init
-                0x0000000008000f98       0x5c build/SPI1.o
-                0x0000000008000f98                SPI1_Init
+                0x000000000800177c       0x5c build/SPI1.o
+                0x000000000800177c                SPI1_Init
  .text.SPI1_GPIO_Init
-                0x0000000008000ff4       0xa0 build/SPI1.o
-                0x0000000008000ff4                SPI1_GPIO_Init
- .text.WR_CMD   0x0000000008001094       0x34 build/SPI1.o
-                0x0000000008001094                WR_CMD
+                0x00000000080017d8       0xa0 build/SPI1.o
+                0x00000000080017d8                SPI1_GPIO_Init
+ .text.WR_CMD   0x0000000008001878       0x34 build/SPI1.o
+                0x0000000008001878                WR_CMD
  .text.TIM_Configuration
-                0x00000000080010c8       0x7e build/Timer.o
-                0x00000000080010c8                TIM_Configuration
- *fill*         0x0000000008001146        0x2 
+                0x00000000080018ac       0x7e build/Timer.o
+                0x00000000080018ac                TIM_Configuration
+ *fill*         0x000000000800192a        0x2 
  .text.CAN1_GPIO_Config
-                0x0000000008001148       0x6c build/bsp_can.o
+                0x000000000800192c       0x6c build/bsp_can.o
  .text.CAN2_GPIO_Config
-                0x00000000080011b4       0x68 build/bsp_can.o
+                0x0000000008001998       0x68 build/bsp_can.o
  .text.CAN1_Mode_Config
-                0x000000000800121c       0x60 build/bsp_can.o
+                0x0000000008001a00       0x60 build/bsp_can.o
  .text.CAN2_Mode_Config
-                0x000000000800127c       0x68 build/bsp_can.o
+                0x0000000008001a60       0x68 build/bsp_can.o
  .text.CAN1_NVIC_Config
-                0x00000000080012e4       0x2e build/bsp_can.o
+                0x0000000008001ac8       0x2e build/bsp_can.o
  .text.CAN2_NVIC_Config
-                0x0000000008001312       0x2e build/bsp_can.o
+                0x0000000008001af6       0x2e build/bsp_can.o
  .text.CAN1_Filter_Config
-                0x0000000008001340       0x44 build/bsp_can.o
+                0x0000000008001b24       0x44 build/bsp_can.o
  .text.CAN2_Filter_Config
-                0x0000000008001384       0x48 build/bsp_can.o
+                0x0000000008001b68       0x48 build/bsp_can.o
  .text.CAN1_Config
-                0x00000000080013cc       0x14 build/bsp_can.o
-                0x00000000080013cc                CAN1_Config
+                0x0000000008001bb0       0x14 build/bsp_can.o
+                0x0000000008001bb0                CAN1_Config
  .text.CAN2_Config
-                0x00000000080013e0       0x14 build/bsp_can.o
-                0x00000000080013e0                CAN2_Config
+                0x0000000008001bc4       0x14 build/bsp_can.o
+                0x0000000008001bc4                CAN2_Config
  .text.CAN1_RX0_IRQHandler
-                0x00000000080013f4       0x24 build/bsp_can.o
-                0x00000000080013f4                CAN1_RX0_IRQHandler
+                0x0000000008001bd8       0x18 build/bsp_can.o
+                0x0000000008001bd8                CAN1_RX0_IRQHandler
  .text.CAN2_RX0_IRQHandler
-                0x0000000008001418       0x24 build/bsp_can.o
-                0x0000000008001418                CAN2_RX0_IRQHandler
+                0x0000000008001bf0       0x18 build/bsp_can.o
+                0x0000000008001bf0                CAN2_RX0_IRQHandler
  .text.led_setup
-                0x000000000800143c       0x78 build/bsp_led.o
-                0x000000000800143c                led_setup
+                0x0000000008001c08       0x78 build/bsp_led.o
+                0x0000000008001c08                led_setup
  .text.SPI2_GPIO_Init
-                0x00000000080014b4       0x98 build/bsp_spi2.o
-                0x00000000080014b4                SPI2_GPIO_Init
+                0x0000000008001c80       0x98 build/bsp_spi2.o
+                0x0000000008001c80                SPI2_GPIO_Init
  .text.SPI2_Init
-                0x000000000800154c       0x68 build/bsp_spi2.o
-                0x000000000800154c                SPI2_Init
+                0x0000000008001d18       0x68 build/bsp_spi2.o
+                0x0000000008001d18                SPI2_Init
  .text.spi2_w_cmd
-                0x00000000080015b4       0x20 build/bsp_spi2.o
-                0x00000000080015b4                spi2_w_cmd
+                0x0000000008001d80       0x20 build/bsp_spi2.o
+                0x0000000008001d80                spi2_w_cmd
  .text.spi2_r_cmd
-                0x00000000080015d4       0x1c build/bsp_spi2.o
-                0x00000000080015d4                spi2_r_cmd
+                0x0000000008001da0       0x1c build/bsp_spi2.o
+                0x0000000008001da0                spi2_r_cmd
  .text.spi2_wr_cmd
-                0x00000000080015f0        0xc build/bsp_spi2.o
-                0x00000000080015f0                spi2_wr_cmd
+                0x0000000008001dbc        0xc build/bsp_spi2.o
+                0x0000000008001dbc                spi2_wr_cmd
  .text.SetSysClock
-                0x00000000080015fc       0xc4 build/system_stm32f4xx.o
+                0x0000000008001dc8       0xc4 build/system_stm32f4xx.o
  .text.SystemInit
-                0x00000000080016c0       0x50 build/system_stm32f4xx.o
-                0x00000000080016c0                SystemInit
+                0x0000000008001e8c       0x50 build/system_stm32f4xx.o
+                0x0000000008001e8c                SystemInit
  .text.COE_Init
-                0x0000000008001710       0x14 build/ecatcoe.o
-                0x0000000008001710                COE_Init
+                0x0000000008001edc       0x14 build/ecatcoe.o
+                0x0000000008001edc                COE_Init
  .text.COE_ServiceInd
-                0x0000000008001724       0x2c build/ecatcoe.o
-                0x0000000008001724                COE_ServiceInd
+                0x0000000008001ef0       0x2c build/ecatcoe.o
+                0x0000000008001ef0                COE_ServiceInd
  .text.COE_ContinueInd
-                0x0000000008001750       0x50 build/ecatcoe.o
-                0x0000000008001750                COE_ContinueInd
+                0x0000000008001f1c       0x50 build/ecatcoe.o
+                0x0000000008001f1c                COE_ContinueInd
  .text.ResetALEventMask
-                0x00000000080017a0       0x40 build/ecatslv.o
-                0x00000000080017a0                ResetALEventMask
+                0x0000000008001f6c       0x40 build/ecatslv.o
+                0x0000000008001f6c                ResetALEventMask
  .text.SetALEventMask
-                0x00000000080017e0       0x40 build/ecatslv.o
-                0x00000000080017e0                SetALEventMask
+                0x0000000008001fac       0x40 build/ecatslv.o
+                0x0000000008001fac                SetALEventMask
  .text.UpdateEEPROMLoadedState
-                0x0000000008001820       0x40 build/ecatslv.o
-                0x0000000008001820                UpdateEEPROMLoadedState
+                0x0000000008001fec       0x40 build/ecatslv.o
+                0x0000000008001fec                UpdateEEPROMLoadedState
  .text.GetSyncMan
-                0x0000000008001860       0x1c build/ecatslv.o
-                0x0000000008001860                GetSyncMan
+                0x000000000800202c       0x1c build/ecatslv.o
+                0x000000000800202c                GetSyncMan
  .text.DisableSyncManChannel
-                0x000000000800187c       0x38 build/ecatslv.o
-                0x000000000800187c                DisableSyncManChannel
+                0x0000000008002048       0x38 build/ecatslv.o
+                0x0000000008002048                DisableSyncManChannel
  .text.EnableSyncManChannel
-                0x00000000080018b4       0x36 build/ecatslv.o
-                0x00000000080018b4                EnableSyncManChannel
- *fill*         0x00000000080018ea        0x2 
+                0x0000000008002080       0x36 build/ecatslv.o
+                0x0000000008002080                EnableSyncManChannel
+ *fill*         0x00000000080020b6        0x2 
  .text.CheckSmSettings
-                0x00000000080018ec      0x2c0 build/ecatslv.o
-                0x00000000080018ec                CheckSmSettings
+                0x00000000080020b8      0x2c0 build/ecatslv.o
+                0x00000000080020b8                CheckSmSettings
  .text.StartInputHandler
-                0x0000000008001bac      0x598 build/ecatslv.o
-                0x0000000008001bac                StartInputHandler
+                0x0000000008002378      0x598 build/ecatslv.o
+                0x0000000008002378                StartInputHandler
  .text.StartOutputHandler
-                0x0000000008002144       0x3c build/ecatslv.o
-                0x0000000008002144                StartOutputHandler
+                0x0000000008002910       0x3c build/ecatslv.o
+                0x0000000008002910                StartOutputHandler
  .text.StopOutputHandler
-                0x0000000008002180       0x14 build/ecatslv.o
-                0x0000000008002180                StopOutputHandler
+                0x000000000800294c       0x14 build/ecatslv.o
+                0x000000000800294c                StopOutputHandler
  .text.StopInputHandler
-                0x0000000008002194       0xc8 build/ecatslv.o
-                0x0000000008002194                StopInputHandler
+                0x0000000008002960       0xc8 build/ecatslv.o
+                0x0000000008002960                StopInputHandler
  .text.BackToInitTransition
-                0x000000000800225c        0xc build/ecatslv.o
-                0x000000000800225c                BackToInitTransition
+                0x0000000008002a28        0xc build/ecatslv.o
+                0x0000000008002a28                BackToInitTransition
  .text.SetALStatus
-                0x0000000008002268       0x4c build/ecatslv.o
-                0x0000000008002268                SetALStatus
+                0x0000000008002a34       0x4c build/ecatslv.o
+                0x0000000008002a34                SetALStatus
  .text.AL_ControlInd
-                0x00000000080022b4      0x540 build/ecatslv.o
-                0x00000000080022b4                AL_ControlInd
+                0x0000000008002a80      0x540 build/ecatslv.o
+                0x0000000008002a80                AL_ControlInd
  .text.AL_ControlRes
-                0x00000000080027f4      0x224 build/ecatslv.o
-                0x00000000080027f4                AL_ControlRes
+                0x0000000008002fc0      0x224 build/ecatslv.o
+                0x0000000008002fc0                AL_ControlRes
  .text.DC_CheckWatchdog
-                0x0000000008002a18       0xe0 build/ecatslv.o
-                0x0000000008002a18                DC_CheckWatchdog
+                0x00000000080031e4       0xe0 build/ecatslv.o
+                0x00000000080031e4                DC_CheckWatchdog
  .text.CheckIfEcatError
-                0x0000000008002af8       0x98 build/ecatslv.o
-                0x0000000008002af8                CheckIfEcatError
+                0x00000000080032c4       0x98 build/ecatslv.o
+                0x00000000080032c4                CheckIfEcatError
  .text.ECAT_Init
-                0x0000000008002b90      0x114 build/ecatslv.o
-                0x0000000008002b90                ECAT_Init
+                0x000000000800335c      0x114 build/ecatslv.o
+                0x000000000800335c                ECAT_Init
  .text.ECAT_Main
-                0x0000000008002ca4      0x150 build/ecatslv.o
-                0x0000000008002ca4                ECAT_Main
+                0x0000000008003470      0x150 build/ecatslv.o
+                0x0000000008003470                ECAT_Main
  .text.PutInMbxQueue
-                0x0000000008002df4       0x2a build/mailbox.o
-                0x0000000008002df4                PutInMbxQueue
+                0x00000000080035c0       0x2a build/mailbox.o
+                0x00000000080035c0                PutInMbxQueue
  .text.GetOutOfMbxQueue
-                0x0000000008002e1e       0x28 build/mailbox.o
-                0x0000000008002e1e                GetOutOfMbxQueue
- *fill*         0x0000000008002e46        0x2 
+                0x00000000080035ea       0x28 build/mailbox.o
+                0x00000000080035ea                GetOutOfMbxQueue
+ *fill*         0x0000000008003612        0x2 
  .text.MBX_Init
-                0x0000000008002e48       0xd4 build/mailbox.o
-                0x0000000008002e48                MBX_Init
+                0x0000000008003614       0xd4 build/mailbox.o
+                0x0000000008003614                MBX_Init
  .text.MBX_StartMailboxHandler
-                0x0000000008002f1c       0x98 build/mailbox.o
-                0x0000000008002f1c                MBX_StartMailboxHandler
+                0x00000000080036e8       0x98 build/mailbox.o
+                0x00000000080036e8                MBX_StartMailboxHandler
  .text.MBX_StopMailboxHandler
-                0x0000000008002fb4       0xf4 build/mailbox.o
-                0x0000000008002fb4                MBX_StopMailboxHandler
+                0x0000000008003780       0xf4 build/mailbox.o
+                0x0000000008003780                MBX_StopMailboxHandler
  .text.MailboxServiceInd
-                0x00000000080030a8       0x16 build/mailbox.o
-                0x00000000080030a8                MailboxServiceInd
- *fill*         0x00000000080030be        0x2 
+                0x0000000008003874       0x16 build/mailbox.o
+                0x0000000008003874                MailboxServiceInd
+ *fill*         0x000000000800388a        0x2 
  .text.MBX_CopyToSendMailbox
-                0x00000000080030c0       0xe8 build/mailbox.o
-                0x00000000080030c0                MBX_CopyToSendMailbox
+                0x000000000800388c       0xe8 build/mailbox.o
+                0x000000000800388c                MBX_CopyToSendMailbox
  .text.MBX_MailboxReadInd
-                0x00000000080031a8       0x94 build/mailbox.o
-                0x00000000080031a8                MBX_MailboxReadInd
+                0x0000000008003974       0x94 build/mailbox.o
+                0x0000000008003974                MBX_MailboxReadInd
  .text.MBX_MailboxRepeatReq
-                0x000000000800323c       0x60 build/mailbox.o
-                0x000000000800323c                MBX_MailboxRepeatReq
+                0x0000000008003a08       0x60 build/mailbox.o
+                0x0000000008003a08                MBX_MailboxRepeatReq
  .text.MBX_MailboxSendReq
-                0x000000000800329c       0x88 build/mailbox.o
-                0x000000000800329c                MBX_MailboxSendReq
+                0x0000000008003a68       0x88 build/mailbox.o
+                0x0000000008003a68                MBX_MailboxSendReq
  .text.MBX_MailboxWriteInd
-                0x0000000008003324       0x70 build/mailbox.o
-                0x0000000008003324                MBX_MailboxWriteInd
+                0x0000000008003af0       0x70 build/mailbox.o
+                0x0000000008003af0                MBX_MailboxWriteInd
  .text.MBX_CheckAndCopyMailbox
-                0x0000000008003394      0x108 build/mailbox.o
-                0x0000000008003394                MBX_CheckAndCopyMailbox
+                0x0000000008003b60      0x108 build/mailbox.o
+                0x0000000008003b60                MBX_CheckAndCopyMailbox
  .text.MBX_Main
-                0x000000000800349c       0x4c build/mailbox.o
-                0x000000000800349c                MBX_Main
+                0x0000000008003c68       0x4c build/mailbox.o
+                0x0000000008003c68                MBX_Main
  .text.OBJ_GetObjectHandle
-                0x00000000080034e8       0x16 build/objdef.o
-                0x00000000080034e8                OBJ_GetObjectHandle
+                0x0000000008003cb4       0x16 build/objdef.o
+                0x0000000008003cb4                OBJ_GetObjectHandle
  .text.OBJ_GetObjectLength
-                0x00000000080034fe       0x8e build/objdef.o
-                0x00000000080034fe                OBJ_GetObjectLength
+                0x0000000008003cca       0x8e build/objdef.o
+                0x0000000008003cca                OBJ_GetObjectLength
  .text.OBJ_CopyNumberToString
-                0x000000000800358c       0x48 build/objdef.o
-                0x000000000800358c                OBJ_CopyNumberToString
+                0x0000000008003d58       0x48 build/objdef.o
+                0x0000000008003d58                OBJ_CopyNumberToString
  .text.OBJ_GetDesc
-                0x00000000080035d4       0xd0 build/objdef.o
-                0x00000000080035d4                OBJ_GetDesc
+                0x0000000008003da0       0xd0 build/objdef.o
+                0x0000000008003da0                OBJ_GetDesc
  .text.OBJ_GetEntryDesc
-                0x00000000080036a4       0x22 build/objdef.o
-                0x00000000080036a4                OBJ_GetEntryDesc
+                0x0000000008003e70       0x22 build/objdef.o
+                0x0000000008003e70                OBJ_GetEntryDesc
  .text.OBJ_GetNoOfObjects
-                0x00000000080036c6       0x6a build/objdef.o
-                0x00000000080036c6                OBJ_GetNoOfObjects
+                0x0000000008003e92       0x6a build/objdef.o
+                0x0000000008003e92                OBJ_GetNoOfObjects
  .text.OBJ_GetObjectList
-                0x0000000008003730       0xbc build/objdef.o
-                0x0000000008003730                OBJ_GetObjectList
+                0x0000000008003efc       0xbc build/objdef.o
+                0x0000000008003efc                OBJ_GetObjectList
  .text.OBJ_GetObjDesc
-                0x00000000080037ec        0x4 build/objdef.o
-                0x00000000080037ec                OBJ_GetObjDesc
+                0x0000000008003fb8        0x4 build/objdef.o
+                0x0000000008003fb8                OBJ_GetObjDesc
  .text.OBJ_GetEntryOffset
-                0x00000000080037f0      0x180 build/objdef.o
-                0x00000000080037f0                OBJ_GetEntryOffset
+                0x0000000008003fbc      0x180 build/objdef.o
+                0x0000000008003fbc                OBJ_GetEntryOffset
  .text.CheckSyncTypeValue
-                0x0000000008003970      0x12c build/objdef.o
-                0x0000000008003970                CheckSyncTypeValue
+                0x000000000800413c      0x12c build/objdef.o
+                0x000000000800413c                CheckSyncTypeValue
  .text.OBJ_Read
-                0x0000000008003a9c      0x464 build/objdef.o
-                0x0000000008003a9c                OBJ_Read
+                0x0000000008004268      0x464 build/objdef.o
+                0x0000000008004268                OBJ_Read
  .text.OBJ_Write
-                0x0000000008003f00      0x548 build/objdef.o
-                0x0000000008003f00                OBJ_Write
+                0x00000000080046cc      0x548 build/objdef.o
+                0x00000000080046cc                OBJ_Write
  .text.SdoUploadSegmentInd
-                0x0000000008004448      0x13c build/sdoserv.o
+                0x0000000008004c14      0x13c build/sdoserv.o
  .text.SdoDownloadSegmentInd
-                0x0000000008004584      0x260 build/sdoserv.o
- .text.SdoRes   0x00000000080047e4       0xd8 build/sdoserv.o
-                0x00000000080047e4                SdoRes
+                0x0000000008004d50      0x260 build/sdoserv.o
+ .text.SdoRes   0x0000000008004fb0       0xd8 build/sdoserv.o
+                0x0000000008004fb0                SdoRes
  .text.SDOS_SdoInd
-                0x00000000080048bc      0x458 build/sdoserv.o
-                0x00000000080048bc                SDOS_SdoInd
+                0x0000000008005088      0x458 build/sdoserv.o
+                0x0000000008005088                SDOS_SdoInd
  .text.SDOS_SdoRes
-                0x0000000008004d14       0xd4 build/sdoserv.o
-                0x0000000008004d14                SDOS_SdoRes
+                0x00000000080054e0       0xd4 build/sdoserv.o
+                0x00000000080054e0                SDOS_SdoRes
  .text.SDOS_SdoInfoInd
-                0x0000000008004de8      0x2d8 build/sdoserv.o
-                0x0000000008004de8                SDOS_SdoInfoInd
+                0x00000000080055b4      0x2d8 build/sdoserv.o
+                0x00000000080055b4                SDOS_SdoInfoInd
  .text.COE_GetObjectDictionary
-                0x00000000080050c0        0xc build/coeappl.o
-                0x00000000080050c0                COE_GetObjectDictionary
+                0x000000000800588c        0xc build/coeappl.o
+                0x000000000800588c                COE_GetObjectDictionary
  .text.COE_AddObjectToDic
-                0x00000000080050cc       0x74 build/coeappl.o
-                0x00000000080050cc                COE_AddObjectToDic
+                0x0000000008005898       0x74 build/coeappl.o
+                0x0000000008005898                COE_AddObjectToDic
  .text.COE_RemoveDicEntry
-                0x0000000008005140       0x3c build/coeappl.o
-                0x0000000008005140                COE_RemoveDicEntry
+                0x000000000800590c       0x3c build/coeappl.o
+                0x000000000800590c                COE_RemoveDicEntry
  .text.COE_ClearObjDictionary
-                0x000000000800517c       0x20 build/coeappl.o
-                0x000000000800517c                COE_ClearObjDictionary
+                0x0000000008005948       0x20 build/coeappl.o
+                0x0000000008005948                COE_ClearObjDictionary
  .text.AddObjectsToObjDictionary
-                0x000000000800519c       0x24 build/coeappl.o
-                0x000000000800519c                AddObjectsToObjDictionary
+                0x0000000008005968       0x24 build/coeappl.o
+                0x0000000008005968                AddObjectsToObjDictionary
  .text.COE_ObjDictionaryInit
-                0x00000000080051c0       0x28 build/coeappl.o
-                0x00000000080051c0                COE_ObjDictionaryInit
+                0x000000000800598c       0x28 build/coeappl.o
+                0x000000000800598c                COE_ObjDictionaryInit
  .text.COE_ObjInit
-                0x00000000080051e8       0xa8 build/coeappl.o
-                0x00000000080051e8                COE_ObjInit
+                0x00000000080059b4       0xa8 build/coeappl.o
+                0x00000000080059b4                COE_ObjInit
  .text.COE_Main
-                0x0000000008005290       0xb0 build/coeappl.o
-                0x0000000008005290                COE_Main
+                0x0000000008005a5c       0xb0 build/coeappl.o
+                0x0000000008005a5c                COE_Main
  .text.PDO_InputMapping
-                0x0000000008005340       0x28 build/ecatappl.o
-                0x0000000008005340                PDO_InputMapping
+                0x0000000008005b0c       0x28 build/ecatappl.o
+                0x0000000008005b0c                PDO_InputMapping
  .text.PDO_OutputMapping
-                0x0000000008005368       0x28 build/ecatappl.o
-                0x0000000008005368                PDO_OutputMapping
+                0x0000000008005b34       0x28 build/ecatappl.o
+                0x0000000008005b34                PDO_OutputMapping
  .text.ECAT_CheckTimer
-                0x0000000008005390       0x3c build/ecatappl.o
-                0x0000000008005390                ECAT_CheckTimer
+                0x0000000008005b5c       0x3c build/ecatappl.o
+                0x0000000008005b5c                ECAT_CheckTimer
  .text.HandleBusCycleCalculation
-                0x00000000080053cc       0x9c build/ecatappl.o
-                0x00000000080053cc                HandleBusCycleCalculation
+                0x0000000008005b98       0x9c build/ecatappl.o
+                0x0000000008005b98                HandleBusCycleCalculation
  .text.Sync1_Isr
-                0x0000000008005468       0x40 build/ecatappl.o
-                0x0000000008005468                Sync1_Isr
+                0x0000000008005c34       0x40 build/ecatappl.o
+                0x0000000008005c34                Sync1_Isr
  .text.MainInit
-                0x00000000080054a8       0x44 build/ecatappl.o
-                0x00000000080054a8                MainInit
+                0x0000000008005c74       0x44 build/ecatappl.o
+                0x0000000008005c74                MainInit
  .text.ECAT_Application
-                0x00000000080054ec        0x8 build/ecatappl.o
-                0x00000000080054ec                ECAT_Application
- .text.PDI_Isr  0x00000000080054f4      0x118 build/ecatappl.o
-                0x00000000080054f4                PDI_Isr
+                0x0000000008005cb8        0x8 build/ecatappl.o
+                0x0000000008005cb8                ECAT_Application
+ .text.PDI_Isr  0x0000000008005cc0      0x118 build/ecatappl.o
+                0x0000000008005cc0                PDI_Isr
  .text.Sync0_Isr
-                0x000000000800560c      0x108 build/ecatappl.o
-                0x000000000800560c                Sync0_Isr
+                0x0000000008005dd8      0x108 build/ecatappl.o
+                0x0000000008005dd8                Sync0_Isr
  .text.MainLoop
-                0x0000000008005714       0xa0 build/ecatappl.o
-                0x0000000008005714                MainLoop
+                0x0000000008005ee0       0xa0 build/ecatappl.o
+                0x0000000008005ee0                MainLoop
  .text.APPL_AckErrorInd
-                0x00000000080057b4        0x2 build/el9800appl.o
-                0x00000000080057b4                APPL_AckErrorInd
+                0x0000000008005f80        0x2 build/el9800appl.o
+                0x0000000008005f80                APPL_AckErrorInd
  .text.APPL_StartMailboxHandler
-                0x00000000080057b6        0x4 build/el9800appl.o
-                0x00000000080057b6                APPL_StartMailboxHandler
+                0x0000000008005f82        0x4 build/el9800appl.o
+                0x0000000008005f82                APPL_StartMailboxHandler
  .text.APPL_StopMailboxHandler
-                0x00000000080057ba        0x4 build/el9800appl.o
-                0x00000000080057ba                APPL_StopMailboxHandler
+                0x0000000008005f86        0x4 build/el9800appl.o
+                0x0000000008005f86                APPL_StopMailboxHandler
  .text.APPL_StartInputHandler
-                0x00000000080057be        0x4 build/el9800appl.o
-                0x00000000080057be                APPL_StartInputHandler
+                0x0000000008005f8a        0x4 build/el9800appl.o
+                0x0000000008005f8a                APPL_StartInputHandler
  .text.APPL_StopInputHandler
-                0x00000000080057c2        0x4 build/el9800appl.o
-                0x00000000080057c2                APPL_StopInputHandler
+                0x0000000008005f8e        0x4 build/el9800appl.o
+                0x0000000008005f8e                APPL_StopInputHandler
  .text.APPL_StartOutputHandler
-                0x00000000080057c6        0x4 build/el9800appl.o
-                0x00000000080057c6                APPL_StartOutputHandler
- *fill*         0x00000000080057ca        0x2 
+                0x0000000008005f92        0x4 build/el9800appl.o
+                0x0000000008005f92                APPL_StartOutputHandler
+ *fill*         0x0000000008005f96        0x2 
  .text.APPL_StopOutputHandler
-                0x00000000080057cc       0x8c build/el9800appl.o
-                0x00000000080057cc                APPL_StopOutputHandler
+                0x0000000008005f98       0x8c build/el9800appl.o
+                0x0000000008005f98                APPL_StopOutputHandler
  .text.APPL_GenerateMapping
-                0x0000000008005858       0xec build/el9800appl.o
-                0x0000000008005858                APPL_GenerateMapping
+                0x0000000008006024       0xec build/el9800appl.o
+                0x0000000008006024                APPL_GenerateMapping
  .text.APPL_InputMapping
-                0x0000000008005944      0x104 build/el9800appl.o
-                0x0000000008005944                APPL_InputMapping
+                0x0000000008006110      0x104 build/el9800appl.o
+                0x0000000008006110                APPL_InputMapping
  .text.APPL_OutputMapping
-                0x0000000008005a48      0x12c build/el9800appl.o
-                0x0000000008005a48                APPL_OutputMapping
+                0x0000000008006214      0x16c build/el9800appl.o
+                0x0000000008006214                APPL_OutputMapping
  .text.ecat_motor_data_rx
-                0x0000000008005b74       0x5c build/el9800appl.o
-                0x0000000008005b74                ecat_motor_data_rx
+                0x0000000008006380      0x164 build/el9800appl.o
+                0x0000000008006380                ecat_motor_data_rx
  .text.ecat_can_rx
-                0x0000000008005bd0       0x94 build/el9800appl.o
-                0x0000000008005bd0                ecat_can_rx
+                0x00000000080064e4       0x94 build/el9800appl.o
+                0x00000000080064e4                ecat_can_rx
  .text.APPL_Application
-                0x0000000008005c64      0x14c build/el9800appl.o
-                0x0000000008005c64                APPL_Application
+                0x0000000008006578      0x154 build/el9800appl.o
+                0x0000000008006578                APPL_Application
  .text.ReadObject0x1802
-                0x0000000008005db0       0x68 build/el9800appl.o
-                0x0000000008005db0                ReadObject0x1802
- .text.main     0x0000000008005e18       0x28 build/el9800appl.o
-                0x0000000008005e18                main
+                0x00000000080066cc       0x68 build/el9800appl.o
+                0x00000000080066cc                ReadObject0x1802
+ .text.main     0x0000000008006734       0x28 build/el9800appl.o
+                0x0000000008006734                main
  .text.AddressingEsc
-                0x0000000008005e40       0x30 build/el9800hw.o
+                0x000000000800675c       0x30 build/el9800hw.o
  .text.ISR_AddressingEsc
-                0x0000000008005e70       0x30 build/el9800hw.o
+                0x000000000800678c       0x30 build/el9800hw.o
  .text.GPIO_Config
-                0x0000000008005ea0       0x90 build/el9800hw.o
-                0x0000000008005ea0                GPIO_Config
+                0x00000000080067bc       0x90 build/el9800hw.o
+                0x00000000080067bc                GPIO_Config
  .text.HW_Release
-                0x0000000008005f30        0x2 build/el9800hw.o
-                0x0000000008005f30                HW_Release
- *fill*         0x0000000008005f32        0x2 
+                0x000000000800684c        0x2 build/el9800hw.o
+                0x000000000800684c                HW_Release
+ *fill*         0x000000000800684e        0x2 
  .text.HW_EscRead
-                0x0000000008005f34       0x3c build/el9800hw.o
-                0x0000000008005f34                HW_EscRead
+                0x0000000008006850       0x3c build/el9800hw.o
+                0x0000000008006850                HW_EscRead
  .text.HW_EscReadIsr
-                0x0000000008005f70       0x3c build/el9800hw.o
-                0x0000000008005f70                HW_EscReadIsr
+                0x000000000800688c       0x3c build/el9800hw.o
+                0x000000000800688c                HW_EscReadIsr
  .text.GetInterruptRegister
-                0x0000000008005fac       0x30 build/el9800hw.o
+                0x00000000080068c8       0x30 build/el9800hw.o
  .text.HW_GetALEventRegister
-                0x0000000008005fdc       0x10 build/el9800hw.o
-                0x0000000008005fdc                HW_GetALEventRegister
+                0x00000000080068f8       0x10 build/el9800hw.o
+                0x00000000080068f8                HW_GetALEventRegister
  .text.ISR_GetInterruptRegister
-                0x0000000008005fec       0x34 build/el9800hw.o
+                0x0000000008006908       0x34 build/el9800hw.o
  .text.HW_GetALEventRegister_Isr
-                0x0000000008006020       0x10 build/el9800hw.o
-                0x0000000008006020                HW_GetALEventRegister_Isr
+                0x000000000800693c       0x10 build/el9800hw.o
+                0x000000000800693c                HW_GetALEventRegister_Isr
  .text.HW_EscWrite
-                0x0000000008006030       0x40 build/el9800hw.o
-                0x0000000008006030                HW_EscWrite
- .text.HW_Init  0x0000000008006070       0x84 build/el9800hw.o
-                0x0000000008006070                HW_Init
+                0x000000000800694c       0x40 build/el9800hw.o
+                0x000000000800694c                HW_EscWrite
+ .text.HW_Init  0x000000000800698c       0x84 build/el9800hw.o
+                0x000000000800698c                HW_Init
  .text.HW_EscWriteIsr
-                0x00000000080060f4       0x3c build/el9800hw.o
-                0x00000000080060f4                HW_EscWriteIsr
+                0x0000000008006a10       0x3c build/el9800hw.o
+                0x0000000008006a10                HW_EscWriteIsr
  .text.EXTI3_IRQHandler
-                0x0000000008006130        0xe build/el9800hw.o
-                0x0000000008006130                EXTI3_IRQHandler
+                0x0000000008006a4c        0xe build/el9800hw.o
+                0x0000000008006a4c                EXTI3_IRQHandler
  .text.EXTI1_IRQHandler
-                0x000000000800613e        0xe build/el9800hw.o
-                0x000000000800613e                EXTI1_IRQHandler
+                0x0000000008006a5a        0xe build/el9800hw.o
+                0x0000000008006a5a                EXTI1_IRQHandler
  .text.EXTI0_IRQHandler
-                0x000000000800614c        0xe build/el9800hw.o
-                0x000000000800614c                EXTI0_IRQHandler
- *fill*         0x000000000800615a        0x2 
+                0x0000000008006a68        0xe build/el9800hw.o
+                0x0000000008006a68                EXTI0_IRQHandler
+ *fill*         0x0000000008006a76        0x2 
  .text.TIM2_IRQHandler
-                0x000000000800615c       0x24 build/el9800hw.o
-                0x000000000800615c                TIM2_IRQHandler
+                0x0000000008006a78       0x24 build/el9800hw.o
+                0x0000000008006a78                TIM2_IRQHandler
  .text.Reset_Handler
-                0x0000000008006180       0x50 build/startup_stm32f405xx.o
-                0x0000000008006180                Reset_Handler
+                0x0000000008006a9c       0x50 build/startup_stm32f405xx.o
+                0x0000000008006a9c                Reset_Handler
  .text.Default_Handler
-                0x00000000080061d0        0x2 build/startup_stm32f405xx.o
-                0x00000000080061d0                RTC_Alarm_IRQHandler
-                0x00000000080061d0                HASH_RNG_IRQHandler
-                0x00000000080061d0                EXTI2_IRQHandler
-                0x00000000080061d0                TIM8_CC_IRQHandler
-                0x00000000080061d0                TIM1_CC_IRQHandler
-                0x00000000080061d0                DMA2_Stream5_IRQHandler
-                0x00000000080061d0                DMA1_Stream5_IRQHandler
-                0x00000000080061d0                PVD_IRQHandler
-                0x00000000080061d0                SDIO_IRQHandler
-                0x00000000080061d0                TAMP_STAMP_IRQHandler
-                0x00000000080061d0                CAN2_RX1_IRQHandler
-                0x00000000080061d0                TIM8_TRG_COM_TIM14_IRQHandler
-                0x00000000080061d0                TIM1_UP_TIM10_IRQHandler
-                0x00000000080061d0                TIM8_UP_TIM13_IRQHandler
-                0x00000000080061d0                I2C3_ER_IRQHandler
-                0x00000000080061d0                I2C2_EV_IRQHandler
-                0x00000000080061d0                DMA1_Stream2_IRQHandler
-                0x00000000080061d0                FPU_IRQHandler
-                0x00000000080061d0                OTG_HS_WKUP_IRQHandler
-                0x00000000080061d0                CAN2_SCE_IRQHandler
-                0x00000000080061d0                DMA2_Stream2_IRQHandler
-                0x00000000080061d0                SPI1_IRQHandler
-                0x00000000080061d0                TIM6_DAC_IRQHandler
-                0x00000000080061d0                TIM1_BRK_TIM9_IRQHandler
-                0x00000000080061d0                DMA2_Stream3_IRQHandler
-                0x00000000080061d0                USART6_IRQHandler
-                0x00000000080061d0                USART3_IRQHandler
-                0x00000000080061d0                CAN1_RX1_IRQHandler
-                0x00000000080061d0                UART5_IRQHandler
-                0x00000000080061d0                DMA2_Stream0_IRQHandler
-                0x00000000080061d0                TIM4_IRQHandler
-                0x00000000080061d0                I2C1_EV_IRQHandler
-                0x00000000080061d0                DMA1_Stream6_IRQHandler
-                0x00000000080061d0                DMA1_Stream1_IRQHandler
-                0x00000000080061d0                UART4_IRQHandler
-                0x00000000080061d0                TIM3_IRQHandler
-                0x00000000080061d0                RCC_IRQHandler
-                0x00000000080061d0                TIM8_BRK_TIM12_IRQHandler
-                0x00000000080061d0                Default_Handler
-                0x00000000080061d0                EXTI15_10_IRQHandler
-                0x00000000080061d0                ADC_IRQHandler
-                0x00000000080061d0                DMA1_Stream7_IRQHandler
-                0x00000000080061d0                TIM7_IRQHandler
-                0x00000000080061d0                CAN2_TX_IRQHandler
-                0x00000000080061d0                TIM5_IRQHandler
-                0x00000000080061d0                DMA2_Stream7_IRQHandler
-                0x00000000080061d0                I2C3_EV_IRQHandler
-                0x00000000080061d0                EXTI9_5_IRQHandler
-                0x00000000080061d0                RTC_WKUP_IRQHandler
-                0x00000000080061d0                SPI2_IRQHandler
-                0x00000000080061d0                OTG_HS_EP1_IN_IRQHandler
-                0x00000000080061d0                DMA1_Stream0_IRQHandler
-                0x00000000080061d0                CAN1_TX_IRQHandler
-                0x00000000080061d0                EXTI4_IRQHandler
-                0x00000000080061d0                FSMC_IRQHandler
-                0x00000000080061d0                OTG_HS_EP1_OUT_IRQHandler
-                0x00000000080061d0                WWDG_IRQHandler
-                0x00000000080061d0                OTG_FS_WKUP_IRQHandler
-                0x00000000080061d0                TIM1_TRG_COM_TIM11_IRQHandler
-                0x00000000080061d0                OTG_HS_IRQHandler
-                0x00000000080061d0                USART2_IRQHandler
-                0x00000000080061d0                I2C2_ER_IRQHandler
-                0x00000000080061d0                DMA2_Stream1_IRQHandler
-                0x00000000080061d0                CAN1_SCE_IRQHandler
-                0x00000000080061d0                FLASH_IRQHandler
-                0x00000000080061d0                DMA2_Stream4_IRQHandler
-                0x00000000080061d0                USART1_IRQHandler
-                0x00000000080061d0                OTG_FS_IRQHandler
-                0x00000000080061d0                SPI3_IRQHandler
-                0x00000000080061d0                DMA1_Stream4_IRQHandler
-                0x00000000080061d0                I2C1_ER_IRQHandler
-                0x00000000080061d0                DMA2_Stream6_IRQHandler
-                0x00000000080061d0                DMA1_Stream3_IRQHandler
- *fill*         0x00000000080061d2        0x2 
+                0x0000000008006aec        0x2 build/startup_stm32f405xx.o
+                0x0000000008006aec                RTC_Alarm_IRQHandler
+                0x0000000008006aec                HASH_RNG_IRQHandler
+                0x0000000008006aec                EXTI2_IRQHandler
+                0x0000000008006aec                TIM8_CC_IRQHandler
+                0x0000000008006aec                TIM1_CC_IRQHandler
+                0x0000000008006aec                DMA2_Stream5_IRQHandler
+                0x0000000008006aec                DMA1_Stream5_IRQHandler
+                0x0000000008006aec                PVD_IRQHandler
+                0x0000000008006aec                SDIO_IRQHandler
+                0x0000000008006aec                TAMP_STAMP_IRQHandler
+                0x0000000008006aec                CAN2_RX1_IRQHandler
+                0x0000000008006aec                TIM8_TRG_COM_TIM14_IRQHandler
+                0x0000000008006aec                TIM1_UP_TIM10_IRQHandler
+                0x0000000008006aec                TIM8_UP_TIM13_IRQHandler
+                0x0000000008006aec                I2C3_ER_IRQHandler
+                0x0000000008006aec                I2C2_EV_IRQHandler
+                0x0000000008006aec                DMA1_Stream2_IRQHandler
+                0x0000000008006aec                FPU_IRQHandler
+                0x0000000008006aec                OTG_HS_WKUP_IRQHandler
+                0x0000000008006aec                CAN2_SCE_IRQHandler
+                0x0000000008006aec                DMA2_Stream2_IRQHandler
+                0x0000000008006aec                SPI1_IRQHandler
+                0x0000000008006aec                TIM6_DAC_IRQHandler
+                0x0000000008006aec                TIM1_BRK_TIM9_IRQHandler
+                0x0000000008006aec                DMA2_Stream3_IRQHandler
+                0x0000000008006aec                USART6_IRQHandler
+                0x0000000008006aec                USART3_IRQHandler
+                0x0000000008006aec                CAN1_RX1_IRQHandler
+                0x0000000008006aec                UART5_IRQHandler
+                0x0000000008006aec                DMA2_Stream0_IRQHandler
+                0x0000000008006aec                TIM4_IRQHandler
+                0x0000000008006aec                I2C1_EV_IRQHandler
+                0x0000000008006aec                DMA1_Stream6_IRQHandler
+                0x0000000008006aec                DMA1_Stream1_IRQHandler
+                0x0000000008006aec                UART4_IRQHandler
+                0x0000000008006aec                TIM3_IRQHandler
+                0x0000000008006aec                RCC_IRQHandler
+                0x0000000008006aec                TIM8_BRK_TIM12_IRQHandler
+                0x0000000008006aec                Default_Handler
+                0x0000000008006aec                EXTI15_10_IRQHandler
+                0x0000000008006aec                ADC_IRQHandler
+                0x0000000008006aec                DMA1_Stream7_IRQHandler
+                0x0000000008006aec                TIM7_IRQHandler
+                0x0000000008006aec                CAN2_TX_IRQHandler
+                0x0000000008006aec                TIM5_IRQHandler
+                0x0000000008006aec                DMA2_Stream7_IRQHandler
+                0x0000000008006aec                I2C3_EV_IRQHandler
+                0x0000000008006aec                EXTI9_5_IRQHandler
+                0x0000000008006aec                RTC_WKUP_IRQHandler
+                0x0000000008006aec                SPI2_IRQHandler
+                0x0000000008006aec                OTG_HS_EP1_IN_IRQHandler
+                0x0000000008006aec                DMA1_Stream0_IRQHandler
+                0x0000000008006aec                CAN1_TX_IRQHandler
+                0x0000000008006aec                EXTI4_IRQHandler
+                0x0000000008006aec                FSMC_IRQHandler
+                0x0000000008006aec                OTG_HS_EP1_OUT_IRQHandler
+                0x0000000008006aec                WWDG_IRQHandler
+                0x0000000008006aec                OTG_FS_WKUP_IRQHandler
+                0x0000000008006aec                TIM1_TRG_COM_TIM11_IRQHandler
+                0x0000000008006aec                OTG_HS_IRQHandler
+                0x0000000008006aec                USART2_IRQHandler
+                0x0000000008006aec                I2C2_ER_IRQHandler
+                0x0000000008006aec                DMA2_Stream1_IRQHandler
+                0x0000000008006aec                CAN1_SCE_IRQHandler
+                0x0000000008006aec                FLASH_IRQHandler
+                0x0000000008006aec                DMA2_Stream4_IRQHandler
+                0x0000000008006aec                USART1_IRQHandler
+                0x0000000008006aec                OTG_FS_IRQHandler
+                0x0000000008006aec                SPI3_IRQHandler
+                0x0000000008006aec                DMA1_Stream4_IRQHandler
+                0x0000000008006aec                I2C1_ER_IRQHandler
+                0x0000000008006aec                DMA2_Stream6_IRQHandler
+                0x0000000008006aec                DMA1_Stream3_IRQHandler
+ *fill*         0x0000000008006aee        0x2 
  .text.__libc_init_array
-                0x00000000080061d4       0x48 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
-                0x00000000080061d4                __libc_init_array
- .text.malloc   0x000000000800621c       0x10 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-malloc.o)
-                0x000000000800621c                malloc
- .text.free     0x000000000800622c       0x10 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-malloc.o)
-                0x000000000800622c                free
- .text.memcpy   0x000000000800623c       0x1c /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memcpy-stub.o)
-                0x000000000800623c                memcpy
- .text.memset   0x0000000008006258       0x10 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
-                0x0000000008006258                memset
- .text._free_r  0x0000000008006268       0x98 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-freer.o)
-                0x0000000008006268                _free_r
+                0x0000000008006af0       0x48 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
+                0x0000000008006af0                __libc_init_array
+ .text.malloc   0x0000000008006b38       0x10 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-malloc.o)
+                0x0000000008006b38                malloc
+ .text.free     0x0000000008006b48       0x10 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-malloc.o)
+                0x0000000008006b48                free
+ .text.memcpy   0x0000000008006b58       0x1c /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memcpy-stub.o)
+                0x0000000008006b58                memcpy
+ .text.memset   0x0000000008006b74       0x10 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
+                0x0000000008006b74                memset
+ .text._free_r  0x0000000008006b84       0x98 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-freer.o)
+                0x0000000008006b84                _free_r
  .text.sbrk_aligned
-                0x0000000008006300       0x40 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-mallocr.o)
+                0x0000000008006c1c       0x40 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-mallocr.o)
  .text._malloc_r
-                0x0000000008006340       0xe8 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-mallocr.o)
-                0x0000000008006340                _malloc_r
- .text._sbrk_r  0x0000000008006428       0x20 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-sbrkr.o)
-                0x0000000008006428                _sbrk_r
+                0x0000000008006c5c       0xe8 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-mallocr.o)
+                0x0000000008006c5c                _malloc_r
+ .text._sbrk_r  0x0000000008006d44       0x20 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-sbrkr.o)
+                0x0000000008006d44                _sbrk_r
  .text.__malloc_lock
-                0x0000000008006448        0xc /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-mlock.o)
-                0x0000000008006448                __malloc_lock
+                0x0000000008006d64        0xc /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-mlock.o)
+                0x0000000008006d64                __malloc_lock
  .text.__malloc_unlock
-                0x0000000008006454        0xc /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-mlock.o)
-                0x0000000008006454                __malloc_unlock
+                0x0000000008006d70        0xc /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-mlock.o)
+                0x0000000008006d70                __malloc_unlock
  .text.__retarget_lock_acquire_recursive
-                0x0000000008006460        0x2 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-lock.o)
-                0x0000000008006460                __retarget_lock_acquire_recursive
+                0x0000000008006d7c        0x2 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-lock.o)
+                0x0000000008006d7c                __retarget_lock_acquire_recursive
  .text.__retarget_lock_release_recursive
-                0x0000000008006462        0x2 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-lock.o)
-                0x0000000008006462                __retarget_lock_release_recursive
- .text._sbrk    0x0000000008006464       0x1c /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(sbrk.o)
-                0x0000000008006464                _sbrk
+                0x0000000008006d7e        0x2 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-lock.o)
+                0x0000000008006d7e                __retarget_lock_release_recursive
+ .text._sbrk    0x0000000008006d80       0x1c /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(sbrk.o)
+                0x0000000008006d80                _sbrk
  *(.glue_7)
- .glue_7        0x0000000008006480        0x0 linker stubs
+ .glue_7        0x0000000008006d9c        0x0 linker stubs
  *(.glue_7t)
- .glue_7t       0x0000000008006480        0x0 linker stubs
+ .glue_7t       0x0000000008006d9c        0x0 linker stubs
  *(.eh_frame)
- .eh_frame      0x0000000008006480        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .eh_frame      0x0000000008006d9c        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
  *(.init)
- .init          0x0000000008006480        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
-                0x0000000008006480                _init
- .init          0x0000000008006484        0x8 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
+ .init          0x0000000008006d9c        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
+                0x0000000008006d9c                _init
+ .init          0x0000000008006da0        0x8 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
  *(.fini)
- .fini          0x000000000800648c        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
-                0x000000000800648c                _fini
- .fini          0x0000000008006490        0x8 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
-                0x0000000008006498                . = ALIGN (0x4)
-                0x0000000008006498                _etext = .
+ .fini          0x0000000008006da8        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crti.o
+                0x0000000008006da8                _fini
+ .fini          0x0000000008006dac        0x8 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
+                0x0000000008006db4                . = ALIGN (0x4)
+                0x0000000008006db4                _etext = .
 
-.vfp11_veneer   0x0000000008006498        0x0
- .vfp11_veneer  0x0000000008006498        0x0 linker stubs
+.vfp11_veneer   0x0000000008006db4        0x0
+ .vfp11_veneer  0x0000000008006db4        0x0 linker stubs
 
-.v4_bx          0x0000000008006498        0x0
- .v4_bx         0x0000000008006498        0x0 linker stubs
+.v4_bx          0x0000000008006db4        0x0
+ .v4_bx         0x0000000008006db4        0x0 linker stubs
 
-.iplt           0x0000000008006498        0x0
- .iplt          0x0000000008006498        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+.iplt           0x0000000008006db4        0x0
+ .iplt          0x0000000008006db4        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.rodata         0x0000000008006498      0xf90
-                0x0000000008006498                . = ALIGN (0x4)
+.rodata         0x0000000008006db4      0xf90
+                0x0000000008006db4                . = ALIGN (0x4)
  *(.rodata)
  *(.rodata*)
  .rodata.cBitMask
-                0x0000000008006498       0x20 build/objdef.o
-                0x0000000008006498                cBitMask
+                0x0000000008006db4       0x20 build/objdef.o
+                0x0000000008006db4                cBitMask
  .rodata.cAbortCode
-                0x00000000080064b8       0x78 build/sdoserv.o
-                0x00000000080064b8                cAbortCode
+                0x0000000008006dd4       0x78 build/sdoserv.o
+                0x0000000008006dd4                cAbortCode
  .rodata.aName0x1000
-                0x0000000008006530        0xc build/coeappl.o
-                0x0000000008006530                aName0x1000
+                0x0000000008006e4c        0xc build/coeappl.o
+                0x0000000008006e4c                aName0x1000
  .rodata.aName0x1001
-                0x000000000800653c        0xf build/coeappl.o
-                0x000000000800653c                aName0x1001
- *fill*         0x000000000800654b        0x1 
+                0x0000000008006e58        0xf build/coeappl.o
+                0x0000000008006e58                aName0x1001
+ *fill*         0x0000000008006e67        0x1 
  .rodata.aName0x1008
-                0x000000000800654c        0xc build/coeappl.o
-                0x000000000800654c                aName0x1008
+                0x0000000008006e68        0xc build/coeappl.o
+                0x0000000008006e68                aName0x1008
  .rodata.aName0x1009
-                0x0000000008006558       0x11 build/coeappl.o
-                0x0000000008006558                aName0x1009
- *fill*         0x0000000008006569        0x3 
+                0x0000000008006e74       0x11 build/coeappl.o
+                0x0000000008006e74                aName0x1009
+ *fill*         0x0000000008006e85        0x3 
  .rodata.aName0x100A
-                0x000000000800656c       0x11 build/coeappl.o
-                0x000000000800656c                aName0x100A
- *fill*         0x000000000800657d        0x3 
+                0x0000000008006e88       0x11 build/coeappl.o
+                0x0000000008006e88                aName0x100A
+ *fill*         0x0000000008006e99        0x3 
  .rodata.aName0x1018
-                0x0000000008006580       0x39 build/coeappl.o
-                0x0000000008006580                aName0x1018
- *fill*         0x00000000080065b9        0x3 
+                0x0000000008006e9c       0x39 build/coeappl.o
+                0x0000000008006e9c                aName0x1018
+ *fill*         0x0000000008006ed5        0x3 
  .rodata.aName0x10F1
-                0x00000000080065bc       0x3f build/coeappl.o
-                0x00000000080065bc                aName0x10F1
- *fill*         0x00000000080065fb        0x1 
+                0x0000000008006ed8       0x3f build/coeappl.o
+                0x0000000008006ed8                aName0x10F1
+ *fill*         0x0000000008006f17        0x1 
  .rodata.aName0x1601
-                0x00000000080065fc        0xf build/coeappl.o
-                0x00000000080065fc                aName0x1601
- *fill*         0x000000000800660b        0x1 
+                0x0000000008006f18        0xf build/coeappl.o
+                0x0000000008006f18                aName0x1601
+ *fill*         0x0000000008006f27        0x1 
  .rodata.aName0x1802
-                0x000000000800660c       0x3f build/coeappl.o
-                0x000000000800660c                aName0x1802
- *fill*         0x000000000800664b        0x1 
+                0x0000000008006f28       0x3f build/coeappl.o
+                0x0000000008006f28                aName0x1802
+ *fill*         0x0000000008006f67        0x1 
  .rodata.aName0x1A00
-                0x000000000800664c        0xf build/coeappl.o
-                0x000000000800664c                aName0x1A00
- *fill*         0x000000000800665b        0x1 
+                0x0000000008006f68        0xf build/coeappl.o
+                0x0000000008006f68                aName0x1A00
+ *fill*         0x0000000008006f77        0x1 
  .rodata.aName0x1A02
-                0x000000000800665c        0xf build/coeappl.o
-                0x000000000800665c                aName0x1A02
- *fill*         0x000000000800666b        0x1 
+                0x0000000008006f78        0xf build/coeappl.o
+                0x0000000008006f78                aName0x1A02
+ *fill*         0x0000000008006f87        0x1 
  .rodata.aName0x1C00
-                0x000000000800666c       0x12 build/coeappl.o
-                0x000000000800666c                aName0x1C00
- *fill*         0x000000000800667e        0x2 
+                0x0000000008006f88       0x12 build/coeappl.o
+                0x0000000008006f88                aName0x1C00
+ *fill*         0x0000000008006f9a        0x2 
  .rodata.aName0x1C12
-                0x0000000008006680        0xd build/coeappl.o
-                0x0000000008006680                aName0x1C12
- *fill*         0x000000000800668d        0x3 
+                0x0000000008006f9c        0xd build/coeappl.o
+                0x0000000008006f9c                aName0x1C12
+ *fill*         0x0000000008006fa9        0x3 
  .rodata.aName0x1C13
-                0x0000000008006690        0xd build/coeappl.o
-                0x0000000008006690                aName0x1C13
- *fill*         0x000000000800669d        0x3 
+                0x0000000008006fac        0xd build/coeappl.o
+                0x0000000008006fac                aName0x1C13
+ *fill*         0x0000000008006fb9        0x3 
  .rodata.aName0x1C32
-                0x00000000080066a0      0x100 build/coeappl.o
-                0x00000000080066a0                aName0x1C32
+                0x0000000008006fbc      0x100 build/coeappl.o
+                0x0000000008006fbc                aName0x1C32
  .rodata.aName0x1C33
-                0x00000000080067a0       0xff build/coeappl.o
-                0x00000000080067a0                aName0x1C33
- *fill*         0x000000000800689f        0x1 
+                0x00000000080070bc       0xff build/coeappl.o
+                0x00000000080070bc                aName0x1C33
+ *fill*         0x00000000080071bb        0x1 
  .rodata.aName0x6000
-                0x00000000080068a0       0x55 build/coeappl.o
-                0x00000000080068a0                aName0x6000
- *fill*         0x00000000080068f5        0x3 
+                0x00000000080071bc       0x55 build/coeappl.o
+                0x00000000080071bc                aName0x6000
+ *fill*         0x0000000008007211        0x3 
  .rodata.aName0x6020
-                0x00000000080068f8      0x192 build/coeappl.o
-                0x00000000080068f8                aName0x6020
- *fill*         0x0000000008006a8a        0x2 
+                0x0000000008007214      0x192 build/coeappl.o
+                0x0000000008007214                aName0x6020
+ *fill*         0x00000000080073a6        0x2 
  .rodata.aName0x7010
-                0x0000000008006a8c      0x190 build/coeappl.o
-                0x0000000008006a8c                aName0x7010
+                0x00000000080073a8      0x190 build/coeappl.o
+                0x00000000080073a8                aName0x7010
  .rodata.aName0x8020
-                0x0000000008006c1c       0x73 build/coeappl.o
-                0x0000000008006c1c                aName0x8020
- *fill*         0x0000000008006c8f        0x1 
+                0x0000000008007538       0x73 build/coeappl.o
+                0x0000000008007538                aName0x8020
+ *fill*         0x00000000080075ab        0x1 
  .rodata.aName0xF000
-                0x0000000008006c90       0x49 build/coeappl.o
-                0x0000000008006c90                aName0xF000
- *fill*         0x0000000008006cd9        0x3 
+                0x00000000080075ac       0x49 build/coeappl.o
+                0x00000000080075ac                aName0xF000
+ *fill*         0x00000000080075f5        0x3 
  .rodata.aName0xF010
-                0x0000000008006cdc       0x14 build/coeappl.o
-                0x0000000008006cdc                aName0xF010
+                0x00000000080075f8       0x14 build/coeappl.o
+                0x00000000080075f8                aName0xF010
  .rodata.asEntryDesc0x0800
-                0x0000000008006cf0       0x12 build/coeappl.o
-                0x0000000008006cf0                asEntryDesc0x0800
- *fill*         0x0000000008006d02        0x2 
+                0x000000000800760c       0x12 build/coeappl.o
+                0x000000000800760c                asEntryDesc0x0800
+ *fill*         0x000000000800761e        0x2 
  .rodata.asEntryDesc0x1018
-                0x0000000008006d04       0x1e build/coeappl.o
-                0x0000000008006d04                asEntryDesc0x1018
- *fill*         0x0000000008006d22        0x2 
+                0x0000000008007620       0x1e build/coeappl.o
+                0x0000000008007620                asEntryDesc0x1018
+ *fill*         0x000000000800763e        0x2 
  .rodata.asEntryDesc0x10F1
-                0x0000000008006d24       0x12 build/coeappl.o
-                0x0000000008006d24                asEntryDesc0x10F1
- *fill*         0x0000000008006d36        0x2 
+                0x0000000008007640       0x12 build/coeappl.o
+                0x0000000008007640                asEntryDesc0x10F1
+ *fill*         0x0000000008007652        0x2 
  .rodata.asEntryDesc0x1601
-                0x0000000008006d38      0x120 build/coeappl.o
-                0x0000000008006d38                asEntryDesc0x1601
+                0x0000000008007654      0x120 build/coeappl.o
+                0x0000000008007654                asEntryDesc0x1601
  .rodata.asEntryDesc0x1802
-                0x0000000008006e58       0x3c build/coeappl.o
-                0x0000000008006e58                asEntryDesc0x1802
+                0x0000000008007774       0x3c build/coeappl.o
+                0x0000000008007774                asEntryDesc0x1802
  .rodata.asEntryDesc0x1A00
-                0x0000000008006e94       0x3c build/coeappl.o
-                0x0000000008006e94                asEntryDesc0x1A00
+                0x00000000080077b0       0x3c build/coeappl.o
+                0x00000000080077b0                asEntryDesc0x1A00
  .rodata.asEntryDesc0x1A02
-                0x0000000008006ed0      0x108 build/coeappl.o
-                0x0000000008006ed0                asEntryDesc0x1A02
+                0x00000000080077ec      0x108 build/coeappl.o
+                0x00000000080077ec                asEntryDesc0x1A02
  .rodata.asEntryDesc0x1C00
-                0x0000000008006fd8        0xc build/coeappl.o
-                0x0000000008006fd8                asEntryDesc0x1C00
+                0x00000000080078f4        0xc build/coeappl.o
+                0x00000000080078f4                asEntryDesc0x1C00
  .rodata.asEntryDesc0x1C3x
-                0x0000000008006fe4       0xc6 build/coeappl.o
-                0x0000000008006fe4                asEntryDesc0x1C3x
- *fill*         0x00000000080070aa        0x2 
+                0x0000000008007900       0xc6 build/coeappl.o
+                0x0000000008007900                asEntryDesc0x1C3x
+ *fill*         0x00000000080079c6        0x2 
  .rodata.asEntryDesc0x6000
-                0x00000000080070ac       0x3c build/coeappl.o
-                0x00000000080070ac                asEntryDesc0x6000
+                0x00000000080079c8       0x3c build/coeappl.o
+                0x00000000080079c8                asEntryDesc0x6000
  .rodata.asEntryDesc0x6020
-                0x00000000080070e8      0x13e build/coeappl.o
-                0x00000000080070e8                asEntryDesc0x6020
- *fill*         0x0000000008007226        0x2 
+                0x0000000008007a04      0x13e build/coeappl.o
+                0x0000000008007a04                asEntryDesc0x6020
+ *fill*         0x0000000008007b42        0x2 
  .rodata.asEntryDesc0x7010
-                0x0000000008007228      0x120 build/coeappl.o
-                0x0000000008007228                asEntryDesc0x7010
+                0x0000000008007b44      0x120 build/coeappl.o
+                0x0000000008007b44                asEntryDesc0x7010
  .rodata.asEntryDesc0x8020
-                0x0000000008007348       0x7e build/coeappl.o
-                0x0000000008007348                asEntryDesc0x8020
- *fill*         0x00000000080073c6        0x2 
+                0x0000000008007c64       0x7e build/coeappl.o
+                0x0000000008007c64                asEntryDesc0x8020
+ *fill*         0x0000000008007ce2        0x2 
  .rodata.asEntryDesc0xF000
-                0x00000000080073c8       0x12 build/coeappl.o
-                0x00000000080073c8                asEntryDesc0xF000
- *fill*         0x00000000080073da        0x2 
+                0x0000000008007ce4       0x12 build/coeappl.o
+                0x0000000008007ce4                asEntryDesc0xF000
+ *fill*         0x0000000008007cf6        0x2 
  .rodata.asEntryDesc0xF010
-                0x00000000080073dc       0x18 build/coeappl.o
-                0x00000000080073dc                asEntryDesc0xF010
+                0x0000000008007cf8       0x18 build/coeappl.o
+                0x0000000008007cf8                asEntryDesc0xF010
  .rodata.asPDOAssignEntryDesc
-                0x00000000080073f4        0xc build/coeappl.o
-                0x00000000080073f4                asPDOAssignEntryDesc
+                0x0000000008007d10        0xc build/coeappl.o
+                0x0000000008007d10                asPDOAssignEntryDesc
  .rodata.sEntryDesc0x1000
-                0x0000000008007400        0x6 build/coeappl.o
-                0x0000000008007400                sEntryDesc0x1000
- *fill*         0x0000000008007406        0x2 
+                0x0000000008007d1c        0x6 build/coeappl.o
+                0x0000000008007d1c                sEntryDesc0x1000
+ *fill*         0x0000000008007d22        0x2 
  .rodata.sEntryDesc0x1001
-                0x0000000008007408        0x6 build/coeappl.o
-                0x0000000008007408                sEntryDesc0x1001
- *fill*         0x000000000800740e        0x2 
+                0x0000000008007d24        0x6 build/coeappl.o
+                0x0000000008007d24                sEntryDesc0x1001
+ *fill*         0x0000000008007d2a        0x2 
  .rodata.sEntryDesc0x1008
-                0x0000000008007410        0x6 build/coeappl.o
-                0x0000000008007410                sEntryDesc0x1008
- *fill*         0x0000000008007416        0x2 
+                0x0000000008007d2c        0x6 build/coeappl.o
+                0x0000000008007d2c                sEntryDesc0x1008
+ *fill*         0x0000000008007d32        0x2 
  .rodata.sEntryDesc0x1009
-                0x0000000008007418        0x6 build/coeappl.o
-                0x0000000008007418                sEntryDesc0x1009
- *fill*         0x000000000800741e        0x2 
+                0x0000000008007d34        0x6 build/coeappl.o
+                0x0000000008007d34                sEntryDesc0x1009
+ *fill*         0x0000000008007d3a        0x2 
  .rodata.sEntryDesc0x100A
-                0x0000000008007420        0x6 build/coeappl.o
-                0x0000000008007420                sEntryDesc0x100A
-                0x0000000008007428                . = ALIGN (0x4)
- *fill*         0x0000000008007426        0x2 
+                0x0000000008007d3c        0x6 build/coeappl.o
+                0x0000000008007d3c                sEntryDesc0x100A
+                0x0000000008007d44                . = ALIGN (0x4)
+ *fill*         0x0000000008007d42        0x2 
 
-.rel.dyn        0x0000000008007428        0x0
- .rel.iplt      0x0000000008007428        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+.rel.dyn        0x0000000008007d44        0x0
+ .rel.iplt      0x0000000008007d44        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
 .ARM.extab
  *(.ARM.extab* .gnu.linkonce.armextab.*)
 
-.ARM            0x0000000008007428        0x0
-                0x0000000008007428                __exidx_start = .
+.ARM            0x0000000008007d44        0x0
+                0x0000000008007d44                __exidx_start = .
  *(.ARM.exidx*)
-                0x0000000008007428                __exidx_end = .
+                0x0000000008007d44                __exidx_end = .
 
-.preinit_array  0x0000000008007428        0x0
-                0x0000000008007428                PROVIDE (__preinit_array_start = .)
+.preinit_array  0x0000000008007d44        0x0
+                0x0000000008007d44                PROVIDE (__preinit_array_start = .)
  *(.preinit_array*)
-                0x0000000008007428                PROVIDE (__preinit_array_end = .)
+                0x0000000008007d44                PROVIDE (__preinit_array_end = .)
 
-.init_array     0x0000000008007428        0x4
-                0x0000000008007428                PROVIDE (__init_array_start = .)
+.init_array     0x0000000008007d44        0x4
+                0x0000000008007d44                PROVIDE (__init_array_start = .)
  *(SORT_BY_NAME(.init_array.*))
  *(.init_array*)
- .init_array    0x0000000008007428        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
-                0x000000000800742c                PROVIDE (__init_array_end = .)
+ .init_array    0x0000000008007d44        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+                0x0000000008007d48                PROVIDE (__init_array_end = .)
 
-.fini_array     0x000000000800742c        0x4
+.fini_array     0x0000000008007d48        0x4
                 [!provide]                        PROVIDE (__fini_array_start = .)
  *(SORT_BY_NAME(.fini_array.*))
  *(.fini_array*)
- .fini_array    0x000000000800742c        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+ .fini_array    0x0000000008007d48        0x4 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
                 [!provide]                        PROVIDE (__fini_array_end = .)
-                0x0000000008007430                _sidata = LOADADDR (.data)
+                0x0000000008007d4c                _sidata = LOADADDR (.data)
 
-.data           0x0000000020000000      0x740 load address 0x0000000008007430
+.data           0x0000000020000000      0x740 load address 0x0000000008007d4c
                 0x0000000020000000                . = ALIGN (0x4)
                 0x0000000020000000                _sdata = .
  *(.data)
@@ -3276,12 +3319,12 @@ LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3
                 0x00000000200006e0       0x60 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-impure.o)
                 0x0000000020000740                . = ALIGN (0x4)
                 0x0000000020000740                _edata = .
-                0x0000000008007b70                _siccmram = LOADADDR (.ccmram)
+                0x000000000800848c                _siccmram = LOADADDR (.ccmram)
 
-.igot.plt       0x0000000020000740        0x0 load address 0x0000000008007b70
+.igot.plt       0x0000000020000740        0x0 load address 0x000000000800848c
  .igot.plt      0x0000000020000740        0x0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
 
-.ccmram         0x0000000010000000        0x0 load address 0x0000000008007b70
+.ccmram         0x0000000010000000        0x0 load address 0x000000000800848c
                 0x0000000010000000                . = ALIGN (0x4)
                 0x0000000010000000                _sccmram = .
  *(.ccmram)
@@ -3757,14 +3800,20 @@ LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3
  .ARM.attributes
                 0x0000000000000842       0x34 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(sbrk.o)
  .ARM.attributes
-                0x0000000000000876       0x1e /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
+                0x0000000000000876       0x1e /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+ .ARM.attributes
+                0x0000000000000894       0x1e /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldivdf3.o)
+ .ARM.attributes
+                0x00000000000008b2       0x1e /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_fixdfsi.o)
+ .ARM.attributes
+                0x00000000000008d0       0x1e /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtn.o
 OUTPUT(build/stm32F4_ax58100_hw.elf elf32-littlearm)
 LOAD linker stubs
 LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc.a
 LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libm.a
 LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a
 
-.debug_info     0x0000000000000000    0x1470f
+.debug_info     0x0000000000000000    0x1476a
  .debug_info    0x0000000000000000      0x10e build/stm32f4xx_it.o
  .debug_info    0x000000000000010e      0x57c build/misc.o
  .debug_info    0x000000000000068a      0xe4b build/stm32f4xx_can.o
@@ -3779,22 +3828,22 @@ LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3
  .debug_info    0x0000000000007443      0x382 build/RST.o
  .debug_info    0x00000000000077c5      0x73d build/SPI1.o
  .debug_info    0x0000000000007f02      0x742 build/Timer.o
- .debug_info    0x0000000000008644      0xfe7 build/bsp_can.o
- .debug_info    0x000000000000962b      0x32e build/bsp_led.o
- .debug_info    0x0000000000009959      0x8c2 build/bsp_spi2.o
- .debug_info    0x000000000000a21b      0x661 build/system_stm32f4xx.o
- .debug_info    0x000000000000a87c      0x520 build/ecatcoe.o
- .debug_info    0x000000000000ad9c     0x1997 build/ecatslv.o
- .debug_info    0x000000000000c733      0xc4c build/mailbox.o
- .debug_info    0x000000000000d37f     0x1139 build/objdef.o
- .debug_info    0x000000000000e4b8     0x133f build/sdoserv.o
- .debug_info    0x000000000000f7f7     0x1692 build/coeappl.o
- .debug_info    0x0000000000010e89      0xea9 build/ecatappl.o
- .debug_info    0x0000000000011d32     0x1663 build/el9800appl.o
- .debug_info    0x0000000000013395     0x1358 build/el9800hw.o
- .debug_info    0x00000000000146ed       0x22 build/startup_stm32f405xx.o
+ .debug_info    0x0000000000008644      0xf9d build/bsp_can.o
+ .debug_info    0x00000000000095e1      0x32e build/bsp_led.o
+ .debug_info    0x000000000000990f      0x8c2 build/bsp_spi2.o
+ .debug_info    0x000000000000a1d1      0x661 build/system_stm32f4xx.o
+ .debug_info    0x000000000000a832      0x520 build/ecatcoe.o
+ .debug_info    0x000000000000ad52     0x199e build/ecatslv.o
+ .debug_info    0x000000000000c6f0      0xc4c build/mailbox.o
+ .debug_info    0x000000000000d33c     0x1139 build/objdef.o
+ .debug_info    0x000000000000e475     0x133f build/sdoserv.o
+ .debug_info    0x000000000000f7b4     0x1699 build/coeappl.o
+ .debug_info    0x0000000000010e4d      0xeb0 build/ecatappl.o
+ .debug_info    0x0000000000011cfd     0x16f3 build/el9800appl.o
+ .debug_info    0x00000000000133f0     0x1358 build/el9800hw.o
+ .debug_info    0x0000000000014748       0x22 build/startup_stm32f405xx.o
 
-.debug_abbrev   0x0000000000000000     0x359a
+.debug_abbrev   0x0000000000000000     0x3573
  .debug_abbrev  0x0000000000000000       0x44 build/stm32f4xx_it.o
  .debug_abbrev  0x0000000000000044      0x187 build/misc.o
  .debug_abbrev  0x00000000000001cb      0x25b build/stm32f4xx_can.o
@@ -3809,20 +3858,20 @@ LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3
  .debug_abbrev  0x000000000000128d      0x150 build/RST.o
  .debug_abbrev  0x00000000000013dd      0x19f build/SPI1.o
  .debug_abbrev  0x000000000000157c      0x165 build/Timer.o
- .debug_abbrev  0x00000000000016e1      0x20c build/bsp_can.o
- .debug_abbrev  0x00000000000018ed      0x145 build/bsp_led.o
- .debug_abbrev  0x0000000000001a32      0x1dd build/bsp_spi2.o
- .debug_abbrev  0x0000000000001c0f      0x187 build/system_stm32f4xx.o
- .debug_abbrev  0x0000000000001d96      0x1da build/ecatcoe.o
- .debug_abbrev  0x0000000000001f70      0x307 build/ecatslv.o
- .debug_abbrev  0x0000000000002277      0x233 build/mailbox.o
- .debug_abbrev  0x00000000000024aa      0x2a1 build/objdef.o
- .debug_abbrev  0x000000000000274b      0x2fe build/sdoserv.o
- .debug_abbrev  0x0000000000002a49      0x237 build/coeappl.o
- .debug_abbrev  0x0000000000002c80      0x2b5 build/ecatappl.o
- .debug_abbrev  0x0000000000002f35      0x310 build/el9800appl.o
- .debug_abbrev  0x0000000000003245      0x343 build/el9800hw.o
- .debug_abbrev  0x0000000000003588       0x12 build/startup_stm32f405xx.o
+ .debug_abbrev  0x00000000000016e1      0x1f0 build/bsp_can.o
+ .debug_abbrev  0x00000000000018d1      0x145 build/bsp_led.o
+ .debug_abbrev  0x0000000000001a16      0x1dd build/bsp_spi2.o
+ .debug_abbrev  0x0000000000001bf3      0x187 build/system_stm32f4xx.o
+ .debug_abbrev  0x0000000000001d7a      0x1da build/ecatcoe.o
+ .debug_abbrev  0x0000000000001f54      0x307 build/ecatslv.o
+ .debug_abbrev  0x000000000000225b      0x233 build/mailbox.o
+ .debug_abbrev  0x000000000000248e      0x2a1 build/objdef.o
+ .debug_abbrev  0x000000000000272f      0x2fe build/sdoserv.o
+ .debug_abbrev  0x0000000000002a2d      0x237 build/coeappl.o
+ .debug_abbrev  0x0000000000002c64      0x2b5 build/ecatappl.o
+ .debug_abbrev  0x0000000000002f19      0x305 build/el9800appl.o
+ .debug_abbrev  0x000000000000321e      0x343 build/el9800hw.o
+ .debug_abbrev  0x0000000000003561       0x12 build/startup_stm32f405xx.o
 
 .debug_aranges  0x0000000000000000      0xe70
  .debug_aranges
@@ -3912,7 +3961,7 @@ LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3
  .debug_ranges  0x0000000000001148       0x90 build/el9800hw.o
  .debug_ranges  0x00000000000011d8       0x20 build/startup_stm32f405xx.o
 
-.debug_line     0x0000000000000000     0xcfa0
+.debug_line     0x0000000000000000     0xd087
  .debug_line    0x0000000000000000      0x12a build/stm32f4xx_it.o
  .debug_line    0x000000000000012a      0x2c9 build/misc.o
  .debug_line    0x00000000000003f3      0xe4b build/stm32f4xx_can.o
@@ -3927,22 +3976,22 @@ LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3
  .debug_line    0x0000000000005152      0x1d7 build/RST.o
  .debug_line    0x0000000000005329      0x2cb build/SPI1.o
  .debug_line    0x00000000000055f4      0x1df build/Timer.o
- .debug_line    0x00000000000057d3      0x4c6 build/bsp_can.o
- .debug_line    0x0000000000005c99      0x1fc build/bsp_led.o
- .debug_line    0x0000000000005e95      0x2f0 build/bsp_spi2.o
- .debug_line    0x0000000000006185      0x3c0 build/system_stm32f4xx.o
- .debug_line    0x0000000000006545      0x177 build/ecatcoe.o
- .debug_line    0x00000000000066bc     0x1b5d build/ecatslv.o
- .debug_line    0x0000000000008219      0x958 build/mailbox.o
- .debug_line    0x0000000000008b71     0x1313 build/objdef.o
- .debug_line    0x0000000000009e84      0xf80 build/sdoserv.o
- .debug_line    0x000000000000ae04      0x523 build/coeappl.o
- .debug_line    0x000000000000b327      0x719 build/ecatappl.o
- .debug_line    0x000000000000ba40      0xdd2 build/el9800appl.o
- .debug_line    0x000000000000c812      0x718 build/el9800hw.o
- .debug_line    0x000000000000cf2a       0x76 build/startup_stm32f405xx.o
+ .debug_line    0x00000000000057d3      0x4c4 build/bsp_can.o
+ .debug_line    0x0000000000005c97      0x1fc build/bsp_led.o
+ .debug_line    0x0000000000005e93      0x2f0 build/bsp_spi2.o
+ .debug_line    0x0000000000006183      0x3c0 build/system_stm32f4xx.o
+ .debug_line    0x0000000000006543      0x177 build/ecatcoe.o
+ .debug_line    0x00000000000066ba     0x1b5d build/ecatslv.o
+ .debug_line    0x0000000000008217      0x958 build/mailbox.o
+ .debug_line    0x0000000000008b6f     0x1313 build/objdef.o
+ .debug_line    0x0000000000009e82      0xf80 build/sdoserv.o
+ .debug_line    0x000000000000ae02      0x523 build/coeappl.o
+ .debug_line    0x000000000000b325      0x719 build/ecatappl.o
+ .debug_line    0x000000000000ba3e      0xebb build/el9800appl.o
+ .debug_line    0x000000000000c8f9      0x718 build/el9800hw.o
+ .debug_line    0x000000000000d011       0x76 build/startup_stm32f405xx.o
 
-.debug_str      0x0000000000000000     0x504f
+.debug_str      0x0000000000000000     0x5088
  .debug_str     0x0000000000000000      0x1e9 build/stm32f4xx_it.o
                                         0x21d (size before relaxing)
  .debug_str     0x00000000000001e9      0x27c build/misc.o
@@ -3972,7 +4021,7 @@ LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3
  .debug_str     0x0000000000002de1       0x43 build/Timer.o
                                         0x96a (size before relaxing)
  .debug_str     0x0000000000002e24      0x155 build/bsp_can.o
-                                        0xd56 (size before relaxing)
+                                        0xd46 (size before relaxing)
  .debug_str     0x0000000000002f79       0x20 build/bsp_led.o
                                         0x374 (size before relaxing)
  .debug_str     0x0000000000002f99      0x155 build/bsp_spi2.o
@@ -3981,23 +4030,23 @@ LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3
                                         0x3fc (size before relaxing)
  .debug_str     0x0000000000003192      0x1c6 build/ecatcoe.o
                                         0x39a (size before relaxing)
- .debug_str     0x0000000000003358      0x8fb build/ecatslv.o
-                                       0x10aa (size before relaxing)
- .debug_str     0x0000000000003c53      0x1d1 build/mailbox.o
+ .debug_str     0x0000000000003358      0x901 build/ecatslv.o
+                                       0x10b0 (size before relaxing)
+ .debug_str     0x0000000000003c59      0x1d1 build/mailbox.o
                                         0x576 (size before relaxing)
- .debug_str     0x0000000000003e24      0x2a8 build/objdef.o
+ .debug_str     0x0000000000003e2a      0x2a8 build/objdef.o
                                         0x6f5 (size before relaxing)
- .debug_str     0x00000000000040cc      0x301 build/sdoserv.o
+ .debug_str     0x00000000000040d2      0x301 build/sdoserv.o
                                         0x804 (size before relaxing)
- .debug_str     0x00000000000043cd      0x890 build/coeappl.o
-                                        0xd51 (size before relaxing)
- .debug_str     0x0000000000004c5d      0x20c build/ecatappl.o
-                                        0xdf1 (size before relaxing)
- .debug_str     0x0000000000004e69       0xe7 build/el9800appl.o
-                                        0xb4f (size before relaxing)
- .debug_str     0x0000000000004f50       0xdb build/el9800hw.o
+ .debug_str     0x00000000000043d3      0x890 build/coeappl.o
+                                        0xd57 (size before relaxing)
+ .debug_str     0x0000000000004c63      0x20c build/ecatappl.o
+                                        0xdf7 (size before relaxing)
+ .debug_str     0x0000000000004e6f      0x11a build/el9800appl.o
+                                        0xb88 (size before relaxing)
+ .debug_str     0x0000000000004f89       0xdb build/el9800hw.o
                                         0xc52 (size before relaxing)
- .debug_str     0x000000000000502b       0x24 build/startup_stm32f405xx.o
+ .debug_str     0x0000000000005064       0x24 build/startup_stm32f405xx.o
                                          0x6c (size before relaxing)
 
 .comment        0x0000000000000000       0x49
@@ -4030,7 +4079,7 @@ LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3
  .comment       0x0000000000000049       0x4a build/el9800appl.o
  .comment       0x0000000000000049       0x4a build/el9800hw.o
 
-.debug_frame    0x0000000000000000     0x238c
+.debug_frame    0x0000000000000000     0x24bc
  .debug_frame   0x0000000000000000       0xa0 build/stm32f4xx_it.o
  .debug_frame   0x00000000000000a0       0x60 build/misc.o
  .debug_frame   0x0000000000000100      0x1f0 build/stm32f4xx_can.o
@@ -4056,19 +4105,22 @@ LOAD /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3
  .debug_frame   0x0000000000001acc       0xfc build/sdoserv.o
  .debug_frame   0x0000000000001bc8       0xd8 build/coeappl.o
  .debug_frame   0x0000000000001ca0      0x108 build/ecatappl.o
- .debug_frame   0x0000000000001da8      0x148 build/el9800appl.o
- .debug_frame   0x0000000000001ef0      0x1ec build/el9800hw.o
- .debug_frame   0x00000000000020dc       0x2c /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
- .debug_frame   0x0000000000002108       0x30 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-malloc.o)
- .debug_frame   0x0000000000002138       0x28 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memcpy-stub.o)
- .debug_frame   0x0000000000002160       0x20 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
- .debug_frame   0x0000000000002180       0x38 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-freer.o)
- .debug_frame   0x00000000000021b8       0x4c /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-mallocr.o)
- .debug_frame   0x0000000000002204       0x2c /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-sbrkr.o)
- .debug_frame   0x0000000000002230       0x30 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-mlock.o)
- .debug_frame   0x0000000000002260       0x5c /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-reent.o)
- .debug_frame   0x00000000000022bc       0xb0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-lock.o)
- .debug_frame   0x000000000000236c       0x20 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(sbrk.o)
+ .debug_frame   0x0000000000001da8      0x158 build/el9800appl.o
+ .debug_frame   0x0000000000001f00      0x1ec build/el9800hw.o
+ .debug_frame   0x00000000000020ec       0x2c /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
+ .debug_frame   0x0000000000002118       0x30 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-malloc.o)
+ .debug_frame   0x0000000000002148       0x28 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memcpy-stub.o)
+ .debug_frame   0x0000000000002170       0x20 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-memset.o)
+ .debug_frame   0x0000000000002190       0x38 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-freer.o)
+ .debug_frame   0x00000000000021c8       0x4c /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-mallocr.o)
+ .debug_frame   0x0000000000002214       0x2c /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-sbrkr.o)
+ .debug_frame   0x0000000000002240       0x30 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-mlock.o)
+ .debug_frame   0x0000000000002270       0x5c /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-reent.o)
+ .debug_frame   0x00000000000022cc       0xb0 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-lock.o)
+ .debug_frame   0x000000000000237c       0x20 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libnosys.a(sbrk.o)
+ .debug_frame   0x000000000000239c       0xac /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+ .debug_frame   0x0000000000002448       0x50 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldivdf3.o)
+ .debug_frame   0x0000000000002498       0x24 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_fixdfsi.o)
 
 .debug_loc      0x0000000000000000     0xa919
  .debug_loc     0x0000000000000000      0x187 build/misc.o
@@ -4530,7 +4582,6 @@ GPIO_SetBits                                      build/stm32f4xx_gpio.o
                                                   build/RST.o
 GPIO_StructInit                                   build/stm32f4xx_gpio.o
 GPIO_ToggleBits                                   build/stm32f4xx_gpio.o
-                                                  build/bsp_can.o
 GPIO_Write                                        build/stm32f4xx_gpio.o
 GPIO_WriteBit                                     build/stm32f4xx_gpio.o
 GenObjDic                                         build/coeappl.o
@@ -5228,11 +5279,35 @@ WWDG_IRQHandler                                   build/startup_stm32f405xx.o
 WWDG_SetCounter                                   build/stm32f4xx_wwdg.o
 WWDG_SetPrescaler                                 build/stm32f4xx_wwdg.o
 WWDG_SetWindowValue                               build/stm32f4xx_wwdg.o
+__adddf3                                          /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+__aeabi_d2iz                                      /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_fixdfsi.o)
+                                                  build/el9800appl.o
+__aeabi_dadd                                      /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+__aeabi_ddiv                                      /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldivdf3.o)
+                                                  build/el9800appl.o
+__aeabi_dmul                                      /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldivdf3.o)
+                                                  /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldf3.o)
+                                                  build/el9800appl.o
+__aeabi_drsub                                     /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+__aeabi_dsub                                      /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+__aeabi_f2d                                       /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+                                                  build/el9800appl.o
+__aeabi_i2d                                       /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+__aeabi_l2d                                       /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+__aeabi_ui2d                                      /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+__aeabi_ul2d                                      /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
 __bss_end__                                       /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o
 __bss_start__                                     /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o
 __call_exitprocs                                  /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-exit.o)
 __deregister_frame_info                           /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+__divdf3                                          /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldivdf3.o)
 __dso_handle                                      /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
+__extendsfdf2                                     /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+__fixdfsi                                         /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_fixdfsi.o)
+__floatdidf                                       /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+__floatsidf                                       /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+__floatundidf                                     /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
+__floatunsidf                                     /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
 __init_array_end                                  /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
 __init_array_start                                /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
 __libc_fini_array                                 /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o
@@ -5258,6 +5333,8 @@ __malloc_sbrk_start                               /usr/share/gcc-arm-none-eabi-1
 __malloc_unlock                                   /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-mlock.o)
                                                   /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-mallocr.o)
                                                   /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-nano-freer.o)
+__muldf3                                          /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldivdf3.o)
+                                                  /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_muldf3.o)
 __preinit_array_end                               /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
 __preinit_array_start                             /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-init.o)
 __register_frame_info                             /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/crtbegin.o
@@ -5277,6 +5354,7 @@ __sf_fake_stderr                                  /usr/share/gcc-arm-none-eabi-1
 __sf_fake_stdin                                   /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-impure.o)
 __sf_fake_stdout                                  /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/libc_nano.a(lib_a-impure.o)
 __stack                                           /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/../../../../arm-none-eabi/lib/thumb/v7e-m+fp/hard/crt0.o
+__subdf3                                          /usr/share/gcc-arm-none-eabi-10.3-2021.10/bin/../lib/gcc/arm-none-eabi/10.3.1/thumb/v7e-m+fp/hard/libgcc.a(_arm_addsubdf3.o)
 _ebss                                             build/startup_stm32f405xx.o
 _edata                                            build/startup_stm32f405xx.o
 _estack                                           build/startup_stm32f405xx.o

@@ -467,6 +467,16 @@ void APPL_OutputMapping(UINT16 *pData)
             ((UINT16 *)&sDOOutputs)[27] = SWAPWORD(*(pTmpData + 25));
             /*motor2*/
             ((UINT16 *)&sDOOutputs)[28] = SWAPWORD(*(pTmpData + 26));
+            ((UINT16 *)&sDOOutputs)[29] = SWAPWORD(*(pTmpData + 27));
+            ((UINT16 *)&sDOOutputs)[30] = SWAPWORD(*(pTmpData + 28));
+            ((UINT16 *)&sDOOutputs)[31] = SWAPWORD(*(pTmpData + 29));
+            ((UINT16 *)&sDOOutputs)[32] = SWAPWORD(*(pTmpData + 30));
+            ((UINT16 *)&sDOOutputs)[33] = SWAPWORD(*(pTmpData + 31));
+            ((UINT16 *)&sDOOutputs)[34] = SWAPWORD(*(pTmpData + 32));
+            ((UINT16 *)&sDOOutputs)[35] = SWAPWORD(*(pTmpData + 33));
+            ((UINT16 *)&sDOOutputs)[36] = SWAPWORD(*(pTmpData + 34));
+            ((UINT16 *)&sDOOutputs)[37] = SWAPWORD(*(pTmpData + 35));
+            ((UINT16 *)&sDOOutputs)[38] = SWAPWORD(*(pTmpData + 36));
             break;
         }
     }
@@ -515,7 +525,9 @@ void APPL_Application(void)
 
     ecat_can_rx();
     ecat_motor_data_rx();
+
     ecat_spi_motor(0, 0);
+    ecat_spi_motor(0, 1);
 
     // uint8_t dummy = spi2_wr_cmd(0x01);
 
@@ -582,13 +594,26 @@ void ecat_motor_data_rx()
     motor_tx[0][0].leg_id = 0;
     motor_tx[0][0].motor_id = 0;
     motor_tx[0][0].mode = sDOOutputs.motor1_mode;
-    motor_tx[0][0].T = sDOOutputs.motor1_t;
-    motor_tx[0][0].W = sDOOutputs.motor1_w;
-    motor_tx[0][0].Pos = sDOOutputs.motor1_pos;
-    motor_tx[0][0].K_P = sDOOutputs.motor1_kp;
-    motor_tx[0][0].K_W = sDOOutputs.motor1_kd;
+    motor_tx[0][0].T = sDOOutputs.motor1_t * 256;
+    motor_tx[0][0].W = sDOOutputs.motor1_w * 128;
+    motor_tx[0][0].Pos = sDOOutputs.motor1_pos / 6.2832 * 16384;
+    motor_tx[0][0].K_P = sDOOutputs.motor1_kp * 2048;
+    motor_tx[0][0].K_W = sDOOutputs.motor1_kd * 1024;
 
     motor_tx[0][0].SumCheck = motor_tx[0][0].start[0] + motor_tx[0][0].start[1] + motor_tx[0][0].leg_id + motor_tx[0][0].motor_id + motor_tx[0][0].mode + motor_tx[0][0].T + motor_tx[0][0].W + motor_tx[0][0].Pos + motor_tx[0][0].K_P + motor_tx[0][0].K_W;
+
+    motor_tx[0][1].start[0] = 0xD2;
+    motor_tx[0][1].start[1] = 0xFE;
+    motor_tx[0][1].leg_id = 0;
+    motor_tx[0][1].motor_id = 1;
+    motor_tx[0][1].mode = sDOOutputs.motor2_mode;
+    motor_tx[0][1].T = sDOOutputs.motor2_t * 256;
+    motor_tx[0][1].W = sDOOutputs.motor2_w * 128;
+    motor_tx[0][1].Pos = sDOOutputs.motor2_pos / 6.2832 * 16384;
+    motor_tx[0][1].K_P = sDOOutputs.motor2_kp * 2048;
+    motor_tx[0][1].K_W = sDOOutputs.motor2_kd * 1024;
+
+    motor_tx[0][1].SumCheck = motor_tx[0][1].start[0] + motor_tx[0][1].start[1] + motor_tx[0][1].leg_id + motor_tx[0][1].motor_id + motor_tx[0][1].mode + motor_tx[0][1].T + motor_tx[0][1].W + motor_tx[0][1].Pos + motor_tx[0][1].K_P + motor_tx[0][1].K_W;
 }
 
 void ecat_can_rx()

@@ -117,8 +117,8 @@ int main(void)
     SPI_TRANSMIT(0,2);
     unitreeA1_tx(0,2);
 
-    SPI_TRANSMIT(1,0);
-    unitreeA1_tx(1,0);
+    //SPI_TRANSMIT(1,0);
+    //unitreeA1_tx(1,0);
 
     //SPI_TRANSMIT(1,1);
     //SPI_TRANSMIT(1,2);
