@@ -384,7 +384,6 @@ void APPL_InputMapping(UINT16 *pData)
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[14]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[15]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[16]);
-            /*motor1*/
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[17]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[18]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[19]);
@@ -394,16 +393,29 @@ void APPL_InputMapping(UINT16 *pData)
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[23]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[24]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[25]);
-            /*motor2*/
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[26]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[27]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[28]);
+            /*motor1*/
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[29]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[30]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[31]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[32]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[33]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[34]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[35]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[36]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[37]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[38]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[39]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[40]);
+            /*motor2*/
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[41]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[42]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[43]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[44]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[45]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[46]);
             break;
         }
     }
@@ -491,6 +503,8 @@ void APPL_OutputMapping(UINT16 *pData)
 void ecat_motor_data_rx();
 void ecat_can_rx();
 
+int ms_flag = 0;
+
 void APPL_Application(void)
 {
     if (sDOOutputs.bLED1 != 0)
@@ -522,9 +536,6 @@ void APPL_Application(void)
 
     ecat_can_rx();
     ecat_motor_data_rx();
-
-    ecat_spi_motor(0, 0);
-    ecat_spi_motor(0, 1);
 
     // uint8_t dummy = spi2_wr_cmd(0x01);
 
@@ -563,12 +574,12 @@ void APPL_Application(void)
     sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
     sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
 
-    sAIInputs.motor1_temp = motor_rx[0][0].Temp;
-    sAIInputs.motor1_error = motor_rx[0][0].MError;
-    sAIInputs.motor1_T = (float)motor_rx[0][0].T / 256;
-    sAIInputs.motor1_W = (float)motor_rx[0][0].W / 128;
-    sAIInputs.motor1_Pos = (float)motor_rx[0][0].Pos / 16384 * 6.2832;
-    sAIInputs.motor1_Acc = (float)motor_rx[0][0].Acc;
+    // sAIInputs.motor1_temp = motor_rx[0][0].Temp;
+    // sAIInputs.motor1_error = motor_rx[0][0].MError;
+    // sAIInputs.motor1_T = (float)motor_rx[0][0].T / 256;
+    // sAIInputs.motor1_W = (float)motor_rx[0][0].W / 128;
+    // sAIInputs.motor1_Pos = (float)motor_rx[0][0].Pos / 16384 * 6.2832;
+    // sAIInputs.motor1_Acc = (float)motor_rx[0][0].Acc;
 
     // sAIInputs.motor2_temp = motor_rx[0][1].Temp;
     // sAIInputs.motor2_error = motor_rx[0][1].MError;
@@ -577,12 +588,39 @@ void APPL_Application(void)
     // sAIInputs.motor2_Pos = (float)motor_rx[0][1].Pos / 16384 * 6.2832;
     // sAIInputs.motor2_Acc = (float)motor_rx[0][1].Acc;
 
-    sAIInputs.motor2_temp = 0x01;
-    sAIInputs.motor2_error = 0x01;
-    sAIInputs.motor2_T = 0x00FF;
-    sAIInputs.motor2_W = 0x00EE;
-    sAIInputs.motor2_Pos = 0x00FF;
-    sAIInputs.motor2_Acc = 0x00EE;
+    if (ms_flag < 11)
+    {
+        sAIInputs.motor1_id = ms_flag;
+        sAIInputs.motor1_mode = 10;
+
+        sAIInputs.motor1_temp = motor_rx[ms_flag / 3][ms_flag % 3].Temp;                       //
+        sAIInputs.motor1_error = motor_rx[ms_flag / 3][ms_flag % 3].MError;                    //
+        sAIInputs.motor1_T = (float)motor_rx[ms_flag / 3][ms_flag % 3].T / 256;                //
+        sAIInputs.motor1_W = (float)motor_rx[ms_flag / 3][ms_flag % 3].W / 128;                //
+        sAIInputs.motor1_Pos = (float)motor_rx[ms_flag / 3][ms_flag % 3].Pos / 16384 * 6.2832; //
+        sAIInputs.motor1_LW = 10;
+        sAIInputs.motor1_Acc = (float)motor_rx[ms_flag / 3][ms_flag % 3].Acc; //
+
+        ms_flag++;
+        ecat_spi_motor(ms_flag / 3,ms_flag % 3);
+    }
+    else
+    {
+        sAIInputs.motor1_id = 11;
+        sAIInputs.motor1_mode = 10;
+
+        sAIInputs.motor1_temp = motor_rx[3][2].Temp;                       //
+        sAIInputs.motor1_error = motor_rx[3][2].MError;                    //
+        sAIInputs.motor1_T = (float)motor_rx[3][2].T / 256;                //
+        sAIInputs.motor1_W = (float)motor_rx[3][2].W / 128;                //
+        sAIInputs.motor1_Pos = (float)motor_rx[3][2].Pos / 16384 * 6.2832; //
+        sAIInputs.motor1_LW = 10;
+        sAIInputs.motor1_Acc = (float)motor_rx[3][2].Acc; //
+
+        ms_flag = 0;
+
+        ecat_spi_motor(3,2);
+    }
 
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
     sAIInputs.bTxPDOToggle ^= 1;
@@ -597,31 +635,20 @@ void APPL_Application(void)
 
 void ecat_motor_data_rx()
 {
-    motor_tx[0][0].start[0] = 0xD2;
-    motor_tx[0][0].start[1] = 0xFE;
-    motor_tx[0][0].leg_id = 0;
-    motor_tx[0][0].motor_id = 0;
-    motor_tx[0][0].mode = sDOOutputs.motor1_mode;
-    motor_tx[0][0].T = sDOOutputs.motor1_t * 256;
-    motor_tx[0][0].W = sDOOutputs.motor1_w * 128;
-    motor_tx[0][0].Pos = sDOOutputs.motor1_pos / 6.2832 * 16384;
-    motor_tx[0][0].K_P = sDOOutputs.motor1_kp * 2048;
-    motor_tx[0][0].K_W = sDOOutputs.motor1_kd * 1024;
+    int motorid = sDOOutputs.motor2_mode;
 
-    motor_tx[0][0].SumCheck = motor_tx[0][0].start[0] + motor_tx[0][0].start[1] + motor_tx[0][0].leg_id + motor_tx[0][0].motor_id + motor_tx[0][0].mode + motor_tx[0][0].T + motor_tx[0][0].W + motor_tx[0][0].Pos + motor_tx[0][0].K_P + motor_tx[0][0].K_W;
+    motor_tx[motorid / 3][motorid % 3].start[0] = 0xD2;
+    motor_tx[motorid / 3][motorid % 3].start[1] = 0xFE;
+    motor_tx[motorid / 3][motorid % 3].leg_id = motorid / 3;
+    motor_tx[motorid / 3][motorid % 3].motor_id = motorid % 3;
+    motor_tx[motorid / 3][motorid % 3].mode = sDOOutputs.motor1_mode;
+    motor_tx[motorid / 3][motorid % 3].T = sDOOutputs.motor1_t * 256;
+    motor_tx[motorid / 3][motorid % 3].W = sDOOutputs.motor1_w * 128;
+    motor_tx[motorid / 3][motorid % 3].Pos = sDOOutputs.motor1_pos / 6.2832 * 16384;
+    motor_tx[motorid / 3][motorid % 3].K_P = sDOOutputs.motor1_kp * 2048;
+    motor_tx[motorid / 3][motorid % 3].K_W = sDOOutputs.motor1_kd * 1024;
 
-    motor_tx[0][1].start[0] = 0xD2;
-    motor_tx[0][1].start[1] = 0xFE;
-    motor_tx[0][1].leg_id = 0;
-    motor_tx[0][1].motor_id = 1;
-    motor_tx[0][1].mode = sDOOutputs.motor2_mode;
-    motor_tx[0][1].T = sDOOutputs.motor2_t * 256;
-    motor_tx[0][1].W = sDOOutputs.motor2_w * 128;
-    motor_tx[0][1].Pos = sDOOutputs.motor2_pos / 6.2832 * 16384;
-    motor_tx[0][1].K_P = sDOOutputs.motor2_kp * 2048;
-    motor_tx[0][1].K_W = sDOOutputs.motor2_kd * 1024;
-
-    motor_tx[0][1].SumCheck = motor_tx[0][1].start[0] + motor_tx[0][1].start[1] + motor_tx[0][1].leg_id + motor_tx[0][1].motor_id + motor_tx[0][1].mode + motor_tx[0][1].T + motor_tx[0][1].W + motor_tx[0][1].Pos + motor_tx[0][1].K_P + motor_tx[0][1].K_W;
+    motor_tx[motorid / 3][motorid % 3].SumCheck = motor_tx[motorid / 3][motorid % 3].start[0] + motor_tx[motorid / 3][motorid % 3].start[1] + motor_tx[motorid / 3][motorid % 3].leg_id + motor_tx[motorid / 3][motorid % 3].motor_id + motor_tx[motorid / 3][motorid % 3].mode + motor_tx[motorid / 3][motorid % 3].T + motor_tx[motorid / 3][motorid % 3].W + motor_tx[motorid / 3][motorid % 3].Pos + motor_tx[motorid / 3][motorid % 3].K_P + motor_tx[motorid / 3][motorid % 3].K_W;
 }
 
 void ecat_can_rx()

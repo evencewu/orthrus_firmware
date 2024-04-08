@@ -108,40 +108,60 @@ int main(void)
   while (1)
   {
     // sendToEcat(0);
-    SPI_TRANSMIT(0,0);
-    unitreeA1_tx(0,0);
+    SPI_TRANSMIT(0, 0);
+    unitreeA1_tx(0, 0);
 
-    SPI_TRANSMIT(0,1);
-    unitreeA1_tx(0,1);
+    SPI_TRANSMIT(0, 1);
+    unitreeA1_tx(0, 1);
 
-    SPI_TRANSMIT(0,2);
-    unitreeA1_tx(0,2);
+    SPI_TRANSMIT(0, 2);
+    unitreeA1_tx(0, 2);
 
-    //SPI_TRANSMIT(1,0);
-    //unitreeA1_tx(1,0);
+    SPI_TRANSMIT(1, 0);
+    unitreeA1_tx(1, 0);
 
-    //SPI_TRANSMIT(1,1);
-    //SPI_TRANSMIT(1,2);
-    //SPI_TRANSMIT(2,0);
-    //SPI_TRANSMIT(2,1);
-    //SPI_TRANSMIT(2,2);
-    //SPI_TRANSMIT(3,0);
-    //SPI_TRANSMIT(3,1);
-    //SPI_TRANSMIT(3,2);
+    SPI_TRANSMIT(1, 1);
+    unitreeA1_tx(1, 1);
 
-    
-    
-    
-    
-    //unitreeA1_tx(1,1);
-    //unitreeA1_tx(1,2);
-    //unitreeA1_tx(2,0);
-    //unitreeA1_tx(2,1);
-    //unitreeA1_tx(2,2);
-    //unitreeA1_tx(3,0);
-    //unitreeA1_tx(3,1);
-    //unitreeA1_tx(3,2);
-    
+    SPI_TRANSMIT(1, 2);
+    unitreeA1_tx(1, 2);
+
+    SPI_TRANSMIT(2, 0);
+    unitreeA1_tx(2, 0);
+
+    SPI_TRANSMIT(2, 1);
+    unitreeA1_tx(2, 1);
+
+    SPI_TRANSMIT(2, 2);
+    unitreeA1_tx(2, 2);
+
+    SPI_TRANSMIT(3, 0);
+    unitreeA1_tx(3, 0);
+
+    SPI_TRANSMIT(3, 1);
+    unitreeA1_tx(3, 1);
+
+    SPI_TRANSMIT(3, 2);
+    unitreeA1_tx(3, 2);
+
+    // SPI_TRANSMIT(1,1);
+    // SPI_TRANSMIT(1,2);
+    // SPI_TRANSMIT(2,0);
+    // SPI_TRANSMIT(2,1);
+    // SPI_TRANSMIT(2,2);
+    // SPI_TRANSMIT(3,0);
+    // SPI_TRANSMIT(3,1);
+    // SPI_TRANSMIT(3,2);
+
+    // unitreeA1_tx(1,1);
+    // unitreeA1_tx(1,2);
+    // unitreeA1_tx(2,0);
+    // unitreeA1_tx(2,1);
+    // unitreeA1_tx(2,2);
+    // unitreeA1_tx(3,0);
+    // unitreeA1_tx(3,1);
+    // unitreeA1_tx(3,2);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
