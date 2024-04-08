@@ -368,6 +368,7 @@ void APPL_InputMapping(UINT16 *pData)
         case 0x1A02:
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[1]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[2]);
+            /*can1*/
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[3]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[4]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[5]);
@@ -375,6 +376,7 @@ void APPL_InputMapping(UINT16 *pData)
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[7]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[8]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[9]);
+            /*can2*/
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[10]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[11]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[12]);
@@ -382,6 +384,7 @@ void APPL_InputMapping(UINT16 *pData)
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[14]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[15]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[16]);
+            /*motor1*/
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[17]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[18]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[19]);
@@ -391,22 +394,16 @@ void APPL_InputMapping(UINT16 *pData)
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[23]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[24]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[25]);
+            /*motor2*/
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[26]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[27]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[28]);
-
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[29]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[30]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[31]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[32]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[33]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[34]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[35]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[36]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[37]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[38]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[39]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[40]);
             break;
         }
     }
@@ -566,15 +563,26 @@ void APPL_Application(void)
     sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
     sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
 
-    sAIInputs.motor1_id = 10;
-    sAIInputs.motor1_mode = 10;
-    sAIInputs.motor1_temp = 10;
-    sAIInputs.motor1_error = 10;
-    sAIInputs.motor1_T = 10;
-    sAIInputs.motor1_W = 10;
-    sAIInputs.motor1_Pos = 10;
-    sAIInputs.motor1_LW = 10;
-    sAIInputs.motor1_Acc = 10;
+    sAIInputs.motor1_temp = motor_rx[0][0].Temp;
+    sAIInputs.motor1_error = motor_rx[0][0].MError;
+    sAIInputs.motor1_T = (float)motor_rx[0][0].T / 256;
+    sAIInputs.motor1_W = (float)motor_rx[0][0].W / 128;
+    sAIInputs.motor1_Pos = (float)motor_rx[0][0].Pos / 16384 * 6.2832;
+    sAIInputs.motor1_Acc = (float)motor_rx[0][0].Acc;
+
+    // sAIInputs.motor2_temp = motor_rx[0][1].Temp;
+    // sAIInputs.motor2_error = motor_rx[0][1].MError;
+    // sAIInputs.motor2_T = (float)motor_rx[0][1].T / 256;
+    // sAIInputs.motor2_W = (float)motor_rx[0][1].W / 128;
+    // sAIInputs.motor2_Pos = (float)motor_rx[0][1].Pos / 16384 * 6.2832;
+    // sAIInputs.motor2_Acc = (float)motor_rx[0][1].Acc;
+
+    sAIInputs.motor2_temp = 0x01;
+    sAIInputs.motor2_error = 0x01;
+    sAIInputs.motor2_T = 0x00FF;
+    sAIInputs.motor2_W = 0x00EE;
+    sAIInputs.motor2_Pos = 0x00FF;
+    sAIInputs.motor2_Acc = 0x00EE;
 
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
     sAIInputs.bTxPDOToggle ^= 1;
