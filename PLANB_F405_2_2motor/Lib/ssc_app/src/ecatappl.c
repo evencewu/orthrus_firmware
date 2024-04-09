@@ -407,6 +407,7 @@ UINT16 MainInit(void)
     CAN1_Config();
 	CAN2_Config();
 
+    MotorTxDataInit();
 
     /*Timer initialization*/
     u16BusCycleCntMs = 0;

@@ -69,4 +69,6 @@ void GetMotorMsg(uint8_t *input);
 void PreparMotorMsg(A1PackageSpiTx motor_tx_pack,uint8_t *motor_original_tx);
 void ecat_spi_motor(int leg_id, int motor_id);
 
+void MotorTxDataInit();
+
 #endif

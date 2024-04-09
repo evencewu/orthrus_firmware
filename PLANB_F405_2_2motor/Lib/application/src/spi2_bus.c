@@ -16,14 +16,14 @@ A1msgRxTransform rx_transform;
 
 void GetMotorMsg(uint8_t *input)
 {
-    memcpy(&rx_transform.u8[0],input,21);
-    memcpy(&motor_rx[rx_transform.a1msg.leg_id][rx_transform.a1msg.motor_id],&rx_transform.a1msg.start[0],21); 
+    memcpy(&rx_transform.u8[0], input, 21);
+    memcpy(&motor_rx[rx_transform.a1msg.leg_id][rx_transform.a1msg.motor_id], &rx_transform.a1msg.start[0], 21);
 }
 
-void PreparMotorMsg(A1PackageSpiTx motor_tx_pack,uint8_t *motor_original_tx)
+void PreparMotorMsg(A1PackageSpiTx motor_tx_pack, uint8_t *motor_original_tx)
 {
     uint8_t motor_tx_msg[21];
-    memcpy(motor_tx_msg,&motor_tx_pack,21);
+    memcpy(motor_tx_msg, &motor_tx_pack, 21);
 
     for (int i = 0; i < 20; i++)
     {
@@ -71,5 +71,14 @@ void ecat_spi_motor(int leg_id, int motor_id)
         }
 
         call_flag = 0;
+    }
+}
+
+void MotorTxDataInit()
+{
+    for (int i = 0; i < 12; i++)
+    {
+        motor_tx[i / 3][i % 3].leg_id = i / 3;
+        motor_tx[i / 3][i % 3].motor_id = i % 3;
     }
 }
