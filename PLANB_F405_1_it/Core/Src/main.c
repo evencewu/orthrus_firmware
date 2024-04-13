@@ -113,18 +113,14 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    //unitreeA1_enable(3,1);
     SPI_TRANSMIT(0, 0);
     SPI_TRANSMIT(0, 1);
     SPI_TRANSMIT(0, 2);
     SPI_TRANSMIT(1, 0);
     SPI_TRANSMIT(1, 1);
     SPI_TRANSMIT(1, 2);
-    SPI_TRANSMIT(2, 0);
-    SPI_TRANSMIT(2, 1);
-    SPI_TRANSMIT(2, 2);
-    SPI_TRANSMIT(3, 0);
-    SPI_TRANSMIT(3, 1);
-    SPI_TRANSMIT(3, 2);
+
     // sendToEcat(0);
     // SPI_TRANSMIT(1,1);
     // SPI_TRANSMIT(1,2);

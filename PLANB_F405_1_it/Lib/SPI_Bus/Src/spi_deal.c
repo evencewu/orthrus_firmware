@@ -208,7 +208,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
     if (htim->Instance == TIM4)
     {
-        if (usart_motor_send_flag < 12)
+        if (usart_motor_send_flag < 5)
         {
             usart_motor_send_flag++;
         }
@@ -221,8 +221,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
         //{
         //     HAL_GPIO_TogglePin(GPIOB, GPIO_PIN_12);
         // }
-            
-        unitreeA1_tx(usart_motor_send_flag%4,usart_motor_send_flag/4);
+        
+        //unitreeA1_enable(usart_motor_send_flag%2,usart_motor_send_flag/2);
+
+        unitreeA1_tx(usart_motor_send_flag%2,usart_motor_send_flag/2);
+        //unitreeA1_tx(usart_motor_send_flag%2,usart_motor_send_flag/2);
         //unitreeA1_tx(0);
     }
 }

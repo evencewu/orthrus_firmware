@@ -574,53 +574,27 @@ void APPL_Application(void)
     sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
     sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
 
-    // sAIInputs.motor1_temp = motor_rx[0][0].Temp;
-    // sAIInputs.motor1_error = motor_rx[0][0].MError;
-    // sAIInputs.motor1_T = (float)motor_rx[0][0].T / 256;
-    // sAIInputs.motor1_W = (float)motor_rx[0][0].W / 128;
-    // sAIInputs.motor1_Pos = (float)motor_rx[0][0].Pos / 16384 * 6.2832;
-    // sAIInputs.motor1_Acc = (float)motor_rx[0][0].Acc;
-
-    // sAIInputs.motor2_temp = motor_rx[0][1].Temp;
-    // sAIInputs.motor2_error = motor_rx[0][1].MError;
-    // sAIInputs.motor2_T = (float)motor_rx[0][1].T / 256;
-    // sAIInputs.motor2_W = (float)motor_rx[0][1].W / 128;
-    // sAIInputs.motor2_Pos = (float)motor_rx[0][1].Pos / 16384 * 6.2832;
-    // sAIInputs.motor2_Acc = (float)motor_rx[0][1].Acc;
-
     if (ms_flag < 11)
     {
-        sAIInputs.motor1_id = ms_flag;
-        sAIInputs.motor1_mode = 10;
-
-        sAIInputs.motor1_temp = motor_rx[ms_flag / 3][ms_flag % 3].Temp;                       //
-        sAIInputs.motor1_error = motor_rx[ms_flag / 3][ms_flag % 3].MError;                    //
-        sAIInputs.motor1_T = (float)motor_rx[ms_flag / 3][ms_flag % 3].T / 256;                //
-        sAIInputs.motor1_W = (float)motor_rx[ms_flag / 3][ms_flag % 3].W / 128;                //
-        sAIInputs.motor1_Pos = (float)motor_rx[ms_flag / 3][ms_flag % 3].Pos / 16384 * 6.2832; //
-        sAIInputs.motor1_LW = 10;
-        sAIInputs.motor1_Acc = (float)motor_rx[ms_flag / 3][ms_flag % 3].Acc; //
-
         ms_flag++;
-        ecat_spi_motor(ms_flag / 3,ms_flag % 3);
     }
     else
     {
-        sAIInputs.motor1_id = 11;
-        sAIInputs.motor1_mode = 10;
-
-        sAIInputs.motor1_temp = motor_rx[3][2].Temp;                       //
-        sAIInputs.motor1_error = motor_rx[3][2].MError;                    //
-        sAIInputs.motor1_T = (float)motor_rx[3][2].T / 256;                //
-        sAIInputs.motor1_W = (float)motor_rx[3][2].W / 128;                //
-        sAIInputs.motor1_Pos = (float)motor_rx[3][2].Pos / 16384 * 6.2832; //
-        sAIInputs.motor1_LW = 10;
-        sAIInputs.motor1_Acc = (float)motor_rx[3][2].Acc; //
-
         ms_flag = 0;
-
-        ecat_spi_motor(3,2);
     }
+
+    sAIInputs.motor1_id = ms_flag;
+    sAIInputs.motor1_mode = 10;
+
+    sAIInputs.motor1_temp = motor_rx[ms_flag / 3][ms_flag % 3].Temp;                       //
+    sAIInputs.motor1_error = motor_rx[ms_flag / 3][ms_flag % 3].MError;                    //
+    sAIInputs.motor1_T = (float)motor_rx[ms_flag / 3][ms_flag % 3].T / 256;                //
+    sAIInputs.motor1_W = (float)motor_rx[ms_flag / 3][ms_flag % 3].W / 128;                //
+    sAIInputs.motor1_Pos = (float)motor_rx[ms_flag / 3][ms_flag % 3].Pos / 16384 * 6.2832; //
+    sAIInputs.motor1_LW = 10;
+    sAIInputs.motor1_Acc = (float)motor_rx[ms_flag / 3][ms_flag % 3].Acc; //
+
+    ecat_spi_motor(ms_flag / 3, ms_flag % 3);
 
     /* we toggle the TxPDO Toggle after updating the data of the corresponding TxPDO */
     sAIInputs.bTxPDOToggle ^= 1;
@@ -637,18 +611,21 @@ void ecat_motor_data_rx()
 {
     int motorid = sDOOutputs.motor2_mode;
 
-    motor_tx[motorid / 3][motorid % 3].start[0] = 0xD2;
-    motor_tx[motorid / 3][motorid % 3].start[1] = 0xFE;
-    motor_tx[motorid / 3][motorid % 3].leg_id = motorid / 3;
-    motor_tx[motorid / 3][motorid % 3].motor_id = motorid % 3;
-    motor_tx[motorid / 3][motorid % 3].mode = sDOOutputs.motor1_mode;
-    motor_tx[motorid / 3][motorid % 3].T = sDOOutputs.motor1_t * 256;
-    motor_tx[motorid / 3][motorid % 3].W = sDOOutputs.motor1_w * 128;
-    motor_tx[motorid / 3][motorid % 3].Pos = sDOOutputs.motor1_pos / 6.2832 * 16384;
-    motor_tx[motorid / 3][motorid % 3].K_P = sDOOutputs.motor1_kp * 2048;
-    motor_tx[motorid / 3][motorid % 3].K_W = sDOOutputs.motor1_kd * 1024;
+    if (motorid <= 11)
+    {
+        motor_tx[motorid / 3][motorid % 3].start[0] = 0xD2;
+        motor_tx[motorid / 3][motorid % 3].start[1] = 0xFE;
+        motor_tx[motorid / 3][motorid % 3].leg_id = motorid / 3;
+        motor_tx[motorid / 3][motorid % 3].motor_id = motorid % 3;
+        motor_tx[motorid / 3][motorid % 3].mode = sDOOutputs.motor1_mode;
+        motor_tx[motorid / 3][motorid % 3].T = sDOOutputs.motor1_t * 256;
+        motor_tx[motorid / 3][motorid % 3].W = sDOOutputs.motor1_w * 128;
+        motor_tx[motorid / 3][motorid % 3].Pos = sDOOutputs.motor1_pos / 6.2832 * 16384;
+        motor_tx[motorid / 3][motorid % 3].K_P = sDOOutputs.motor1_kp * 2048;
+        motor_tx[motorid / 3][motorid % 3].K_W = sDOOutputs.motor1_kd * 1024;
 
-    motor_tx[motorid / 3][motorid % 3].SumCheck = motor_tx[motorid / 3][motorid % 3].start[0] + motor_tx[motorid / 3][motorid % 3].start[1] + motor_tx[motorid / 3][motorid % 3].leg_id + motor_tx[motorid / 3][motorid % 3].motor_id + motor_tx[motorid / 3][motorid % 3].mode + motor_tx[motorid / 3][motorid % 3].T + motor_tx[motorid / 3][motorid % 3].W + motor_tx[motorid / 3][motorid % 3].Pos + motor_tx[motorid / 3][motorid % 3].K_P + motor_tx[motorid / 3][motorid % 3].K_W;
+        motor_tx[motorid / 3][motorid % 3].SumCheck = motor_tx[motorid / 3][motorid % 3].start[0] + motor_tx[motorid / 3][motorid % 3].start[1] + motor_tx[motorid / 3][motorid % 3].leg_id + motor_tx[motorid / 3][motorid % 3].motor_id + motor_tx[motorid / 3][motorid % 3].mode + motor_tx[motorid / 3][motorid % 3].T + motor_tx[motorid / 3][motorid % 3].W + motor_tx[motorid / 3][motorid % 3].Pos + motor_tx[motorid / 3][motorid % 3].K_P + motor_tx[motorid / 3][motorid % 3].K_W;
+    }
 }
 
 void ecat_can_rx()

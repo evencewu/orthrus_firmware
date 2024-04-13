@@ -13,6 +13,7 @@ extern motor_recv_t data_leg[4];
 void DataSet(int leg_id);
 void unitreeA1_tx(int leg_id,int motor_id);
 void unitreeA1_tx_test(int leg_id,int motor_id);
+void unitreeA1_enable(int leg_id, int motor_id);
 
 extern uint32_t crc32_core(uint32_t *ptr, uint32_t len);
 

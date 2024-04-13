@@ -3,8 +3,8 @@
 #include "data_def.h"
 
 #define LF 0
-#define LB 1
-#define RF 2
+#define RF 1
+#define LB 2
 #define RB 3
 
 Leg leg[4];
@@ -66,7 +66,7 @@ void USART1_IRQHandler(void)
             if (this_time_rx_len == RC_FRAME_LENGTH)
             {
                 sbus_to_rc(sbus_rx_buf_LF[0], &leg[LF].a1_buf);
-                unitreeA1_rx(0);
+                unitreeA1_rx(LF);
                 
             }
         }
@@ -97,7 +97,7 @@ void USART1_IRQHandler(void)
             {
                 // 处理数据
                 sbus_to_rc(sbus_rx_buf_LF[1], &leg[LF].a1_buf);
-                unitreeA1_rx(0);
+                unitreeA1_rx(LF);
                 
             }
         }
@@ -144,7 +144,7 @@ void USART2_IRQHandler(void)
             if (this_time_rx_len == RC_FRAME_LENGTH)
             {
                 sbus_to_rc(sbus_rx_buf_LB[0], &leg[LB].a1_buf);
-                unitreeA1_rx(1);
+                unitreeA1_rx(LB);
                 
             }
         }
@@ -153,15 +153,15 @@ void USART2_IRQHandler(void)
             /* Current memory buffer used is Memory 1 */
             // disable DMA
             // 失效DMA
-            __HAL_DMA_DISABLE(&hdma_usart6_rx);
+            __HAL_DMA_DISABLE(&hdma_usart2_rx);
 
             // get receive data length, length = set_data_length - remain_length
             // 获取接收数据长度,长度 = 设定长度 - 剩余长度
-            this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart6_rx.Instance->NDTR;
+            this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart2_rx.Instance->NDTR;
 
             // reset set_data_lenght
             // 重新设定数据长度
-            hdma_usart6_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
+            hdma_usart2_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
 
             // set memory buffer 0
             // 设定缓冲区0
@@ -169,13 +169,13 @@ void USART2_IRQHandler(void)
 
             // enable DMA
             // 使能DMA
-            __HAL_DMA_ENABLE(&hdma_usart6_rx);
+            __HAL_DMA_ENABLE(&hdma_usart2_rx);
 
             if (this_time_rx_len == RC_FRAME_LENGTH)
             {
                 // 处理数据
                 sbus_to_rc(sbus_rx_buf_LB[1], &leg[LB].a1_buf);
-                unitreeA1_rx(1);
+                unitreeA1_rx(LB);
                 
             }
         }
@@ -222,7 +222,7 @@ void USART3_IRQHandler(void)
             if (this_time_rx_len == RC_FRAME_LENGTH)
             {
                 sbus_to_rc(sbus_rx_buf_RB[0], &leg[RB].a1_buf);
-                unitreeA1_rx(3);
+                unitreeA1_rx(RB);
                 
             }
         }
@@ -231,15 +231,15 @@ void USART3_IRQHandler(void)
             /* Current memory buffer used is Memory 1 */
             // disable DMA
             // 失效DMA
-            __HAL_DMA_DISABLE(&hdma_usart6_rx);
+            __HAL_DMA_DISABLE(&hdma_usart3_rx);
 
             // get receive data length, length = set_data_length - remain_length
             // 获取接收数据长度,长度 = 设定长度 - 剩余长度
-            this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart6_rx.Instance->NDTR;
+            this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart3_rx.Instance->NDTR;
 
             // reset set_data_lenght
             // 重新设定数据长度
-            hdma_usart6_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
+            hdma_usart3_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
 
             // set memory buffer 0
             // 设定缓冲区0
@@ -247,13 +247,13 @@ void USART3_IRQHandler(void)
 
             // enable DMA
             // 使能DMA
-            __HAL_DMA_ENABLE(&hdma_usart6_rx);
+            __HAL_DMA_ENABLE(&hdma_usart3_rx);
 
             if (this_time_rx_len == RC_FRAME_LENGTH)
             {
                 // 处理数据
                 sbus_to_rc(sbus_rx_buf_RB[1], &leg[RB].a1_buf);
-                unitreeA1_rx(3);
+                unitreeA1_rx(RB);
                
             }
         }
@@ -300,7 +300,7 @@ void USART6_IRQHandler(void)
             if (this_time_rx_len == RC_FRAME_LENGTH)
             {
                 sbus_to_rc(sbus_rx_buf_RF[0], &leg[RF].a1_buf);
-                unitreeA1_rx(2);
+                unitreeA1_rx(RF);
                
             }
         }
@@ -331,7 +331,7 @@ void USART6_IRQHandler(void)
             {
                 // 处理数据
                 sbus_to_rc(sbus_rx_buf_RF[1], &leg[RF].a1_buf);
-                unitreeA1_rx(2);
+                unitreeA1_rx(RF);
                
             }
         }
