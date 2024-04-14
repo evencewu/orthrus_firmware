@@ -1,0 +1,222 @@
+ARM GAS  /tmp/ccnog7ln.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"RST.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.rst_high,"ax",%progbits
+  20              		.align	1
+  21              		.global	rst_high
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	rst_high:
+  27              	.LFB124:
+  28              		.file 1 "Lib/bsp/src/RST.c"
+   1:Lib/bsp/src/RST.c **** #include "RST.h"
+   2:Lib/bsp/src/RST.c **** 
+   3:Lib/bsp/src/RST.c **** void rst_setup(void)
+   4:Lib/bsp/src/RST.c **** {
+   5:Lib/bsp/src/RST.c ****     /* Setup NRST as GPIO out and pull it high */
+   6:Lib/bsp/src/RST.c ****     GPIO_InitTypeDef gpio;
+   7:Lib/bsp/src/RST.c ****  
+   8:Lib/bsp/src/RST.c ****     RCC_AHB1PeriphClockCmd(ESC_RCC_APB1PERIPH_GPIOX_RSTN, ENABLE);
+   9:Lib/bsp/src/RST.c **** 
+  10:Lib/bsp/src/RST.c ****     gpio.GPIO_Pin   = ESC_GPIO_Pin_RSTN; 
+  11:Lib/bsp/src/RST.c ****     gpio.GPIO_Mode  = GPIO_Mode_OUT;
+  12:Lib/bsp/src/RST.c ****     gpio.GPIO_Speed = GPIO_Speed_50MHz;
+  13:Lib/bsp/src/RST.c ****     gpio.GPIO_OType = GPIO_OType_PP;
+  14:Lib/bsp/src/RST.c ****     gpio.GPIO_PuPd  = GPIO_PuPd_UP;
+  15:Lib/bsp/src/RST.c ****     GPIO_Init(ESC_GPIOX_RSTN, &gpio);
+  16:Lib/bsp/src/RST.c ****     
+  17:Lib/bsp/src/RST.c ****     rst_high();
+  18:Lib/bsp/src/RST.c **** }
+  19:Lib/bsp/src/RST.c **** 
+  20:Lib/bsp/src/RST.c **** void rst_high(void)
+  21:Lib/bsp/src/RST.c **** {
+  29              		.loc 1 21 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33 0000 08B5     		push	{r3, lr}
+  34              		.cfi_def_cfa_offset 8
+  35              		.cfi_offset 3, -8
+  36              		.cfi_offset 14, -4
+  22:Lib/bsp/src/RST.c ****     /* Set RSTN line high */
+ARM GAS  /tmp/ccnog7ln.s 			page 2
+
+
+  23:Lib/bsp/src/RST.c ****     GPIO_SetBits(ESC_GPIOX_RSTN, ESC_GPIO_Pin_RSTN);
+  37              		.loc 1 23 5 view .LVU1
+  38 0002 0421     		movs	r1, #4
+  39 0004 0148     		ldr	r0, .L3
+  40 0006 FFF7FEFF 		bl	GPIO_SetBits
+  41              	.LVL0:
+  24:Lib/bsp/src/RST.c **** }
+  42              		.loc 1 24 1 is_stmt 0 view .LVU2
+  43 000a 08BD     		pop	{r3, pc}
+  44              	.L4:
+  45              		.align	2
+  46              	.L3:
+  47 000c 00000240 		.word	1073872896
+  48              		.cfi_endproc
+  49              	.LFE124:
+  51              		.section	.text.rst_setup,"ax",%progbits
+  52              		.align	1
+  53              		.global	rst_setup
+  54              		.syntax unified
+  55              		.thumb
+  56              		.thumb_func
+  58              	rst_setup:
+  59              	.LFB123:
+   4:Lib/bsp/src/RST.c ****     GPIO_InitTypeDef gpio;
+  60              		.loc 1 4 1 is_stmt 1 view -0
+  61              		.cfi_startproc
+  62              		@ args = 0, pretend = 0, frame = 8
+  63              		@ frame_needed = 0, uses_anonymous_args = 0
+  64 0000 00B5     		push	{lr}
+  65              		.cfi_def_cfa_offset 4
+  66              		.cfi_offset 14, -4
+  67 0002 83B0     		sub	sp, sp, #12
+  68              		.cfi_def_cfa_offset 16
+   6:Lib/bsp/src/RST.c ****  
+  69              		.loc 1 6 5 view .LVU4
+   8:Lib/bsp/src/RST.c **** 
+  70              		.loc 1 8 5 view .LVU5
+  71 0004 0121     		movs	r1, #1
+  72 0006 0846     		mov	r0, r1
+  73 0008 FFF7FEFF 		bl	RCC_AHB1PeriphClockCmd
+  74              	.LVL1:
+  10:Lib/bsp/src/RST.c ****     gpio.GPIO_Mode  = GPIO_Mode_OUT;
+  75              		.loc 1 10 5 view .LVU6
+  10:Lib/bsp/src/RST.c ****     gpio.GPIO_Mode  = GPIO_Mode_OUT;
+  76              		.loc 1 10 21 is_stmt 0 view .LVU7
+  77 000c 0423     		movs	r3, #4
+  78 000e 0093     		str	r3, [sp]
+  11:Lib/bsp/src/RST.c ****     gpio.GPIO_Speed = GPIO_Speed_50MHz;
+  79              		.loc 1 11 5 is_stmt 1 view .LVU8
+  11:Lib/bsp/src/RST.c ****     gpio.GPIO_Speed = GPIO_Speed_50MHz;
+  80              		.loc 1 11 21 is_stmt 0 view .LVU9
+  81 0010 0123     		movs	r3, #1
+  82 0012 8DF80430 		strb	r3, [sp, #4]
+  12:Lib/bsp/src/RST.c ****     gpio.GPIO_OType = GPIO_OType_PP;
+  83              		.loc 1 12 5 is_stmt 1 view .LVU10
+  12:Lib/bsp/src/RST.c ****     gpio.GPIO_OType = GPIO_OType_PP;
+  84              		.loc 1 12 21 is_stmt 0 view .LVU11
+ARM GAS  /tmp/ccnog7ln.s 			page 3
+
+
+  85 0016 0222     		movs	r2, #2
+  86 0018 8DF80520 		strb	r2, [sp, #5]
+  13:Lib/bsp/src/RST.c ****     gpio.GPIO_PuPd  = GPIO_PuPd_UP;
+  87              		.loc 1 13 5 is_stmt 1 view .LVU12
+  13:Lib/bsp/src/RST.c ****     gpio.GPIO_PuPd  = GPIO_PuPd_UP;
+  88              		.loc 1 13 21 is_stmt 0 view .LVU13
+  89 001c 0022     		movs	r2, #0
+  90 001e 8DF80620 		strb	r2, [sp, #6]
+  14:Lib/bsp/src/RST.c ****     GPIO_Init(ESC_GPIOX_RSTN, &gpio);
+  91              		.loc 1 14 5 is_stmt 1 view .LVU14
+  14:Lib/bsp/src/RST.c ****     GPIO_Init(ESC_GPIOX_RSTN, &gpio);
+  92              		.loc 1 14 21 is_stmt 0 view .LVU15
+  93 0022 8DF80730 		strb	r3, [sp, #7]
+  15:Lib/bsp/src/RST.c ****     
+  94              		.loc 1 15 5 is_stmt 1 view .LVU16
+  95 0026 6946     		mov	r1, sp
+  96 0028 0348     		ldr	r0, .L7
+  97 002a FFF7FEFF 		bl	GPIO_Init
+  98              	.LVL2:
+  17:Lib/bsp/src/RST.c **** }
+  99              		.loc 1 17 5 view .LVU17
+ 100 002e FFF7FEFF 		bl	rst_high
+ 101              	.LVL3:
+  18:Lib/bsp/src/RST.c **** 
+ 102              		.loc 1 18 1 is_stmt 0 view .LVU18
+ 103 0032 03B0     		add	sp, sp, #12
+ 104              		.cfi_def_cfa_offset 4
+ 105              		@ sp needed
+ 106 0034 5DF804FB 		ldr	pc, [sp], #4
+ 107              	.L8:
+ 108              		.align	2
+ 109              	.L7:
+ 110 0038 00000240 		.word	1073872896
+ 111              		.cfi_endproc
+ 112              	.LFE123:
+ 114              		.section	.text.rst_low,"ax",%progbits
+ 115              		.align	1
+ 116              		.global	rst_low
+ 117              		.syntax unified
+ 118              		.thumb
+ 119              		.thumb_func
+ 121              	rst_low:
+ 122              	.LFB125:
+  25:Lib/bsp/src/RST.c **** 
+  26:Lib/bsp/src/RST.c **** void rst_low(void)
+  27:Lib/bsp/src/RST.c **** {    /* Set RSTN line low */
+ 123              		.loc 1 27 1 is_stmt 1 view -0
+ 124              		.cfi_startproc
+ 125              		@ args = 0, pretend = 0, frame = 0
+ 126              		@ frame_needed = 0, uses_anonymous_args = 0
+ 127 0000 08B5     		push	{r3, lr}
+ 128              		.cfi_def_cfa_offset 8
+ 129              		.cfi_offset 3, -8
+ 130              		.cfi_offset 14, -4
+  28:Lib/bsp/src/RST.c ****     GPIO_ResetBits(ESC_GPIOX_RSTN, ESC_GPIO_Pin_RSTN);
+ 131              		.loc 1 28 5 view .LVU20
+ 132 0002 0421     		movs	r1, #4
+ARM GAS  /tmp/ccnog7ln.s 			page 4
+
+
+ 133 0004 0148     		ldr	r0, .L11
+ 134 0006 FFF7FEFF 		bl	GPIO_ResetBits
+ 135              	.LVL4:
+  29:Lib/bsp/src/RST.c **** }...
+ 136              		.loc 1 29 1 is_stmt 0 view .LVU21
+ 137 000a 08BD     		pop	{r3, pc}
+ 138              	.L12:
+ 139              		.align	2
+ 140              	.L11:
+ 141 000c 00000240 		.word	1073872896
+ 142              		.cfi_endproc
+ 143              	.LFE125:
+ 145              		.text
+ 146              	.Letext0:
+ 147              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 148              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 149              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 150              		.file 5 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
+ 151              		.file 6 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h"
+ARM GAS  /tmp/ccnog7ln.s 			page 5
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 RST.c
+     /tmp/ccnog7ln.s:20     .text.rst_high:0000000000000000 $t
+     /tmp/ccnog7ln.s:26     .text.rst_high:0000000000000000 rst_high
+     /tmp/ccnog7ln.s:47     .text.rst_high:000000000000000c $d
+     /tmp/ccnog7ln.s:52     .text.rst_setup:0000000000000000 $t
+     /tmp/ccnog7ln.s:58     .text.rst_setup:0000000000000000 rst_setup
+     /tmp/ccnog7ln.s:110    .text.rst_setup:0000000000000038 $d
+     /tmp/ccnog7ln.s:115    .text.rst_low:0000000000000000 $t
+     /tmp/ccnog7ln.s:121    .text.rst_low:0000000000000000 rst_low
+     /tmp/ccnog7ln.s:141    .text.rst_low:000000000000000c $d
+
+UNDEFINED SYMBOLS
+GPIO_SetBits
+RCC_AHB1PeriphClockCmd
+GPIO_Init
+GPIO_ResetBits
