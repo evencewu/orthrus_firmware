@@ -368,7 +368,7 @@ void APPL_InputMapping(UINT16 *pData)
         case 0x1A02:
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[1]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[2]);
-            /*can1*/
+            /*can2*/
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[3]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[4]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[5]);
@@ -376,46 +376,25 @@ void APPL_InputMapping(UINT16 *pData)
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[7]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[8]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[9]);
-            /*can2*/
+            /*motor*/
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[10]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[11]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[12]);
+
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[13]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[14]);
+
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[15]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[16]);
+
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[17]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[18]);
+
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[19]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[20]);
+
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[21]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[22]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[23]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[24]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[25]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[26]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[27]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[28]);
-            /*motor1*/
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[29]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[30]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[31]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[32]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[33]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[34]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[35]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[36]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[37]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[38]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[39]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[40]);
-            /*motor2*/
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[41]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[42]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[43]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[44]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[45]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[46]);
+            /**/
             break;
         }
     }
@@ -525,21 +504,6 @@ void APPL_Application(void)
 
     sAIInputs.i16Analoginput = 0;
 
-    sAIInputs.can1_h0 = Can1_RxMessage.StdId;
-    sAIInputs.can1_h1 = Can1_RxMessage.ExtId;
-    sAIInputs.can1_h2 = Can1_RxMessage.IDE;
-    sAIInputs.can1_h3 = Can1_RxMessage.RTR;
-    sAIInputs.can1_h4 = Can1_RxMessage.DLC;
-
-    sAIInputs.can1_d0 = Can1_RxMessage.Data[0];
-    sAIInputs.can1_d1 = Can1_RxMessage.Data[1];
-    sAIInputs.can1_d2 = Can1_RxMessage.Data[2];
-    sAIInputs.can1_d3 = Can1_RxMessage.Data[3];
-    sAIInputs.can1_d4 = Can1_RxMessage.Data[4];
-    sAIInputs.can1_d5 = Can1_RxMessage.Data[5];
-    sAIInputs.can1_d6 = Can1_RxMessage.Data[6];
-    sAIInputs.can1_d7 = Can1_RxMessage.Data[7];
-
     sAIInputs.can2_h0 = Can2_RxMessage.StdId;
     sAIInputs.can2_h1 = Can2_RxMessage.ExtId;
     sAIInputs.can2_h2 = Can2_RxMessage.IDE;
@@ -564,16 +528,16 @@ void APPL_Application(void)
         ms_flag = 0;
     }
 
-    sAIInputs.motor1_id = ms_flag;
-    sAIInputs.motor1_mode = 10;
+    sAIInputs.motor_id = ms_flag;
+    sAIInputs.motor_mode = 10;
 
-    sAIInputs.motor1_temp = motor_rx[ms_flag / 3][ms_flag % 3].Temp;                       //
-    sAIInputs.motor1_error = motor_rx[ms_flag / 3][ms_flag % 3].MError;                    //
-    sAIInputs.motor1_T = (float)motor_rx[ms_flag / 3][ms_flag % 3].T / 256;                //
-    sAIInputs.motor1_W = (float)motor_rx[ms_flag / 3][ms_flag % 3].W / 128;                //
-    sAIInputs.motor1_Pos = (float)motor_rx[ms_flag / 3][ms_flag % 3].Pos / 16384 * 6.2832; //
-    sAIInputs.motor1_LW = 10;
-    sAIInputs.motor1_Acc = (float)motor_rx[ms_flag / 3][ms_flag % 3].Acc; //
+    sAIInputs.motor_temp = motor_rx[ms_flag / 3][ms_flag % 3].Temp;                       //
+    sAIInputs.motor_error = motor_rx[ms_flag / 3][ms_flag % 3].MError;                    //
+    sAIInputs.motor_T = (float)motor_rx[ms_flag / 3][ms_flag % 3].T / 256;                //
+    sAIInputs.motor_W = (float)motor_rx[ms_flag / 3][ms_flag % 3].W / 128;                //
+    sAIInputs.motor_Pos = (float)motor_rx[ms_flag / 3][ms_flag % 3].Pos / 16384 * 6.2832; //
+    sAIInputs.motor_LW = 10;
+    sAIInputs.motor_Acc = (float)motor_rx[ms_flag / 3][ms_flag % 3].Acc; //
 
     ecat_spi_motor(ms_flag / 3, ms_flag % 3);
 
