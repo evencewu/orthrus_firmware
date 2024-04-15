@@ -1,0 +1,3528 @@
+ARM GAS  /tmp/ccXIdJsJ.s 			page 1
+
+
+   1              		.cpu cortex-m4
+   2              		.arch armv7e-m
+   3              		.fpu fpv4-sp-d16
+   4              		.eabi_attribute 27, 1
+   5              		.eabi_attribute 28, 1
+   6              		.eabi_attribute 20, 1
+   7              		.eabi_attribute 21, 1
+   8              		.eabi_attribute 23, 3
+   9              		.eabi_attribute 24, 1
+  10              		.eabi_attribute 25, 1
+  11              		.eabi_attribute 26, 1
+  12              		.eabi_attribute 30, 1
+  13              		.eabi_attribute 34, 1
+  14              		.eabi_attribute 18, 4
+  15              		.file	"coeappl.c"
+  16              		.text
+  17              	.Ltext0:
+  18              		.cfi_sections	.debug_frame
+  19              		.section	.text.COE_GetObjectDictionary,"ax",%progbits
+  20              		.align	1
+  21              		.global	COE_GetObjectDictionary
+  22              		.syntax unified
+  23              		.thumb
+  24              		.thumb_func
+  26              	COE_GetObjectDictionary:
+  27              	.LFB123:
+  28              		.file 1 "Lib/ssc_app/src/coeappl.c"
+   1:Lib/ssc_app/src/coeappl.c **** /**
+   2:Lib/ssc_app/src/coeappl.c **** \addtogroup CoE CAN Application Profile over EtherCAT
+   3:Lib/ssc_app/src/coeappl.c **** @{
+   4:Lib/ssc_app/src/coeappl.c **** */
+   5:Lib/ssc_app/src/coeappl.c **** 
+   6:Lib/ssc_app/src/coeappl.c **** /**
+   7:Lib/ssc_app/src/coeappl.c **** \file coeappl.c
+   8:Lib/ssc_app/src/coeappl.c **** \author EthercatSSC@beckhoff.com
+   9:Lib/ssc_app/src/coeappl.c **** \brief Implementation
+  10:Lib/ssc_app/src/coeappl.c **** This file contains an example for CoE services and the CoE object dictionary
+  11:Lib/ssc_app/src/coeappl.c **** 
+  12:Lib/ssc_app/src/coeappl.c **** \version 5.11
+  13:Lib/ssc_app/src/coeappl.c **** 
+  14:Lib/ssc_app/src/coeappl.c **** <br>Changes to version V5.10:<br>
+  15:Lib/ssc_app/src/coeappl.c **** V5.11 COE1: update invalid end entry in the object dictionaries (error with some compilers)<br>
+  16:Lib/ssc_app/src/coeappl.c **** V5.11 COE3: change 0x10F3.2 (Sync Error limit) from UINT32 to UINT16 (according to the ETG.1020)<br
+  17:Lib/ssc_app/src/coeappl.c **** V5.11 ECAT10: change PROTO handling to prevent compiler errors<br>
+  18:Lib/ssc_app/src/coeappl.c **** V5.11 ECAT4: enhance SM/Sync monitoring for input/output only slaves<br>
+  19:Lib/ssc_app/src/coeappl.c **** <br>Changes to version V5.01:<br>
+  20:Lib/ssc_app/src/coeappl.c **** V5.10 COE1: Define one entry description for all 0x1C3x objects and change data type of SI11,12,13 
+  21:Lib/ssc_app/src/coeappl.c **** V5.10 COE2: Change return value of Get ObjectSize to UINT32<br>
+  22:Lib/ssc_app/src/coeappl.c ****             Change object size to UINT32<br>
+  23:Lib/ssc_app/src/coeappl.c **** V5.10 ECAT13: Update Synchronisation handling (FreeRun,SM Sync, Sync0, Sync1)<br>
+  24:Lib/ssc_app/src/coeappl.c ****               Compare DC UINT configuration (by ESC Config data) vs. DC activation register setting
+  25:Lib/ssc_app/src/coeappl.c ****               Update 0x1C3x entries<br>
+  26:Lib/ssc_app/src/coeappl.c **** <br>Changes to version V5.0:<br>
+  27:Lib/ssc_app/src/coeappl.c **** V5.01 APPL3: Include library demo application<br>
+  28:Lib/ssc_app/src/coeappl.c **** V5.01 COE1: Remove alignment entry (SI33) from objects 0x1C32/0x1C33<br>
+  29:Lib/ssc_app/src/coeappl.c **** V5.01 EL9800 1: Read/Write functions for setting object 0x8020 moved to el9800appl.c<br>
+  30:Lib/ssc_app/src/coeappl.c **** V5.01 EL9800 2: Add TxPdo Parameter object 0x1802<br>
+ARM GAS  /tmp/ccXIdJsJ.s 			page 2
+
+
+  31:Lib/ssc_app/src/coeappl.c **** V5.01 SDO6: Update SDO response interface handling. (used if the object access function returns "AB
+  32:Lib/ssc_app/src/coeappl.c **** <br>Changes to version V4.40:<br>
+  33:Lib/ssc_app/src/coeappl.c **** V5.0 TEST1: Add test application. See Application Note ET9300 for more details.<br>
+  34:Lib/ssc_app/src/coeappl.c **** V5.0 COE1: Add reserved Subindex7 to object 0x1C32 and 0x1C33.<br>
+  35:Lib/ssc_app/src/coeappl.c **** V5.0 COE4: Create object dictionary on device startup.<br>
+  36:Lib/ssc_app/src/coeappl.c **** V5.0 COE6: Update entry descriptions for object with the code ARRAY.<br>
+  37:Lib/ssc_app/src/coeappl.c **** V5.0 ECAT2: Reference to application specific object dictionary is set to "ApplicationObjDic".<br>
+  38:Lib/ssc_app/src/coeappl.c **** <br>Changes to version V4.30:<br>
+  39:Lib/ssc_app/src/coeappl.c **** V4.40 COE 6: change dynamic object dictionary handling<br>
+  40:Lib/ssc_app/src/coeappl.c **** V4.40 CiA402 2: enable freerun Sync Mode for CiA402 Device (The motion controller application will 
+  41:Lib/ssc_app/src/coeappl.c **** V4.40 COE5: move identification and synchronisation object values to ecat_def.h<br>
+  42:Lib/ssc_app/src/coeappl.c **** V4.40 DIAG1: Add diagnosis object 0x10F3<br>
+  43:Lib/ssc_app/src/coeappl.c **** V4.40 OBJ3: Update the global object dictionary pointer if a new list head is added<br>
+  44:Lib/ssc_app/src/coeappl.c **** V4.40 COE4: Prevent access NULL pointer<br>
+  45:Lib/ssc_app/src/coeappl.c **** V4.40 SYNC1: Initialize 0x1C3x objects<br>
+  46:Lib/ssc_app/src/coeappl.c **** V4.40 HW1: Add (adapt) objects for FC1100 support<br>
+  47:Lib/ssc_app/src/coeappl.c **** <br>Changes to version V4.20:<br>
+  48:Lib/ssc_app/src/coeappl.c **** V4.30 OBJ 3: Handle object dictionary in double link list<br>
+  49:Lib/ssc_app/src/coeappl.c **** V4.30 OBJ 2: General EtherCAT device objects are moved from chnappl.h to coeappl.c<br>
+  50:Lib/ssc_app/src/coeappl.c **** V4.30 SYNC: set 0x1C32:05; 0x1C33:05 (minCyleTime) to MIN_PD_CYCLE_TIME
+  51:Lib/ssc_app/src/coeappl.c ****                     (should be set dynamic if required)<br>
+  52:Lib/ssc_app/src/coeappl.c **** V4.30 PDO: rename PDO specific function calls
+  53:Lib/ssc_app/src/coeappl.c ****                     (PDO specific functions are moved to ecatappl.c)<br>
+  54:Lib/ssc_app/src/coeappl.c **** V4.20 PIC24: Add EL9800_4 (PIC24) required source code<br>
+  55:Lib/ssc_app/src/coeappl.c **** V4.11 ECAT 1: C166: MinDelayTime renamed in CalcAndCopyTime<br>
+  56:Lib/ssc_app/src/coeappl.c **** <br>Changes to version V4.07:<br>
+  57:Lib/ssc_app/src/coeappl.c **** V4.10 ECAT 1: To save and restore arrays in the object directory.<br>
+  58:Lib/ssc_app/src/coeappl.c ****             The code to get the size of an array entry was changed.<br>
+  59:Lib/ssc_app/src/coeappl.c **** V4.10 COE 1:  The SM-Parameter were extended<br>
+  60:Lib/ssc_app/src/coeappl.c **** <br>Changes to version V4.06:<br>
+  61:Lib/ssc_app/src/coeappl.c **** V4.07 COEAPPL 1: The PDO numbers were adapted according top the modular device profile,<br>
+  62:Lib/ssc_app/src/coeappl.c ****            the PDO numbers increment now with every module (in chnappl.h)<br>
+  63:Lib/ssc_app/src/coeappl.c **** V4.07 COEAPPL 2: The example is working for the NIOS with the evaluation board DBC2C20 V1.2<br>
+  64:Lib/ssc_app/src/coeappl.c ****             which is available by Altera<br>
+  65:Lib/ssc_app/src/coeappl.c **** V4.07 ECAT 1: The sources for SPI and MCI were merged (in ecat_def.h<br>
+  66:Lib/ssc_app/src/coeappl.c ****             set the switch MCI_HW to 1 when using the MCI,<br>
+  67:Lib/ssc_app/src/coeappl.c ****             set the switch SPI_HW to 1 when using the SPI<br>
+  68:Lib/ssc_app/src/coeappl.c **** <br>Changes to version V4.03:<br>
+  69:Lib/ssc_app/src/coeappl.c **** V4.04 SDO 1: The SDO interface was changed in that way that a SDO response<br>
+  70:Lib/ssc_app/src/coeappl.c ****             could be sent by the application to a later time. In that case<br>
+  71:Lib/ssc_app/src/coeappl.c ****             the functions OBJ_Read and OBJ_Write shall return the value<br>
+  72:Lib/ssc_app/src/coeappl.c ****             ABORTIDX_WORKING. To send the SDO response the new function SDOS_SdoRes<br>
+  73:Lib/ssc_app/src/coeappl.c ****             has to be called by the application. While waiting for the call<br>
+  74:Lib/ssc_app/src/coeappl.c ****             of SDOS_SdoRes the SDO interface will answer to another SDO request<br>
+  75:Lib/ssc_app/src/coeappl.c ****             with the error MBXERR_SERVICEINWORK in the mailbox protocol.<br>
+  76:Lib/ssc_app/src/coeappl.c ****             In this example the reading and writing of object 0x8020 is delayed,<br>
+  77:Lib/ssc_app/src/coeappl.c ****             the function SDOS_SdoRes will be called from COE_Main.<br>
+  78:Lib/ssc_app/src/coeappl.c **** <br>Changes to version V4.00:<br>
+  79:Lib/ssc_app/src/coeappl.c **** V4.01 COEAPPL 1: The object dictionary and the mapping functions are now defined<br>
+  80:Lib/ssc_app/src/coeappl.c ****              in chnappl.h (chnappl.inc made problems with some developing tools)<br>
+  81:Lib/ssc_app/src/coeappl.c **** <br>Changes to version V3.20:<br>
+  82:Lib/ssc_app/src/coeappl.c **** V4.00 COEAPPL 1: The object dictionary and the mapping functions are now defined<br>
+  83:Lib/ssc_app/src/coeappl.c ****             in chnappl.c and were adapted to the modular device profile<br>
+  84:Lib/ssc_app/src/coeappl.c **** V4.00 COEAPPL 2: The handling of backup parameters was included according to<br>
+  85:Lib/ssc_app/src/coeappl.c ****             the EtherCAT Guidelines and Protocol Enhancements Specification<br>
+  86:Lib/ssc_app/src/coeappl.c **** V4.00 COEAPPL 3: The handling of the TxPDO Toggle was included according to<br>
+  87:Lib/ssc_app/src/coeappl.c ****              the EtherCAT Guidelines and Protocol Enhancements Specification<br>
+ARM GAS  /tmp/ccXIdJsJ.s 			page 3
+
+
+  88:Lib/ssc_app/src/coeappl.c **** V4.00 COEAPPL 4: The handling of the TxPDO State was included according to<br>
+  89:Lib/ssc_app/src/coeappl.c ****             the EtherCAT Guidelines and Protocol Enhancements Specification<br>
+  90:Lib/ssc_app/src/coeappl.c **** V4.00 ECAT 1: The handling of the Sync Manager Parameter was included according to<br>
+  91:Lib/ssc_app/src/coeappl.c ****             the EtherCAT Guidelines and Protocol Enhancements Specification
+  92:Lib/ssc_app/src/coeappl.c **** */
+  93:Lib/ssc_app/src/coeappl.c **** 
+  94:Lib/ssc_app/src/coeappl.c **** /*-----------------------------------------------------------------------------------------
+  95:Lib/ssc_app/src/coeappl.c **** ------
+  96:Lib/ssc_app/src/coeappl.c **** ------    Includes
+  97:Lib/ssc_app/src/coeappl.c **** ------
+  98:Lib/ssc_app/src/coeappl.c **** -----------------------------------------------------------------------------------------*/
+  99:Lib/ssc_app/src/coeappl.c **** 
+ 100:Lib/ssc_app/src/coeappl.c **** #include "ecat_def.h"
+ 101:Lib/ssc_app/src/coeappl.c **** 
+ 102:Lib/ssc_app/src/coeappl.c **** 
+ 103:Lib/ssc_app/src/coeappl.c **** #include "ecatslv.h"
+ 104:Lib/ssc_app/src/coeappl.c **** 
+ 105:Lib/ssc_app/src/coeappl.c **** #define _COEAPPL_    1
+ 106:Lib/ssc_app/src/coeappl.c **** #include "coeappl.h"
+ 107:Lib/ssc_app/src/coeappl.c **** #undef _COEAPPL_
+ 108:Lib/ssc_app/src/coeappl.c **** /* ECATCHANGE_START(V5.11) ECAT10*/
+ 109:Lib/ssc_app/src/coeappl.c **** /*remove definition of _COEAPPL_ (#ifdef is used in coeappl.h)*/
+ 110:Lib/ssc_app/src/coeappl.c **** /* ECATCHANGE_END(V5.11) ECAT10*/
+ 111:Lib/ssc_app/src/coeappl.c **** 
+ 112:Lib/ssc_app/src/coeappl.c **** #define _OBJD_
+ 113:Lib/ssc_app/src/coeappl.c **** 
+ 114:Lib/ssc_app/src/coeappl.c **** /*Add Application specific Objects*/
+ 115:Lib/ssc_app/src/coeappl.c **** #include "el9800appl.h"
+ 116:Lib/ssc_app/src/coeappl.c **** 
+ 117:Lib/ssc_app/src/coeappl.c **** 
+ 118:Lib/ssc_app/src/coeappl.c **** #undef _OBJD_
+ 119:Lib/ssc_app/src/coeappl.c **** /*-----------------------------------------------------------------------------------------
+ 120:Lib/ssc_app/src/coeappl.c **** ------
+ 121:Lib/ssc_app/src/coeappl.c **** ------    Backup Parameter
+ 122:Lib/ssc_app/src/coeappl.c **** ------
+ 123:Lib/ssc_app/src/coeappl.c **** -----------------------------------------------------------------------------------------*/
+ 124:Lib/ssc_app/src/coeappl.c **** 
+ 125:Lib/ssc_app/src/coeappl.c **** /*-----------------------------------------------------------------------------------------
+ 126:Lib/ssc_app/src/coeappl.c **** ------
+ 127:Lib/ssc_app/src/coeappl.c **** ------    Generic EtherCAT device object
+ 128:Lib/ssc_app/src/coeappl.c **** ------
+ 129:Lib/ssc_app/src/coeappl.c **** -----------------------------------------------------------------------------------------*/
+ 130:Lib/ssc_app/src/coeappl.c **** 
+ 131:Lib/ssc_app/src/coeappl.c **** /*---------------------------------------------
+ 132:Lib/ssc_app/src/coeappl.c **** -    0x1000
+ 133:Lib/ssc_app/src/coeappl.c **** -----------------------------------------------*/
+ 134:Lib/ssc_app/src/coeappl.c **** /**
+ 135:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1000 (Device type) variable to handle the object data
+ 136:Lib/ssc_app/src/coeappl.c ****  */
+ 137:Lib/ssc_app/src/coeappl.c **** UINT32 u32Devicetype = (DEVICE_PROFILE_TYPE);
+ 138:Lib/ssc_app/src/coeappl.c **** 
+ 139:Lib/ssc_app/src/coeappl.c **** /**
+ 140:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1000 (Device type) entry description
+ 141:Lib/ssc_app/src/coeappl.c ****  */
+ 142:Lib/ssc_app/src/coeappl.c **** OBJCONST TSDOINFOENTRYDESC    OBJMEM sEntryDesc0x1000 = {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ};
+ 143:Lib/ssc_app/src/coeappl.c **** 
+ 144:Lib/ssc_app/src/coeappl.c **** /**
+ARM GAS  /tmp/ccXIdJsJ.s 			page 4
+
+
+ 145:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1000 (Device type) object name
+ 146:Lib/ssc_app/src/coeappl.c ****  */
+ 147:Lib/ssc_app/src/coeappl.c **** OBJCONST UCHAR OBJMEM aName0x1000[] = "Device type";
+ 148:Lib/ssc_app/src/coeappl.c **** 
+ 149:Lib/ssc_app/src/coeappl.c **** 
+ 150:Lib/ssc_app/src/coeappl.c **** /*---------------------------------------------
+ 151:Lib/ssc_app/src/coeappl.c **** -    0x1001
+ 152:Lib/ssc_app/src/coeappl.c **** -----------------------------------------------*/
+ 153:Lib/ssc_app/src/coeappl.c **** /**
+ 154:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1001 (Error Register) variable to handle the object data
+ 155:Lib/ssc_app/src/coeappl.c ****  */
+ 156:Lib/ssc_app/src/coeappl.c **** UINT16 u16ErrorRegister = 0x0;
+ 157:Lib/ssc_app/src/coeappl.c **** 
+ 158:Lib/ssc_app/src/coeappl.c **** /**
+ 159:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1001 (Error Register) entry description
+ 160:Lib/ssc_app/src/coeappl.c ****  */
+ 161:Lib/ssc_app/src/coeappl.c **** OBJCONST TSDOINFOENTRYDESC    OBJMEM sEntryDesc0x1001 = {DEFTYPE_UNSIGNED8, 0x08, ACCESS_READ};
+ 162:Lib/ssc_app/src/coeappl.c **** 
+ 163:Lib/ssc_app/src/coeappl.c **** /**
+ 164:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1001 (Error Register) object name
+ 165:Lib/ssc_app/src/coeappl.c ****  */
+ 166:Lib/ssc_app/src/coeappl.c **** OBJCONST UCHAR OBJMEM aName0x1001[] = "Error register";
+ 167:Lib/ssc_app/src/coeappl.c **** 
+ 168:Lib/ssc_app/src/coeappl.c **** 
+ 169:Lib/ssc_app/src/coeappl.c **** /*---------------------------------------------
+ 170:Lib/ssc_app/src/coeappl.c **** -    0x1008
+ 171:Lib/ssc_app/src/coeappl.c **** -----------------------------------------------*/
+ 172:Lib/ssc_app/src/coeappl.c **** /**
+ 173:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1008 (Device name) variable to handle the object data
+ 174:Lib/ssc_app/src/coeappl.c ****  */
+ 175:Lib/ssc_app/src/coeappl.c **** CHAR acDevicename[] = DEVICE_NAME;
+ 176:Lib/ssc_app/src/coeappl.c **** 
+ 177:Lib/ssc_app/src/coeappl.c **** /**
+ 178:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1008 (Device name) entry description
+ 179:Lib/ssc_app/src/coeappl.c ****  */
+ 180:Lib/ssc_app/src/coeappl.c **** OBJCONST TSDOINFOENTRYDESC    OBJMEM sEntryDesc0x1008 = {DEFTYPE_VISIBLESTRING, BYTE2BIT(DEVICE_NAM
+ 181:Lib/ssc_app/src/coeappl.c **** 
+ 182:Lib/ssc_app/src/coeappl.c **** /**
+ 183:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1008 (Device name) object name
+ 184:Lib/ssc_app/src/coeappl.c ****  */
+ 185:Lib/ssc_app/src/coeappl.c **** OBJCONST UCHAR OBJMEM aName0x1008[] = "Device name";
+ 186:Lib/ssc_app/src/coeappl.c **** 
+ 187:Lib/ssc_app/src/coeappl.c **** 
+ 188:Lib/ssc_app/src/coeappl.c **** /*---------------------------------------------
+ 189:Lib/ssc_app/src/coeappl.c **** -    0x1009
+ 190:Lib/ssc_app/src/coeappl.c **** -----------------------------------------------*/
+ 191:Lib/ssc_app/src/coeappl.c **** /**
+ 192:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1009 (Hardware version) variable to handle the object data
+ 193:Lib/ssc_app/src/coeappl.c ****  */
+ 194:Lib/ssc_app/src/coeappl.c **** CHAR acHardwareversion[] = DEVICE_HW_VERSION;
+ 195:Lib/ssc_app/src/coeappl.c **** 
+ 196:Lib/ssc_app/src/coeappl.c **** /**
+ 197:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1009 (Hardware version) entry description
+ 198:Lib/ssc_app/src/coeappl.c ****  */
+ 199:Lib/ssc_app/src/coeappl.c **** OBJCONST TSDOINFOENTRYDESC    OBJMEM sEntryDesc0x1009 = {DEFTYPE_VISIBLESTRING,BYTE2BIT(DEVICE_HW_V
+ 200:Lib/ssc_app/src/coeappl.c **** 
+ 201:Lib/ssc_app/src/coeappl.c **** /**
+ARM GAS  /tmp/ccXIdJsJ.s 			page 5
+
+
+ 202:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1009 (Hardware version) object name
+ 203:Lib/ssc_app/src/coeappl.c ****  */
+ 204:Lib/ssc_app/src/coeappl.c **** OBJCONST UCHAR OBJMEM aName0x1009[] = "Hardware version";
+ 205:Lib/ssc_app/src/coeappl.c **** 
+ 206:Lib/ssc_app/src/coeappl.c **** 
+ 207:Lib/ssc_app/src/coeappl.c **** /*---------------------------------------------
+ 208:Lib/ssc_app/src/coeappl.c **** -    0x100A
+ 209:Lib/ssc_app/src/coeappl.c **** -----------------------------------------------*/
+ 210:Lib/ssc_app/src/coeappl.c **** /**
+ 211:Lib/ssc_app/src/coeappl.c ****  * \brief 0x100A (Software version) variable to handle the object data
+ 212:Lib/ssc_app/src/coeappl.c ****  */
+ 213:Lib/ssc_app/src/coeappl.c **** CHAR acSoftwareversion[] = DEVICE_SW_VERSION;
+ 214:Lib/ssc_app/src/coeappl.c **** 
+ 215:Lib/ssc_app/src/coeappl.c **** /**
+ 216:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1009 (Hardware version) entry description
+ 217:Lib/ssc_app/src/coeappl.c ****  */
+ 218:Lib/ssc_app/src/coeappl.c **** OBJCONST TSDOINFOENTRYDESC    OBJMEM sEntryDesc0x100A = {DEFTYPE_VISIBLESTRING,BYTE2BIT(DEVICE_SW_V
+ 219:Lib/ssc_app/src/coeappl.c **** 
+ 220:Lib/ssc_app/src/coeappl.c **** /**
+ 221:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1009 (Hardware version) object name
+ 222:Lib/ssc_app/src/coeappl.c ****  */
+ 223:Lib/ssc_app/src/coeappl.c **** OBJCONST UCHAR OBJMEM aName0x100A[] = "Software version";
+ 224:Lib/ssc_app/src/coeappl.c **** 
+ 225:Lib/ssc_app/src/coeappl.c **** 
+ 226:Lib/ssc_app/src/coeappl.c **** 
+ 227:Lib/ssc_app/src/coeappl.c **** 
+ 228:Lib/ssc_app/src/coeappl.c **** /*---------------------------------------------
+ 229:Lib/ssc_app/src/coeappl.c **** -    0x1018
+ 230:Lib/ssc_app/src/coeappl.c **** -----------------------------------------------*/
+ 231:Lib/ssc_app/src/coeappl.c **** /**
+ 232:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1018 (Identity) object structure
+ 233:Lib/ssc_app/src/coeappl.c ****  */
+ 234:Lib/ssc_app/src/coeappl.c **** typedef struct OBJ_STRUCT_PACKED_START {
+ 235:Lib/ssc_app/src/coeappl.c ****    UINT16   u16SubIndex0; /**< \brief SubIndex 0*/
+ 236:Lib/ssc_app/src/coeappl.c ****    UINT32   u32VendorID; /**< \brief EtherCAT vendor ID */
+ 237:Lib/ssc_app/src/coeappl.c ****    UINT32   u32Productcode; /**< \brief Product code*/
+ 238:Lib/ssc_app/src/coeappl.c ****    UINT32   u32Revision; /**< \brief Revision number*/
+ 239:Lib/ssc_app/src/coeappl.c ****    UINT32   u32Serialnumber; /**< \brief Serial number*/
+ 240:Lib/ssc_app/src/coeappl.c **** } OBJ_STRUCT_PACKED_END
+ 241:Lib/ssc_app/src/coeappl.c **** TOBJ1018;
+ 242:Lib/ssc_app/src/coeappl.c **** 
+ 243:Lib/ssc_app/src/coeappl.c **** /**
+ 244:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1018 (Identity) variable to handle the object data
+ 245:Lib/ssc_app/src/coeappl.c ****  */
+ 246:Lib/ssc_app/src/coeappl.c **** TOBJ1018 sIdentity = {4, (VENDOR_ID), (PRODUCT_CODE), (REVISION_NUMBER), (SERIAL_NUMBER)};
+ 247:Lib/ssc_app/src/coeappl.c **** 
+ 248:Lib/ssc_app/src/coeappl.c **** /**
+ 249:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1018 (Identity) entry descriptions
+ 250:Lib/ssc_app/src/coeappl.c ****  * 
+ 251:Lib/ssc_app/src/coeappl.c ****  * Subindex 000
+ 252:Lib/ssc_app/src/coeappl.c ****  * SubIndex 001: Vendor ID
+ 253:Lib/ssc_app/src/coeappl.c ****  * SubIndex 002: Product code
+ 254:Lib/ssc_app/src/coeappl.c ****  * SubIndex 003: Revision
+ 255:Lib/ssc_app/src/coeappl.c ****  * SubIndex 004: Serial number
+ 256:Lib/ssc_app/src/coeappl.c ****  */
+ 257:Lib/ssc_app/src/coeappl.c **** OBJCONST TSDOINFOENTRYDESC    OBJMEM asEntryDesc0x1018[] = {
+ 258:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED8, 0x8, ACCESS_READ },
+ARM GAS  /tmp/ccXIdJsJ.s 			page 6
+
+
+ 259:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ}, 
+ 260:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ}, 
+ 261:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ}, 
+ 262:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ}};
+ 263:Lib/ssc_app/src/coeappl.c **** 
+ 264:Lib/ssc_app/src/coeappl.c **** /**
+ 265:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1018 (Identity) object and entry names
+ 266:Lib/ssc_app/src/coeappl.c ****  */
+ 267:Lib/ssc_app/src/coeappl.c **** OBJCONST UCHAR OBJMEM aName0x1018[] = "Identity\000Vendor ID\000Product code\000Revision\000Serial 
+ 268:Lib/ssc_app/src/coeappl.c **** 
+ 269:Lib/ssc_app/src/coeappl.c **** 
+ 270:Lib/ssc_app/src/coeappl.c **** 
+ 271:Lib/ssc_app/src/coeappl.c **** /*---------------------------------------------
+ 272:Lib/ssc_app/src/coeappl.c **** -    0x10F1
+ 273:Lib/ssc_app/src/coeappl.c **** -----------------------------------------------*/
+ 274:Lib/ssc_app/src/coeappl.c **** /**
+ 275:Lib/ssc_app/src/coeappl.c ****  * \brief 0x10F1 (Error settings) entry description
+ 276:Lib/ssc_app/src/coeappl.c ****  * Subindex 000
+ 277:Lib/ssc_app/src/coeappl.c ****  * SubIndex 001: Local Error Reaction
+ 278:Lib/ssc_app/src/coeappl.c ****  * SubIndex 002: Sync Error Counter Limit
+ 279:Lib/ssc_app/src/coeappl.c ****  */
+ 280:Lib/ssc_app/src/coeappl.c **** OBJCONST TSDOINFOENTRYDESC    OBJMEM asEntryDesc0x10F1[] = {
+ 281:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED8, 0x8, ACCESS_READ },
+ 282:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READWRITE}, 
+ 283:Lib/ssc_app/src/coeappl.c **** /*ECATCHANGE_START(V5.11) COE3*/
+ 284:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED16, 0x10, ACCESS_READWRITE}};
+ 285:Lib/ssc_app/src/coeappl.c **** /*ECATCHANGE_END(V5.11) COE3*/
+ 286:Lib/ssc_app/src/coeappl.c **** 
+ 287:Lib/ssc_app/src/coeappl.c **** /**
+ 288:Lib/ssc_app/src/coeappl.c ****  * \brief 0x10F1 (Error settings) object and entry names
+ 289:Lib/ssc_app/src/coeappl.c ****  */   
+ 290:Lib/ssc_app/src/coeappl.c **** OBJCONST UCHAR OBJMEM aName0x10F1[] = "Error Settings\000Local Error Reaction\000Sync Error Counter
+ 291:Lib/ssc_app/src/coeappl.c **** 
+ 292:Lib/ssc_app/src/coeappl.c **** 
+ 293:Lib/ssc_app/src/coeappl.c **** //object declaration and initialization in objdef.h
+ 294:Lib/ssc_app/src/coeappl.c **** 
+ 295:Lib/ssc_app/src/coeappl.c **** 
+ 296:Lib/ssc_app/src/coeappl.c **** /*---------------------------------------------
+ 297:Lib/ssc_app/src/coeappl.c **** -    0x1C00
+ 298:Lib/ssc_app/src/coeappl.c **** -----------------------------------------------*/
+ 299:Lib/ssc_app/src/coeappl.c **** /**
+ 300:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1C00 (Sync manager type) object structure
+ 301:Lib/ssc_app/src/coeappl.c ****  */
+ 302:Lib/ssc_app/src/coeappl.c **** typedef struct OBJ_STRUCT_PACKED_START {
+ 303:Lib/ssc_app/src/coeappl.c ****    UINT16   u16SubIndex0; /**< \brief SubIndex 0*/
+ 304:Lib/ssc_app/src/coeappl.c ****    UINT8   aEntries[4]; /**< \brief Entry buffer (one for each SyncManager)*/
+ 305:Lib/ssc_app/src/coeappl.c **** } OBJ_STRUCT_PACKED_END
+ 306:Lib/ssc_app/src/coeappl.c **** TOBJ1C00;
+ 307:Lib/ssc_app/src/coeappl.c **** 
+ 308:Lib/ssc_app/src/coeappl.c **** /**
+ 309:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1C00 (Sync manager type) variable to handle the object data
+ 310:Lib/ssc_app/src/coeappl.c ****  *
+ 311:Lib/ssc_app/src/coeappl.c ****  * SI 0 : 4 (4 SyncManagers available)
+ 312:Lib/ssc_app/src/coeappl.c ****  * SI1 (SM0): Mailbox Out (0x1)
+ 313:Lib/ssc_app/src/coeappl.c ****  * SI2 (SM1): Mailbox In (0x2)
+ 314:Lib/ssc_app/src/coeappl.c ****  * SI3 (SM2): Process data Out (0x3)
+ 315:Lib/ssc_app/src/coeappl.c ****  * SI4 (SM3): Process data In (0x4)
+ARM GAS  /tmp/ccXIdJsJ.s 			page 7
+
+
+ 316:Lib/ssc_app/src/coeappl.c ****  *
+ 317:Lib/ssc_app/src/coeappl.c ****  */
+ 318:Lib/ssc_app/src/coeappl.c **** TOBJ1C00 sSyncmanagertype = {0x04, {0x01, 0x02, 0x03, 0x04}};
+ 319:Lib/ssc_app/src/coeappl.c **** 
+ 320:Lib/ssc_app/src/coeappl.c **** 
+ 321:Lib/ssc_app/src/coeappl.c **** /**
+ 322:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1C00 (Sync manager type) entry descriptions
+ 323:Lib/ssc_app/src/coeappl.c ****  *
+ 324:Lib/ssc_app/src/coeappl.c ****  * The object is an array so only the first entry is described (which is used for all entries).
+ 325:Lib/ssc_app/src/coeappl.c ****  */
+ 326:Lib/ssc_app/src/coeappl.c **** OBJCONST TSDOINFOENTRYDESC    OBJMEM asEntryDesc0x1C00[2] = {
+ 327:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED8, 0x08, ACCESS_READ},
+ 328:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED8, 0x08, ACCESS_READ}};
+ 329:Lib/ssc_app/src/coeappl.c **** 
+ 330:Lib/ssc_app/src/coeappl.c **** /**
+ 331:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1C00 (Sync manager type) object name
+ 332:Lib/ssc_app/src/coeappl.c ****  */
+ 333:Lib/ssc_app/src/coeappl.c **** OBJCONST UCHAR OBJMEM aName0x1C00[] = "Sync manager type";
+ 334:Lib/ssc_app/src/coeappl.c **** 
+ 335:Lib/ssc_app/src/coeappl.c **** 
+ 336:Lib/ssc_app/src/coeappl.c **** /*---------------------------------------------
+ 337:Lib/ssc_app/src/coeappl.c **** -    0x1C3x
+ 338:Lib/ssc_app/src/coeappl.c **** -----------------------------------------------*/
+ 339:Lib/ssc_app/src/coeappl.c **** /**
+ 340:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1C3x (SyncManager parameter) entry description
+ 341:Lib/ssc_app/src/coeappl.c ****  *
+ 342:Lib/ssc_app/src/coeappl.c ****  * The entry descriptions are used for 0x1C32 and 0x1C33
+ 343:Lib/ssc_app/src/coeappl.c ****  */
+ 344:Lib/ssc_app/src/coeappl.c **** OBJCONST TSDOINFOENTRYDESC    OBJMEM asEntryDesc0x1C3x[] = {
+ 345:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED8, 0x8, ACCESS_READ }, /* Subindex 000 */
+ 346:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED16, 0x10, (ACCESS_READ | ACCESS_WRITE_PREOP)}, /* SubIndex 001: Synchronization
+ 347:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ}, /* SubIndex 002: Cycle Time */
+ 348:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0x20, 0}, /* SubIndex 003: Shift Time (not supported)*/
+ 349:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED16, 0x10, ACCESS_READ}, /* SubIndex 004: Synchronization Types supported */
+ 350:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ}, /* SubIndex 005: Minimum Cycle Time */
+ 351:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ}, /* SubIndex 006: Calc and Copy Time */
+ 352:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0x20, 0}, /* Subindex 007 Minimum Delay Time (not supported)*/
+ 353:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED16, 0x10, ACCESS_READWRITE}, /* SubIndex 008: Get Cycle Time */
+ 354:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READ}, /* SubIndex 009: Delay Time */
+ 355:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED32, 0x20, ACCESS_READWRITE}, /* SubIndex 010: Sync0 Cycle Time */
+ 356:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED16, 0x10, ACCESS_READ}, /* SubIndex 011: SM-Event Missed */
+ 357:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_UNSIGNED16, 0x10, ACCESS_READ}, /* SubIndex 012: Cycle Time Too Small */
+ 358:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0x10, 0}, /* SubIndex 013: Shift Too Short Counter (not supported)*/
+ 359:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0x10, 0}, /* Subindex 014: RxPDO Toggle Failed (not supported)*/
+ 360:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0x20, 0}, /* Subindex 015: Minimum Cycle Distance (not supported)*/
+ 361:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0x20, 0}, /* Subindex 016: Maximum Cycle Distance (not supported)*/
+ 362:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0x20, 0}, /* Subindex 017: Minimum SM Sync Distance (not supported)*/
+ 363:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0x20, 0}, /* Subindex 018: Maximum SM Sync Distance (not supported)*/
+ 364:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0, 0}, /* Subindex 019 doesn't exist */
+ 365:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0, 0}, /* Subindex 020 doesn't exist */
+ 366:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0, 0}, /* Subindex 021 doesn't exist */
+ 367:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0, 0}, /* Subindex 022 doesn't exist */
+ 368:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0, 0}, /* Subindex 023 doesn't exist */
+ 369:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0, 0}, /* Subindex 024 doesn't exist */
+ 370:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0, 0}, /* Subindex 025 doesn't exist */
+ 371:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0, 0}, /* Subindex 026 doesn't exist */
+ 372:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0, 0}, /* Subindex 027 doesn't exist */
+ARM GAS  /tmp/ccXIdJsJ.s 			page 8
+
+
+ 373:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0, 0}, /* Subindex 028 doesn't exist */
+ 374:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0, 0}, /* Subindex 029 doesn't exist */
+ 375:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0, 0}, /* Subindex 030 doesn't exist */
+ 376:Lib/ssc_app/src/coeappl.c ****    {0x0000, 0, 0}, /* Subindex 031 doesn't exist */
+ 377:Lib/ssc_app/src/coeappl.c ****    {DEFTYPE_BOOLEAN, 0x01, ACCESS_READ}}; /* SubIndex 032: Sync error */
+ 378:Lib/ssc_app/src/coeappl.c **** 
+ 379:Lib/ssc_app/src/coeappl.c **** /*ECATCHANGE_START(V5.11) ECAT4*/
+ 380:Lib/ssc_app/src/coeappl.c **** /**
+ 381:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1C32 (SyncManager 2 parameter) object and entry names
+ 382:Lib/ssc_app/src/coeappl.c ****  */
+ 383:Lib/ssc_app/src/coeappl.c **** OBJCONST UCHAR OBJMEM aName0x1C32[] = "SM output parameter\000Synchronization Type\000Cycle Time\00
+ 384:Lib/ssc_app/src/coeappl.c **** /*ECATCHANGE_END(V5.11) ECAT4*/
+ 385:Lib/ssc_app/src/coeappl.c **** 
+ 386:Lib/ssc_app/src/coeappl.c **** /*ECATCHANGE_START(V5.11) ECAT4*/
+ 387:Lib/ssc_app/src/coeappl.c **** /**
+ 388:Lib/ssc_app/src/coeappl.c ****  * \brief 0x1C33 (SyncManager 3 parameter) object and entry names
+ 389:Lib/ssc_app/src/coeappl.c ****  */
+ 390:Lib/ssc_app/src/coeappl.c **** OBJCONST UCHAR OBJMEM aName0x1C33[] = "SM input parameter\000Synchronization Type\000Cycle Time\000
+ 391:Lib/ssc_app/src/coeappl.c **** 
+ 392:Lib/ssc_app/src/coeappl.c **** /******************************************************************************
+ 393:Lib/ssc_app/src/coeappl.c **** ** Object Dictionary
+ 394:Lib/ssc_app/src/coeappl.c **** ******************************************************************************/
+ 395:Lib/ssc_app/src/coeappl.c **** /**
+ 396:Lib/ssc_app/src/coeappl.c ****  * \brief Object dictionary pointer
+ 397:Lib/ssc_app/src/coeappl.c ****  */
+ 398:Lib/ssc_app/src/coeappl.c **** TOBJECT    OBJMEM * ObjDicList = NULL;
+ 399:Lib/ssc_app/src/coeappl.c **** 
+ 400:Lib/ssc_app/src/coeappl.c **** /**
+ 401:Lib/ssc_app/src/coeappl.c ****  * \brief List of generic application independent objects
+ 402:Lib/ssc_app/src/coeappl.c ****  */
+ 403:Lib/ssc_app/src/coeappl.c **** TOBJECT    OBJMEM GenObjDic[] = {
+ 404:Lib/ssc_app/src/coeappl.c ****     /* Object 0x1000 */
+ 405:Lib/ssc_app/src/coeappl.c ****    {NULL,NULL,  0x1000, {DEFTYPE_UNSIGNED32, 0 | (OBJCODE_VAR << 8)}, &sEntryDesc0x1000, aName0x100
+ 406:Lib/ssc_app/src/coeappl.c ****    /* Object 0x1001 */
+ 407:Lib/ssc_app/src/coeappl.c ****    {NULL,NULL,  0x1001, {DEFTYPE_UNSIGNED8, 0 | (OBJCODE_VAR << 8)}, &sEntryDesc0x1001, aName0x1001
+ 408:Lib/ssc_app/src/coeappl.c **** /* Object 0x1008 */
+ 409:Lib/ssc_app/src/coeappl.c ****    {NULL,NULL,  0x1008, {DEFTYPE_VISIBLESTRING, 0 | (OBJCODE_VAR << 8)}, &sEntryDesc0x1008, aName0x
+ 410:Lib/ssc_app/src/coeappl.c ****    /* Object 0x1009 */
+ 411:Lib/ssc_app/src/coeappl.c ****    {NULL,NULL,  0x1009, {DEFTYPE_VISIBLESTRING, 0 | (OBJCODE_VAR << 8)}, &sEntryDesc0x1009, aName0x
+ 412:Lib/ssc_app/src/coeappl.c ****    /* Object 0x100A */
+ 413:Lib/ssc_app/src/coeappl.c ****    {NULL,NULL,  0x100A, {DEFTYPE_VISIBLESTRING, 0 | (OBJCODE_VAR << 8)}, &sEntryDesc0x100A, aName0x
+ 414:Lib/ssc_app/src/coeappl.c ****    /* Object 0x1018 */
+ 415:Lib/ssc_app/src/coeappl.c ****    {NULL,NULL,  0x1018, {DEFTYPE_IDENTITY, 4 | (OBJCODE_REC << 8)}, asEntryDesc0x1018, aName0x1018,
+ 416:Lib/ssc_app/src/coeappl.c ****     /* Object 0x10F1 */
+ 417:Lib/ssc_app/src/coeappl.c ****    {NULL,NULL,  0x10F1, {DEFTYPE_RECORD, 2 | (OBJCODE_REC << 8)}, asEntryDesc0x10F1, aName0x10F1, &
+ 418:Lib/ssc_app/src/coeappl.c ****    /* Object 0x1C00 */
+ 419:Lib/ssc_app/src/coeappl.c ****    {NULL,NULL, 0x1C00, {DEFTYPE_UNSIGNED8, 4 | (OBJCODE_ARR << 8)}, asEntryDesc0x1C00, aName0x1C00,
+ 420:Lib/ssc_app/src/coeappl.c ****    /* Object 0x1C32 */
+ 421:Lib/ssc_app/src/coeappl.c ****    {NULL,NULL, 0x1C32, {DEFTYPE_SMPAR, 32 | (OBJCODE_REC << 8)}, asEntryDesc0x1C3x, aName0x1C32, &s
+ 422:Lib/ssc_app/src/coeappl.c ****    /* Object 0x1C33 */
+ 423:Lib/ssc_app/src/coeappl.c ****    {NULL,NULL, 0x1C33, {DEFTYPE_SMPAR, 32 | (OBJCODE_REC << 8)}, asEntryDesc0x1C3x, aName0x1C33, &s
+ 424:Lib/ssc_app/src/coeappl.c ****    
+ 425:Lib/ssc_app/src/coeappl.c ****   /*end of entries*/
+ 426:Lib/ssc_app/src/coeappl.c **** /*ECATCHANGE_START(V5.11) COE1*/
+ 427:Lib/ssc_app/src/coeappl.c ****   {NULL,NULL, 0xFFFF, {0, 0}, NULL, NULL, NULL, NULL, NULL, 0x000}};
+ 428:Lib/ssc_app/src/coeappl.c **** /*ECATCHANGE_END(V5.11) COE1*/
+ 429:Lib/ssc_app/src/coeappl.c **** 
+ARM GAS  /tmp/ccXIdJsJ.s 			page 9
+
+
+ 430:Lib/ssc_app/src/coeappl.c **** 
+ 431:Lib/ssc_app/src/coeappl.c **** /*-----------------------------------------------------------------------------------------
+ 432:Lib/ssc_app/src/coeappl.c **** ------
+ 433:Lib/ssc_app/src/coeappl.c **** ------    Functions
+ 434:Lib/ssc_app/src/coeappl.c **** ------
+ 435:Lib/ssc_app/src/coeappl.c **** -----------------------------------------------------------------------------------------*/
+ 436:Lib/ssc_app/src/coeappl.c **** 
+ 437:Lib/ssc_app/src/coeappl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 438:Lib/ssc_app/src/coeappl.c **** /**
+ 439:Lib/ssc_app/src/coeappl.c **** 
+ 440:Lib/ssc_app/src/coeappl.c ****  \brief    returns the pointer to the object dictionary
+ 441:Lib/ssc_app/src/coeappl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 442:Lib/ssc_app/src/coeappl.c **** OBJCONST TOBJECT OBJMEM * COE_GetObjectDictionary(void)
+ 443:Lib/ssc_app/src/coeappl.c **** {
+  29              		.loc 1 443 1 view -0
+  30              		.cfi_startproc
+  31              		@ args = 0, pretend = 0, frame = 0
+  32              		@ frame_needed = 0, uses_anonymous_args = 0
+  33              		@ link register save eliminated.
+ 444:Lib/ssc_app/src/coeappl.c ****     return (OBJCONST TOBJECT OBJMEM *) ObjDicList;
+  34              		.loc 1 444 5 view .LVU1
+ 445:Lib/ssc_app/src/coeappl.c **** }
+  35              		.loc 1 445 1 is_stmt 0 view .LVU2
+  36 0000 014B     		ldr	r3, .L2
+  37 0002 1868     		ldr	r0, [r3]
+  38 0004 7047     		bx	lr
+  39              	.L3:
+  40 0006 00BF     		.align	2
+  41              	.L2:
+  42 0008 00000000 		.word	.LANCHOR0
+  43              		.cfi_endproc
+  44              	.LFE123:
+  46              		.section	.text.COE_AddObjectToDic,"ax",%progbits
+  47              		.align	1
+  48              		.global	COE_AddObjectToDic
+  49              		.syntax unified
+  50              		.thumb
+  51              		.thumb_func
+  53              	COE_AddObjectToDic:
+  54              	.LVL0:
+  55              	.LFB125:
+ 446:Lib/ssc_app/src/coeappl.c **** 
+ 447:Lib/ssc_app/src/coeappl.c **** 
+ 448:Lib/ssc_app/src/coeappl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 449:Lib/ssc_app/src/coeappl.c **** /**
+ 450:Lib/ssc_app/src/coeappl.c ****  \brief     This function initialize the several objects
+ 451:Lib/ssc_app/src/coeappl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 452:Lib/ssc_app/src/coeappl.c **** 
+ 453:Lib/ssc_app/src/coeappl.c **** void COE_ObjInit(void)
+ 454:Lib/ssc_app/src/coeappl.c **** {
+ 455:Lib/ssc_app/src/coeappl.c **** 
+ 456:Lib/ssc_app/src/coeappl.c ****     /* initialize the Sync Manager Output parameter object 0x1C32 */
+ 457:Lib/ssc_app/src/coeappl.c **** 
+ 458:Lib/ssc_app/src/coeappl.c ****     sSyncManOutPar.subindex0         = 32;
+ 459:Lib/ssc_app/src/coeappl.c ****     /*
+ 460:Lib/ssc_app/src/coeappl.c ****     subindex 1 contains the actual synchronization mode, it could be written
+ 461:Lib/ssc_app/src/coeappl.c ****       from the master to switch between ECAT FreeRun and ECAT Synchron Mode
+ARM GAS  /tmp/ccXIdJsJ.s 			page 10
+
+
+ 462:Lib/ssc_app/src/coeappl.c ****         if the slave supports both modes,
+ 463:Lib/ssc_app/src/coeappl.c ****         in DC mode (selected by the DC registers) this value will be overwritten
+ 464:Lib/ssc_app/src/coeappl.c ****         with SYNCTYPE_DCSYNC0 or SYNCTYPE_DCSYNC1 */
+ 465:Lib/ssc_app/src/coeappl.c ****      /*default mode is ECAT Synchron Mode */
+ 466:Lib/ssc_app/src/coeappl.c ****     sSyncManOutPar.u16SyncType     = SYNCTYPE_FREERUN;
+ 467:Lib/ssc_app/src/coeappl.c **** 
+ 468:Lib/ssc_app/src/coeappl.c ****     /* subindex 2 contains the cycle time of the application,
+ 469:Lib/ssc_app/src/coeappl.c ****        in ECAT FreeRun mode it could be used for a timer interrupt to run the application,
+ 470:Lib/ssc_app/src/coeappl.c ****         in ECAT Synchron mode it could be written from the master with its local cycle time
+ 471:Lib/ssc_app/src/coeappl.c ****         that the slave can check if this cycle time is supported,
+ 472:Lib/ssc_app/src/coeappl.c ****         in DC Mode this value will be overwritten with the DC cycle time register */
+ 473:Lib/ssc_app/src/coeappl.c ****     sSyncManOutPar.u32CycleTime     = 0;
+ 474:Lib/ssc_app/src/coeappl.c ****     /* only for DC Mode important: the subindex 3 contains the time shift between the
+ 475:Lib/ssc_app/src/coeappl.c ****        SYNC0 (SYNC1) signal and when the outputs are put to the hardware to allow the
+ 476:Lib/ssc_app/src/coeappl.c ****         master a very exactly calculation of delay times*/
+ 477:Lib/ssc_app/src/coeappl.c ****     sSyncManOutPar.u32ShiftTime     = 0;
+ 478:Lib/ssc_app/src/coeappl.c **** 
+ 479:Lib/ssc_app/src/coeappl.c ****     /* the subindex 4 contains the supported synchronization types */
+ 480:Lib/ssc_app/src/coeappl.c **** 
+ 481:Lib/ssc_app/src/coeappl.c ****     sSyncManOutPar.u16SyncTypesSupported    = SYNCTYPE_FREERUNSUPP            /* ECAT FreeRun Mode 
+ 482:Lib/ssc_app/src/coeappl.c ****                                               | SYNCTYPE_TIMESVARIABLE        /* the execution time
+ 483:Lib/ssc_app/src/coeappl.c ****                                               | SYNCTYPE_SYNCHRONSUPP         /* ECAT Synchron Mode
+ 484:Lib/ssc_app/src/coeappl.c ****                                               | SYNCTYPE_DCSYNC0SUPP          /* DC Sync0 Mode is s
+ 485:Lib/ssc_app/src/coeappl.c ****                                               | SYNCTYPE_DCSYNC1SUPP          /* DC Sync1 Mode is s
+ 486:Lib/ssc_app/src/coeappl.c ****                                               | SYNCTYPE_SUBCYCLESUPP         /*Subordinated applic
+ 487:Lib/ssc_app/src/coeappl.c ****     ;
+ 488:Lib/ssc_app/src/coeappl.c **** 
+ 489:Lib/ssc_app/src/coeappl.c ****     /* subindex 5 contains the minimum cycle time the slave is able to support,
+ 490:Lib/ssc_app/src/coeappl.c ****        will be calculated dynamically because it depends on the connected modules
+ 491:Lib/ssc_app/src/coeappl.c ****         (in this example we will make an online measurement in the ESC Interrupt Routine).
+ 492:Lib/ssc_app/src/coeappl.c ****         For the sample application this value is set to MIN_PD_CYCLE_TIME */
+ 493:Lib/ssc_app/src/coeappl.c ****     sSyncManOutPar.u32MinCycleTime = MIN_PD_CYCLE_TIME;
+ 494:Lib/ssc_app/src/coeappl.c ****     /* only for DC Mode important: subindex 6 contains the minimum delay time the slave
+ 495:Lib/ssc_app/src/coeappl.c ****        needs after receiving the SM2-event before the SYNC0(SYNC1) can be received without delays
+ 496:Lib/ssc_app/src/coeappl.c ****        will be calculated dynamically because it depends on the connected modules
+ 497:Lib/ssc_app/src/coeappl.c ****         (in this example we will make an online measurement in the ESC Interrupt Routine) */
+ 498:Lib/ssc_app/src/coeappl.c ****     sSyncManOutPar.u32CalcAndCopyTime = (PD_OUTPUT_CALC_AND_COPY_TIME);
+ 499:Lib/ssc_app/src/coeappl.c **** 
+ 500:Lib/ssc_app/src/coeappl.c ****     /*subindex 8: trigger cycle time measurement*/
+ 501:Lib/ssc_app/src/coeappl.c ****     sSyncManOutPar.u16GetCycleTime = 0;
+ 502:Lib/ssc_app/src/coeappl.c **** 
+ 503:Lib/ssc_app/src/coeappl.c ****     /*subindex 9: time from start driving outputs until outputs are valid*/
+ 504:Lib/ssc_app/src/coeappl.c ****     sSyncManOutPar.u32DelayTime = (PD_OUTPUT_DELAY_TIME);
+ 505:Lib/ssc_app/src/coeappl.c **** 
+ 506:Lib/ssc_app/src/coeappl.c ****     /*subindex 32: indicates if a synchronisation error has occurred*/
+ 507:Lib/ssc_app/src/coeappl.c ****     sSyncManOutPar.u8SyncError = 0;
+ 508:Lib/ssc_app/src/coeappl.c **** 
+ 509:Lib/ssc_app/src/coeappl.c **** /*ECATCHANGE_START(V5.11) ECAT4*/
+ 510:Lib/ssc_app/src/coeappl.c ****     /* initialize the Sync Manager Input parameter object 0x1C33 */
+ 511:Lib/ssc_app/src/coeappl.c ****     sSyncManInPar.subindex0         = 32;
+ 512:Lib/ssc_app/src/coeappl.c ****     /* default mode is ECAT Synchron Mode, if output size > 0 the inputs are updated with the SM2-e
+ 513:Lib/ssc_app/src/coeappl.c ****     sSyncManInPar.u16SyncType         = SYNCTYPE_FREERUN;
+ 514:Lib/ssc_app/src/coeappl.c **** 
+ 515:Lib/ssc_app/src/coeappl.c ****     /* subindex 2: same as 0x1C32:02 */
+ 516:Lib/ssc_app/src/coeappl.c ****     sSyncManInPar.u32CycleTime     = sSyncManOutPar.u32CycleTime;
+ 517:Lib/ssc_app/src/coeappl.c ****     /* only for DC Mode important: subindex 3 contains the time shift between the
+ 518:Lib/ssc_app/src/coeappl.c ****        SYNC0 (SYNC1) signal and when the inputs are got to the hardware to allow the
+ARM GAS  /tmp/ccXIdJsJ.s 			page 11
+
+
+ 519:Lib/ssc_app/src/coeappl.c ****         master a very exactly calculation of delay times,
+ 520:Lib/ssc_app/src/coeappl.c ****        will be calculated dynamically because it depends on the connected modules
+ 521:Lib/ssc_app/src/coeappl.c ****         (in this example we will make an online measurement in the ESC Interrupt Routine) */
+ 522:Lib/ssc_app/src/coeappl.c ****     sSyncManInPar.u32ShiftTime     = 0;
+ 523:Lib/ssc_app/src/coeappl.c ****     /* subindex 4: same as 0x1C32:04 */
+ 524:Lib/ssc_app/src/coeappl.c ****     sSyncManInPar.u16SyncTypesSupported    = sSyncManOutPar.u16SyncTypesSupported;
+ 525:Lib/ssc_app/src/coeappl.c **** 
+ 526:Lib/ssc_app/src/coeappl.c ****     /* subindex 5: same as 0x1C32:05 */
+ 527:Lib/ssc_app/src/coeappl.c ****     sSyncManInPar.u32MinCycleTime = MIN_PD_CYCLE_TIME;
+ 528:Lib/ssc_app/src/coeappl.c ****     /* subindex 6: delay read inputs, calculation and copy to SM buffer*/
+ 529:Lib/ssc_app/src/coeappl.c ****     sSyncManInPar.u32CalcAndCopyTime = (PD_INPUT_CALC_AND_COPY_TIME);
+ 530:Lib/ssc_app/src/coeappl.c ****     /*subindex 8: trigger cycle time measurement*/
+ 531:Lib/ssc_app/src/coeappl.c ****     sSyncManInPar.u16GetCycleTime = 0;
+ 532:Lib/ssc_app/src/coeappl.c ****     /*subindex 9: delay to prepare input latch*/
+ 533:Lib/ssc_app/src/coeappl.c ****     sSyncManInPar.u32DelayTime = (PD_INPUT_DELAY_TIME);
+ 534:Lib/ssc_app/src/coeappl.c **** 
+ 535:Lib/ssc_app/src/coeappl.c ****     /*subindex 32: incremented if a synchronisation error has occurred*/
+ 536:Lib/ssc_app/src/coeappl.c ****     sSyncManInPar.u8SyncError = 0;
+ 537:Lib/ssc_app/src/coeappl.c **** /*ECATCHANGE_END(V5.11) ECAT4*/
+ 538:Lib/ssc_app/src/coeappl.c **** 
+ 539:Lib/ssc_app/src/coeappl.c ****     /*Indicate no user specified Sync mode*/
+ 540:Lib/ssc_app/src/coeappl.c ****     bSyncSetByUser = FALSE;
+ 541:Lib/ssc_app/src/coeappl.c **** 
+ 542:Lib/ssc_app/src/coeappl.c ****     {
+ 543:Lib/ssc_app/src/coeappl.c ****     UINT16 result = COE_ObjDictionaryInit();
+ 544:Lib/ssc_app/src/coeappl.c ****     if(result != 0)
+ 545:Lib/ssc_app/src/coeappl.c ****     {
+ 546:Lib/ssc_app/src/coeappl.c ****         /*clear already linked objects*/
+ 547:Lib/ssc_app/src/coeappl.c ****         COE_ClearObjDictionary();
+ 548:Lib/ssc_app/src/coeappl.c ****     }
+ 549:Lib/ssc_app/src/coeappl.c ****     }
+ 550:Lib/ssc_app/src/coeappl.c **** 
+ 551:Lib/ssc_app/src/coeappl.c ****     u8PendingSdo = 0;
+ 552:Lib/ssc_app/src/coeappl.c ****     bStoreCompleteAccess = FALSE;
+ 553:Lib/ssc_app/src/coeappl.c ****     u16StoreIndex   =   0;
+ 554:Lib/ssc_app/src/coeappl.c ****     u8StoreSubindex = 0;
+ 555:Lib/ssc_app/src/coeappl.c ****     u32StoreDataSize = 0;
+ 556:Lib/ssc_app/src/coeappl.c ****     pStoreData = NULL;
+ 557:Lib/ssc_app/src/coeappl.c ****     pSdoPendFunc    = NULL;
+ 558:Lib/ssc_app/src/coeappl.c **** 
+ 559:Lib/ssc_app/src/coeappl.c ****     pSdoSegData = NULL;
+ 560:Lib/ssc_app/src/coeappl.c **** }
+ 561:Lib/ssc_app/src/coeappl.c **** 
+ 562:Lib/ssc_app/src/coeappl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 563:Lib/ssc_app/src/coeappl.c **** /**
+ 564:Lib/ssc_app/src/coeappl.c ****  \return    0               object successful added to object dictionary
+ 565:Lib/ssc_app/src/coeappl.c ****             ALSTATUSCODE_XX add object failed
+ 566:Lib/ssc_app/src/coeappl.c **** 
+ 567:Lib/ssc_app/src/coeappl.c ****  \brief    This function adds an object to the object dictionary
+ 568:Lib/ssc_app/src/coeappl.c ****  *////////////////////////////////////////////////////////////////////////////////////////
+ 569:Lib/ssc_app/src/coeappl.c **** UINT16 COE_AddObjectToDic(TOBJECT OBJMEM * pNewObjEntry)
+ 570:Lib/ssc_app/src/coeappl.c **** {
+  56              		.loc 1 570 1 is_stmt 1 view -0
+  57              		.cfi_startproc
+  58              		@ args = 0, pretend = 0, frame = 0
+  59              		@ frame_needed = 0, uses_anonymous_args = 0
+  60              		@ link register save eliminated.
+ARM GAS  /tmp/ccXIdJsJ.s 			page 12
+
+
+ 571:Lib/ssc_app/src/coeappl.c ****     if(pNewObjEntry != NULL)
+  61              		.loc 1 571 5 view .LVU4
+  62              		.loc 1 571 7 is_stmt 0 view .LVU5
+  63 0000 0028     		cmp	r0, #0
+  64 0002 31D0     		beq	.L11
+ 570:Lib/ssc_app/src/coeappl.c ****     if(pNewObjEntry != NULL)
+  65              		.loc 1 570 1 view .LVU6
+  66 0004 10B4     		push	{r4}
+  67              		.cfi_def_cfa_offset 4
+  68              		.cfi_offset 4, -4
+  69 0006 0446     		mov	r4, r0
+ 572:Lib/ssc_app/src/coeappl.c ****     {
+ 573:Lib/ssc_app/src/coeappl.c ****         if(ObjDicList == NULL)
+  70              		.loc 1 573 9 is_stmt 1 view .LVU7
+  71              		.loc 1 573 23 is_stmt 0 view .LVU8
+  72 0008 194B     		ldr	r3, .L23
+  73 000a 1B68     		ldr	r3, [r3]
+  74              		.loc 1 573 11 view .LVU9
+  75 000c 63B1     		cbz	r3, .L18
+ 574:Lib/ssc_app/src/coeappl.c ****         {
+ 575:Lib/ssc_app/src/coeappl.c ****             /* Object dictionary is empty */
+ 576:Lib/ssc_app/src/coeappl.c ****             ObjDicList = pNewObjEntry;
+ 577:Lib/ssc_app/src/coeappl.c ****             ObjDicList->pNext = NULL;
+ 578:Lib/ssc_app/src/coeappl.c ****             ObjDicList->pPrev = NULL;
+ 579:Lib/ssc_app/src/coeappl.c ****             return 0;
+ 580:Lib/ssc_app/src/coeappl.c ****         }
+ 581:Lib/ssc_app/src/coeappl.c ****         else if(ObjDicList->Index > pNewObjEntry->Index)
+  76              		.loc 1 581 14 is_stmt 1 view .LVU10
+  77              		.loc 1 581 27 is_stmt 0 view .LVU11
+  78 000e 1A89     		ldrh	r2, [r3, #8]
+  79              		.loc 1 581 49 view .LVU12
+  80 0010 0189     		ldrh	r1, [r0, #8]
+  81              		.loc 1 581 16 view .LVU13
+  82 0012 8A42     		cmp	r2, r1
+  83 0014 0ED8     		bhi	.L19
+  84              	.L7:
+  85              	.LVL1:
+  86              	.LBB2:
+ 582:Lib/ssc_app/src/coeappl.c ****         {
+ 583:Lib/ssc_app/src/coeappl.c ****             /*insert new object dictionary head*/
+ 584:Lib/ssc_app/src/coeappl.c ****             pNewObjEntry->pPrev = NULL;
+ 585:Lib/ssc_app/src/coeappl.c ****             pNewObjEntry->pNext = ObjDicList;
+ 586:Lib/ssc_app/src/coeappl.c ****             ObjDicList->pPrev = pNewObjEntry;
+ 587:Lib/ssc_app/src/coeappl.c ****             ObjDicList = pNewObjEntry;
+ 588:Lib/ssc_app/src/coeappl.c ****             return 0;
+ 589:Lib/ssc_app/src/coeappl.c ****         }
+ 590:Lib/ssc_app/src/coeappl.c ****         else
+ 591:Lib/ssc_app/src/coeappl.c ****         {
+ 592:Lib/ssc_app/src/coeappl.c ****             TOBJECT    OBJMEM * pDicEntry = ObjDicList;
+ 593:Lib/ssc_app/src/coeappl.c ****             while(pDicEntry != NULL)
+  87              		.loc 1 593 18 is_stmt 1 view .LVU14
+  88 0016 2BB3     		cbz	r3, .L20
+ 594:Lib/ssc_app/src/coeappl.c ****             {
+ 595:Lib/ssc_app/src/coeappl.c ****                 if(pDicEntry->Index == pNewObjEntry->Index)
+  89              		.loc 1 595 17 view .LVU15
+  90              		.loc 1 595 29 is_stmt 0 view .LVU16
+  91 0018 1A89     		ldrh	r2, [r3, #8]
+ARM GAS  /tmp/ccXIdJsJ.s 			page 13
+
+
+  92              		.loc 1 595 19 view .LVU17
+  93 001a 9142     		cmp	r1, r2
+  94 001c 26D0     		beq	.L12
+ 596:Lib/ssc_app/src/coeappl.c ****                 {
+ 597:Lib/ssc_app/src/coeappl.c ****                     /*object already exists in object dictionary*/
+ 598:Lib/ssc_app/src/coeappl.c ****                     return ALSTATUSCODE_UNSPECIFIEDERROR;
+ 599:Lib/ssc_app/src/coeappl.c ****                 }
+ 600:Lib/ssc_app/src/coeappl.c ****                 else if(pDicEntry->Index > pNewObjEntry->Index)
+  95              		.loc 1 600 22 is_stmt 1 view .LVU18
+  96              		.loc 1 600 24 is_stmt 0 view .LVU19
+  97 001e 13D3     		bcc	.L21
+ 601:Lib/ssc_app/src/coeappl.c ****                 {
+ 602:Lib/ssc_app/src/coeappl.c ****                     pNewObjEntry->pPrev = pDicEntry->pPrev;
+ 603:Lib/ssc_app/src/coeappl.c ****                     pNewObjEntry->pNext = pDicEntry;
+ 604:Lib/ssc_app/src/coeappl.c **** 
+ 605:Lib/ssc_app/src/coeappl.c ****                     if(pDicEntry->pPrev != NULL)
+ 606:Lib/ssc_app/src/coeappl.c ****                         pDicEntry->pPrev->pNext = pNewObjEntry;
+ 607:Lib/ssc_app/src/coeappl.c **** 
+ 608:Lib/ssc_app/src/coeappl.c ****                     pDicEntry->pPrev = pNewObjEntry;
+ 609:Lib/ssc_app/src/coeappl.c **** 
+ 610:Lib/ssc_app/src/coeappl.c ****                     return 0;
+ 611:Lib/ssc_app/src/coeappl.c ****                 }
+ 612:Lib/ssc_app/src/coeappl.c ****                 else if(pDicEntry->pNext == NULL)
+  98              		.loc 1 612 22 is_stmt 1 view .LVU20
+  99              		.loc 1 612 34 is_stmt 0 view .LVU21
+ 100 0020 5A68     		ldr	r2, [r3, #4]
+ 101              		.loc 1 612 24 view .LVU22
+ 102 0022 D2B1     		cbz	r2, .L22
+ 613:Lib/ssc_app/src/coeappl.c ****                 {
+ 614:Lib/ssc_app/src/coeappl.c ****                     /*Last entry reached => add object to list tail*/
+ 615:Lib/ssc_app/src/coeappl.c ****                     pDicEntry->pNext = pNewObjEntry;
+ 616:Lib/ssc_app/src/coeappl.c ****                     pNewObjEntry->pPrev = pDicEntry;
+ 617:Lib/ssc_app/src/coeappl.c ****                     pNewObjEntry->pNext = NULL;
+ 618:Lib/ssc_app/src/coeappl.c ****                     return 0;
+ 619:Lib/ssc_app/src/coeappl.c ****                 }
+ 620:Lib/ssc_app/src/coeappl.c ****                 else
+ 621:Lib/ssc_app/src/coeappl.c ****                 {
+ 622:Lib/ssc_app/src/coeappl.c ****                     /*The new object index is smaller than the current index. Get next object handl
+ 623:Lib/ssc_app/src/coeappl.c ****                     pDicEntry = pDicEntry->pNext;
+ 103              		.loc 1 623 31 view .LVU23
+ 104 0024 1346     		mov	r3, r2
+ 105              	.LVL2:
+ 106              		.loc 1 623 31 view .LVU24
+ 107 0026 F6E7     		b	.L7
+ 108              	.L18:
+ 109              		.loc 1 623 31 view .LVU25
+ 110              	.LBE2:
+ 576:Lib/ssc_app/src/coeappl.c ****             ObjDicList->pNext = NULL;
+ 111              		.loc 1 576 13 is_stmt 1 view .LVU26
+ 576:Lib/ssc_app/src/coeappl.c ****             ObjDicList->pNext = NULL;
+ 112              		.loc 1 576 24 is_stmt 0 view .LVU27
+ 113 0028 114B     		ldr	r3, .L23
+ 114 002a 1860     		str	r0, [r3]
+ 577:Lib/ssc_app/src/coeappl.c ****             ObjDicList->pPrev = NULL;
+ 115              		.loc 1 577 13 is_stmt 1 view .LVU28
+ 577:Lib/ssc_app/src/coeappl.c ****             ObjDicList->pPrev = NULL;
+ 116              		.loc 1 577 31 is_stmt 0 view .LVU29
+ARM GAS  /tmp/ccXIdJsJ.s 			page 14
+
+
+ 117 002c 0020     		movs	r0, #0
+ 118              	.LVL3:
+ 577:Lib/ssc_app/src/coeappl.c ****             ObjDicList->pPrev = NULL;
+ 119              		.loc 1 577 31 view .LVU30
+ 120 002e 6060     		str	r0, [r4, #4]
+ 578:Lib/ssc_app/src/coeappl.c ****             return 0;
+ 121              		.loc 1 578 13 is_stmt 1 view .LVU31
+ 578:Lib/ssc_app/src/coeappl.c ****             return 0;
+ 122              		.loc 1 578 31 is_stmt 0 view .LVU32
+ 123 0030 2060     		str	r0, [r4]
+ 579:Lib/ssc_app/src/coeappl.c ****         }
+ 124              		.loc 1 579 13 is_stmt 1 view .LVU33
+ 579:Lib/ssc_app/src/coeappl.c ****         }
+ 125              		.loc 1 579 20 is_stmt 0 view .LVU34
+ 126 0032 06E0     		b	.L5
+ 127              	.LVL4:
+ 128              	.L19:
+ 584:Lib/ssc_app/src/coeappl.c ****             pNewObjEntry->pNext = ObjDicList;
+ 129              		.loc 1 584 13 is_stmt 1 view .LVU35
+ 584:Lib/ssc_app/src/coeappl.c ****             pNewObjEntry->pNext = ObjDicList;
+ 130              		.loc 1 584 33 is_stmt 0 view .LVU36
+ 131 0034 0020     		movs	r0, #0
+ 132              	.LVL5:
+ 584:Lib/ssc_app/src/coeappl.c ****             pNewObjEntry->pNext = ObjDicList;
+ 133              		.loc 1 584 33 view .LVU37
+ 134 0036 2060     		str	r0, [r4]
+ 585:Lib/ssc_app/src/coeappl.c ****             ObjDicList->pPrev = pNewObjEntry;
+ 135              		.loc 1 585 13 is_stmt 1 view .LVU38
+ 585:Lib/ssc_app/src/coeappl.c ****             ObjDicList->pPrev = pNewObjEntry;
+ 136              		.loc 1 585 33 is_stmt 0 view .LVU39
+ 137 0038 0D4B     		ldr	r3, .L23
+ 138 003a 1A68     		ldr	r2, [r3]
+ 139 003c 6260     		str	r2, [r4, #4]
+ 586:Lib/ssc_app/src/coeappl.c ****             ObjDicList = pNewObjEntry;
+ 140              		.loc 1 586 13 is_stmt 1 view .LVU40
+ 586:Lib/ssc_app/src/coeappl.c ****             ObjDicList = pNewObjEntry;
+ 141              		.loc 1 586 31 is_stmt 0 view .LVU41
+ 142 003e 1460     		str	r4, [r2]
+ 587:Lib/ssc_app/src/coeappl.c ****             return 0;
+ 143              		.loc 1 587 13 is_stmt 1 view .LVU42
+ 587:Lib/ssc_app/src/coeappl.c ****             return 0;
+ 144              		.loc 1 587 24 is_stmt 0 view .LVU43
+ 145 0040 1C60     		str	r4, [r3]
+ 588:Lib/ssc_app/src/coeappl.c ****         }
+ 146              		.loc 1 588 13 is_stmt 1 view .LVU44
+ 147              	.L5:
+ 624:Lib/ssc_app/src/coeappl.c ****                 }
+ 625:Lib/ssc_app/src/coeappl.c ****             }
+ 626:Lib/ssc_app/src/coeappl.c ****         }
+ 627:Lib/ssc_app/src/coeappl.c ****     }
+ 628:Lib/ssc_app/src/coeappl.c ****     return ALSTATUSCODE_UNSPECIFIEDERROR;
+ 629:Lib/ssc_app/src/coeappl.c **** }
+ 148              		.loc 1 629 1 is_stmt 0 view .LVU45
+ 149 0042 5DF8044B 		ldr	r4, [sp], #4
+ 150              		.cfi_remember_state
+ 151              		.cfi_restore 4
+ 152              		.cfi_def_cfa_offset 0
+ARM GAS  /tmp/ccXIdJsJ.s 			page 15
+
+
+ 153              	.LVL6:
+ 154              		.loc 1 629 1 view .LVU46
+ 155 0046 7047     		bx	lr
+ 156              	.LVL7:
+ 157              	.L21:
+ 158              		.cfi_restore_state
+ 159              	.LBB3:
+ 602:Lib/ssc_app/src/coeappl.c ****                     pNewObjEntry->pNext = pDicEntry;
+ 160              		.loc 1 602 21 is_stmt 1 view .LVU47
+ 602:Lib/ssc_app/src/coeappl.c ****                     pNewObjEntry->pNext = pDicEntry;
+ 161              		.loc 1 602 52 is_stmt 0 view .LVU48
+ 162 0048 1A68     		ldr	r2, [r3]
+ 602:Lib/ssc_app/src/coeappl.c ****                     pNewObjEntry->pNext = pDicEntry;
+ 163              		.loc 1 602 41 view .LVU49
+ 164 004a 2260     		str	r2, [r4]
+ 603:Lib/ssc_app/src/coeappl.c **** 
+ 165              		.loc 1 603 21 is_stmt 1 view .LVU50
+ 603:Lib/ssc_app/src/coeappl.c **** 
+ 166              		.loc 1 603 41 is_stmt 0 view .LVU51
+ 167 004c 6360     		str	r3, [r4, #4]
+ 605:Lib/ssc_app/src/coeappl.c ****                         pDicEntry->pPrev->pNext = pNewObjEntry;
+ 168              		.loc 1 605 21 is_stmt 1 view .LVU52
+ 605:Lib/ssc_app/src/coeappl.c ****                         pDicEntry->pPrev->pNext = pNewObjEntry;
+ 169              		.loc 1 605 33 is_stmt 0 view .LVU53
+ 170 004e 1A68     		ldr	r2, [r3]
+ 605:Lib/ssc_app/src/coeappl.c ****                         pDicEntry->pPrev->pNext = pNewObjEntry;
+ 171              		.loc 1 605 23 view .LVU54
+ 172 0050 02B1     		cbz	r2, .L9
+ 606:Lib/ssc_app/src/coeappl.c **** 
+ 173              		.loc 1 606 25 is_stmt 1 view .LVU55
+ 606:Lib/ssc_app/src/coeappl.c **** 
+ 174              		.loc 1 606 49 is_stmt 0 view .LVU56
+ 175 0052 5460     		str	r4, [r2, #4]
+ 176              	.L9:
+ 608:Lib/ssc_app/src/coeappl.c **** 
+ 177              		.loc 1 608 21 is_stmt 1 view .LVU57
+ 608:Lib/ssc_app/src/coeappl.c **** 
+ 178              		.loc 1 608 38 is_stmt 0 view .LVU58
+ 179 0054 1C60     		str	r4, [r3]
+ 610:Lib/ssc_app/src/coeappl.c ****                 }
+ 180              		.loc 1 610 21 is_stmt 1 view .LVU59
+ 610:Lib/ssc_app/src/coeappl.c ****                 }
+ 181              		.loc 1 610 28 is_stmt 0 view .LVU60
+ 182 0056 0020     		movs	r0, #0
+ 183              	.LVL8:
+ 610:Lib/ssc_app/src/coeappl.c ****                 }
+ 184              		.loc 1 610 28 view .LVU61
+ 185 0058 F3E7     		b	.L5
+ 186              	.LVL9:
+ 187              	.L22:
+ 615:Lib/ssc_app/src/coeappl.c ****                     pNewObjEntry->pPrev = pDicEntry;
+ 188              		.loc 1 615 21 is_stmt 1 view .LVU62
+ 615:Lib/ssc_app/src/coeappl.c ****                     pNewObjEntry->pPrev = pDicEntry;
+ 189              		.loc 1 615 38 is_stmt 0 view .LVU63
+ 190 005a 5C60     		str	r4, [r3, #4]
+ 616:Lib/ssc_app/src/coeappl.c ****                     pNewObjEntry->pNext = NULL;
+ 191              		.loc 1 616 21 is_stmt 1 view .LVU64
+ARM GAS  /tmp/ccXIdJsJ.s 			page 16
+
+
+ 616:Lib/ssc_app/src/coeappl.c ****                     pNewObjEntry->pNext = NULL;
+ 192              		.loc 1 616 41 is_stmt 0 view .LVU65
+ 193 005c 2360     		str	r3, [r4]
+ 617:Lib/ssc_app/src/coeappl.c ****                     return 0;
+ 194              		.loc 1 617 21 is_stmt 1 view .LVU66
+ 617:Lib/ssc_app/src/coeappl.c ****                     return 0;
+ 195              		.loc 1 617 41 is_stmt 0 view .LVU67
+ 196 005e 0020     		movs	r0, #0
+ 197              	.LVL10:
+ 617:Lib/ssc_app/src/coeappl.c ****                     return 0;
+ 198              		.loc 1 617 41 view .LVU68
+ 199 0060 6060     		str	r0, [r4, #4]
+ 618:Lib/ssc_app/src/coeappl.c ****                 }
+ 200              		.loc 1 618 21 is_stmt 1 view .LVU69
+ 618:Lib/ssc_app/src/coeappl.c ****                 }
+ 201              		.loc 1 618 28 is_stmt 0 view .LVU70
+ 202 0062 EEE7     		b	.L5
+ 203              	.LVL11:
+ 204              	.L20:
+ 618:Lib/ssc_app/src/coeappl.c ****                 }
+ 205              		.loc 1 618 28 view .LVU71
+ 206              	.LBE3:
+ 628:Lib/ssc_app/src/coeappl.c **** }
+ 207              		.loc 1 628 12 view .LVU72
+ 208 0064 0120     		movs	r0, #1
+ 209              	.LVL12:
+ 210              	.LBB4:
+ 628:Lib/ssc_app/src/coeappl.c **** }
+ 211              		.loc 1 628 12 view .LVU73
+ 212 0066 ECE7     		b	.L5
+ 213              	.LVL13:
+ 214              	.L11:
+ 215              		.cfi_def_cfa_offset 0
+ 216              		.cfi_restore 4
+ 628:Lib/ssc_app/src/coeappl.c **** }
+ 217              		.loc 1 628 12 view .LVU74
+ 218              	.LBE4:
+ 219 0068 0120     		movs	r0, #1
+ 220              	.LVL14:
+ 221              		.loc 1 629 1 view .LVU75
+ 222 006a 7047     		bx	lr
+ 223              	.LVL15:
+ 224              	.L12:
+ 225              		.cfi_def_cfa_offset 4
+ 226              		.cfi_offset 4, -4
+ 227              	.LBB5:
+ 598:Lib/ssc_app/src/coeappl.c ****                 }
+ 228              		.loc 1 598 28 view .LVU76
+ 229 006c 0120     		movs	r0, #1
+ 230              	.LVL16:
+ 598:Lib/ssc_app/src/coeappl.c ****                 }
+ 231              		.loc 1 598 28 view .LVU77
+ 232 006e E8E7     		b	.L5
+ 233              	.L24:
+ 234              		.align	2
+ 235              	.L23:
+ 236 0070 00000000 		.word	.LANCHOR0
+ARM GAS  /tmp/ccXIdJsJ.s 			page 17
+
+
+ 237              	.LBE5:
+ 238              		.cfi_endproc
+ 239              	.LFE125:
+ 241              		.section	.text.COE_RemoveDicEntry,"ax",%progbits
+ 242              		.align	1
+ 243              		.global	COE_RemoveDicEntry
+ 244              		.syntax unified
+ 245              		.thumb
+ 246              		.thumb_func
+ 248              	COE_RemoveDicEntry:
+ 249              	.LVL17:
+ 250              	.LFB126:
+ 630:Lib/ssc_app/src/coeappl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 631:Lib/ssc_app/src/coeappl.c **** /**
+ 632:Lib/ssc_app/src/coeappl.c **** 
+ 633:Lib/ssc_app/src/coeappl.c ****  \brief    This function removes an object to the object dictionary
+ 634:Lib/ssc_app/src/coeappl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 635:Lib/ssc_app/src/coeappl.c **** void COE_RemoveDicEntry(UINT16 index)
+ 636:Lib/ssc_app/src/coeappl.c **** {
+ 251              		.loc 1 636 1 is_stmt 1 view -0
+ 252              		.cfi_startproc
+ 253              		@ args = 0, pretend = 0, frame = 0
+ 254              		@ frame_needed = 0, uses_anonymous_args = 0
+ 255              		@ link register save eliminated.
+ 637:Lib/ssc_app/src/coeappl.c ****     TOBJECT    OBJMEM * pDicEntry = ObjDicList;
+ 256              		.loc 1 637 5 view .LVU79
+ 257              		.loc 1 637 25 is_stmt 0 view .LVU80
+ 258 0000 0D4B     		ldr	r3, .L34
+ 259 0002 1B68     		ldr	r3, [r3]
+ 260              	.LVL18:
+ 638:Lib/ssc_app/src/coeappl.c **** 
+ 639:Lib/ssc_app/src/coeappl.c ****     while(pDicEntry != NULL)
+ 261              		.loc 1 639 5 is_stmt 1 view .LVU81
+ 262              		.loc 1 639 10 is_stmt 0 view .LVU82
+ 263 0004 03E0     		b	.L26
+ 264              	.LVL19:
+ 265              	.L33:
+ 266              	.LBB6:
+ 640:Lib/ssc_app/src/coeappl.c ****     {
+ 641:Lib/ssc_app/src/coeappl.c ****         if(pDicEntry->Index == index)
+ 642:Lib/ssc_app/src/coeappl.c ****         {
+ 643:Lib/ssc_app/src/coeappl.c ****             TOBJECT OBJMEM *pPrevEntry = pDicEntry->pPrev;
+ 644:Lib/ssc_app/src/coeappl.c ****             TOBJECT OBJMEM *pNextEntry = pDicEntry->pNext;
+ 645:Lib/ssc_app/src/coeappl.c **** 
+ 646:Lib/ssc_app/src/coeappl.c ****             if(pPrevEntry != NULL)
+ 647:Lib/ssc_app/src/coeappl.c ****                 pPrevEntry->pNext = pNextEntry;
+ 648:Lib/ssc_app/src/coeappl.c **** 
+ 649:Lib/ssc_app/src/coeappl.c ****             if(pNextEntry != NULL)
+ 650:Lib/ssc_app/src/coeappl.c ****                 pNextEntry->pPrev = pPrevEntry;
+ 651:Lib/ssc_app/src/coeappl.c **** 
+ 652:Lib/ssc_app/src/coeappl.c ****             pDicEntry->pPrev = NULL;
+ 653:Lib/ssc_app/src/coeappl.c ****             pDicEntry->pNext = NULL;
+ 654:Lib/ssc_app/src/coeappl.c ****             /*Update Object dictionary pointer if list head was removed*/
+ 655:Lib/ssc_app/src/coeappl.c ****             if(pDicEntry->Index == ObjDicList->Index)
+ 656:Lib/ssc_app/src/coeappl.c ****             {
+ 657:Lib/ssc_app/src/coeappl.c ****                 ObjDicList = pNextEntry;
+ 267              		.loc 1 657 17 is_stmt 1 view .LVU83
+ARM GAS  /tmp/ccXIdJsJ.s 			page 18
+
+
+ 268              		.loc 1 657 28 is_stmt 0 view .LVU84
+ 269 0006 0C4B     		ldr	r3, .L34
+ 270 0008 1A60     		str	r2, [r3]
+ 658:Lib/ssc_app/src/coeappl.c ****             }
+ 659:Lib/ssc_app/src/coeappl.c ****             return;
+ 271              		.loc 1 659 13 is_stmt 1 view .LVU85
+ 272 000a 7047     		bx	lr
+ 273              	.LVL20:
+ 274              	.L27:
+ 275              		.loc 1 659 13 is_stmt 0 view .LVU86
+ 276              	.LBE6:
+ 660:Lib/ssc_app/src/coeappl.c ****         }
+ 661:Lib/ssc_app/src/coeappl.c **** 
+ 662:Lib/ssc_app/src/coeappl.c ****         pDicEntry = pDicEntry->pNext;
+ 277              		.loc 1 662 9 is_stmt 1 view .LVU87
+ 278              		.loc 1 662 19 is_stmt 0 view .LVU88
+ 279 000c 5B68     		ldr	r3, [r3, #4]
+ 280              	.LVL21:
+ 281              	.L26:
+ 639:Lib/ssc_app/src/coeappl.c ****     {
+ 282              		.loc 1 639 10 is_stmt 1 view .LVU89
+ 283 000e 8BB1     		cbz	r3, .L25
+ 641:Lib/ssc_app/src/coeappl.c ****         {
+ 284              		.loc 1 641 9 view .LVU90
+ 641:Lib/ssc_app/src/coeappl.c ****         {
+ 285              		.loc 1 641 21 is_stmt 0 view .LVU91
+ 286 0010 1A89     		ldrh	r2, [r3, #8]
+ 641:Lib/ssc_app/src/coeappl.c ****         {
+ 287              		.loc 1 641 11 view .LVU92
+ 288 0012 8242     		cmp	r2, r0
+ 289 0014 FAD1     		bne	.L27
+ 290              	.LBB7:
+ 643:Lib/ssc_app/src/coeappl.c ****             TOBJECT OBJMEM *pNextEntry = pDicEntry->pNext;
+ 291              		.loc 1 643 13 is_stmt 1 view .LVU93
+ 643:Lib/ssc_app/src/coeappl.c ****             TOBJECT OBJMEM *pNextEntry = pDicEntry->pNext;
+ 292              		.loc 1 643 29 is_stmt 0 view .LVU94
+ 293 0016 1968     		ldr	r1, [r3]
+ 294              	.LVL22:
+ 644:Lib/ssc_app/src/coeappl.c **** 
+ 295              		.loc 1 644 13 is_stmt 1 view .LVU95
+ 644:Lib/ssc_app/src/coeappl.c **** 
+ 296              		.loc 1 644 29 is_stmt 0 view .LVU96
+ 297 0018 5A68     		ldr	r2, [r3, #4]
+ 298              	.LVL23:
+ 646:Lib/ssc_app/src/coeappl.c ****                 pPrevEntry->pNext = pNextEntry;
+ 299              		.loc 1 646 13 is_stmt 1 view .LVU97
+ 646:Lib/ssc_app/src/coeappl.c ****                 pPrevEntry->pNext = pNextEntry;
+ 300              		.loc 1 646 15 is_stmt 0 view .LVU98
+ 301 001a 01B1     		cbz	r1, .L28
+ 647:Lib/ssc_app/src/coeappl.c **** 
+ 302              		.loc 1 647 17 is_stmt 1 view .LVU99
+ 647:Lib/ssc_app/src/coeappl.c **** 
+ 303              		.loc 1 647 35 is_stmt 0 view .LVU100
+ 304 001c 4A60     		str	r2, [r1, #4]
+ 305              	.L28:
+ 649:Lib/ssc_app/src/coeappl.c ****                 pNextEntry->pPrev = pPrevEntry;
+ 306              		.loc 1 649 13 is_stmt 1 view .LVU101
+ARM GAS  /tmp/ccXIdJsJ.s 			page 19
+
+
+ 649:Lib/ssc_app/src/coeappl.c ****                 pNextEntry->pPrev = pPrevEntry;
+ 307              		.loc 1 649 15 is_stmt 0 view .LVU102
+ 308 001e 02B1     		cbz	r2, .L29
+ 650:Lib/ssc_app/src/coeappl.c **** 
+ 309              		.loc 1 650 17 is_stmt 1 view .LVU103
+ 650:Lib/ssc_app/src/coeappl.c **** 
+ 310              		.loc 1 650 35 is_stmt 0 view .LVU104
+ 311 0020 1160     		str	r1, [r2]
+ 312              	.L29:
+ 652:Lib/ssc_app/src/coeappl.c ****             pDicEntry->pNext = NULL;
+ 313              		.loc 1 652 13 is_stmt 1 view .LVU105
+ 652:Lib/ssc_app/src/coeappl.c ****             pDicEntry->pNext = NULL;
+ 314              		.loc 1 652 30 is_stmt 0 view .LVU106
+ 315 0022 0021     		movs	r1, #0
+ 316              	.LVL24:
+ 652:Lib/ssc_app/src/coeappl.c ****             pDicEntry->pNext = NULL;
+ 317              		.loc 1 652 30 view .LVU107
+ 318 0024 1960     		str	r1, [r3]
+ 653:Lib/ssc_app/src/coeappl.c ****             /*Update Object dictionary pointer if list head was removed*/
+ 319              		.loc 1 653 13 is_stmt 1 view .LVU108
+ 653:Lib/ssc_app/src/coeappl.c ****             /*Update Object dictionary pointer if list head was removed*/
+ 320              		.loc 1 653 30 is_stmt 0 view .LVU109
+ 321 0026 5960     		str	r1, [r3, #4]
+ 655:Lib/ssc_app/src/coeappl.c ****             {
+ 322              		.loc 1 655 13 is_stmt 1 view .LVU110
+ 655:Lib/ssc_app/src/coeappl.c ****             {
+ 323              		.loc 1 655 25 is_stmt 0 view .LVU111
+ 324 0028 1989     		ldrh	r1, [r3, #8]
+ 655:Lib/ssc_app/src/coeappl.c ****             {
+ 325              		.loc 1 655 46 view .LVU112
+ 326 002a 034B     		ldr	r3, .L34
+ 327              	.LVL25:
+ 655:Lib/ssc_app/src/coeappl.c ****             {
+ 328              		.loc 1 655 46 view .LVU113
+ 329 002c 1B68     		ldr	r3, [r3]
+ 330 002e 1B89     		ldrh	r3, [r3, #8]
+ 655:Lib/ssc_app/src/coeappl.c ****             {
+ 331              		.loc 1 655 15 view .LVU114
+ 332 0030 9942     		cmp	r1, r3
+ 333 0032 E8D0     		beq	.L33
+ 334              	.LVL26:
+ 335              	.L25:
+ 655:Lib/ssc_app/src/coeappl.c ****             {
+ 336              		.loc 1 655 15 view .LVU115
+ 337              	.LBE7:
+ 663:Lib/ssc_app/src/coeappl.c ****     }
+ 664:Lib/ssc_app/src/coeappl.c **** }
+ 338              		.loc 1 664 1 view .LVU116
+ 339 0034 7047     		bx	lr
+ 340              	.L35:
+ 341 0036 00BF     		.align	2
+ 342              	.L34:
+ 343 0038 00000000 		.word	.LANCHOR0
+ 344              		.cfi_endproc
+ 345              	.LFE126:
+ 347              		.section	.text.COE_ClearObjDictionary,"ax",%progbits
+ 348              		.align	1
+ARM GAS  /tmp/ccXIdJsJ.s 			page 20
+
+
+ 349              		.global	COE_ClearObjDictionary
+ 350              		.syntax unified
+ 351              		.thumb
+ 352              		.thumb_func
+ 354              	COE_ClearObjDictionary:
+ 355              	.LFB127:
+ 665:Lib/ssc_app/src/coeappl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 666:Lib/ssc_app/src/coeappl.c **** /**
+ 667:Lib/ssc_app/src/coeappl.c **** 
+ 668:Lib/ssc_app/src/coeappl.c ****  \brief    This function clear the object dictionary
+ 669:Lib/ssc_app/src/coeappl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 670:Lib/ssc_app/src/coeappl.c **** void COE_ClearObjDictionary(void)
+ 671:Lib/ssc_app/src/coeappl.c **** {
+ 356              		.loc 1 671 1 is_stmt 1 view -0
+ 357              		.cfi_startproc
+ 358              		@ args = 0, pretend = 0, frame = 0
+ 359              		@ frame_needed = 0, uses_anonymous_args = 0
+ 360 0000 10B5     		push	{r4, lr}
+ 361              		.cfi_def_cfa_offset 8
+ 362              		.cfi_offset 4, -8
+ 363              		.cfi_offset 14, -4
+ 672:Lib/ssc_app/src/coeappl.c ****     TOBJECT OBJMEM * pObjEntry = (TOBJECT OBJMEM *) ObjDicList;
+ 364              		.loc 1 672 5 view .LVU118
+ 365              		.loc 1 672 22 is_stmt 0 view .LVU119
+ 366 0002 064B     		ldr	r3, .L40
+ 367 0004 1C68     		ldr	r4, [r3]
+ 368              	.LVL27:
+ 673:Lib/ssc_app/src/coeappl.c ****     UINT16 Index = 0;
+ 369              		.loc 1 673 5 is_stmt 1 view .LVU120
+ 674:Lib/ssc_app/src/coeappl.c **** 
+ 675:Lib/ssc_app/src/coeappl.c ****     while(pObjEntry != NULL)
+ 370              		.loc 1 675 5 view .LVU121
+ 371              		.loc 1 675 10 is_stmt 0 view .LVU122
+ 372 0006 03E0     		b	.L37
+ 373              	.LVL28:
+ 374              	.L38:
+ 676:Lib/ssc_app/src/coeappl.c ****     {
+ 677:Lib/ssc_app/src/coeappl.c ****         Index = pObjEntry->Index;
+ 375              		.loc 1 677 9 is_stmt 1 view .LVU123
+ 376              		.loc 1 677 15 is_stmt 0 view .LVU124
+ 377 0008 2089     		ldrh	r0, [r4, #8]
+ 378              	.LVL29:
+ 678:Lib/ssc_app/src/coeappl.c ****         pObjEntry = pObjEntry->pNext;
+ 379              		.loc 1 678 9 is_stmt 1 view .LVU125
+ 380              		.loc 1 678 19 is_stmt 0 view .LVU126
+ 381 000a 6468     		ldr	r4, [r4, #4]
+ 382              	.LVL30:
+ 679:Lib/ssc_app/src/coeappl.c **** 
+ 680:Lib/ssc_app/src/coeappl.c ****         COE_RemoveDicEntry(Index);
+ 383              		.loc 1 680 9 is_stmt 1 view .LVU127
+ 384 000c FFF7FEFF 		bl	COE_RemoveDicEntry
+ 385              	.LVL31:
+ 386              	.L37:
+ 675:Lib/ssc_app/src/coeappl.c ****     {
+ 387              		.loc 1 675 10 view .LVU128
+ 388 0010 002C     		cmp	r4, #0
+ 389 0012 F9D1     		bne	.L38
+ARM GAS  /tmp/ccXIdJsJ.s 			page 21
+
+
+ 681:Lib/ssc_app/src/coeappl.c ****     }
+ 682:Lib/ssc_app/src/coeappl.c ****     ObjDicList = NULL;
+ 390              		.loc 1 682 5 view .LVU129
+ 391              		.loc 1 682 16 is_stmt 0 view .LVU130
+ 392 0014 014B     		ldr	r3, .L40
+ 393 0016 0022     		movs	r2, #0
+ 394 0018 1A60     		str	r2, [r3]
+ 683:Lib/ssc_app/src/coeappl.c **** }
+ 395              		.loc 1 683 1 view .LVU131
+ 396 001a 10BD     		pop	{r4, pc}
+ 397              	.LVL32:
+ 398              	.L41:
+ 399              		.loc 1 683 1 view .LVU132
+ 400              		.align	2
+ 401              	.L40:
+ 402 001c 00000000 		.word	.LANCHOR0
+ 403              		.cfi_endproc
+ 404              	.LFE127:
+ 406              		.section	.text.AddObjectsToObjDictionary,"ax",%progbits
+ 407              		.align	1
+ 408              		.global	AddObjectsToObjDictionary
+ 409              		.syntax unified
+ 410              		.thumb
+ 411              		.thumb_func
+ 413              	AddObjectsToObjDictionary:
+ 414              	.LVL33:
+ 415              	.LFB128:
+ 684:Lib/ssc_app/src/coeappl.c **** 
+ 685:Lib/ssc_app/src/coeappl.c **** 
+ 686:Lib/ssc_app/src/coeappl.c **** UINT16 AddObjectsToObjDictionary(TOBJECT OBJMEM * pObjEntry)
+ 687:Lib/ssc_app/src/coeappl.c **** {
+ 416              		.loc 1 687 1 is_stmt 1 view -0
+ 417              		.cfi_startproc
+ 418              		@ args = 0, pretend = 0, frame = 0
+ 419              		@ frame_needed = 0, uses_anonymous_args = 0
+ 420              		.loc 1 687 1 is_stmt 0 view .LVU134
+ 421 0000 10B5     		push	{r4, lr}
+ 422              		.cfi_def_cfa_offset 8
+ 423              		.cfi_offset 4, -8
+ 424              		.cfi_offset 14, -4
+ 425 0002 0446     		mov	r4, r0
+ 688:Lib/ssc_app/src/coeappl.c ****     UINT16 result = 0;
+ 426              		.loc 1 688 5 is_stmt 1 view .LVU135
+ 427              	.LVL34:
+ 689:Lib/ssc_app/src/coeappl.c ****     TOBJECT OBJMEM * pEntry = (TOBJECT OBJMEM *)pObjEntry;
+ 428              		.loc 1 689 5 view .LVU136
+ 690:Lib/ssc_app/src/coeappl.c **** 
+ 691:Lib/ssc_app/src/coeappl.c ****     while(pEntry->Index != 0xFFFF)
+ 429              		.loc 1 691 5 view .LVU137
+ 688:Lib/ssc_app/src/coeappl.c ****     TOBJECT OBJMEM * pEntry = (TOBJECT OBJMEM *)pObjEntry;
+ 430              		.loc 1 688 12 is_stmt 0 view .LVU138
+ 431 0004 0021     		movs	r1, #0
+ 432              		.loc 1 691 10 view .LVU139
+ 433 0006 00E0     		b	.L43
+ 434              	.LVL35:
+ 435              	.L47:
+ 692:Lib/ssc_app/src/coeappl.c ****     {
+ARM GAS  /tmp/ccXIdJsJ.s 			page 22
+
+
+ 693:Lib/ssc_app/src/coeappl.c ****         result = COE_AddObjectToDic(pEntry);
+ 694:Lib/ssc_app/src/coeappl.c **** 
+ 695:Lib/ssc_app/src/coeappl.c ****         if(result != 0)
+ 696:Lib/ssc_app/src/coeappl.c ****             return result;
+ 697:Lib/ssc_app/src/coeappl.c **** 
+ 698:Lib/ssc_app/src/coeappl.c ****         pEntry++;
+ 436              		.loc 1 698 9 is_stmt 1 view .LVU140
+ 437              		.loc 1 698 15 is_stmt 0 view .LVU141
+ 438 0008 2834     		adds	r4, r4, #40
+ 439              	.LVL36:
+ 440              	.L43:
+ 691:Lib/ssc_app/src/coeappl.c ****     {
+ 441              		.loc 1 691 10 is_stmt 1 view .LVU142
+ 691:Lib/ssc_app/src/coeappl.c ****     {
+ 442              		.loc 1 691 17 is_stmt 0 view .LVU143
+ 443 000a 2289     		ldrh	r2, [r4, #8]
+ 691:Lib/ssc_app/src/coeappl.c ****     {
+ 444              		.loc 1 691 10 view .LVU144
+ 445 000c 4FF6FF73 		movw	r3, #65535
+ 446 0010 9A42     		cmp	r2, r3
+ 447 0012 05D0     		beq	.L44
+ 693:Lib/ssc_app/src/coeappl.c **** 
+ 448              		.loc 1 693 9 is_stmt 1 view .LVU145
+ 693:Lib/ssc_app/src/coeappl.c **** 
+ 449              		.loc 1 693 18 is_stmt 0 view .LVU146
+ 450 0014 2046     		mov	r0, r4
+ 451 0016 FFF7FEFF 		bl	COE_AddObjectToDic
+ 452              	.LVL37:
+ 695:Lib/ssc_app/src/coeappl.c ****             return result;
+ 453              		.loc 1 695 9 is_stmt 1 view .LVU147
+ 695:Lib/ssc_app/src/coeappl.c ****             return result;
+ 454              		.loc 1 695 11 is_stmt 0 view .LVU148
+ 455 001a 0146     		mov	r1, r0
+ 456 001c 0028     		cmp	r0, #0
+ 457 001e F3D0     		beq	.L47
+ 458              	.LVL38:
+ 459              	.L44:
+ 699:Lib/ssc_app/src/coeappl.c ****     }
+ 700:Lib/ssc_app/src/coeappl.c **** 
+ 701:Lib/ssc_app/src/coeappl.c ****     return result;
+ 702:Lib/ssc_app/src/coeappl.c **** 
+ 703:Lib/ssc_app/src/coeappl.c **** }
+ 460              		.loc 1 703 1 view .LVU149
+ 461 0020 0846     		mov	r0, r1
+ 462 0022 10BD     		pop	{r4, pc}
+ 463              		.loc 1 703 1 view .LVU150
+ 464              		.cfi_endproc
+ 465              	.LFE128:
+ 467              		.section	.text.COE_ObjDictionaryInit,"ax",%progbits
+ 468              		.align	1
+ 469              		.global	COE_ObjDictionaryInit
+ 470              		.syntax unified
+ 471              		.thumb
+ 472              		.thumb_func
+ 474              	COE_ObjDictionaryInit:
+ 475              	.LFB129:
+ 704:Lib/ssc_app/src/coeappl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ARM GAS  /tmp/ccXIdJsJ.s 			page 23
+
+
+ 705:Lib/ssc_app/src/coeappl.c **** /**
+ 706:Lib/ssc_app/src/coeappl.c ****  \return    0               object dictionary created successful
+ 707:Lib/ssc_app/src/coeappl.c ****             ALSTATUSCODE_XX create object dictionary failed
+ 708:Lib/ssc_app/src/coeappl.c **** 
+ 709:Lib/ssc_app/src/coeappl.c ****  \brief    This function initialize the object dictionary
+ 710:Lib/ssc_app/src/coeappl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 711:Lib/ssc_app/src/coeappl.c **** UINT16 COE_ObjDictionaryInit(void)
+ 712:Lib/ssc_app/src/coeappl.c **** {
+ 476              		.loc 1 712 1 is_stmt 1 view -0
+ 477              		.cfi_startproc
+ 478              		@ args = 0, pretend = 0, frame = 0
+ 479              		@ frame_needed = 0, uses_anonymous_args = 0
+ 480 0000 08B5     		push	{r3, lr}
+ 481              		.cfi_def_cfa_offset 8
+ 482              		.cfi_offset 3, -8
+ 483              		.cfi_offset 14, -4
+ 713:Lib/ssc_app/src/coeappl.c ****     UINT16 result = 0;
+ 484              		.loc 1 713 5 view .LVU152
+ 485              	.LVL39:
+ 714:Lib/ssc_app/src/coeappl.c **** 
+ 715:Lib/ssc_app/src/coeappl.c ****     /*Reset object dictionary pointer*/
+ 716:Lib/ssc_app/src/coeappl.c ****     ObjDicList = NULL;
+ 486              		.loc 1 716 5 view .LVU153
+ 487              		.loc 1 716 16 is_stmt 0 view .LVU154
+ 488 0002 064B     		ldr	r3, .L52
+ 489 0004 0022     		movs	r2, #0
+ 490 0006 1A60     		str	r2, [r3]
+ 717:Lib/ssc_app/src/coeappl.c **** 
+ 718:Lib/ssc_app/src/coeappl.c ****     result = AddObjectsToObjDictionary((TOBJECT OBJMEM *) GenObjDic);
+ 491              		.loc 1 718 5 is_stmt 1 view .LVU155
+ 492              		.loc 1 718 14 is_stmt 0 view .LVU156
+ 493 0008 0548     		ldr	r0, .L52+4
+ 494 000a FFF7FEFF 		bl	AddObjectsToObjDictionary
+ 495              	.LVL40:
+ 719:Lib/ssc_app/src/coeappl.c **** 
+ 720:Lib/ssc_app/src/coeappl.c ****     if(result != 0)
+ 496              		.loc 1 720 5 is_stmt 1 view .LVU157
+ 497              		.loc 1 720 7 is_stmt 0 view .LVU158
+ 498 000e 00B1     		cbz	r0, .L51
+ 499              	.LVL41:
+ 500              	.L49:
+ 721:Lib/ssc_app/src/coeappl.c ****         return result;
+ 722:Lib/ssc_app/src/coeappl.c ****     if(ApplicationObjDic != NULL)
+ 723:Lib/ssc_app/src/coeappl.c ****     {
+ 724:Lib/ssc_app/src/coeappl.c ****         result = AddObjectsToObjDictionary((TOBJECT OBJMEM *) ApplicationObjDic);
+ 725:Lib/ssc_app/src/coeappl.c ****     }
+ 726:Lib/ssc_app/src/coeappl.c **** 
+ 727:Lib/ssc_app/src/coeappl.c ****     return result;
+ 728:Lib/ssc_app/src/coeappl.c **** }
+ 501              		.loc 1 728 1 view .LVU159
+ 502 0010 08BD     		pop	{r3, pc}
+ 503              	.LVL42:
+ 504              	.L51:
+ 722:Lib/ssc_app/src/coeappl.c ****     {
+ 505              		.loc 1 722 5 is_stmt 1 view .LVU160
+ 724:Lib/ssc_app/src/coeappl.c ****     }
+ 506              		.loc 1 724 9 view .LVU161
+ARM GAS  /tmp/ccXIdJsJ.s 			page 24
+
+
+ 724:Lib/ssc_app/src/coeappl.c ****     }
+ 507              		.loc 1 724 18 is_stmt 0 view .LVU162
+ 508 0012 0448     		ldr	r0, .L52+8
+ 509 0014 FFF7FEFF 		bl	AddObjectsToObjDictionary
+ 510              	.LVL43:
+ 727:Lib/ssc_app/src/coeappl.c **** }
+ 511              		.loc 1 727 5 is_stmt 1 view .LVU163
+ 727:Lib/ssc_app/src/coeappl.c **** }
+ 512              		.loc 1 727 12 is_stmt 0 view .LVU164
+ 513 0018 FAE7     		b	.L49
+ 514              	.L53:
+ 515 001a 00BF     		.align	2
+ 516              	.L52:
+ 517 001c 00000000 		.word	.LANCHOR0
+ 518 0020 00000000 		.word	.LANCHOR1
+ 519 0024 00000000 		.word	.LANCHOR2
+ 520              		.cfi_endproc
+ 521              	.LFE129:
+ 523              		.section	.text.COE_ObjInit,"ax",%progbits
+ 524              		.align	1
+ 525              		.global	COE_ObjInit
+ 526              		.syntax unified
+ 527              		.thumb
+ 528              		.thumb_func
+ 530              	COE_ObjInit:
+ 531              	.LFB124:
+ 454:Lib/ssc_app/src/coeappl.c **** 
+ 532              		.loc 1 454 1 is_stmt 1 view -0
+ 533              		.cfi_startproc
+ 534              		@ args = 0, pretend = 0, frame = 0
+ 535              		@ frame_needed = 0, uses_anonymous_args = 0
+ 536 0000 08B5     		push	{r3, lr}
+ 537              		.cfi_def_cfa_offset 8
+ 538              		.cfi_offset 3, -8
+ 539              		.cfi_offset 14, -4
+ 458:Lib/ssc_app/src/coeappl.c ****     /*
+ 540              		.loc 1 458 5 view .LVU166
+ 458:Lib/ssc_app/src/coeappl.c ****     /*
+ 541              		.loc 1 458 38 is_stmt 0 view .LVU167
+ 542 0002 1D4A     		ldr	r2, .L58
+ 543 0004 4FF0200C 		mov	ip, #32
+ 544 0008 A2F800C0 		strh	ip, [r2]	@ movhi
+ 466:Lib/ssc_app/src/coeappl.c **** 
+ 545              		.loc 1 466 5 is_stmt 1 view .LVU168
+ 466:Lib/ssc_app/src/coeappl.c **** 
+ 546              		.loc 1 466 36 is_stmt 0 view .LVU169
+ 547 000c 0023     		movs	r3, #0
+ 548 000e 5380     		strh	r3, [r2, #2]	@ movhi
+ 473:Lib/ssc_app/src/coeappl.c ****     /* only for DC Mode important: the subindex 3 contains the time shift between the
+ 549              		.loc 1 473 5 is_stmt 1 view .LVU170
+ 473:Lib/ssc_app/src/coeappl.c ****     /* only for DC Mode important: the subindex 3 contains the time shift between the
+ 550              		.loc 1 473 37 is_stmt 0 view .LVU171
+ 551 0010 5360     		str	r3, [r2, #4]
+ 477:Lib/ssc_app/src/coeappl.c **** 
+ 552              		.loc 1 477 5 is_stmt 1 view .LVU172
+ 477:Lib/ssc_app/src/coeappl.c **** 
+ 553              		.loc 1 477 37 is_stmt 0 view .LVU173
+ARM GAS  /tmp/ccXIdJsJ.s 			page 25
+
+
+ 554 0012 9360     		str	r3, [r2, #8]
+ 481:Lib/ssc_app/src/coeappl.c ****                                               | SYNCTYPE_TIMESVARIABLE        /* the execution time
+ 555              		.loc 1 481 5 is_stmt 1 view .LVU174
+ 481:Lib/ssc_app/src/coeappl.c ****                                               | SYNCTYPE_TIMESVARIABLE        /* the execution time
+ 556              		.loc 1 481 45 is_stmt 0 view .LVU175
+ 557 0014 44F21F00 		movw	r0, #16415
+ 558 0018 9081     		strh	r0, [r2, #12]	@ movhi
+ 493:Lib/ssc_app/src/coeappl.c ****     /* only for DC Mode important: subindex 6 contains the minimum delay time the slave
+ 559              		.loc 1 493 5 is_stmt 1 view .LVU176
+ 493:Lib/ssc_app/src/coeappl.c ****     /* only for DC Mode important: subindex 6 contains the minimum delay time the slave
+ 560              		.loc 1 493 36 is_stmt 0 view .LVU177
+ 561 001a 1849     		ldr	r1, .L58+4
+ 562 001c 1161     		str	r1, [r2, #16]
+ 498:Lib/ssc_app/src/coeappl.c **** 
+ 563              		.loc 1 498 5 is_stmt 1 view .LVU178
+ 498:Lib/ssc_app/src/coeappl.c **** 
+ 564              		.loc 1 498 39 is_stmt 0 view .LVU179
+ 565 001e 5361     		str	r3, [r2, #20]
+ 501:Lib/ssc_app/src/coeappl.c **** 
+ 566              		.loc 1 501 5 is_stmt 1 view .LVU180
+ 501:Lib/ssc_app/src/coeappl.c **** 
+ 567              		.loc 1 501 36 is_stmt 0 view .LVU181
+ 568 0020 9383     		strh	r3, [r2, #28]	@ movhi
+ 504:Lib/ssc_app/src/coeappl.c **** 
+ 569              		.loc 1 504 5 is_stmt 1 view .LVU182
+ 504:Lib/ssc_app/src/coeappl.c **** 
+ 570              		.loc 1 504 33 is_stmt 0 view .LVU183
+ 571 0022 1362     		str	r3, [r2, #32]
+ 507:Lib/ssc_app/src/coeappl.c **** 
+ 572              		.loc 1 507 5 is_stmt 1 view .LVU184
+ 507:Lib/ssc_app/src/coeappl.c **** 
+ 573              		.loc 1 507 32 is_stmt 0 view .LVU185
+ 574 0024 82F84030 		strb	r3, [r2, #64]
+ 511:Lib/ssc_app/src/coeappl.c ****     /* default mode is ECAT Synchron Mode, if output size > 0 the inputs are updated with the SM2-e
+ 575              		.loc 1 511 5 is_stmt 1 view .LVU186
+ 511:Lib/ssc_app/src/coeappl.c ****     /* default mode is ECAT Synchron Mode, if output size > 0 the inputs are updated with the SM2-e
+ 576              		.loc 1 511 37 is_stmt 0 view .LVU187
+ 577 0028 154A     		ldr	r2, .L58+8
+ 578 002a A2F800C0 		strh	ip, [r2]	@ movhi
+ 513:Lib/ssc_app/src/coeappl.c **** 
+ 579              		.loc 1 513 5 is_stmt 1 view .LVU188
+ 513:Lib/ssc_app/src/coeappl.c **** 
+ 580              		.loc 1 513 39 is_stmt 0 view .LVU189
+ 581 002e 5380     		strh	r3, [r2, #2]	@ movhi
+ 516:Lib/ssc_app/src/coeappl.c ****     /* only for DC Mode important: subindex 3 contains the time shift between the
+ 582              		.loc 1 516 5 is_stmt 1 view .LVU190
+ 516:Lib/ssc_app/src/coeappl.c ****     /* only for DC Mode important: subindex 3 contains the time shift between the
+ 583              		.loc 1 516 36 is_stmt 0 view .LVU191
+ 584 0030 5360     		str	r3, [r2, #4]
+ 522:Lib/ssc_app/src/coeappl.c ****     /* subindex 4: same as 0x1C32:04 */
+ 585              		.loc 1 522 5 is_stmt 1 view .LVU192
+ 522:Lib/ssc_app/src/coeappl.c ****     /* subindex 4: same as 0x1C32:04 */
+ 586              		.loc 1 522 36 is_stmt 0 view .LVU193
+ 587 0032 9360     		str	r3, [r2, #8]
+ 524:Lib/ssc_app/src/coeappl.c **** 
+ 588              		.loc 1 524 5 is_stmt 1 view .LVU194
+ 524:Lib/ssc_app/src/coeappl.c **** 
+ARM GAS  /tmp/ccXIdJsJ.s 			page 26
+
+
+ 589              		.loc 1 524 44 is_stmt 0 view .LVU195
+ 590 0034 9081     		strh	r0, [r2, #12]	@ movhi
+ 527:Lib/ssc_app/src/coeappl.c ****     /* subindex 6: delay read inputs, calculation and copy to SM buffer*/
+ 591              		.loc 1 527 5 is_stmt 1 view .LVU196
+ 527:Lib/ssc_app/src/coeappl.c ****     /* subindex 6: delay read inputs, calculation and copy to SM buffer*/
+ 592              		.loc 1 527 35 is_stmt 0 view .LVU197
+ 593 0036 1161     		str	r1, [r2, #16]
+ 529:Lib/ssc_app/src/coeappl.c ****     /*subindex 8: trigger cycle time measurement*/
+ 594              		.loc 1 529 5 is_stmt 1 view .LVU198
+ 529:Lib/ssc_app/src/coeappl.c ****     /*subindex 8: trigger cycle time measurement*/
+ 595              		.loc 1 529 38 is_stmt 0 view .LVU199
+ 596 0038 5361     		str	r3, [r2, #20]
+ 531:Lib/ssc_app/src/coeappl.c ****     /*subindex 9: delay to prepare input latch*/
+ 597              		.loc 1 531 5 is_stmt 1 view .LVU200
+ 531:Lib/ssc_app/src/coeappl.c ****     /*subindex 9: delay to prepare input latch*/
+ 598              		.loc 1 531 35 is_stmt 0 view .LVU201
+ 599 003a 9383     		strh	r3, [r2, #28]	@ movhi
+ 533:Lib/ssc_app/src/coeappl.c **** 
+ 600              		.loc 1 533 5 is_stmt 1 view .LVU202
+ 533:Lib/ssc_app/src/coeappl.c **** 
+ 601              		.loc 1 533 32 is_stmt 0 view .LVU203
+ 602 003c 1362     		str	r3, [r2, #32]
+ 536:Lib/ssc_app/src/coeappl.c **** /*ECATCHANGE_END(V5.11) ECAT4*/
+ 603              		.loc 1 536 5 is_stmt 1 view .LVU204
+ 536:Lib/ssc_app/src/coeappl.c **** /*ECATCHANGE_END(V5.11) ECAT4*/
+ 604              		.loc 1 536 31 is_stmt 0 view .LVU205
+ 605 003e 82F84030 		strb	r3, [r2, #64]
+ 540:Lib/ssc_app/src/coeappl.c **** 
+ 606              		.loc 1 540 5 is_stmt 1 view .LVU206
+ 540:Lib/ssc_app/src/coeappl.c **** 
+ 607              		.loc 1 540 20 is_stmt 0 view .LVU207
+ 608 0042 104A     		ldr	r2, .L58+12
+ 609 0044 1370     		strb	r3, [r2]
+ 610              	.LBB8:
+ 543:Lib/ssc_app/src/coeappl.c ****     if(result != 0)
+ 611              		.loc 1 543 5 is_stmt 1 view .LVU208
+ 543:Lib/ssc_app/src/coeappl.c ****     if(result != 0)
+ 612              		.loc 1 543 21 is_stmt 0 view .LVU209
+ 613 0046 FFF7FEFF 		bl	COE_ObjDictionaryInit
+ 614              	.LVL44:
+ 544:Lib/ssc_app/src/coeappl.c ****     {
+ 615              		.loc 1 544 5 is_stmt 1 view .LVU210
+ 544:Lib/ssc_app/src/coeappl.c ****     {
+ 616              		.loc 1 544 7 is_stmt 0 view .LVU211
+ 617 004a 88B9     		cbnz	r0, .L57
+ 618              	.LVL45:
+ 619              	.L55:
+ 544:Lib/ssc_app/src/coeappl.c ****     {
+ 620              		.loc 1 544 7 view .LVU212
+ 621              	.LBE8:
+ 551:Lib/ssc_app/src/coeappl.c ****     bStoreCompleteAccess = FALSE;
+ 622              		.loc 1 551 5 is_stmt 1 view .LVU213
+ 551:Lib/ssc_app/src/coeappl.c ****     bStoreCompleteAccess = FALSE;
+ 623              		.loc 1 551 18 is_stmt 0 view .LVU214
+ 624 004c 0023     		movs	r3, #0
+ 625 004e 0E4A     		ldr	r2, .L58+16
+ 626 0050 1370     		strb	r3, [r2]
+ARM GAS  /tmp/ccXIdJsJ.s 			page 27
+
+
+ 552:Lib/ssc_app/src/coeappl.c ****     u16StoreIndex   =   0;
+ 627              		.loc 1 552 5 is_stmt 1 view .LVU215
+ 552:Lib/ssc_app/src/coeappl.c ****     u16StoreIndex   =   0;
+ 628              		.loc 1 552 26 is_stmt 0 view .LVU216
+ 629 0052 0E4A     		ldr	r2, .L58+20
+ 630 0054 1370     		strb	r3, [r2]
+ 553:Lib/ssc_app/src/coeappl.c ****     u8StoreSubindex = 0;
+ 631              		.loc 1 553 5 is_stmt 1 view .LVU217
+ 553:Lib/ssc_app/src/coeappl.c ****     u8StoreSubindex = 0;
+ 632              		.loc 1 553 21 is_stmt 0 view .LVU218
+ 633 0056 0E4A     		ldr	r2, .L58+24
+ 634 0058 1380     		strh	r3, [r2]	@ movhi
+ 554:Lib/ssc_app/src/coeappl.c ****     u32StoreDataSize = 0;
+ 635              		.loc 1 554 5 is_stmt 1 view .LVU219
+ 554:Lib/ssc_app/src/coeappl.c ****     u32StoreDataSize = 0;
+ 636              		.loc 1 554 21 is_stmt 0 view .LVU220
+ 637 005a 0E4A     		ldr	r2, .L58+28
+ 638 005c 1370     		strb	r3, [r2]
+ 555:Lib/ssc_app/src/coeappl.c ****     pStoreData = NULL;
+ 639              		.loc 1 555 5 is_stmt 1 view .LVU221
+ 555:Lib/ssc_app/src/coeappl.c ****     pStoreData = NULL;
+ 640              		.loc 1 555 22 is_stmt 0 view .LVU222
+ 641 005e 0E4A     		ldr	r2, .L58+32
+ 642 0060 1360     		str	r3, [r2]
+ 556:Lib/ssc_app/src/coeappl.c ****     pSdoPendFunc    = NULL;
+ 643              		.loc 1 556 5 is_stmt 1 view .LVU223
+ 556:Lib/ssc_app/src/coeappl.c ****     pSdoPendFunc    = NULL;
+ 644              		.loc 1 556 16 is_stmt 0 view .LVU224
+ 645 0062 0E4A     		ldr	r2, .L58+36
+ 646 0064 1360     		str	r3, [r2]
+ 557:Lib/ssc_app/src/coeappl.c **** 
+ 647              		.loc 1 557 5 is_stmt 1 view .LVU225
+ 557:Lib/ssc_app/src/coeappl.c **** 
+ 648              		.loc 1 557 21 is_stmt 0 view .LVU226
+ 649 0066 0E4A     		ldr	r2, .L58+40
+ 650 0068 1360     		str	r3, [r2]
+ 559:Lib/ssc_app/src/coeappl.c **** }
+ 651              		.loc 1 559 5 is_stmt 1 view .LVU227
+ 559:Lib/ssc_app/src/coeappl.c **** }
+ 652              		.loc 1 559 17 is_stmt 0 view .LVU228
+ 653 006a 0E4A     		ldr	r2, .L58+44
+ 654 006c 1360     		str	r3, [r2]
+ 560:Lib/ssc_app/src/coeappl.c **** 
+ 655              		.loc 1 560 1 view .LVU229
+ 656 006e 08BD     		pop	{r3, pc}
+ 657              	.LVL46:
+ 658              	.L57:
+ 659              	.LBB9:
+ 547:Lib/ssc_app/src/coeappl.c ****     }
+ 660              		.loc 1 547 9 is_stmt 1 view .LVU230
+ 661 0070 FFF7FEFF 		bl	COE_ClearObjDictionary
+ 662              	.LVL47:
+ 547:Lib/ssc_app/src/coeappl.c ****     }
+ 663              		.loc 1 547 9 is_stmt 0 view .LVU231
+ 664 0074 EAE7     		b	.L55
+ 665              	.L59:
+ 666 0076 00BF     		.align	2
+ARM GAS  /tmp/ccXIdJsJ.s 			page 28
+
+
+ 667              	.L58:
+ 668 0078 00000000 		.word	sSyncManOutPar
+ 669 007c 20A10700 		.word	500000
+ 670 0080 00000000 		.word	sSyncManInPar
+ 671 0084 00000000 		.word	bSyncSetByUser
+ 672 0088 00000000 		.word	u8PendingSdo
+ 673 008c 00000000 		.word	bStoreCompleteAccess
+ 674 0090 00000000 		.word	u16StoreIndex
+ 675 0094 00000000 		.word	u8StoreSubindex
+ 676 0098 00000000 		.word	u32StoreDataSize
+ 677 009c 00000000 		.word	pStoreData
+ 678 00a0 00000000 		.word	pSdoPendFunc
+ 679 00a4 00000000 		.word	pSdoSegData
+ 680              	.LBE9:
+ 681              		.cfi_endproc
+ 682              	.LFE124:
+ 684              		.section	.text.COE_Main,"ax",%progbits
+ 685              		.align	1
+ 686              		.global	COE_Main
+ 687              		.syntax unified
+ 688              		.thumb
+ 689              		.thumb_func
+ 691              	COE_Main:
+ 692              	.LFB130:
+ 729:Lib/ssc_app/src/coeappl.c **** 
+ 730:Lib/ssc_app/src/coeappl.c **** 
+ 731:Lib/ssc_app/src/coeappl.c **** /////////////////////////////////////////////////////////////////////////////////////////
+ 732:Lib/ssc_app/src/coeappl.c **** /**
+ 733:Lib/ssc_app/src/coeappl.c **** 
+ 734:Lib/ssc_app/src/coeappl.c ****  \brief    is called for background calculations which should not influence the
+ 735:Lib/ssc_app/src/coeappl.c ****              ECAT_Application in synchronous modes
+ 736:Lib/ssc_app/src/coeappl.c **** *////////////////////////////////////////////////////////////////////////////////////////
+ 737:Lib/ssc_app/src/coeappl.c **** 
+ 738:Lib/ssc_app/src/coeappl.c **** void COE_Main(void)
+ 739:Lib/ssc_app/src/coeappl.c **** {
+ 693              		.loc 1 739 1 is_stmt 1 view -0
+ 694              		.cfi_startproc
+ 695              		@ args = 0, pretend = 0, frame = 0
+ 696              		@ frame_needed = 0, uses_anonymous_args = 0
+ 697 0000 10B5     		push	{r4, lr}
+ 698              		.cfi_def_cfa_offset 8
+ 699              		.cfi_offset 4, -8
+ 700              		.cfi_offset 14, -4
+ 701 0002 82B0     		sub	sp, sp, #8
+ 702              		.cfi_def_cfa_offset 16
+ 740:Lib/ssc_app/src/coeappl.c ****      UINT8 abort = 0;
+ 703              		.loc 1 740 6 view .LVU233
+ 704              	.LVL48:
+ 741:Lib/ssc_app/src/coeappl.c ****     if(pSdoPendFunc != NULL)
+ 705              		.loc 1 741 5 view .LVU234
+ 706              		.loc 1 741 21 is_stmt 0 view .LVU235
+ 707 0004 224B     		ldr	r3, .L69
+ 708 0006 1C68     		ldr	r4, [r3]
+ 709              		.loc 1 741 7 view .LVU236
+ 710 0008 002C     		cmp	r4, #0
+ 711 000a 29D0     		beq	.L60
+ 742:Lib/ssc_app/src/coeappl.c ****     {
+ARM GAS  /tmp/ccXIdJsJ.s 			page 29
+
+
+ 743:Lib/ssc_app/src/coeappl.c ****         abort = pSdoPendFunc(u16StoreIndex,u8StoreSubindex,u32StoreDataSize,pStoreData,bStoreComple
+ 712              		.loc 1 743 9 is_stmt 1 view .LVU237
+ 713              		.loc 1 743 17 is_stmt 0 view .LVU238
+ 714 000c 214B     		ldr	r3, .L69+4
+ 715 000e 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 716 0010 0093     		str	r3, [sp]
+ 717 0012 214B     		ldr	r3, .L69+8
+ 718 0014 1B68     		ldr	r3, [r3]
+ 719 0016 214A     		ldr	r2, .L69+12
+ 720 0018 1268     		ldr	r2, [r2]
+ 721 001a 2149     		ldr	r1, .L69+16
+ 722 001c 0978     		ldrb	r1, [r1]	@ zero_extendqisi2
+ 723 001e 2148     		ldr	r0, .L69+20
+ 724 0020 0088     		ldrh	r0, [r0]
+ 725 0022 A047     		blx	r4
+ 726              	.LVL49:
+ 727 0024 0446     		mov	r4, r0
+ 728              	.LVL50:
+ 744:Lib/ssc_app/src/coeappl.c **** 
+ 745:Lib/ssc_app/src/coeappl.c ****         if(abort != ABORTIDX_WORKING)
+ 729              		.loc 1 745 9 is_stmt 1 view .LVU239
+ 730              		.loc 1 745 11 is_stmt 0 view .LVU240
+ 731 0026 FF28     		cmp	r0, #255
+ 732 0028 1AD0     		beq	.L60
+ 746:Lib/ssc_app/src/coeappl.c ****         {
+ 747:Lib/ssc_app/src/coeappl.c ****             switch(u8PendingSdo)
+ 733              		.loc 1 747 13 is_stmt 1 view .LVU241
+ 734 002a 1F4B     		ldr	r3, .L69+24
+ 735 002c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 736 002e 022B     		cmp	r3, #2
+ 737 0030 23D0     		beq	.L62
+ 738 0032 17D8     		bhi	.L63
+ 739 0034 012B     		cmp	r3, #1
+ 740 0036 04D1     		bne	.L65
+ 741              	.LVL51:
+ 742              	.L64:
+ 748:Lib/ssc_app/src/coeappl.c ****             {
+ 749:Lib/ssc_app/src/coeappl.c ****                 case SDO_PENDING_SEG_WRITE:
+ 750:Lib/ssc_app/src/coeappl.c ****                     if(pSdoSegData)
+ 751:Lib/ssc_app/src/coeappl.c ****                     {
+ 752:Lib/ssc_app/src/coeappl.c ****                         /* the allocated buffer can be released */
+ 753:Lib/ssc_app/src/coeappl.c ****                         FREEMEM( (UINT16 VARMEM *) pSdoSegData );
+ 754:Lib/ssc_app/src/coeappl.c ****                         pSdoSegData = NULL;
+ 755:Lib/ssc_app/src/coeappl.c ****                     }
+ 756:Lib/ssc_app/src/coeappl.c ****                 case SDO_PENDING_WRITE:
+ 757:Lib/ssc_app/src/coeappl.c ****                      /*send SDO Download Response*/
+ 758:Lib/ssc_app/src/coeappl.c ****                     SDOS_SdoRes(abort, 0, NULL);
+ 743              		.loc 1 758 21 view .LVU242
+ 744 0038 0022     		movs	r2, #0
+ 745 003a 1146     		mov	r1, r2
+ 746 003c 2046     		mov	r0, r4
+ 747 003e FFF7FEFF 		bl	SDOS_SdoRes
+ 748              	.LVL52:
+ 759:Lib/ssc_app/src/coeappl.c ****                 break;
+ 749              		.loc 1 759 17 view .LVU243
+ 750              	.L65:
+ 760:Lib/ssc_app/src/coeappl.c **** 
+ARM GAS  /tmp/ccXIdJsJ.s 			page 30
+
+
+ 761:Lib/ssc_app/src/coeappl.c ****                 case SDO_PENDING_SEG_READ:
+ 762:Lib/ssc_app/src/coeappl.c ****                 case SDO_PENDING_READ:
+ 763:Lib/ssc_app/src/coeappl.c ****                     /* send SDO upload response */
+ 764:Lib/ssc_app/src/coeappl.c ****                       SDOS_SdoRes(abort, u32StoreDataSize, pStoreData);
+ 765:Lib/ssc_app/src/coeappl.c ****                     break;
+ 766:Lib/ssc_app/src/coeappl.c **** 
+ 767:Lib/ssc_app/src/coeappl.c ****             }
+ 768:Lib/ssc_app/src/coeappl.c **** 
+ 769:Lib/ssc_app/src/coeappl.c ****             u8PendingSdo = 0;
+ 751              		.loc 1 769 13 view .LVU244
+ 752              		.loc 1 769 26 is_stmt 0 view .LVU245
+ 753 0042 0023     		movs	r3, #0
+ 754 0044 184A     		ldr	r2, .L69+24
+ 755 0046 1370     		strb	r3, [r2]
+ 770:Lib/ssc_app/src/coeappl.c ****             u16StoreIndex = 0;
+ 756              		.loc 1 770 13 is_stmt 1 view .LVU246
+ 757              		.loc 1 770 27 is_stmt 0 view .LVU247
+ 758 0048 164A     		ldr	r2, .L69+20
+ 759 004a 1380     		strh	r3, [r2]	@ movhi
+ 771:Lib/ssc_app/src/coeappl.c ****             u8StoreSubindex = 0;
+ 760              		.loc 1 771 13 is_stmt 1 view .LVU248
+ 761              		.loc 1 771 29 is_stmt 0 view .LVU249
+ 762 004c 144A     		ldr	r2, .L69+16
+ 763 004e 1370     		strb	r3, [r2]
+ 772:Lib/ssc_app/src/coeappl.c ****             u32StoreDataSize = 0;
+ 764              		.loc 1 772 13 is_stmt 1 view .LVU250
+ 765              		.loc 1 772 30 is_stmt 0 view .LVU251
+ 766 0050 124A     		ldr	r2, .L69+12
+ 767 0052 1360     		str	r3, [r2]
+ 773:Lib/ssc_app/src/coeappl.c ****             pStoreData = NULL;
+ 768              		.loc 1 773 13 is_stmt 1 view .LVU252
+ 769              		.loc 1 773 24 is_stmt 0 view .LVU253
+ 770 0054 104A     		ldr	r2, .L69+8
+ 771 0056 1360     		str	r3, [r2]
+ 774:Lib/ssc_app/src/coeappl.c ****             bStoreCompleteAccess = 0;
+ 772              		.loc 1 774 13 is_stmt 1 view .LVU254
+ 773              		.loc 1 774 34 is_stmt 0 view .LVU255
+ 774 0058 0E4A     		ldr	r2, .L69+4
+ 775 005a 1370     		strb	r3, [r2]
+ 775:Lib/ssc_app/src/coeappl.c ****             pSdoPendFunc = NULL;
+ 776              		.loc 1 775 13 is_stmt 1 view .LVU256
+ 777              		.loc 1 775 26 is_stmt 0 view .LVU257
+ 778 005c 0C4A     		ldr	r2, .L69
+ 779 005e 1360     		str	r3, [r2]
+ 780              	.L60:
+ 776:Lib/ssc_app/src/coeappl.c ****         }
+ 777:Lib/ssc_app/src/coeappl.c ****     }
+ 778:Lib/ssc_app/src/coeappl.c **** }
+ 781              		.loc 1 778 1 view .LVU258
+ 782 0060 02B0     		add	sp, sp, #8
+ 783              		.cfi_remember_state
+ 784              		.cfi_def_cfa_offset 8
+ 785              		@ sp needed
+ 786 0062 10BD     		pop	{r4, pc}
+ 787              	.LVL53:
+ 788              	.L63:
+ 789              		.cfi_restore_state
+ARM GAS  /tmp/ccXIdJsJ.s 			page 31
+
+
+ 747:Lib/ssc_app/src/coeappl.c ****             {
+ 790              		.loc 1 747 13 view .LVU259
+ 791 0064 033B     		subs	r3, r3, #3
+ 792 0066 DBB2     		uxtb	r3, r3
+ 793 0068 012B     		cmp	r3, #1
+ 794 006a EAD8     		bhi	.L65
+ 764:Lib/ssc_app/src/coeappl.c ****                     break;
+ 795              		.loc 1 764 23 is_stmt 1 view .LVU260
+ 796 006c 0A4B     		ldr	r3, .L69+8
+ 797 006e 1A68     		ldr	r2, [r3]
+ 798 0070 0A4B     		ldr	r3, .L69+12
+ 799 0072 1968     		ldr	r1, [r3]
+ 800 0074 FFF7FEFF 		bl	SDOS_SdoRes
+ 801              	.LVL54:
+ 765:Lib/ssc_app/src/coeappl.c **** 
+ 802              		.loc 1 765 21 view .LVU261
+ 803 0078 E3E7     		b	.L65
+ 804              	.LVL55:
+ 805              	.L62:
+ 750:Lib/ssc_app/src/coeappl.c ****                     {
+ 806              		.loc 1 750 21 view .LVU262
+ 750:Lib/ssc_app/src/coeappl.c ****                     {
+ 807              		.loc 1 750 24 is_stmt 0 view .LVU263
+ 808 007a 0C4B     		ldr	r3, .L69+28
+ 809 007c 1868     		ldr	r0, [r3]
+ 810              	.LVL56:
+ 750:Lib/ssc_app/src/coeappl.c ****                     {
+ 811              		.loc 1 750 23 view .LVU264
+ 812 007e 0028     		cmp	r0, #0
+ 813 0080 DAD0     		beq	.L64
+ 753:Lib/ssc_app/src/coeappl.c ****                         pSdoSegData = NULL;
+ 814              		.loc 1 753 25 is_stmt 1 view .LVU265
+ 815 0082 FFF7FEFF 		bl	free
+ 816              	.LVL57:
+ 754:Lib/ssc_app/src/coeappl.c ****                     }
+ 817              		.loc 1 754 25 view .LVU266
+ 754:Lib/ssc_app/src/coeappl.c ****                     }
+ 818              		.loc 1 754 37 is_stmt 0 view .LVU267
+ 819 0086 094B     		ldr	r3, .L69+28
+ 820 0088 0022     		movs	r2, #0
+ 821 008a 1A60     		str	r2, [r3]
+ 822 008c D4E7     		b	.L64
+ 823              	.L70:
+ 824 008e 00BF     		.align	2
+ 825              	.L69:
+ 826 0090 00000000 		.word	pSdoPendFunc
+ 827 0094 00000000 		.word	bStoreCompleteAccess
+ 828 0098 00000000 		.word	pStoreData
+ 829 009c 00000000 		.word	u32StoreDataSize
+ 830 00a0 00000000 		.word	u8StoreSubindex
+ 831 00a4 00000000 		.word	u16StoreIndex
+ 832 00a8 00000000 		.word	u8PendingSdo
+ 833 00ac 00000000 		.word	pSdoSegData
+ 834              		.cfi_endproc
+ 835              	.LFE130:
+ 837              		.global	GenObjDic
+ 838              		.global	ObjDicList
+ARM GAS  /tmp/ccXIdJsJ.s 			page 32
+
+
+ 839              		.global	aName0x1C33
+ 840              		.global	aName0x1C32
+ 841              		.global	asEntryDesc0x1C3x
+ 842              		.global	aName0x1C00
+ 843              		.global	asEntryDesc0x1C00
+ 844              		.global	sSyncmanagertype
+ 845              		.global	aName0x10F1
+ 846              		.global	asEntryDesc0x10F1
+ 847              		.global	aName0x1018
+ 848              		.global	asEntryDesc0x1018
+ 849              		.global	sIdentity
+ 850              		.global	aName0x100A
+ 851              		.global	sEntryDesc0x100A
+ 852              		.global	acSoftwareversion
+ 853              		.global	aName0x1009
+ 854              		.global	sEntryDesc0x1009
+ 855              		.global	acHardwareversion
+ 856              		.global	aName0x1008
+ 857              		.global	sEntryDesc0x1008
+ 858              		.global	acDevicename
+ 859              		.global	aName0x1001
+ 860              		.global	sEntryDesc0x1001
+ 861              		.global	u16ErrorRegister
+ 862              		.global	aName0x1000
+ 863              		.global	sEntryDesc0x1000
+ 864              		.global	u32Devicetype
+ 865              		.global	ApplicationObjDic
+ 866              		.global	aName0xF010
+ 867              		.global	asEntryDesc0xF010
+ 868              		.global	aName0xF000
+ 869              		.global	asEntryDesc0xF000
+ 870              		.global	aName0x8020
+ 871              		.global	asEntryDesc0x8020
+ 872              		.global	aName0x7010
+ 873              		.global	asEntryDesc0x7010
+ 874              		.global	aName0x6020
+ 875              		.global	asEntryDesc0x6020
+ 876              		.global	aName0x6000
+ 877              		.global	asEntryDesc0x6000
+ 878              		.global	aName0x1C13
+ 879              		.global	aName0x1C12
+ 880              		.global	aName0x1A02
+ 881              		.global	asEntryDesc0x1A02
+ 882              		.global	aName0x1A00
+ 883              		.global	asEntryDesc0x1A00
+ 884              		.global	aName0x1802
+ 885              		.global	asEntryDesc0x1802
+ 886              		.global	aName0x1601
+ 887              		.global	asEntryDesc0x1601
+ 888              		.global	asEntryDesc0x0800
+ 889              		.global	apEnum0800
+ 890              		.global	sEnum0800_Value01
+ 891              		.global	sEnum0800_Value00
+ 892              		.global	asPDOAssignEntryDesc
+ 893              		.section	.bss.ObjDicList,"aw",%nobits
+ 894              		.align	2
+ 895              		.set	.LANCHOR0,. + 0
+ARM GAS  /tmp/ccXIdJsJ.s 			page 33
+
+
+ 898              	ObjDicList:
+ 899 0000 00000000 		.space	4
+ 900              		.section	.bss.u16ErrorRegister,"aw",%nobits
+ 901              		.align	1
+ 904              	u16ErrorRegister:
+ 905 0000 0000     		.space	2
+ 906              		.section	.data.ApplicationObjDic,"aw"
+ 907              		.align	2
+ 908              		.set	.LANCHOR2,. + 0
+ 911              	ApplicationObjDic:
+ 912 0000 00000000 		.word	0
+ 913 0004 00000000 		.word	0
+ 914 0008 0008     		.short	2048
+ 915 000a 2800     		.short	40
+ 916 000c 0209     		.short	2306
+ 917 000e 0000     		.space	2
+ 918 0010 00000000 		.word	asEntryDesc0x0800
+ 919 0014 00000000 		.word	0
+ 920 0018 00000000 		.word	apEnum0800
+ 921 001c 00000000 		.space	12
+ 921      00000000 
+ 921      00000000 
+ 922 0028 00000000 		.word	0
+ 923 002c 00000000 		.word	0
+ 924 0030 0116     		.short	5633
+ 925 0032 2100     		.short	33
+ 926 0034 1D09     		.short	2333
+ 927 0036 0000     		.space	2
+ 928 0038 00000000 		.word	asEntryDesc0x1601
+ 929 003c 00000000 		.word	aName0x1601
+ 930 0040 00000000 		.word	sDORxPDOMap
+ 931 0044 00000000 		.word	0
+ 932 0048 00000000 		.word	0
+ 933 004c 0000     		.short	0
+ 934 004e 0000     		.space	2
+ 935 0050 00000000 		.word	0
+ 936 0054 00000000 		.word	0
+ 937 0058 0218     		.short	6146
+ 938 005a 2A00     		.short	42
+ 939 005c 0909     		.short	2313
+ 940 005e 0000     		.space	2
+ 941 0060 00000000 		.word	asEntryDesc0x1802
+ 942 0064 00000000 		.word	aName0x1802
+ 943 0068 00000000 		.word	TxPDO1802Subindex0
+ 944 006c 00000000 		.word	ReadObject0x1802
+ 945 0070 00000000 		.word	0
+ 946 0074 0000     		.short	0
+ 947 0076 0000     		.space	2
+ 948 0078 00000000 		.word	0
+ 949 007c 00000000 		.word	0
+ 950 0080 001A     		.short	6656
+ 951 0082 2100     		.short	33
+ 952 0084 0909     		.short	2313
+ 953 0086 0000     		.space	2
+ 954 0088 00000000 		.word	asEntryDesc0x1A00
+ 955 008c 00000000 		.word	aName0x1A00
+ 956 0090 00000000 		.word	sDITxPDOMap
+ARM GAS  /tmp/ccXIdJsJ.s 			page 34
+
+
+ 957 0094 00000000 		.word	0
+ 958 0098 00000000 		.word	0
+ 959 009c 0000     		.short	0
+ 960 009e 0000     		.space	2
+ 961 00a0 00000000 		.word	0
+ 962 00a4 00000000 		.word	0
+ 963 00a8 021A     		.short	6658
+ 964 00aa 2100     		.short	33
+ 965 00ac 0809     		.short	2312
+ 966 00ae 0000     		.space	2
+ 967 00b0 00000000 		.word	asEntryDesc0x1A02
+ 968 00b4 00000000 		.word	aName0x1A02
+ 969 00b8 00000000 		.word	sAITxPDOMap
+ 970 00bc 00000000 		.word	0
+ 971 00c0 00000000 		.word	0
+ 972 00c4 0000     		.short	0
+ 973 00c6 0000     		.space	2
+ 974 00c8 00000000 		.word	0
+ 975 00cc 00000000 		.word	0
+ 976 00d0 121C     		.short	7186
+ 977 00d2 0600     		.short	6
+ 978 00d4 0108     		.short	2049
+ 979 00d6 0000     		.space	2
+ 980 00d8 00000000 		.word	asPDOAssignEntryDesc
+ 981 00dc 00000000 		.word	aName0x1C12
+ 982 00e0 00000000 		.word	sRxPDOassign
+ 983 00e4 00000000 		.word	0
+ 984 00e8 00000000 		.word	0
+ 985 00ec 0000     		.short	0
+ 986 00ee 0000     		.space	2
+ 987 00f0 00000000 		.word	0
+ 988 00f4 00000000 		.word	0
+ 989 00f8 131C     		.short	7187
+ 990 00fa 0600     		.short	6
+ 991 00fc 0208     		.short	2050
+ 992 00fe 0000     		.space	2
+ 993 0100 00000000 		.word	asPDOAssignEntryDesc
+ 994 0104 00000000 		.word	aName0x1C13
+ 995 0108 00000000 		.word	sTxPDOassign
+ 996 010c 00000000 		.word	0
+ 997 0110 00000000 		.word	0
+ 998 0114 0000     		.short	0
+ 999 0116 0000     		.space	2
+ 1000 0118 00000000 		.word	0
+ 1001 011c 00000000 		.word	0
+ 1002 0120 0060     		.short	24576
+ 1003 0122 2A00     		.short	42
+ 1004 0124 0809     		.short	2312
+ 1005 0126 0000     		.space	2
+ 1006 0128 00000000 		.word	asEntryDesc0x6000
+ 1007 012c 00000000 		.word	aName0x6000
+ 1008 0130 00000000 		.word	sDIInputs
+ 1009 0134 00000000 		.word	0
+ 1010 0138 00000000 		.word	0
+ 1011 013c 0000     		.short	0
+ 1012 013e 0000     		.space	2
+ 1013 0140 00000000 		.word	0
+ARM GAS  /tmp/ccXIdJsJ.s 			page 35
+
+
+ 1014 0144 00000000 		.word	0
+ 1015 0148 2060     		.short	24608
+ 1016 014a 2A00     		.short	42
+ 1017 014c 1109     		.short	2321
+ 1018 014e 0000     		.space	2
+ 1019 0150 00000000 		.word	asEntryDesc0x6020
+ 1020 0154 00000000 		.word	aName0x6020
+ 1021 0158 00000000 		.word	sAIInputs
+ 1022 015c 00000000 		.word	0
+ 1023 0160 00000000 		.word	0
+ 1024 0164 0000     		.short	0
+ 1025 0166 0000     		.space	2
+ 1026 0168 00000000 		.word	0
+ 1027 016c 00000000 		.word	0
+ 1028 0170 1070     		.short	28688
+ 1029 0172 2A00     		.short	42
+ 1030 0174 1D09     		.short	2333
+ 1031 0176 0000     		.space	2
+ 1032 0178 00000000 		.word	asEntryDesc0x7010
+ 1033 017c 00000000 		.word	aName0x7010
+ 1034 0180 00000000 		.word	sDOOutputs
+ 1035 0184 00000000 		.word	0
+ 1036 0188 00000000 		.word	0
+ 1037 018c 0000     		.short	0
+ 1038 018e 0000     		.space	2
+ 1039 0190 00000000 		.word	0
+ 1040 0194 00000000 		.word	0
+ 1041 0198 2080     		.short	-32736
+ 1042 019a 2A00     		.short	42
+ 1043 019c 1409     		.short	2324
+ 1044 019e 0000     		.space	2
+ 1045 01a0 00000000 		.word	asEntryDesc0x8020
+ 1046 01a4 00000000 		.word	aName0x8020
+ 1047 01a8 00000000 		.word	sAISettings
+ 1048 01ac 00000000 		.word	0
+ 1049 01b0 00000000 		.word	0
+ 1050 01b4 0800     		.short	8
+ 1051 01b6 0000     		.space	2
+ 1052 01b8 00000000 		.word	0
+ 1053 01bc 00000000 		.word	0
+ 1054 01c0 00F0     		.short	-4096
+ 1055 01c2 2A00     		.short	42
+ 1056 01c4 0209     		.short	2306
+ 1057 01c6 0000     		.space	2
+ 1058 01c8 00000000 		.word	asEntryDesc0xF000
+ 1059 01cc 00000000 		.word	aName0xF000
+ 1060 01d0 00000000 		.word	sModulardeviceprofile
+ 1061 01d4 00000000 		.word	0
+ 1062 01d8 00000000 		.word	0
+ 1063 01dc 0000     		.short	0
+ 1064 01de 0000     		.space	2
+ 1065 01e0 00000000 		.word	0
+ 1066 01e4 00000000 		.word	0
+ 1067 01e8 10F0     		.short	-4080
+ 1068 01ea 0700     		.short	7
+ 1069 01ec 0308     		.short	2051
+ 1070 01ee 0000     		.space	2
+ARM GAS  /tmp/ccXIdJsJ.s 			page 36
+
+
+ 1071 01f0 00000000 		.word	asEntryDesc0xF010
+ 1072 01f4 00000000 		.word	aName0xF010
+ 1073 01f8 00000000 		.word	sModulelist
+ 1074 01fc 00000000 		.word	0
+ 1075 0200 00000000 		.word	0
+ 1076 0204 0000     		.short	0
+ 1077 0206 0000     		.space	2
+ 1078 0208 00000000 		.word	0
+ 1079 020c 00000000 		.word	0
+ 1080 0210 FFFF     		.short	-1
+ 1081 0212 0000     		.short	0
+ 1082 0214 0000     		.short	0
+ 1083 0216 0000     		.space	2
+ 1084 0218 00000000 		.word	0
+ 1085 021c 00000000 		.word	0
+ 1086 0220 00000000 		.word	0
+ 1087 0224 00000000 		.word	0
+ 1088 0228 00000000 		.space	8
+ 1088      00000000 
+ 1089              		.section	.data.GenObjDic,"aw"
+ 1090              		.align	2
+ 1091              		.set	.LANCHOR1,. + 0
+ 1094              	GenObjDic:
+ 1095 0000 00000000 		.word	0
+ 1096 0004 00000000 		.word	0
+ 1097 0008 0010     		.short	4096
+ 1098 000a 0700     		.short	7
+ 1099 000c 0007     		.short	1792
+ 1100 000e 0000     		.space	2
+ 1101 0010 00000000 		.word	sEntryDesc0x1000
+ 1102 0014 00000000 		.word	aName0x1000
+ 1103 0018 00000000 		.word	u32Devicetype
+ 1104 001c 00000000 		.word	0
+ 1105 0020 00000000 		.word	0
+ 1106 0024 0000     		.short	0
+ 1107 0026 0000     		.space	2
+ 1108 0028 00000000 		.word	0
+ 1109 002c 00000000 		.word	0
+ 1110 0030 0110     		.short	4097
+ 1111 0032 0500     		.short	5
+ 1112 0034 0007     		.short	1792
+ 1113 0036 0000     		.space	2
+ 1114 0038 00000000 		.word	sEntryDesc0x1001
+ 1115 003c 00000000 		.word	aName0x1001
+ 1116 0040 00000000 		.word	u16ErrorRegister
+ 1117 0044 00000000 		.word	0
+ 1118 0048 00000000 		.word	0
+ 1119 004c 0000     		.short	0
+ 1120 004e 0000     		.space	2
+ 1121 0050 00000000 		.word	0
+ 1122 0054 00000000 		.word	0
+ 1123 0058 0810     		.short	4104
+ 1124 005a 0900     		.short	9
+ 1125 005c 0007     		.short	1792
+ 1126 005e 0000     		.space	2
+ 1127 0060 00000000 		.word	sEntryDesc0x1008
+ 1128 0064 00000000 		.word	aName0x1008
+ARM GAS  /tmp/ccXIdJsJ.s 			page 37
+
+
+ 1129 0068 00000000 		.word	acDevicename
+ 1130 006c 00000000 		.word	0
+ 1131 0070 00000000 		.word	0
+ 1132 0074 0000     		.short	0
+ 1133 0076 0000     		.space	2
+ 1134 0078 00000000 		.word	0
+ 1135 007c 00000000 		.word	0
+ 1136 0080 0910     		.short	4105
+ 1137 0082 0900     		.short	9
+ 1138 0084 0007     		.short	1792
+ 1139 0086 0000     		.space	2
+ 1140 0088 00000000 		.word	sEntryDesc0x1009
+ 1141 008c 00000000 		.word	aName0x1009
+ 1142 0090 00000000 		.word	acHardwareversion
+ 1143 0094 00000000 		.word	0
+ 1144 0098 00000000 		.word	0
+ 1145 009c 0000     		.short	0
+ 1146 009e 0000     		.space	2
+ 1147 00a0 00000000 		.word	0
+ 1148 00a4 00000000 		.word	0
+ 1149 00a8 0A10     		.short	4106
+ 1150 00aa 0900     		.short	9
+ 1151 00ac 0007     		.short	1792
+ 1152 00ae 0000     		.space	2
+ 1153 00b0 00000000 		.word	sEntryDesc0x100A
+ 1154 00b4 00000000 		.word	aName0x100A
+ 1155 00b8 00000000 		.word	acSoftwareversion
+ 1156 00bc 00000000 		.word	0
+ 1157 00c0 00000000 		.word	0
+ 1158 00c4 0000     		.short	0
+ 1159 00c6 0000     		.space	2
+ 1160 00c8 00000000 		.word	0
+ 1161 00cc 00000000 		.word	0
+ 1162 00d0 1810     		.short	4120
+ 1163 00d2 2300     		.short	35
+ 1164 00d4 0409     		.short	2308
+ 1165 00d6 0000     		.space	2
+ 1166 00d8 00000000 		.word	asEntryDesc0x1018
+ 1167 00dc 00000000 		.word	aName0x1018
+ 1168 00e0 00000000 		.word	sIdentity
+ 1169 00e4 00000000 		.word	0
+ 1170 00e8 00000000 		.word	0
+ 1171 00ec 0000     		.short	0
+ 1172 00ee 0000     		.space	2
+ 1173 00f0 00000000 		.word	0
+ 1174 00f4 00000000 		.word	0
+ 1175 00f8 F110     		.short	4337
+ 1176 00fa 2A00     		.short	42
+ 1177 00fc 0209     		.short	2306
+ 1178 00fe 0000     		.space	2
+ 1179 0100 00000000 		.word	asEntryDesc0x10F1
+ 1180 0104 00000000 		.word	aName0x10F1
+ 1181 0108 00000000 		.word	sErrorSettings
+ 1182 010c 00000000 		.word	0
+ 1183 0110 00000000 		.word	0
+ 1184 0114 0000     		.short	0
+ 1185 0116 0000     		.space	2
+ARM GAS  /tmp/ccXIdJsJ.s 			page 38
+
+
+ 1186 0118 00000000 		.word	0
+ 1187 011c 00000000 		.word	0
+ 1188 0120 001C     		.short	7168
+ 1189 0122 0500     		.short	5
+ 1190 0124 0408     		.short	2052
+ 1191 0126 0000     		.space	2
+ 1192 0128 00000000 		.word	asEntryDesc0x1C00
+ 1193 012c 00000000 		.word	aName0x1C00
+ 1194 0130 00000000 		.word	sSyncmanagertype
+ 1195 0134 00000000 		.word	0
+ 1196 0138 00000000 		.word	0
+ 1197 013c 0000     		.short	0
+ 1198 013e 0000     		.space	2
+ 1199 0140 00000000 		.word	0
+ 1200 0144 00000000 		.word	0
+ 1201 0148 321C     		.short	7218
+ 1202 014a 2900     		.short	41
+ 1203 014c 2009     		.short	2336
+ 1204 014e 0000     		.space	2
+ 1205 0150 00000000 		.word	asEntryDesc0x1C3x
+ 1206 0154 00000000 		.word	aName0x1C32
+ 1207 0158 00000000 		.word	sSyncManOutPar
+ 1208 015c 00000000 		.word	0
+ 1209 0160 00000000 		.word	0
+ 1210 0164 0000     		.short	0
+ 1211 0166 0000     		.space	2
+ 1212 0168 00000000 		.word	0
+ 1213 016c 00000000 		.word	0
+ 1214 0170 331C     		.short	7219
+ 1215 0172 2900     		.short	41
+ 1216 0174 2009     		.short	2336
+ 1217 0176 0000     		.space	2
+ 1218 0178 00000000 		.word	asEntryDesc0x1C3x
+ 1219 017c 00000000 		.word	aName0x1C33
+ 1220 0180 00000000 		.word	sSyncManInPar
+ 1221 0184 00000000 		.word	0
+ 1222 0188 00000000 		.word	0
+ 1223 018c 0000     		.short	0
+ 1224 018e 0000     		.space	2
+ 1225 0190 00000000 		.word	0
+ 1226 0194 00000000 		.word	0
+ 1227 0198 FFFF     		.short	-1
+ 1228 019a 0000     		.short	0
+ 1229 019c 0000     		.short	0
+ 1230 019e 0000     		.space	2
+ 1231 01a0 00000000 		.word	0
+ 1232 01a4 00000000 		.word	0
+ 1233 01a8 00000000 		.word	0
+ 1234 01ac 00000000 		.word	0
+ 1235 01b0 00000000 		.word	0
+ 1236 01b4 0000     		.short	0
+ 1237 01b6 0000     		.space	2
+ 1238              		.section	.data.acDevicename,"aw"
+ 1239              		.align	2
+ 1242              	acDevicename:
+ 1243 0000 5353432D 		.ascii	"SSC-Device\000"
+ 1243      44657669 
+ARM GAS  /tmp/ccXIdJsJ.s 			page 39
+
+
+ 1243      636500
+ 1244              		.section	.data.acHardwareversion,"aw"
+ 1245              		.align	2
+ 1248              	acHardwareversion:
+ 1249 0000 6E2E612E 		.ascii	"n.a.\000"
+ 1249      00
+ 1250              		.section	.data.acSoftwareversion,"aw"
+ 1251              		.align	2
+ 1254              	acSoftwareversion:
+ 1255 0000 352E3131 		.ascii	"5.11\000"
+ 1255      00
+ 1256              		.section	.data.apEnum0800,"aw"
+ 1257              		.align	2
+ 1260              	apEnum0800:
+ 1261 0000 00000000 		.word	sEnum0800_Value00
+ 1262 0004 00000000 		.word	sEnum0800_Value01
+ 1263              		.section	.data.sEnum0800_Value00,"aw"
+ 1264              		.align	2
+ 1267              	sEnum0800_Value00:
+ 1268 0000 00000000 		.ascii	"\000\000\000\000Signed presentation\000"
+ 1268      5369676E 
+ 1268      65642070 
+ 1268      72657365 
+ 1268      6E746174 
+ 1269              		.section	.data.sEnum0800_Value01,"aw"
+ 1270              		.align	2
+ 1273              	sEnum0800_Value01:
+ 1274 0000 01000000 		.ascii	"\001\000\000\000Unsigned presentation\000"
+ 1274      556E7369 
+ 1274      676E6564 
+ 1274      20707265 
+ 1274      73656E74 
+ 1275              		.section	.data.sIdentity,"aw"
+ 1276              		.align	2
+ 1279              	sIdentity:
+ 1280 0000 0400     		.short	4
+ 1281 0002 0000     		.space	2
+ 1282 0004 09000000 		.word	9
+ 1283 0008 52304826 		.word	642265170
+ 1284 000c 11010200 		.word	131345
+ 1285 0010 00000000 		.word	0
+ 1286              		.section	.data.sSyncmanagertype,"aw"
+ 1287              		.align	2
+ 1290              	sSyncmanagertype:
+ 1291 0000 0400     		.short	4
+ 1292 0002 01020304 		.ascii	"\001\002\003\004"
+ 1293              		.section	.data.u32Devicetype,"aw"
+ 1294              		.align	2
+ 1297              	u32Devicetype:
+ 1298 0000 89130000 		.word	5001
+ 1299              		.section	.rodata.aName0x1000,"a"
+ 1300              		.align	2
+ 1303              	aName0x1000:
+ 1304 0000 44657669 		.ascii	"Device type\000"
+ 1304      63652074 
+ 1304      79706500 
+ 1305              		.section	.rodata.aName0x1001,"a"
+ARM GAS  /tmp/ccXIdJsJ.s 			page 40
+
+
+ 1306              		.align	2
+ 1309              	aName0x1001:
+ 1310 0000 4572726F 		.ascii	"Error register\000"
+ 1310      72207265 
+ 1310      67697374 
+ 1310      657200
+ 1311              		.section	.rodata.aName0x1008,"a"
+ 1312              		.align	2
+ 1315              	aName0x1008:
+ 1316 0000 44657669 		.ascii	"Device name\000"
+ 1316      6365206E 
+ 1316      616D6500 
+ 1317              		.section	.rodata.aName0x1009,"a"
+ 1318              		.align	2
+ 1321              	aName0x1009:
+ 1322 0000 48617264 		.ascii	"Hardware version\000"
+ 1322      77617265 
+ 1322      20766572 
+ 1322      73696F6E 
+ 1322      00
+ 1323              		.section	.rodata.aName0x100A,"a"
+ 1324              		.align	2
+ 1327              	aName0x100A:
+ 1328 0000 536F6674 		.ascii	"Software version\000"
+ 1328      77617265 
+ 1328      20766572 
+ 1328      73696F6E 
+ 1328      00
+ 1329              		.section	.rodata.aName0x1018,"a"
+ 1330              		.align	2
+ 1333              	aName0x1018:
+ 1334 0000 4964656E 		.ascii	"Identity\000Vendor ID\000Product code\000Revision\000"
+ 1334      74697479 
+ 1334      0056656E 
+ 1334      646F7220 
+ 1334      49440050 
+ 1335 0029 53657269 		.ascii	"Serial number\000\377\000"
+ 1335      616C206E 
+ 1335      756D6265 
+ 1335      7200FF00 
+ 1336              		.section	.rodata.aName0x10F1,"a"
+ 1337              		.align	2
+ 1340              	aName0x10F1:
+ 1341 0000 4572726F 		.ascii	"Error Settings\000Local Error Reaction\000Sync Erro"
+ 1341      72205365 
+ 1341      7474696E 
+ 1341      6773004C 
+ 1341      6F63616C 
+ 1342 002d 7220436F 		.ascii	"r Counter Limit\000\377\000"
+ 1342      756E7465 
+ 1342      72204C69 
+ 1342      6D697400 
+ 1342      FF00
+ 1343              		.section	.rodata.aName0x1601,"a"
+ 1344              		.align	2
+ 1347              	aName0x1601:
+ 1348 0000 444F2052 		.ascii	"DO RxPDO-Map\000\377\000"
+ARM GAS  /tmp/ccXIdJsJ.s 			page 41
+
+
+ 1348      7850444F 
+ 1348      2D4D6170 
+ 1348      00FF00
+ 1349              		.section	.rodata.aName0x1802,"a"
+ 1350              		.align	2
+ 1353              	aName0x1802:
+ 1354 0000 54785044 		.ascii	"TxPDO Parameter\000\000\000\000\000\000Exclude TxPD"
+ 1354      4F205061 
+ 1354      72616D65 
+ 1354      74657200 
+ 1354      00000000 
+ 1355 0021 4F730054 		.ascii	"Os\000TxPDOState\000\000TxPDO Toggle\000\377\000"
+ 1355      7850444F 
+ 1355      53746174 
+ 1355      65000054 
+ 1355      7850444F 
+ 1356              		.section	.rodata.aName0x1A00,"a"
+ 1357              		.align	2
+ 1360              	aName0x1A00:
+ 1361 0000 44492054 		.ascii	"DI TxPDO-Map\000\377\000"
+ 1361      7850444F 
+ 1361      2D4D6170 
+ 1361      00FF00
+ 1362              		.section	.rodata.aName0x1A02,"a"
+ 1363              		.align	2
+ 1366              	aName0x1A02:
+ 1367 0000 41492054 		.ascii	"AI TxPDO-Map\000\377\000"
+ 1367      7850444F 
+ 1367      2D4D6170 
+ 1367      00FF00
+ 1368              		.section	.rodata.aName0x1C00,"a"
+ 1369              		.align	2
+ 1372              	aName0x1C00:
+ 1373 0000 53796E63 		.ascii	"Sync manager type\000"
+ 1373      206D616E 
+ 1373      61676572 
+ 1373      20747970 
+ 1373      6500
+ 1374              		.section	.rodata.aName0x1C12,"a"
+ 1375              		.align	2
+ 1378              	aName0x1C12:
+ 1379 0000 52785044 		.ascii	"RxPDO assign\000"
+ 1379      4F206173 
+ 1379      7369676E 
+ 1379      00
+ 1380              		.section	.rodata.aName0x1C13,"a"
+ 1381              		.align	2
+ 1384              	aName0x1C13:
+ 1385 0000 54785044 		.ascii	"TxPDO assign\000"
+ 1385      4F206173 
+ 1385      7369676E 
+ 1385      00
+ 1386              		.section	.rodata.aName0x1C32,"a"
+ 1387              		.align	2
+ 1390              	aName0x1C32:
+ 1391 0000 534D206F 		.ascii	"SM output parameter\000Synchronization Type\000Cycl"
+ 1391      75747075 
+ARM GAS  /tmp/ccXIdJsJ.s 			page 42
+
+
+ 1391      74207061 
+ 1391      72616D65 
+ 1391      74657200 
+ 1392 002d 65205469 		.ascii	"e Time\000\000Synchronization Types supported\000Mi"
+ 1392      6D650000 
+ 1392      53796E63 
+ 1392      68726F6E 
+ 1392      697A6174 
+ 1393 0057 6E696D75 		.ascii	"nimum Cycle Time\000Calc and Copy Time\000\000Get C"
+ 1393      6D204379 
+ 1393      636C6520 
+ 1393      54696D65 
+ 1393      0043616C 
+ 1394 0081 79636C65 		.ascii	"ycle Time\000Delay Time\000Sync0 Cycle Time\000SM-E"
+ 1394      2054696D 
+ 1394      65004465 
+ 1394      6C617920 
+ 1394      54696D65 
+ 1395 00ab 76656E74 		.ascii	"vent Missed\000Cycle Time Too Small\000Shift Time T"
+ 1395      204D6973 
+ 1395      73656400 
+ 1395      4379636C 
+ 1395      65205469 
+ 1396 00d8 6F6F2053 		.ascii	"oo Short\000\000\000\000\000\000\000\000\000\000\000"
+ 1396      686F7274 
+ 1396      00000000 
+ 1396      00000000 
+ 1396      000000
+ 1397 00eb 00000000 		.ascii	"\000\000\000\000\000\000\000\000Sync Error\000\377\000"
+ 1397      00000000 
+ 1397      53796E63 
+ 1397      20457272 
+ 1397      6F7200FF 
+ 1398              		.section	.rodata.aName0x1C33,"a"
+ 1399              		.align	2
+ 1402              	aName0x1C33:
+ 1403 0000 534D2069 		.ascii	"SM input parameter\000Synchronization Type\000Cycle"
+ 1403      6E707574 
+ 1403      20706172 
+ 1403      616D6574 
+ 1403      65720053 
+ 1404 002d 2054696D 		.ascii	" Time\000\000Synchronization Types supported\000Min"
+ 1404      65000053 
+ 1404      796E6368 
+ 1404      726F6E69 
+ 1404      7A617469 
+ 1405 0057 696D756D 		.ascii	"imum Cycle Time\000Calc and Copy Time\000\000Get Cy"
+ 1405      20437963 
+ 1405      6C652054 
+ 1405      696D6500 
+ 1405      43616C63 
+ 1406 0081 636C6520 		.ascii	"cle Time\000Delay Time\000Sync0 Cycle Time\000SM-Ev"
+ 1406      54696D65 
+ 1406      0044656C 
+ 1406      61792054 
+ 1406      696D6500 
+ 1407 00ab 656E7420 		.ascii	"ent Missed\000Cycle Time Too Small\000Shift Time To"
+ARM GAS  /tmp/ccXIdJsJ.s 			page 43
+
+
+ 1407      4D697373 
+ 1407      65640043 
+ 1407      79636C65 
+ 1407      2054696D 
+ 1408 00d8 6F205368 		.ascii	"o Short\000\000\000\000\000\000\000\000\000\000\000"
+ 1408      6F727400 
+ 1408      00000000 
+ 1408      00000000 
+ 1408      0000
+ 1409 00ea 00000000 		.ascii	"\000\000\000\000\000\000\000\000Sync Error\000\377\000"
+ 1409      00000000 
+ 1409      53796E63 
+ 1409      20457272 
+ 1409      6F7200FF 
+ 1410              		.section	.rodata.aName0x6000,"a"
+ 1411              		.align	2
+ 1414              	aName0x6000:
+ 1415 0000 44492049 		.ascii	"DI Inputs\000Switch 1\000Switch 2\000Switch 3\000Sw"
+ 1415      6E707574 
+ 1415      73005377 
+ 1415      69746368 
+ 1415      20310053 
+ 1416 0027 69746368 		.ascii	"itch 4\000Switch 5\000Switch 6\000Switch 7\000Switc"
+ 1416      20340053 
+ 1416      77697463 
+ 1416      68203500 
+ 1416      53776974 
+ 1417 004e 68203800 		.ascii	"h 8\000\000\377\000"
+ 1417      00FF00
+ 1418              		.section	.rodata.aName0x6020,"a"
+ 1419              		.align	2
+ 1422              	aName0x6020:
+ 1423 0000 41492049 		.ascii	"AI Inputs\000Underrange\000Overrange\000Limit 1\000"
+ 1423      6E707574 
+ 1423      7300556E 
+ 1423      64657272 
+ 1423      616E6765 
+ 1424 0027 004C696D 		.ascii	"\000Limit 2\000\000\000\000\000\000\000\000\000\000"
+ 1424      69742032 
+ 1424      00000000 
+ 1424      00000000 
+ 1424      0000
+ 1425 0039 54785044 		.ascii	"TxPDO State\000TxPDO Toggle\000Analog input\000\377"
+ 1425      4F205374 
+ 1425      61746500 
+ 1425      54785044 
+ 1425      4F20546F 
+ 1426 0060 00       		.ascii	"\000"
+ 1427              		.section	.rodata.aName0x7010,"a"
+ 1428              		.align	2
+ 1431              	aName0x7010:
+ 1432 0000 444F204F 		.ascii	"DO Outputs\000LED 1\000LED 2\000LED 3\000LED 4\000L"
+ 1432      75747075 
+ 1432      7473004C 
+ 1432      45442031 
+ 1432      004C4544 
+ 1433 0024 45442035 		.ascii	"ED 5\000LED 6\000LED 7\000LED 8\000null\000can2_h0\000"
+ARM GAS  /tmp/ccXIdJsJ.s 			page 44
+
+
+ 1433      004C4544 
+ 1433      2036004C 
+ 1433      45442037 
+ 1433      004C4544 
+ 1434 0048 63616E32 		.ascii	"can2_h1\000can2_h2\000can2_h3\000can2_h4\000can2_d0"
+ 1434      5F683100 
+ 1434      63616E32 
+ 1434      5F683200 
+ 1434      63616E32 
+ 1435 006f 0063616E 		.ascii	"\000can2_d1\000can2_d2\000can2_d3\000can2_d4\000can"
+ 1435      325F6431 
+ 1435      0063616E 
+ 1435      325F6432 
+ 1435      0063616E 
+ 1436 0093 325F6435 		.ascii	"2_d5\000can2_d6\000can2_d7\000motor_mode\000motor_p"
+ 1436      0063616E 
+ 1436      325F6436 
+ 1436      0063616E 
+ 1436      325F6437 
+ 1437 00ba 6F73006D 		.ascii	"os\000motor_w\000motor_kp\000motor_kd\000motor_t\000"
+ 1437      6F746F72 
+ 1437      5F77006D 
+ 1437      6F746F72 
+ 1437      5F6B7000 
+ 1438 00df 6D6F746F 		.ascii	"motor_id\000\000\377\000"
+ 1438      725F6964 
+ 1438      0000FF00 
+ 1439              		.section	.rodata.aName0x8020,"a"
+ 1440              		.align	2
+ 1443              	aName0x8020:
+ 1444 0000 41492053 		.ascii	"AI Settings\000Enable user scale\000Presentation\000"
+ 1444      65747469 
+ 1444      6E677300 
+ 1444      456E6162 
+ 1444      6C652075 
+ 1445 002b 00000000 		.ascii	"\000\000\000\000Enable limit 1\000Enable limit 2\000"
+ 1445      456E6162 
+ 1445      6C65206C 
+ 1445      696D6974 
+ 1445      20310045 
+ 1446 004d 00000000 		.ascii	"\000\000\000\000\000\000\000\000Offset\000Gain\000L"
+ 1446      00000000 
+ 1446      4F666673 
+ 1446      65740047 
+ 1446      61696E00 
+ 1447 0062 696D6974 		.ascii	"imit 1\000Limit 2\000\377\000"
+ 1447      2031004C 
+ 1447      696D6974 
+ 1447      203200FF 
+ 1447      00
+ 1448              		.section	.rodata.aName0xF000,"a"
+ 1449              		.align	2
+ 1452              	aName0xF000:
+ 1453 0000 4D6F6475 		.ascii	"Modular device profile\000Module index distance\000"
+ 1453      6C617220 
+ 1453      64657669 
+ 1453      63652070 
+ARM GAS  /tmp/ccXIdJsJ.s 			page 45
+
+
+ 1453      726F6669 
+ 1454 002d 4D617869 		.ascii	"Maximum number of modules\000\377\000"
+ 1454      6D756D20 
+ 1454      6E756D62 
+ 1454      6572206F 
+ 1454      66206D6F 
+ 1455              		.section	.rodata.aName0xF010,"a"
+ 1456              		.align	2
+ 1459              	aName0xF010:
+ 1460 0000 4D6F6475 		.ascii	"Module profile list\000"
+ 1460      6C652070 
+ 1460      726F6669 
+ 1460      6C65206C 
+ 1460      69737400 
+ 1461              		.section	.rodata.asEntryDesc0x0800,"a"
+ 1462              		.align	2
+ 1465              	asEntryDesc0x0800:
+ 1466 0000 0500     		.short	5
+ 1467 0002 0800     		.short	8
+ 1468 0004 0700     		.short	7
+ 1469 0006 0A00     		.short	10
+ 1470 0008 C000     		.short	192
+ 1471 000a 0700     		.short	7
+ 1472 000c 0A00     		.short	10
+ 1473 000e D000     		.short	208
+ 1474 0010 0700     		.short	7
+ 1475              		.section	.rodata.asEntryDesc0x1018,"a"
+ 1476              		.align	2
+ 1479              	asEntryDesc0x1018:
+ 1480 0000 0500     		.short	5
+ 1481 0002 0800     		.short	8
+ 1482 0004 0700     		.short	7
+ 1483 0006 0700     		.short	7
+ 1484 0008 2000     		.short	32
+ 1485 000a 0700     		.short	7
+ 1486 000c 0700     		.short	7
+ 1487 000e 2000     		.short	32
+ 1488 0010 0700     		.short	7
+ 1489 0012 0700     		.short	7
+ 1490 0014 2000     		.short	32
+ 1491 0016 0700     		.short	7
+ 1492 0018 0700     		.short	7
+ 1493 001a 2000     		.short	32
+ 1494 001c 0700     		.short	7
+ 1495              		.section	.rodata.asEntryDesc0x10F1,"a"
+ 1496              		.align	2
+ 1499              	asEntryDesc0x10F1:
+ 1500 0000 0500     		.short	5
+ 1501 0002 0800     		.short	8
+ 1502 0004 0700     		.short	7
+ 1503 0006 0700     		.short	7
+ 1504 0008 2000     		.short	32
+ 1505 000a 3F00     		.short	63
+ 1506 000c 0600     		.short	6
+ 1507 000e 1000     		.short	16
+ 1508 0010 3F00     		.short	63
+ 1509              		.section	.rodata.asEntryDesc0x1601,"a"
+ARM GAS  /tmp/ccXIdJsJ.s 			page 46
+
+
+ 1510              		.align	2
+ 1513              	asEntryDesc0x1601:
+ 1514 0000 0500     		.short	5
+ 1515 0002 0800     		.short	8
+ 1516 0004 0700     		.short	7
+ 1517 0006 0700     		.short	7
+ 1518 0008 2000     		.short	32
+ 1519 000a 0700     		.short	7
+ 1520 000c 0700     		.short	7
+ 1521 000e 2000     		.short	32
+ 1522 0010 0700     		.short	7
+ 1523 0012 0700     		.short	7
+ 1524 0014 2000     		.short	32
+ 1525 0016 0700     		.short	7
+ 1526 0018 0700     		.short	7
+ 1527 001a 2000     		.short	32
+ 1528 001c 0700     		.short	7
+ 1529 001e 0700     		.short	7
+ 1530 0020 2000     		.short	32
+ 1531 0022 0700     		.short	7
+ 1532 0024 0700     		.short	7
+ 1533 0026 2000     		.short	32
+ 1534 0028 0700     		.short	7
+ 1535 002a 0700     		.short	7
+ 1536 002c 2000     		.short	32
+ 1537 002e 0700     		.short	7
+ 1538 0030 0700     		.short	7
+ 1539 0032 2000     		.short	32
+ 1540 0034 0700     		.short	7
+ 1541 0036 0700     		.short	7
+ 1542 0038 2000     		.short	32
+ 1543 003a 0700     		.short	7
+ 1544 003c 0700     		.short	7
+ 1545 003e 2000     		.short	32
+ 1546 0040 0700     		.short	7
+ 1547 0042 0700     		.short	7
+ 1548 0044 2000     		.short	32
+ 1549 0046 0700     		.short	7
+ 1550 0048 0700     		.short	7
+ 1551 004a 2000     		.short	32
+ 1552 004c 0700     		.short	7
+ 1553 004e 0700     		.short	7
+ 1554 0050 2000     		.short	32
+ 1555 0052 0700     		.short	7
+ 1556 0054 0700     		.short	7
+ 1557 0056 2000     		.short	32
+ 1558 0058 0700     		.short	7
+ 1559 005a 0700     		.short	7
+ 1560 005c 2000     		.short	32
+ 1561 005e 0700     		.short	7
+ 1562 0060 0700     		.short	7
+ 1563 0062 2000     		.short	32
+ 1564 0064 0700     		.short	7
+ 1565 0066 0700     		.short	7
+ 1566 0068 2000     		.short	32
+ 1567 006a 0700     		.short	7
+ 1568 006c 0700     		.short	7
+ARM GAS  /tmp/ccXIdJsJ.s 			page 47
+
+
+ 1569 006e 2000     		.short	32
+ 1570 0070 0700     		.short	7
+ 1571 0072 0700     		.short	7
+ 1572 0074 2000     		.short	32
+ 1573 0076 0700     		.short	7
+ 1574 0078 0700     		.short	7
+ 1575 007a 2000     		.short	32
+ 1576 007c 0700     		.short	7
+ 1577 007e 0700     		.short	7
+ 1578 0080 2000     		.short	32
+ 1579 0082 0700     		.short	7
+ 1580 0084 0700     		.short	7
+ 1581 0086 2000     		.short	32
+ 1582 0088 0700     		.short	7
+ 1583 008a 0700     		.short	7
+ 1584 008c 2000     		.short	32
+ 1585 008e 0700     		.short	7
+ 1586 0090 0700     		.short	7
+ 1587 0092 2000     		.short	32
+ 1588 0094 0700     		.short	7
+ 1589 0096 0700     		.short	7
+ 1590 0098 2000     		.short	32
+ 1591 009a 0700     		.short	7
+ 1592 009c 0700     		.short	7
+ 1593 009e 2000     		.short	32
+ 1594 00a0 0700     		.short	7
+ 1595 00a2 0700     		.short	7
+ 1596 00a4 2000     		.short	32
+ 1597 00a6 0700     		.short	7
+ 1598 00a8 0700     		.short	7
+ 1599 00aa 2000     		.short	32
+ 1600 00ac 0700     		.short	7
+ 1601 00ae 0700     		.short	7
+ 1602 00b0 2000     		.short	32
+ 1603 00b2 0700     		.short	7
+ 1604              		.section	.rodata.asEntryDesc0x1802,"a"
+ 1605              		.align	2
+ 1608              	asEntryDesc0x1802:
+ 1609 0000 0500     		.short	5
+ 1610 0002 0800     		.short	8
+ 1611 0004 0700     		.short	7
+ 1612 0006 0000     		.short	0
+ 1613 0008 0000     		.short	0
+ 1614 000a 0000     		.short	0
+ 1615 000c 0000     		.short	0
+ 1616 000e 0000     		.short	0
+ 1617 0010 0000     		.short	0
+ 1618 0012 0000     		.short	0
+ 1619 0014 0000     		.short	0
+ 1620 0016 0000     		.short	0
+ 1621 0018 0000     		.short	0
+ 1622 001a 0000     		.short	0
+ 1623 001c 0000     		.short	0
+ 1624 001e 0000     		.short	0
+ 1625 0020 0000     		.short	0
+ 1626 0022 0000     		.short	0
+ 1627 0024 0A00     		.short	10
+ARM GAS  /tmp/ccXIdJsJ.s 			page 48
+
+
+ 1628 0026 0000     		.short	0
+ 1629 0028 8700     		.short	135
+ 1630 002a 0100     		.short	1
+ 1631 002c 0100     		.short	1
+ 1632 002e 8700     		.short	135
+ 1633 0030 0000     		.short	0
+ 1634 0032 0000     		.short	0
+ 1635 0034 0000     		.short	0
+ 1636 0036 0100     		.short	1
+ 1637 0038 0100     		.short	1
+ 1638 003a 8700     		.short	135
+ 1639              		.section	.rodata.asEntryDesc0x1A00,"a"
+ 1640              		.align	2
+ 1643              	asEntryDesc0x1A00:
+ 1644 0000 0500     		.short	5
+ 1645 0002 0800     		.short	8
+ 1646 0004 0700     		.short	7
+ 1647 0006 0700     		.short	7
+ 1648 0008 2000     		.short	32
+ 1649 000a 0700     		.short	7
+ 1650 000c 0700     		.short	7
+ 1651 000e 2000     		.short	32
+ 1652 0010 0700     		.short	7
+ 1653 0012 0700     		.short	7
+ 1654 0014 2000     		.short	32
+ 1655 0016 0700     		.short	7
+ 1656 0018 0700     		.short	7
+ 1657 001a 2000     		.short	32
+ 1658 001c 0700     		.short	7
+ 1659 001e 0700     		.short	7
+ 1660 0020 2000     		.short	32
+ 1661 0022 0700     		.short	7
+ 1662 0024 0700     		.short	7
+ 1663 0026 2000     		.short	32
+ 1664 0028 0700     		.short	7
+ 1665 002a 0700     		.short	7
+ 1666 002c 2000     		.short	32
+ 1667 002e 0700     		.short	7
+ 1668 0030 0700     		.short	7
+ 1669 0032 2000     		.short	32
+ 1670 0034 0700     		.short	7
+ 1671 0036 0700     		.short	7
+ 1672 0038 2000     		.short	32
+ 1673 003a 0700     		.short	7
+ 1674              		.section	.rodata.asEntryDesc0x1A02,"a"
+ 1675              		.align	2
+ 1678              	asEntryDesc0x1A02:
+ 1679 0000 0500     		.short	5
+ 1680 0002 0800     		.short	8
+ 1681 0004 0700     		.short	7
+ 1682 0006 0700     		.short	7
+ 1683 0008 2000     		.short	32
+ 1684 000a 0700     		.short	7
+ 1685 000c 0700     		.short	7
+ 1686 000e 2000     		.short	32
+ 1687 0010 0700     		.short	7
+ 1688 0012 0700     		.short	7
+ARM GAS  /tmp/ccXIdJsJ.s 			page 49
+
+
+ 1689 0014 2000     		.short	32
+ 1690 0016 0700     		.short	7
+ 1691 0018 0700     		.short	7
+ 1692 001a 2000     		.short	32
+ 1693 001c 0700     		.short	7
+ 1694 001e 0700     		.short	7
+ 1695 0020 2000     		.short	32
+ 1696 0022 0700     		.short	7
+ 1697 0024 0700     		.short	7
+ 1698 0026 2000     		.short	32
+ 1699 0028 0700     		.short	7
+ 1700 002a 0700     		.short	7
+ 1701 002c 2000     		.short	32
+ 1702 002e 0700     		.short	7
+ 1703 0030 0700     		.short	7
+ 1704 0032 2000     		.short	32
+ 1705 0034 0700     		.short	7
+ 1706              		.section	.rodata.asEntryDesc0x1C00,"a"
+ 1707              		.align	2
+ 1710              	asEntryDesc0x1C00:
+ 1711 0000 0500     		.short	5
+ 1712 0002 0800     		.short	8
+ 1713 0004 0700     		.short	7
+ 1714 0006 0500     		.short	5
+ 1715 0008 0800     		.short	8
+ 1716 000a 0700     		.short	7
+ 1717              		.section	.rodata.asEntryDesc0x1C3x,"a"
+ 1718              		.align	2
+ 1721              	asEntryDesc0x1C3x:
+ 1722 0000 0500     		.short	5
+ 1723 0002 0800     		.short	8
+ 1724 0004 0700     		.short	7
+ 1725 0006 0600     		.short	6
+ 1726 0008 1000     		.short	16
+ 1727 000a 0F00     		.short	15
+ 1728 000c 0700     		.short	7
+ 1729 000e 2000     		.short	32
+ 1730 0010 0700     		.short	7
+ 1731 0012 0000     		.short	0
+ 1732 0014 2000     		.short	32
+ 1733 0016 0000     		.short	0
+ 1734 0018 0600     		.short	6
+ 1735 001a 1000     		.short	16
+ 1736 001c 0700     		.short	7
+ 1737 001e 0700     		.short	7
+ 1738 0020 2000     		.short	32
+ 1739 0022 0700     		.short	7
+ 1740 0024 0700     		.short	7
+ 1741 0026 2000     		.short	32
+ 1742 0028 0700     		.short	7
+ 1743 002a 0000     		.short	0
+ 1744 002c 2000     		.short	32
+ 1745 002e 0000     		.short	0
+ 1746 0030 0600     		.short	6
+ 1747 0032 1000     		.short	16
+ 1748 0034 3F00     		.short	63
+ 1749 0036 0700     		.short	7
+ARM GAS  /tmp/ccXIdJsJ.s 			page 50
+
+
+ 1750 0038 2000     		.short	32
+ 1751 003a 0700     		.short	7
+ 1752 003c 0700     		.short	7
+ 1753 003e 2000     		.short	32
+ 1754 0040 3F00     		.short	63
+ 1755 0042 0600     		.short	6
+ 1756 0044 1000     		.short	16
+ 1757 0046 0700     		.short	7
+ 1758 0048 0600     		.short	6
+ 1759 004a 1000     		.short	16
+ 1760 004c 0700     		.short	7
+ 1761 004e 0000     		.short	0
+ 1762 0050 1000     		.short	16
+ 1763 0052 0000     		.short	0
+ 1764 0054 0000     		.short	0
+ 1765 0056 1000     		.short	16
+ 1766 0058 0000     		.short	0
+ 1767 005a 0000     		.short	0
+ 1768 005c 2000     		.short	32
+ 1769 005e 0000     		.short	0
+ 1770 0060 0000     		.short	0
+ 1771 0062 2000     		.short	32
+ 1772 0064 0000     		.short	0
+ 1773 0066 0000     		.short	0
+ 1774 0068 2000     		.short	32
+ 1775 006a 0000     		.short	0
+ 1776 006c 0000     		.short	0
+ 1777 006e 2000     		.short	32
+ 1778 0070 0000     		.short	0
+ 1779 0072 0000     		.short	0
+ 1780 0074 0000     		.short	0
+ 1781 0076 0000     		.short	0
+ 1782 0078 0000     		.short	0
+ 1783 007a 0000     		.short	0
+ 1784 007c 0000     		.short	0
+ 1785 007e 0000     		.short	0
+ 1786 0080 0000     		.short	0
+ 1787 0082 0000     		.short	0
+ 1788 0084 0000     		.short	0
+ 1789 0086 0000     		.short	0
+ 1790 0088 0000     		.short	0
+ 1791 008a 0000     		.short	0
+ 1792 008c 0000     		.short	0
+ 1793 008e 0000     		.short	0
+ 1794 0090 0000     		.short	0
+ 1795 0092 0000     		.short	0
+ 1796 0094 0000     		.short	0
+ 1797 0096 0000     		.short	0
+ 1798 0098 0000     		.short	0
+ 1799 009a 0000     		.short	0
+ 1800 009c 0000     		.short	0
+ 1801 009e 0000     		.short	0
+ 1802 00a0 0000     		.short	0
+ 1803 00a2 0000     		.short	0
+ 1804 00a4 0000     		.short	0
+ 1805 00a6 0000     		.short	0
+ 1806 00a8 0000     		.short	0
+ARM GAS  /tmp/ccXIdJsJ.s 			page 51
+
+
+ 1807 00aa 0000     		.short	0
+ 1808 00ac 0000     		.short	0
+ 1809 00ae 0000     		.short	0
+ 1810 00b0 0000     		.short	0
+ 1811 00b2 0000     		.short	0
+ 1812 00b4 0000     		.short	0
+ 1813 00b6 0000     		.short	0
+ 1814 00b8 0000     		.short	0
+ 1815 00ba 0000     		.short	0
+ 1816 00bc 0000     		.short	0
+ 1817 00be 0000     		.short	0
+ 1818 00c0 0100     		.short	1
+ 1819 00c2 0100     		.short	1
+ 1820 00c4 0700     		.short	7
+ 1821              		.section	.rodata.asEntryDesc0x6000,"a"
+ 1822              		.align	2
+ 1825              	asEntryDesc0x6000:
+ 1826 0000 0500     		.short	5
+ 1827 0002 0800     		.short	8
+ 1828 0004 0700     		.short	7
+ 1829 0006 0100     		.short	1
+ 1830 0008 0100     		.short	1
+ 1831 000a 8700     		.short	135
+ 1832 000c 0100     		.short	1
+ 1833 000e 0100     		.short	1
+ 1834 0010 8700     		.short	135
+ 1835 0012 0100     		.short	1
+ 1836 0014 0100     		.short	1
+ 1837 0016 8700     		.short	135
+ 1838 0018 0100     		.short	1
+ 1839 001a 0100     		.short	1
+ 1840 001c 8700     		.short	135
+ 1841 001e 0100     		.short	1
+ 1842 0020 0100     		.short	1
+ 1843 0022 8700     		.short	135
+ 1844 0024 0100     		.short	1
+ 1845 0026 0100     		.short	1
+ 1846 0028 8700     		.short	135
+ 1847 002a 0100     		.short	1
+ 1848 002c 0100     		.short	1
+ 1849 002e 8700     		.short	135
+ 1850 0030 0100     		.short	1
+ 1851 0032 0100     		.short	1
+ 1852 0034 8700     		.short	135
+ 1853 0036 0000     		.short	0
+ 1854 0038 0800     		.short	8
+ 1855 003a 0000     		.short	0
+ 1856              		.section	.rodata.asEntryDesc0x6020,"a"
+ 1857              		.align	2
+ 1860              	asEntryDesc0x6020:
+ 1861 0000 0500     		.short	5
+ 1862 0002 0800     		.short	8
+ 1863 0004 0700     		.short	7
+ 1864 0006 0100     		.short	1
+ 1865 0008 0100     		.short	1
+ 1866 000a 8700     		.short	135
+ 1867 000c 0100     		.short	1
+ARM GAS  /tmp/ccXIdJsJ.s 			page 52
+
+
+ 1868 000e 0100     		.short	1
+ 1869 0010 8700     		.short	135
+ 1870 0012 3100     		.short	49
+ 1871 0014 0200     		.short	2
+ 1872 0016 8700     		.short	135
+ 1873 0018 0000     		.short	0
+ 1874 001a 0000     		.short	0
+ 1875 001c 0000     		.short	0
+ 1876 001e 3100     		.short	49
+ 1877 0020 0200     		.short	2
+ 1878 0022 8700     		.short	135
+ 1879 0024 0000     		.short	0
+ 1880 0026 0200     		.short	2
+ 1881 0028 0000     		.short	0
+ 1882 002a 0000     		.short	0
+ 1883 002c 0600     		.short	6
+ 1884 002e 0000     		.short	0
+ 1885 0030 0000     		.short	0
+ 1886 0032 0000     		.short	0
+ 1887 0034 0000     		.short	0
+ 1888 0036 0000     		.short	0
+ 1889 0038 0000     		.short	0
+ 1890 003a 0000     		.short	0
+ 1891 003c 0000     		.short	0
+ 1892 003e 0000     		.short	0
+ 1893 0040 0000     		.short	0
+ 1894 0042 0000     		.short	0
+ 1895 0044 0000     		.short	0
+ 1896 0046 0000     		.short	0
+ 1897 0048 0000     		.short	0
+ 1898 004a 0000     		.short	0
+ 1899 004c 0000     		.short	0
+ 1900 004e 0000     		.short	0
+ 1901 0050 0000     		.short	0
+ 1902 0052 0000     		.short	0
+ 1903 0054 0000     		.short	0
+ 1904 0056 0000     		.short	0
+ 1905 0058 0000     		.short	0
+ 1906 005a 0100     		.short	1
+ 1907 005c 0100     		.short	1
+ 1908 005e 8700     		.short	135
+ 1909 0060 0100     		.short	1
+ 1910 0062 0100     		.short	1
+ 1911 0064 8700     		.short	135
+ 1912 0066 0300     		.short	3
+ 1913 0068 1000     		.short	16
+ 1914 006a 8700     		.short	135
+ 1915              		.section	.rodata.asEntryDesc0x7010,"a"
+ 1916              		.align	2
+ 1919              	asEntryDesc0x7010:
+ 1920 0000 0500     		.short	5
+ 1921 0002 0800     		.short	8
+ 1922 0004 0700     		.short	7
+ 1923 0006 0100     		.short	1
+ 1924 0008 0100     		.short	1
+ 1925 000a 4700     		.short	71
+ 1926 000c 0100     		.short	1
+ARM GAS  /tmp/ccXIdJsJ.s 			page 53
+
+
+ 1927 000e 0100     		.short	1
+ 1928 0010 4700     		.short	71
+ 1929 0012 0100     		.short	1
+ 1930 0014 0100     		.short	1
+ 1931 0016 4700     		.short	71
+ 1932 0018 0100     		.short	1
+ 1933 001a 0100     		.short	1
+ 1934 001c 4700     		.short	71
+ 1935 001e 0100     		.short	1
+ 1936 0020 0100     		.short	1
+ 1937 0022 4700     		.short	71
+ 1938 0024 0100     		.short	1
+ 1939 0026 0100     		.short	1
+ 1940 0028 4700     		.short	71
+ 1941 002a 0100     		.short	1
+ 1942 002c 0100     		.short	1
+ 1943 002e 4700     		.short	71
+ 1944 0030 0100     		.short	1
+ 1945 0032 0100     		.short	1
+ 1946 0034 4700     		.short	71
+ 1947 0036 0100     		.short	1
+ 1948 0038 0800     		.short	8
+ 1949 003a 4700     		.short	71
+ 1950 003c 0100     		.short	1
+ 1951 003e 1000     		.short	16
+ 1952 0040 4700     		.short	71
+ 1953 0042 0100     		.short	1
+ 1954 0044 0800     		.short	8
+ 1955 0046 4700     		.short	71
+ 1956 0048 0100     		.short	1
+ 1957 004a 0800     		.short	8
+ 1958 004c 4700     		.short	71
+ 1959 004e 0100     		.short	1
+ 1960 0050 0800     		.short	8
+ 1961 0052 4700     		.short	71
+ 1962 0054 0100     		.short	1
+ 1963 0056 0800     		.short	8
+ 1964 0058 4700     		.short	71
+ 1965 005a 0100     		.short	1
+ 1966 005c 0800     		.short	8
+ 1967 005e 4700     		.short	71
+ 1968 0060 0100     		.short	1
+ 1969 0062 0800     		.short	8
+ 1970 0064 4700     		.short	71
+ 1971 0066 0100     		.short	1
+ 1972 0068 0800     		.short	8
+ 1973 006a 4700     		.short	71
+ 1974 006c 0100     		.short	1
+ 1975 006e 0800     		.short	8
+ 1976 0070 4700     		.short	71
+ 1977 0072 0100     		.short	1
+ 1978 0074 0800     		.short	8
+ 1979 0076 4700     		.short	71
+ 1980 0078 0100     		.short	1
+ 1981 007a 0800     		.short	8
+ 1982 007c 4700     		.short	71
+ 1983 007e 0100     		.short	1
+ARM GAS  /tmp/ccXIdJsJ.s 			page 54
+
+
+ 1984 0080 0800     		.short	8
+ 1985 0082 4700     		.short	71
+ 1986 0084 0100     		.short	1
+ 1987 0086 0800     		.short	8
+ 1988 0088 4700     		.short	71
+ 1989 008a 0100     		.short	1
+ 1990 008c 1000     		.short	16
+ 1991 008e 4700     		.short	71
+ 1992 0090 0100     		.short	1
+ 1993 0092 2000     		.short	32
+ 1994 0094 4700     		.short	71
+ 1995 0096 0100     		.short	1
+ 1996 0098 2000     		.short	32
+ 1997 009a 4700     		.short	71
+ 1998 009c 0100     		.short	1
+ 1999 009e 2000     		.short	32
+ 2000 00a0 4700     		.short	71
+ 2001 00a2 0100     		.short	1
+ 2002 00a4 2000     		.short	32
+ 2003 00a6 4700     		.short	71
+ 2004 00a8 0100     		.short	1
+ 2005 00aa 2000     		.short	32
+ 2006 00ac 4700     		.short	71
+ 2007 00ae 0100     		.short	1
+ 2008 00b0 1000     		.short	16
+ 2009 00b2 4700     		.short	71
+ 2010              		.section	.rodata.asEntryDesc0x8020,"a"
+ 2011              		.align	2
+ 2014              	asEntryDesc0x8020:
+ 2015 0000 0500     		.short	5
+ 2016 0002 0800     		.short	8
+ 2017 0004 0700     		.short	7
+ 2018 0006 0100     		.short	1
+ 2019 0008 0100     		.short	1
+ 2020 000a 3F03     		.short	831
+ 2021 000c 0008     		.short	2048
+ 2022 000e 0300     		.short	3
+ 2023 0010 3F03     		.short	831
+ 2024 0012 0000     		.short	0
+ 2025 0014 0000     		.short	0
+ 2026 0016 0000     		.short	0
+ 2027 0018 0000     		.short	0
+ 2028 001a 0000     		.short	0
+ 2029 001c 0000     		.short	0
+ 2030 001e 0000     		.short	0
+ 2031 0020 0200     		.short	2
+ 2032 0022 0000     		.short	0
+ 2033 0024 0000     		.short	0
+ 2034 0026 0000     		.short	0
+ 2035 0028 0000     		.short	0
+ 2036 002a 0100     		.short	1
+ 2037 002c 0100     		.short	1
+ 2038 002e 3F03     		.short	831
+ 2039 0030 0100     		.short	1
+ 2040 0032 0100     		.short	1
+ 2041 0034 3F03     		.short	831
+ 2042 0036 0000     		.short	0
+ARM GAS  /tmp/ccXIdJsJ.s 			page 55
+
+
+ 2043 0038 0800     		.short	8
+ 2044 003a 0000     		.short	0
+ 2045 003c 0000     		.short	0
+ 2046 003e 0000     		.short	0
+ 2047 0040 0000     		.short	0
+ 2048 0042 0000     		.short	0
+ 2049 0044 0000     		.short	0
+ 2050 0046 0000     		.short	0
+ 2051 0048 0000     		.short	0
+ 2052 004a 0000     		.short	0
+ 2053 004c 0000     		.short	0
+ 2054 004e 0000     		.short	0
+ 2055 0050 0000     		.short	0
+ 2056 0052 0000     		.short	0
+ 2057 0054 0000     		.short	0
+ 2058 0056 0000     		.short	0
+ 2059 0058 0000     		.short	0
+ 2060 005a 0000     		.short	0
+ 2061 005c 0000     		.short	0
+ 2062 005e 0000     		.short	0
+ 2063 0060 0000     		.short	0
+ 2064 0062 0000     		.short	0
+ 2065 0064 0000     		.short	0
+ 2066 0066 0300     		.short	3
+ 2067 0068 1000     		.short	16
+ 2068 006a 3F03     		.short	831
+ 2069 006c 0400     		.short	4
+ 2070 006e 2000     		.short	32
+ 2071 0070 3F03     		.short	831
+ 2072 0072 0300     		.short	3
+ 2073 0074 1000     		.short	16
+ 2074 0076 3F03     		.short	831
+ 2075 0078 0300     		.short	3
+ 2076 007a 1000     		.short	16
+ 2077 007c 3F03     		.short	831
+ 2078              		.section	.rodata.asEntryDesc0xF000,"a"
+ 2079              		.align	2
+ 2082              	asEntryDesc0xF000:
+ 2083 0000 0500     		.short	5
+ 2084 0002 0800     		.short	8
+ 2085 0004 0700     		.short	7
+ 2086 0006 0600     		.short	6
+ 2087 0008 1000     		.short	16
+ 2088 000a 0700     		.short	7
+ 2089 000c 0600     		.short	6
+ 2090 000e 1000     		.short	16
+ 2091 0010 0700     		.short	7
+ 2092              		.section	.rodata.asEntryDesc0xF010,"a"
+ 2093              		.align	2
+ 2096              	asEntryDesc0xF010:
+ 2097 0000 0500     		.short	5
+ 2098 0002 0800     		.short	8
+ 2099 0004 0700     		.short	7
+ 2100 0006 0700     		.short	7
+ 2101 0008 2000     		.short	32
+ 2102 000a 0700     		.short	7
+ 2103 000c 0700     		.short	7
+ARM GAS  /tmp/ccXIdJsJ.s 			page 56
+
+
+ 2104 000e 2000     		.short	32
+ 2105 0010 0700     		.short	7
+ 2106 0012 0700     		.short	7
+ 2107 0014 2000     		.short	32
+ 2108 0016 0700     		.short	7
+ 2109              		.section	.rodata.asPDOAssignEntryDesc,"a"
+ 2110              		.align	2
+ 2113              	asPDOAssignEntryDesc:
+ 2114 0000 0500     		.short	5
+ 2115 0002 0800     		.short	8
+ 2116 0004 0700     		.short	7
+ 2117 0006 0600     		.short	6
+ 2118 0008 1000     		.short	16
+ 2119 000a 0700     		.short	7
+ 2120              		.section	.rodata.sEntryDesc0x1000,"a"
+ 2121              		.align	2
+ 2124              	sEntryDesc0x1000:
+ 2125 0000 0700     		.short	7
+ 2126 0002 2000     		.short	32
+ 2127 0004 0700     		.short	7
+ 2128              		.section	.rodata.sEntryDesc0x1001,"a"
+ 2129              		.align	2
+ 2132              	sEntryDesc0x1001:
+ 2133 0000 0500     		.short	5
+ 2134 0002 0800     		.short	8
+ 2135 0004 0700     		.short	7
+ 2136              		.section	.rodata.sEntryDesc0x1008,"a"
+ 2137              		.align	2
+ 2140              	sEntryDesc0x1008:
+ 2141 0000 0900     		.short	9
+ 2142 0002 5000     		.short	80
+ 2143 0004 0700     		.short	7
+ 2144              		.section	.rodata.sEntryDesc0x1009,"a"
+ 2145              		.align	2
+ 2148              	sEntryDesc0x1009:
+ 2149 0000 0900     		.short	9
+ 2150 0002 2000     		.short	32
+ 2151 0004 0700     		.short	7
+ 2152              		.section	.rodata.sEntryDesc0x100A,"a"
+ 2153              		.align	2
+ 2156              	sEntryDesc0x100A:
+ 2157 0000 0900     		.short	9
+ 2158 0002 2000     		.short	32
+ 2159 0004 0700     		.short	7
+ 2160              		.text
+ 2161              	.Letext0:
+ 2162              		.file 2 "Lib/ssc/include/sdoserv.h"
+ 2163              		.file 3 "Lib/ssc/include/objdef.h"
+ 2164              		.file 4 "Lib/ssc_app/include/el9800appl.h"
+ 2165              		.file 5 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/stdlib.h"
+ARM GAS  /tmp/ccXIdJsJ.s 			page 57
+
+
+DEFINED SYMBOLS
+                            *ABS*:0000000000000000 coeappl.c
+     /tmp/ccXIdJsJ.s:20     .text.COE_GetObjectDictionary:0000000000000000 $t
+     /tmp/ccXIdJsJ.s:26     .text.COE_GetObjectDictionary:0000000000000000 COE_GetObjectDictionary
+     /tmp/ccXIdJsJ.s:42     .text.COE_GetObjectDictionary:0000000000000008 $d
+     /tmp/ccXIdJsJ.s:47     .text.COE_AddObjectToDic:0000000000000000 $t
+     /tmp/ccXIdJsJ.s:53     .text.COE_AddObjectToDic:0000000000000000 COE_AddObjectToDic
+     /tmp/ccXIdJsJ.s:236    .text.COE_AddObjectToDic:0000000000000070 $d
+     /tmp/ccXIdJsJ.s:242    .text.COE_RemoveDicEntry:0000000000000000 $t
+     /tmp/ccXIdJsJ.s:248    .text.COE_RemoveDicEntry:0000000000000000 COE_RemoveDicEntry
+     /tmp/ccXIdJsJ.s:343    .text.COE_RemoveDicEntry:0000000000000038 $d
+     /tmp/ccXIdJsJ.s:348    .text.COE_ClearObjDictionary:0000000000000000 $t
+     /tmp/ccXIdJsJ.s:354    .text.COE_ClearObjDictionary:0000000000000000 COE_ClearObjDictionary
+     /tmp/ccXIdJsJ.s:402    .text.COE_ClearObjDictionary:000000000000001c $d
+     /tmp/ccXIdJsJ.s:407    .text.AddObjectsToObjDictionary:0000000000000000 $t
+     /tmp/ccXIdJsJ.s:413    .text.AddObjectsToObjDictionary:0000000000000000 AddObjectsToObjDictionary
+     /tmp/ccXIdJsJ.s:468    .text.COE_ObjDictionaryInit:0000000000000000 $t
+     /tmp/ccXIdJsJ.s:474    .text.COE_ObjDictionaryInit:0000000000000000 COE_ObjDictionaryInit
+     /tmp/ccXIdJsJ.s:517    .text.COE_ObjDictionaryInit:000000000000001c $d
+     /tmp/ccXIdJsJ.s:524    .text.COE_ObjInit:0000000000000000 $t
+     /tmp/ccXIdJsJ.s:530    .text.COE_ObjInit:0000000000000000 COE_ObjInit
+     /tmp/ccXIdJsJ.s:668    .text.COE_ObjInit:0000000000000078 $d
+     /tmp/ccXIdJsJ.s:685    .text.COE_Main:0000000000000000 $t
+     /tmp/ccXIdJsJ.s:691    .text.COE_Main:0000000000000000 COE_Main
+     /tmp/ccXIdJsJ.s:826    .text.COE_Main:0000000000000090 $d
+     /tmp/ccXIdJsJ.s:1094   .data.GenObjDic:0000000000000000 GenObjDic
+     /tmp/ccXIdJsJ.s:898    .bss.ObjDicList:0000000000000000 ObjDicList
+     /tmp/ccXIdJsJ.s:1402   .rodata.aName0x1C33:0000000000000000 aName0x1C33
+     /tmp/ccXIdJsJ.s:1390   .rodata.aName0x1C32:0000000000000000 aName0x1C32
+     /tmp/ccXIdJsJ.s:1721   .rodata.asEntryDesc0x1C3x:0000000000000000 asEntryDesc0x1C3x
+     /tmp/ccXIdJsJ.s:1372   .rodata.aName0x1C00:0000000000000000 aName0x1C00
+     /tmp/ccXIdJsJ.s:1710   .rodata.asEntryDesc0x1C00:0000000000000000 asEntryDesc0x1C00
+     /tmp/ccXIdJsJ.s:1290   .data.sSyncmanagertype:0000000000000000 sSyncmanagertype
+     /tmp/ccXIdJsJ.s:1340   .rodata.aName0x10F1:0000000000000000 aName0x10F1
+     /tmp/ccXIdJsJ.s:1499   .rodata.asEntryDesc0x10F1:0000000000000000 asEntryDesc0x10F1
+     /tmp/ccXIdJsJ.s:1333   .rodata.aName0x1018:0000000000000000 aName0x1018
+     /tmp/ccXIdJsJ.s:1479   .rodata.asEntryDesc0x1018:0000000000000000 asEntryDesc0x1018
+     /tmp/ccXIdJsJ.s:1279   .data.sIdentity:0000000000000000 sIdentity
+     /tmp/ccXIdJsJ.s:1327   .rodata.aName0x100A:0000000000000000 aName0x100A
+     /tmp/ccXIdJsJ.s:2156   .rodata.sEntryDesc0x100A:0000000000000000 sEntryDesc0x100A
+     /tmp/ccXIdJsJ.s:1254   .data.acSoftwareversion:0000000000000000 acSoftwareversion
+     /tmp/ccXIdJsJ.s:1321   .rodata.aName0x1009:0000000000000000 aName0x1009
+     /tmp/ccXIdJsJ.s:2148   .rodata.sEntryDesc0x1009:0000000000000000 sEntryDesc0x1009
+     /tmp/ccXIdJsJ.s:1248   .data.acHardwareversion:0000000000000000 acHardwareversion
+     /tmp/ccXIdJsJ.s:1315   .rodata.aName0x1008:0000000000000000 aName0x1008
+     /tmp/ccXIdJsJ.s:2140   .rodata.sEntryDesc0x1008:0000000000000000 sEntryDesc0x1008
+     /tmp/ccXIdJsJ.s:1242   .data.acDevicename:0000000000000000 acDevicename
+     /tmp/ccXIdJsJ.s:1309   .rodata.aName0x1001:0000000000000000 aName0x1001
+     /tmp/ccXIdJsJ.s:2132   .rodata.sEntryDesc0x1001:0000000000000000 sEntryDesc0x1001
+     /tmp/ccXIdJsJ.s:904    .bss.u16ErrorRegister:0000000000000000 u16ErrorRegister
+     /tmp/ccXIdJsJ.s:1303   .rodata.aName0x1000:0000000000000000 aName0x1000
+     /tmp/ccXIdJsJ.s:2124   .rodata.sEntryDesc0x1000:0000000000000000 sEntryDesc0x1000
+     /tmp/ccXIdJsJ.s:1297   .data.u32Devicetype:0000000000000000 u32Devicetype
+     /tmp/ccXIdJsJ.s:911    .data.ApplicationObjDic:0000000000000000 ApplicationObjDic
+     /tmp/ccXIdJsJ.s:1459   .rodata.aName0xF010:0000000000000000 aName0xF010
+     /tmp/ccXIdJsJ.s:2096   .rodata.asEntryDesc0xF010:0000000000000000 asEntryDesc0xF010
+     /tmp/ccXIdJsJ.s:1452   .rodata.aName0xF000:0000000000000000 aName0xF000
+ARM GAS  /tmp/ccXIdJsJ.s 			page 58
+
+
+     /tmp/ccXIdJsJ.s:2082   .rodata.asEntryDesc0xF000:0000000000000000 asEntryDesc0xF000
+     /tmp/ccXIdJsJ.s:1443   .rodata.aName0x8020:0000000000000000 aName0x8020
+     /tmp/ccXIdJsJ.s:2014   .rodata.asEntryDesc0x8020:0000000000000000 asEntryDesc0x8020
+     /tmp/ccXIdJsJ.s:1431   .rodata.aName0x7010:0000000000000000 aName0x7010
+     /tmp/ccXIdJsJ.s:1919   .rodata.asEntryDesc0x7010:0000000000000000 asEntryDesc0x7010
+     /tmp/ccXIdJsJ.s:1422   .rodata.aName0x6020:0000000000000000 aName0x6020
+     /tmp/ccXIdJsJ.s:1860   .rodata.asEntryDesc0x6020:0000000000000000 asEntryDesc0x6020
+     /tmp/ccXIdJsJ.s:1414   .rodata.aName0x6000:0000000000000000 aName0x6000
+     /tmp/ccXIdJsJ.s:1825   .rodata.asEntryDesc0x6000:0000000000000000 asEntryDesc0x6000
+     /tmp/ccXIdJsJ.s:1384   .rodata.aName0x1C13:0000000000000000 aName0x1C13
+     /tmp/ccXIdJsJ.s:1378   .rodata.aName0x1C12:0000000000000000 aName0x1C12
+     /tmp/ccXIdJsJ.s:1366   .rodata.aName0x1A02:0000000000000000 aName0x1A02
+     /tmp/ccXIdJsJ.s:1678   .rodata.asEntryDesc0x1A02:0000000000000000 asEntryDesc0x1A02
+     /tmp/ccXIdJsJ.s:1360   .rodata.aName0x1A00:0000000000000000 aName0x1A00
+     /tmp/ccXIdJsJ.s:1643   .rodata.asEntryDesc0x1A00:0000000000000000 asEntryDesc0x1A00
+     /tmp/ccXIdJsJ.s:1353   .rodata.aName0x1802:0000000000000000 aName0x1802
+     /tmp/ccXIdJsJ.s:1608   .rodata.asEntryDesc0x1802:0000000000000000 asEntryDesc0x1802
+     /tmp/ccXIdJsJ.s:1347   .rodata.aName0x1601:0000000000000000 aName0x1601
+     /tmp/ccXIdJsJ.s:1513   .rodata.asEntryDesc0x1601:0000000000000000 asEntryDesc0x1601
+     /tmp/ccXIdJsJ.s:1465   .rodata.asEntryDesc0x0800:0000000000000000 asEntryDesc0x0800
+     /tmp/ccXIdJsJ.s:1260   .data.apEnum0800:0000000000000000 apEnum0800
+     /tmp/ccXIdJsJ.s:1273   .data.sEnum0800_Value01:0000000000000000 sEnum0800_Value01
+     /tmp/ccXIdJsJ.s:1267   .data.sEnum0800_Value00:0000000000000000 sEnum0800_Value00
+     /tmp/ccXIdJsJ.s:2113   .rodata.asPDOAssignEntryDesc:0000000000000000 asPDOAssignEntryDesc
+     /tmp/ccXIdJsJ.s:894    .bss.ObjDicList:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:901    .bss.u16ErrorRegister:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:907    .data.ApplicationObjDic:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1090   .data.GenObjDic:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1239   .data.acDevicename:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1245   .data.acHardwareversion:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1251   .data.acSoftwareversion:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1257   .data.apEnum0800:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1264   .data.sEnum0800_Value00:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1270   .data.sEnum0800_Value01:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1276   .data.sIdentity:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1287   .data.sSyncmanagertype:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1294   .data.u32Devicetype:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1300   .rodata.aName0x1000:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1306   .rodata.aName0x1001:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1312   .rodata.aName0x1008:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1318   .rodata.aName0x1009:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1324   .rodata.aName0x100A:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1330   .rodata.aName0x1018:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1337   .rodata.aName0x10F1:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1344   .rodata.aName0x1601:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1350   .rodata.aName0x1802:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1357   .rodata.aName0x1A00:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1363   .rodata.aName0x1A02:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1369   .rodata.aName0x1C00:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1375   .rodata.aName0x1C12:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1381   .rodata.aName0x1C13:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1387   .rodata.aName0x1C32:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1399   .rodata.aName0x1C33:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1411   .rodata.aName0x6000:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1419   .rodata.aName0x6020:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1428   .rodata.aName0x7010:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1440   .rodata.aName0x8020:0000000000000000 $d
+ARM GAS  /tmp/ccXIdJsJ.s 			page 59
+
+
+     /tmp/ccXIdJsJ.s:1449   .rodata.aName0xF000:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1456   .rodata.aName0xF010:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1462   .rodata.asEntryDesc0x0800:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1476   .rodata.asEntryDesc0x1018:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1496   .rodata.asEntryDesc0x10F1:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1510   .rodata.asEntryDesc0x1601:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1605   .rodata.asEntryDesc0x1802:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1640   .rodata.asEntryDesc0x1A00:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1675   .rodata.asEntryDesc0x1A02:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1707   .rodata.asEntryDesc0x1C00:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1718   .rodata.asEntryDesc0x1C3x:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1822   .rodata.asEntryDesc0x6000:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1857   .rodata.asEntryDesc0x6020:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:1916   .rodata.asEntryDesc0x7010:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:2011   .rodata.asEntryDesc0x8020:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:2079   .rodata.asEntryDesc0xF000:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:2093   .rodata.asEntryDesc0xF010:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:2110   .rodata.asPDOAssignEntryDesc:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:2121   .rodata.sEntryDesc0x1000:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:2129   .rodata.sEntryDesc0x1001:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:2137   .rodata.sEntryDesc0x1008:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:2145   .rodata.sEntryDesc0x1009:0000000000000000 $d
+     /tmp/ccXIdJsJ.s:2153   .rodata.sEntryDesc0x100A:0000000000000000 $d
+
+UNDEFINED SYMBOLS
+sSyncManOutPar
+sSyncManInPar
+bSyncSetByUser
+u8PendingSdo
+bStoreCompleteAccess
+u16StoreIndex
+u8StoreSubindex
+u32StoreDataSize
+pStoreData
+pSdoPendFunc
+pSdoSegData
+SDOS_SdoRes
+free
+sDORxPDOMap
+TxPDO1802Subindex0
+ReadObject0x1802
+sDITxPDOMap
+sAITxPDOMap
+sRxPDOassign
+sTxPDOassign
+sDIInputs
+sAIInputs
+sDOOutputs
+sAISettings
+sModulardeviceprofile
+sModulelist
+sErrorSettings
