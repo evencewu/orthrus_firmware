@@ -519,7 +519,7 @@ void APPL_Application(void)
     sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
     sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
 
-    if (ms_flag < 11)
+    if (ms_flag < 6)
     {
         ms_flag++;
     }
