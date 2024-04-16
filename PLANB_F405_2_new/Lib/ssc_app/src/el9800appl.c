@@ -376,25 +376,6 @@ void APPL_InputMapping(UINT16 *pData)
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[7]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[8]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[9]);
-            /*motor*/
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[10]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[11]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[12]);
-
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[13]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[14]);
-
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[15]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[16]);
-
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[17]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[18]);
-
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[19]);
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[20]);
-
-            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[21]);
-            /**/
             break;
         }
     }
@@ -425,27 +406,28 @@ void APPL_OutputMapping(UINT16 *pData)
         {
         /* RxPDO 2 */
         case 0x1601:
-            ((UINT16 *)&sDOOutputs)[1] = SWAPWORD(*pTmpData);
-            ((UINT16 *)&sDOOutputs)[2] = (SWAPWORD(*pTmpData) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 1)) & 0xFF) << 8; //
-            ((UINT16 *)&sDOOutputs)[3] = (SWAPWORD(*(pTmpData + 1)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 2)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[4] = (SWAPWORD(*(pTmpData + 2)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 3)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[5] = (SWAPWORD(*(pTmpData + 3)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 4)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[6] = (SWAPWORD(*(pTmpData + 4)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 5)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[7] = (SWAPWORD(*(pTmpData + 5)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 6)) & 0xFF) << 8;
-            ((UINT16 *)&sDOOutputs)[8] = (SWAPWORD(*(pTmpData + 6)) >> 8 & 0xFF) | (SWAPWORD(*(pTmpData + 7)) & 0xFF) << 8;
-            /*motor1*/
-            ((UINT16 *)&sDOOutputs)[16] = (SWAPWORD(*(pTmpData + 14)) >> 8 & 0xFF);
-            ((UINT16 *)&sDOOutputs)[17] = SWAPWORD(*(pTmpData + 15));
-            ((UINT16 *)&sDOOutputs)[18] = SWAPWORD(*(pTmpData + 16));
-            ((UINT16 *)&sDOOutputs)[19] = SWAPWORD(*(pTmpData + 17));
-            ((UINT16 *)&sDOOutputs)[20] = SWAPWORD(*(pTmpData + 18));
-            ((UINT16 *)&sDOOutputs)[21] = SWAPWORD(*(pTmpData + 19));
-            ((UINT16 *)&sDOOutputs)[22] = SWAPWORD(*(pTmpData + 20));
-            ((UINT16 *)&sDOOutputs)[23] = SWAPWORD(*(pTmpData + 21));
-            ((UINT16 *)&sDOOutputs)[24] = SWAPWORD(*(pTmpData + 22));
-            ((UINT16 *)&sDOOutputs)[25] = SWAPWORD(*(pTmpData + 23));
-            ((UINT16 *)&sDOOutputs)[26] = SWAPWORD(*(pTmpData + 24));
-            ((UINT16 *)&sDOOutputs)[27] = SWAPWORD(*(pTmpData + 25));
+            ((UINT16 *)&sDOOutputs)[1] = SWAPWORD(*pTmpData++);
+            //can2
+            ((UINT16 *)&sDOOutputs)[2] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[3] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[4] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[5] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[6] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[7] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[8] = SWAPWORD(*pTmpData++);
+            /*motor*/
+            ((UINT16 *)&sDOOutputs)[9] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[10] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[11] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[12] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[13] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[14] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[15] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[16] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[17] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[18] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[19] = SWAPWORD(*pTmpData++);
+            ((UINT16 *)&sDOOutputs)[20] = SWAPWORD(*pTmpData++);
             break;
         }
     }
@@ -460,8 +442,8 @@ void APPL_OutputMapping(UINT16 *pData)
 
 #include "spi2_bus.h"
 
-void ecat_motor_data_rx();
-void ecat_can_rx();
+//void ecat_motor_data_rx();
+//void ecat_can_rx();
 
 int ms_flag = 0;
 
@@ -494,8 +476,8 @@ void APPL_Application(void)
         GPIO_ResetBits(GPIOB, GPIO_Pin_13);
     }
 
-    ecat_can_rx();
-    ecat_motor_data_rx();
+    //ecat_can_rx();
+    //ecat_motor_data_rx();
 
     // uint8_t dummy = spi2_wr_cmd(0x01);
 
@@ -504,20 +486,20 @@ void APPL_Application(void)
 
     sAIInputs.i16Analoginput = 0;
 
-    sAIInputs.can2_h0 = Can2_RxMessage.StdId;
-    sAIInputs.can2_h1 = Can2_RxMessage.ExtId;
-    sAIInputs.can2_h2 = Can2_RxMessage.IDE;
-    sAIInputs.can2_h3 = Can2_RxMessage.RTR;
-    sAIInputs.can2_h4 = Can2_RxMessage.DLC;
+    //sAIInputs.can2_h0 = Can2_RxMessage.StdId;
+    //sAIInputs.can2_h1 = Can2_RxMessage.ExtId;
+    //sAIInputs.can2_h2 = Can2_RxMessage.IDE;
+    //sAIInputs.can2_h3 = Can2_RxMessage.RTR;
+    //sAIInputs.can2_h4 = Can2_RxMessage.DLC;
 
-    sAIInputs.can2_d0 = Can2_RxMessage.Data[0];
-    sAIInputs.can2_d1 = Can2_RxMessage.Data[1];
-    sAIInputs.can2_d2 = Can2_RxMessage.Data[2];
-    sAIInputs.can2_d3 = Can2_RxMessage.Data[3];
-    sAIInputs.can2_d4 = Can2_RxMessage.Data[4];
-    sAIInputs.can2_d5 = Can2_RxMessage.Data[5];
-    sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
-    sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
+    //sAIInputs.can2_d0 = Can2_RxMessage.Data[0];
+    //sAIInputs.can2_d1 = Can2_RxMessage.Data[1];
+    //sAIInputs.can2_d2 = Can2_RxMessage.Data[2];
+    //sAIInputs.can2_d3 = Can2_RxMessage.Data[3];
+    //sAIInputs.can2_d4 = Can2_RxMessage.Data[4];
+    //sAIInputs.can2_d5 = Can2_RxMessage.Data[5];
+    //sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
+    //sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
 
     if (ms_flag < 6)
     {
@@ -528,16 +510,16 @@ void APPL_Application(void)
         ms_flag = 0;
     }
 
-    sAIInputs.motor_id = ms_flag;
-    sAIInputs.motor_mode = 10;
+    //sAIInputs.motor_id = ms_flag;
+    //sAIInputs.motor_mode = 10;
 
-    sAIInputs.motor_temp = motor_rx[ms_flag / 3][ms_flag % 3].Temp;                       //
-    sAIInputs.motor_error = motor_rx[ms_flag / 3][ms_flag % 3].MError;                    //
-    sAIInputs.motor_T = (float)motor_rx[ms_flag / 3][ms_flag % 3].T / 256;                //
-    sAIInputs.motor_W = (float)motor_rx[ms_flag / 3][ms_flag % 3].W / 128;                //
-    sAIInputs.motor_Pos = (float)motor_rx[ms_flag / 3][ms_flag % 3].Pos / 16384 * 6.2832; //
-    sAIInputs.motor_LW = 10;
-    sAIInputs.motor_Acc = (float)motor_rx[ms_flag / 3][ms_flag % 3].Acc; //
+    //sAIInputs.motor_temp = motor_rx[ms_flag / 3][ms_flag % 3].Temp;                       //
+    //sAIInputs.motor_error = motor_rx[ms_flag / 3][ms_flag % 3].MError;                    //
+    //sAIInputs.motor_T = (float)motor_rx[ms_flag / 3][ms_flag % 3].T / 256;                //
+    //sAIInputs.motor_W = (float)motor_rx[ms_flag / 3][ms_flag % 3].W / 128;                //
+    //sAIInputs.motor_Pos = (float)motor_rx[ms_flag / 3][ms_flag % 3].Pos / 16384 * 6.2832; //
+    //sAIInputs.motor_LW = 10;
+    //sAIInputs.motor_Acc = (float)motor_rx[ms_flag / 3][ms_flag % 3].Acc; //
 
     ecat_spi_motor(ms_flag / 3, ms_flag % 3);
 
@@ -552,6 +534,7 @@ void APPL_Application(void)
         sAIInputs.bTxPDOState = 0;
 }
 
+/*
 void ecat_motor_data_rx()
 {
     int motorid = sDOOutputs.motor_id;
@@ -592,6 +575,8 @@ void ecat_can_rx()
 
     CAN_Transmit(CAN2, &Can2_TxMessage);
 }
+*/
+
 /////////////////////////////////////////////////////////////////////////////////////////
 /**
  \param     index               index of the requested object.
