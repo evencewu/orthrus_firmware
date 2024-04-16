@@ -376,6 +376,17 @@ void APPL_InputMapping(UINT16 *pData)
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[7]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[8]);
             *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[9]);
+            /*motor*/
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[10]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[11]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[12]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[13]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[14]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[15]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[16]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[17]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[18]);
+            *pTmpData++ = SWAPWORD(((UINT16 *)&sAIInputs)[19]);
             break;
         }
     }
@@ -476,30 +487,30 @@ void APPL_Application(void)
         GPIO_ResetBits(GPIOB, GPIO_Pin_13);
     }
 
-    //ecat_can_rx();
-    //ecat_motor_data_rx();
+    ecat_can_rx();
+    ecat_motor_data_rx();
 
-    // uint8_t dummy = spi2_wr_cmd(0x01);
+    uint8_t dummy = spi2_wr_cmd(0x01);
 
     /* start the conversion of the A/D converter */
     //		while(!(ADC_GetFlagStatus(ADC1, ADC_FLAG_EOC)==SET));
 
     sAIInputs.i16Analoginput = 0;
 
-    //sAIInputs.can2_h0 = Can2_RxMessage.StdId;
-    //sAIInputs.can2_h1 = Can2_RxMessage.ExtId;
-    //sAIInputs.can2_h2 = Can2_RxMessage.IDE;
-    //sAIInputs.can2_h3 = Can2_RxMessage.RTR;
-    //sAIInputs.can2_h4 = Can2_RxMessage.DLC;
+    sAIInputs.can2_h0 = Can2_RxMessage.StdId;
+    sAIInputs.can2_h1 = Can2_RxMessage.ExtId;
+    sAIInputs.can2_h2 = Can2_RxMessage.IDE;
+    sAIInputs.can2_h3 = Can2_RxMessage.RTR;
+    sAIInputs.can2_h4 = Can2_RxMessage.DLC;
 
-    //sAIInputs.can2_d0 = Can2_RxMessage.Data[0];
-    //sAIInputs.can2_d1 = Can2_RxMessage.Data[1];
-    //sAIInputs.can2_d2 = Can2_RxMessage.Data[2];
-    //sAIInputs.can2_d3 = Can2_RxMessage.Data[3];
-    //sAIInputs.can2_d4 = Can2_RxMessage.Data[4];
-    //sAIInputs.can2_d5 = Can2_RxMessage.Data[5];
-    //sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
-    //sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
+    sAIInputs.can2_d0 = Can2_RxMessage.Data[0];
+    sAIInputs.can2_d1 = Can2_RxMessage.Data[1];
+    sAIInputs.can2_d2 = Can2_RxMessage.Data[2];
+    sAIInputs.can2_d3 = Can2_RxMessage.Data[3];
+    sAIInputs.can2_d4 = Can2_RxMessage.Data[4];
+    sAIInputs.can2_d5 = Can2_RxMessage.Data[5];
+    sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
+    sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
 
     if (ms_flag < 6)
     {
@@ -510,16 +521,15 @@ void APPL_Application(void)
         ms_flag = 0;
     }
 
-    //sAIInputs.motor_id = ms_flag;
-    //sAIInputs.motor_mode = 10;
+    sAIInputs.motor_id = ms_flag;
+    sAIInputs.motor_mode = 10;
 
-    //sAIInputs.motor_temp = motor_rx[ms_flag / 3][ms_flag % 3].Temp;                       //
-    //sAIInputs.motor_error = motor_rx[ms_flag / 3][ms_flag % 3].MError;                    //
-    //sAIInputs.motor_T = (float)motor_rx[ms_flag / 3][ms_flag % 3].T / 256;                //
-    //sAIInputs.motor_W = (float)motor_rx[ms_flag / 3][ms_flag % 3].W / 128;                //
-    //sAIInputs.motor_Pos = (float)motor_rx[ms_flag / 3][ms_flag % 3].Pos / 16384 * 6.2832; //
-    //sAIInputs.motor_LW = 10;
-    //sAIInputs.motor_Acc = (float)motor_rx[ms_flag / 3][ms_flag % 3].Acc; //
+    sAIInputs.motor_temp = motor_rx[ms_flag / 3][ms_flag % 3].Temp;                       //
+    sAIInputs.motor_error = motor_rx[ms_flag / 3][ms_flag % 3].MError;                    //
+    sAIInputs.motor_t = (float)motor_rx[ms_flag / 3][ms_flag % 3].T / 256;                //
+    sAIInputs.motor_w = (float)motor_rx[ms_flag / 3][ms_flag % 3].W / 128;                //
+    sAIInputs.motor_pos = (float)motor_rx[ms_flag / 3][ms_flag % 3].Pos / 16384 * 6.2832; //
+    sAIInputs.motor_acc = (float)motor_rx[ms_flag / 3][ms_flag % 3].Acc; //
 
     ecat_spi_motor(ms_flag / 3, ms_flag % 3);
 
@@ -534,7 +544,7 @@ void APPL_Application(void)
         sAIInputs.bTxPDOState = 0;
 }
 
-/*
+
 void ecat_motor_data_rx()
 {
     int motorid = sDOOutputs.motor_id;
@@ -575,7 +585,7 @@ void ecat_can_rx()
 
     CAN_Transmit(CAN2, &Can2_TxMessage);
 }
-*/
+
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /**
