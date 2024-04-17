@@ -142,9 +142,9 @@ typedef struct OBJ_STRUCT_PACKED_START
    UINT16 motor_mode;
    UINT8 motor_temp;
    UINT8 motor_error;
-   UINT32 motor_t;
-   UINT32 motor_w;
-   UINT32 motor_pos;
+   float motor_t;
+   float motor_w;
+   float motor_pos;
    UINT16 motor_acc;
    UINT16 motor_id;
 } OBJ_STRUCT_PACKED_END
@@ -177,11 +177,11 @@ typedef struct OBJ_STRUCT_PACKED_START
    UINT8 can2_d6;
    UINT8 can2_d7;
    UINT16 motor_mode;
-   UINT32 motor_pos;
-   UINT32 motor_w;
-   UINT32 motor_kp;
-   UINT32 motor_kd;
-   UINT32 motor_t;
+   float motor_pos;
+   float motor_w;
+   float motor_kp;
+   float motor_kd;
+   float motor_t;
    UINT16 motor_id;
 } OBJ_STRUCT_PACKED_END
     TOBJ7010;

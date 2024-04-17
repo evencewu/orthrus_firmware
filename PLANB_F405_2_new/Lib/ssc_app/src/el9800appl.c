@@ -512,7 +512,7 @@ void APPL_Application(void)
     sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
     sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
 
-    if (ms_flag < 6)
+    if (ms_flag < 5)
     {
         ms_flag++;
     }
@@ -549,7 +549,7 @@ void ecat_motor_data_rx()
 {
     int motorid = sDOOutputs.motor_id;
 
-    if (motorid <= 11)
+    if (motorid <= 5)
     {
         motor_tx[motorid / 3][motorid % 3].start[0] = 0xD2;
         motor_tx[motorid / 3][motorid % 3].start[1] = 0xFE;
