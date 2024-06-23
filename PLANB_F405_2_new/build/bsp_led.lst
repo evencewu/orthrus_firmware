@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccHkFoOY.s 			page 1
+ARM GAS  /tmp/ccyi75tB.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccHkFoOY.s 			page 1
    9:Lib/bsp/src/bsp_led.c ****     //LED1
   10:Lib/bsp/src/bsp_led.c ****     gpio.GPIO_Pin = GPIO_Pin_15;
   48              		.loc 1 10 5 view .LVU3
-ARM GAS  /tmp/ccHkFoOY.s 			page 2
+ARM GAS  /tmp/ccyi75tB.s 			page 2
 
 
   49              		.loc 1 10 19 is_stmt 0 view .LVU4
@@ -85,7 +85,7 @@ ARM GAS  /tmp/ccHkFoOY.s 			page 1
   66 0024 8DF80740 		strb	r4, [sp, #7]
   15:Lib/bsp/src/bsp_led.c ****     GPIO_Init(GPIOB, &gpio);
   67              		.loc 1 15 5 is_stmt 1 view .LVU13
-  68 0028 124D     		ldr	r5, .L3
+  68 0028 194D     		ldr	r5, .L3
   69 002a 6946     		mov	r1, sp
   70 002c 2846     		mov	r0, r5
   71 002e FFF7FEFF 		bl	GPIO_Init
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccHkFoOY.s 			page 1
   90 0048 6946     		mov	r1, sp
   91 004a 2846     		mov	r0, r5
   92 004c FFF7FEFF 		bl	GPIO_Init
-ARM GAS  /tmp/ccHkFoOY.s 			page 3
+ARM GAS  /tmp/ccyi75tB.s 			page 3
 
 
   93              	.LVL2:
@@ -151,33 +151,65 @@ ARM GAS  /tmp/ccHkFoOY.s 			page 1
  112 0068 2846     		mov	r0, r5
  113 006a FFF7FEFF 		bl	GPIO_Init
  114              	.LVL3:
-  32:Lib/bsp/src/bsp_led.c **** }...
- 115              		.loc 1 32 1 is_stmt 0 view .LVU36
- 116 006e 03B0     		add	sp, sp, #12
- 117              		.cfi_def_cfa_offset 20
- 118              		@ sp needed
- 119 0070 F0BD     		pop	{r4, r5, r6, r7, pc}
- 120              	.L4:
- 121 0072 00BF     		.align	2
- 122              	.L3:
- 123 0074 00040240 		.word	1073873920
- 124              		.cfi_endproc
- 125              	.LFE123:
- 127              		.text
- 128              	.Letext0:
- 129              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
- 130              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
- 131              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
- 132              		.file 5 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
- 133              		.file 6 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h"
-ARM GAS  /tmp/ccHkFoOY.s 			page 4
+  32:Lib/bsp/src/bsp_led.c **** 
+  33:Lib/bsp/src/bsp_led.c ****     //LED3
+  34:Lib/bsp/src/bsp_led.c ****     gpio.GPIO_Pin = GPIO_Pin_9;
+ 115              		.loc 1 34 5 view .LVU36
+ 116              		.loc 1 34 19 is_stmt 0 view .LVU37
+ 117 006e 4FF40073 		mov	r3, #512
+ 118 0072 0093     		str	r3, [sp]
+  35:Lib/bsp/src/bsp_led.c ****     gpio.GPIO_Mode = GPIO_Mode_OUT;
+ 119              		.loc 1 35 5 is_stmt 1 view .LVU38
+ 120              		.loc 1 35 20 is_stmt 0 view .LVU39
+ 121 0074 8DF80470 		strb	r7, [sp, #4]
+  36:Lib/bsp/src/bsp_led.c ****     gpio.GPIO_Speed = GPIO_Speed_50MHz;
+ 122              		.loc 1 36 5 is_stmt 1 view .LVU40
+ 123              		.loc 1 36 21 is_stmt 0 view .LVU41
+ 124 0078 8DF80540 		strb	r4, [sp, #5]
+  37:Lib/bsp/src/bsp_led.c ****     gpio.GPIO_OType = GPIO_OType_PP;
+ 125              		.loc 1 37 5 is_stmt 1 view .LVU42
+ 126              		.loc 1 37 21 is_stmt 0 view .LVU43
+ 127 007c 8DF80660 		strb	r6, [sp, #6]
+  38:Lib/bsp/src/bsp_led.c ****     gpio.GPIO_PuPd = GPIO_PuPd_DOWN;
+ 128              		.loc 1 38 5 is_stmt 1 view .LVU44
+ 129              		.loc 1 38 20 is_stmt 0 view .LVU45
+ 130 0080 8DF80740 		strb	r4, [sp, #7]
+  39:Lib/bsp/src/bsp_led.c ****     GPIO_Init(GPIOB, &gpio);
+ 131              		.loc 1 39 5 is_stmt 1 view .LVU46
+ 132 0084 6946     		mov	r1, sp
+ 133 0086 2846     		mov	r0, r5
+ARM GAS  /tmp/ccyi75tB.s 			page 4
+
+
+ 134 0088 FFF7FEFF 		bl	GPIO_Init
+ 135              	.LVL4:
+  40:Lib/bsp/src/bsp_led.c **** }...
+ 136              		.loc 1 40 1 is_stmt 0 view .LVU47
+ 137 008c 03B0     		add	sp, sp, #12
+ 138              		.cfi_def_cfa_offset 20
+ 139              		@ sp needed
+ 140 008e F0BD     		pop	{r4, r5, r6, r7, pc}
+ 141              	.L4:
+ 142              		.align	2
+ 143              	.L3:
+ 144 0090 00040240 		.word	1073873920
+ 145              		.cfi_endproc
+ 146              	.LFE123:
+ 148              		.text
+ 149              	.Letext0:
+ 150              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 151              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 152              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 153              		.file 5 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_gpio.h"
+ 154              		.file 6 "Drivers/STM32F4xx_StdPeriph_Driver/inc/stm32f4xx_rcc.h"
+ARM GAS  /tmp/ccyi75tB.s 			page 5
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 bsp_led.c
-     /tmp/ccHkFoOY.s:20     .text.led_setup:0000000000000000 $t
-     /tmp/ccHkFoOY.s:26     .text.led_setup:0000000000000000 led_setup
-     /tmp/ccHkFoOY.s:123    .text.led_setup:0000000000000074 $d
+     /tmp/ccyi75tB.s:20     .text.led_setup:0000000000000000 $t
+     /tmp/ccyi75tB.s:26     .text.led_setup:0000000000000000 led_setup
+     /tmp/ccyi75tB.s:144    .text.led_setup:0000000000000090 $d
 
 UNDEFINED SYMBOLS
 RCC_AHB1PeriphClockCmd

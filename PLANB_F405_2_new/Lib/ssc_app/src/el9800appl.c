@@ -462,30 +462,14 @@ void APPL_Application(void)
 {
     if (sDOOutputs.bLED1 != 0)
     {
-        GPIO_SetBits(GPIOB, GPIO_Pin_15);
+        GPIO_SetBits(GPIOB, GPIO_Pin_9);
     }
     else
     {
-        GPIO_ResetBits(GPIOB, GPIO_Pin_15);
+        GPIO_ResetBits(GPIOB, GPIO_Pin_9);
     }
 
-    if (sDOOutputs.bLED2 != 0)
-    {
-        GPIO_SetBits(GPIOB, GPIO_Pin_14);
-    }
-    else
-    {
-        GPIO_ResetBits(GPIOB, GPIO_Pin_14);
-    }
 
-    if (sDOOutputs.bLED3 != 0)
-    {
-        GPIO_SetBits(GPIOB, GPIO_Pin_13);
-    }
-    else
-    {
-        GPIO_ResetBits(GPIOB, GPIO_Pin_13);
-    }
 
     ecat_can_rx();
     ecat_motor_data_rx();
