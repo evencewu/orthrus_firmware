@@ -124,6 +124,12 @@ void CAN1_Config(void)
 CanTxMsg Can2_TxMessage; // 发送缓冲区
 CanRxMsg Can2_RxMessage; // 接收缓冲区
 
+// 负载均衡
+int can2_balance_flag_[20];
+
+// 负载均衡分类缓冲区
+CanRxMsg Can2_RxBalance[20];
+
 static void CAN2_GPIO_Config(void)
 {
 
@@ -236,6 +242,11 @@ void CAN2_Config(void)
 
     CAN2_NVIC_Config();
     CAN2_Filter_Config();
+
+    for (int i = 0; i < 20; ++i)
+    {
+        can2_balance_flag_[i] = 0;
+    }
 }
 
 /********************************************************************/
@@ -247,4 +258,22 @@ void CAN1_RX0_IRQHandler(void)
 void CAN2_RX0_IRQHandler(void)
 {
     CAN_Receive(CAN2, CAN_FIFO0, &Can2_RxMessage);
+    if ((int)Can2_RxMessage.StdId < 20)
+    {
+        can2_balance_flag_[(int)Can2_RxMessage.StdId] = 1;
+
+        Can2_RxBalance[(int)Can2_RxMessage.StdId].StdId = Can2_RxMessage.StdId;
+        Can2_RxBalance[(int)Can2_RxMessage.StdId].ExtId = Can2_RxMessage.ExtId;
+        Can2_RxBalance[(int)Can2_RxMessage.StdId].IDE = Can2_RxMessage.IDE;
+        Can2_RxBalance[(int)Can2_RxMessage.StdId].RTR = Can2_RxMessage.RTR;
+        Can2_RxBalance[(int)Can2_RxMessage.StdId].DLC = Can2_RxMessage.DLC;
+        Can2_RxBalance[(int)Can2_RxMessage.StdId].Data[0] = Can2_RxMessage.Data[0];
+        Can2_RxBalance[(int)Can2_RxMessage.StdId].Data[1] = Can2_RxMessage.Data[1];
+        Can2_RxBalance[(int)Can2_RxMessage.StdId].Data[2] = Can2_RxMessage.Data[2];
+        Can2_RxBalance[(int)Can2_RxMessage.StdId].Data[3] = Can2_RxMessage.Data[3];
+        Can2_RxBalance[(int)Can2_RxMessage.StdId].Data[4] = Can2_RxMessage.Data[4];
+        Can2_RxBalance[(int)Can2_RxMessage.StdId].Data[5] = Can2_RxMessage.Data[5];
+        Can2_RxBalance[(int)Can2_RxMessage.StdId].Data[6] = Can2_RxMessage.Data[6];
+        Can2_RxBalance[(int)Can2_RxMessage.StdId].Data[7] = Can2_RxMessage.Data[7];
+    }
 }

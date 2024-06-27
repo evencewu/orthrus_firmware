@@ -206,6 +206,14 @@ extern CanRxMsg Can1_RxMessage; // 接收缓冲区
 extern CanTxMsg Can2_TxMessage; // 发送缓冲区
 extern CanRxMsg Can2_RxMessage; // 接收缓冲区
 
+// 负载均衡
+extern int can2_balance_flag_[20];
+
+// 负载均衡分类缓冲区
+extern CanRxMsg Can2_RxBalance[20];
+
+int can2_loop = 0;
+
 UINT16 APPL_StopOutputHandler(void)
 {
     /*ECATCHANGE_START(V5.11) EL9800 1*/
@@ -418,7 +426,7 @@ void APPL_OutputMapping(UINT16 *pData)
         /* RxPDO 2 */
         case 0x1601:
             ((UINT16 *)&sDOOutputs)[1] = SWAPWORD(*pTmpData++);
-            //can2
+            // can2
             ((UINT16 *)&sDOOutputs)[2] = SWAPWORD(*pTmpData++);
             ((UINT16 *)&sDOOutputs)[3] = SWAPWORD(*pTmpData++);
             ((UINT16 *)&sDOOutputs)[4] = SWAPWORD(*pTmpData++);
@@ -453,8 +461,8 @@ void APPL_OutputMapping(UINT16 *pData)
 
 #include "spi2_bus.h"
 
-//void ecat_motor_data_rx();
-//void ecat_can_rx();
+// void ecat_motor_data_rx();
+// void ecat_can_rx();
 
 int ms_flag = 0;
 
@@ -469,8 +477,6 @@ void APPL_Application(void)
         GPIO_ResetBits(GPIOB, GPIO_Pin_9);
     }
 
-
-
     ecat_can_rx();
     ecat_motor_data_rx();
 
@@ -481,20 +487,123 @@ void APPL_Application(void)
 
     sAIInputs.i16Analoginput = 0;
 
-    sAIInputs.can2_h0 = Can2_RxMessage.StdId;
-    sAIInputs.can2_h1 = Can2_RxMessage.ExtId;
-    sAIInputs.can2_h2 = Can2_RxMessage.IDE;
-    sAIInputs.can2_h3 = Can2_RxMessage.RTR;
-    sAIInputs.can2_h4 = Can2_RxMessage.DLC;
+    /*
+    int can2_select_time = 0;
 
-    sAIInputs.can2_d0 = Can2_RxMessage.Data[0];
-    sAIInputs.can2_d1 = Can2_RxMessage.Data[1];
-    sAIInputs.can2_d2 = Can2_RxMessage.Data[2];
-    sAIInputs.can2_d3 = Can2_RxMessage.Data[3];
-    sAIInputs.can2_d4 = Can2_RxMessage.Data[4];
-    sAIInputs.can2_d5 = Can2_RxMessage.Data[5];
-    sAIInputs.can2_d6 = Can2_RxMessage.Data[6];
-    sAIInputs.can2_d7 = Can2_RxMessage.Data[7];
+    int can2_finish = 0;
+    do
+    {
+        if (can2_balance_flag_[can2_loop] == 1)
+        {
+            sAIInputs.can2_h0 = Can2_RxBalance[can2_loop].StdId;
+            sAIInputs.can2_h1 = Can2_RxBalance[can2_loop].ExtId;
+            sAIInputs.can2_h2 = Can2_RxBalance[can2_loop].IDE;
+            sAIInputs.can2_h3 = Can2_RxBalance[can2_loop].RTR;
+            sAIInputs.can2_h4 = Can2_RxBalance[can2_loop].DLC;
+
+            sAIInputs.can2_d0 = Can2_RxBalance[can2_loop].Data[0];
+            sAIInputs.can2_d1 = Can2_RxBalance[can2_loop].Data[1];
+            sAIInputs.can2_d2 = Can2_RxBalance[can2_loop].Data[2];
+            sAIInputs.can2_d3 = Can2_RxBalance[can2_loop].Data[3];
+            sAIInputs.can2_d4 = Can2_RxBalance[can2_loop].Data[4];
+            sAIInputs.can2_d5 = Can2_RxBalance[can2_loop].Data[5];
+            sAIInputs.can2_d6 = Can2_RxBalance[can2_loop].Data[6];
+            sAIInputs.can2_d7 = Can2_RxBalance[can2_loop].Data[7];
+
+            can2_finish = 1;
+        }
+        else
+        {
+            can2_select_time++;
+        }
+
+        if (can2_loop < 19)
+        {
+            can2_loop++;
+        }
+        else
+        {
+            can2_loop = 0;
+        }
+
+    } while (can2_finish || can2_select_time >= 20);
+    */
+    //---------------------
+
+    int can2_select_time = 0;
+
+    int can2_finish = 0;
+
+    if (can2_finish == 0)
+    {
+
+        if (can2_balance_flag_[can2_loop] == 1)
+        {
+            sAIInputs.can2_h0 = Can2_RxBalance[can2_loop].StdId;
+            sAIInputs.can2_h1 = Can2_RxBalance[can2_loop].ExtId;
+            sAIInputs.can2_h2 = Can2_RxBalance[can2_loop].IDE;
+            sAIInputs.can2_h3 = Can2_RxBalance[can2_loop].RTR;
+            sAIInputs.can2_h4 = Can2_RxBalance[can2_loop].DLC;
+
+            sAIInputs.can2_d0 = Can2_RxBalance[can2_loop].Data[0];
+            sAIInputs.can2_d1 = Can2_RxBalance[can2_loop].Data[1];
+            sAIInputs.can2_d2 = Can2_RxBalance[can2_loop].Data[2];
+            sAIInputs.can2_d3 = Can2_RxBalance[can2_loop].Data[3];
+            sAIInputs.can2_d4 = Can2_RxBalance[can2_loop].Data[4];
+            sAIInputs.can2_d5 = Can2_RxBalance[can2_loop].Data[5];
+            sAIInputs.can2_d6 = Can2_RxBalance[can2_loop].Data[6];
+            sAIInputs.can2_d7 = Can2_RxBalance[can2_loop].Data[7];
+
+            can2_finish = 1;
+        }
+        else
+        {
+            can2_select_time++;
+        }
+
+        if (can2_loop < 19)
+        {
+            can2_loop++;
+        }
+        else
+        {
+            can2_loop = 0;
+        }
+
+        if (can2_select_time > 20)
+        {
+            can2_finish = 1;
+        }
+    }
+
+    //---------------------
+    /*
+    sAIInputs.can2_h0 = Can2_RxBalance[can2_loop].StdId;
+    sAIInputs.can2_h1 = Can2_RxBalance[can2_loop].ExtId;
+    sAIInputs.can2_h2 = Can2_RxBalance[can2_loop].IDE;
+    sAIInputs.can2_h3 = Can2_RxBalance[can2_loop].RTR;
+    sAIInputs.can2_h4 = Can2_RxBalance[can2_loop].DLC;
+
+    sAIInputs.can2_d0 = Can2_RxBalance[can2_loop].Data[0];
+    sAIInputs.can2_d1 = Can2_RxBalance[can2_loop].Data[1];
+    sAIInputs.can2_d2 = Can2_RxBalance[can2_loop].Data[2];
+    sAIInputs.can2_d3 = Can2_RxBalance[can2_loop].Data[3];
+    sAIInputs.can2_d4 = Can2_RxBalance[can2_loop].Data[4];
+    sAIInputs.can2_d5 = Can2_RxBalance[can2_loop].Data[5];
+    sAIInputs.can2_d6 = Can2_RxBalance[can2_loop].Data[6];
+    sAIInputs.can2_d7 = Can2_RxBalance[can2_loop].Data[7];
+
+    if (can2_loop < 19)
+    {
+        can2_loop++;
+    }
+    else
+    {
+        can2_loop = 0;
+    }
+    */
+
+    //---------------------
 
     if (ms_flag < 5)
     {
@@ -513,7 +622,7 @@ void APPL_Application(void)
     sAIInputs.motor_t = (float)motor_rx[ms_flag / 3][ms_flag % 3].T / 256;                //
     sAIInputs.motor_w = (float)motor_rx[ms_flag / 3][ms_flag % 3].W / 128;                //
     sAIInputs.motor_pos = (float)motor_rx[ms_flag / 3][ms_flag % 3].Pos / 16384 * 6.2832; //
-    sAIInputs.motor_acc = (float)motor_rx[ms_flag / 3][ms_flag % 3].Acc; //
+    sAIInputs.motor_acc = (float)motor_rx[ms_flag / 3][ms_flag % 3].Acc;                  //
 
     ecat_spi_motor(ms_flag / 3, ms_flag % 3);
 
@@ -527,7 +636,6 @@ void APPL_Application(void)
     else
         sAIInputs.bTxPDOState = 0;
 }
-
 
 void ecat_motor_data_rx()
 {
@@ -569,7 +677,6 @@ void ecat_can_rx()
 
     CAN_Transmit(CAN2, &Can2_TxMessage);
 }
-
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /**

@@ -38,4 +38,8 @@
 void CAN1_Config(void);
 void CAN2_Config(void);
 
+//void CAN2_LoadBalanceInit(void);
+
+
+
 #endif
