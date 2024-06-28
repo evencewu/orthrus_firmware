@@ -28,7 +28,7 @@ void remote_control_init(void)
 
 void USART1_IRQHandler(void)
 {
-    
+
     if (huart1.Instance->SR & UART_FLAG_RXNE) // 接收到数据
     {
         __HAL_UART_CLEAR_PEFLAG(&huart1);
@@ -67,7 +67,6 @@ void USART1_IRQHandler(void)
             {
                 sbus_to_rc(sbus_rx_buf_LF[0], &leg[LF].a1_buf);
                 unitreeA1_rx(0);
-                
             }
         }
         else
@@ -98,7 +97,6 @@ void USART1_IRQHandler(void)
                 // 处理数据
                 sbus_to_rc(sbus_rx_buf_LF[1], &leg[LF].a1_buf);
                 unitreeA1_rx(0);
-                
             }
         }
     }
@@ -106,7 +104,7 @@ void USART1_IRQHandler(void)
 
 void USART2_IRQHandler(void)
 {
-   
+
     if (huart2.Instance->SR & UART_FLAG_RXNE) // 接收到数据
     {
         __HAL_UART_CLEAR_PEFLAG(&huart2);
@@ -145,7 +143,6 @@ void USART2_IRQHandler(void)
             {
                 sbus_to_rc(sbus_rx_buf_LB[0], &leg[LB].a1_buf);
                 unitreeA1_rx(1);
-                
             }
         }
         else
@@ -176,7 +173,6 @@ void USART2_IRQHandler(void)
                 // 处理数据
                 sbus_to_rc(sbus_rx_buf_LB[1], &leg[LB].a1_buf);
                 unitreeA1_rx(1);
-                
             }
         }
     }
@@ -184,7 +180,7 @@ void USART2_IRQHandler(void)
 
 void USART3_IRQHandler(void)
 {
-  
+
     if (huart3.Instance->SR & UART_FLAG_RXNE) // 接收到数据
     {
         __HAL_UART_CLEAR_PEFLAG(&huart3);
@@ -223,7 +219,6 @@ void USART3_IRQHandler(void)
             {
                 sbus_to_rc(sbus_rx_buf_RB[0], &leg[RB].a1_buf);
                 unitreeA1_rx(3);
-                
             }
         }
         else
@@ -254,7 +249,6 @@ void USART3_IRQHandler(void)
                 // 处理数据
                 sbus_to_rc(sbus_rx_buf_RB[1], &leg[RB].a1_buf);
                 unitreeA1_rx(3);
-               
             }
         }
     }
@@ -262,7 +256,7 @@ void USART3_IRQHandler(void)
 
 void USART6_IRQHandler(void)
 {
-   
+
     if (huart6.Instance->SR & UART_FLAG_RXNE) // 接收到数据
     {
         __HAL_UART_CLEAR_PEFLAG(&huart6);
@@ -301,7 +295,6 @@ void USART6_IRQHandler(void)
             {
                 sbus_to_rc(sbus_rx_buf_RF[0], &leg[RF].a1_buf);
                 unitreeA1_rx(2);
-               
             }
         }
         else
@@ -332,7 +325,6 @@ void USART6_IRQHandler(void)
                 // 处理数据
                 sbus_to_rc(sbus_rx_buf_RF[1], &leg[RF].a1_buf);
                 unitreeA1_rx(2);
-               
             }
         }
     }
@@ -350,7 +342,7 @@ void unitreeA1_rx(int leg_id)
     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
 
-    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[0] = 0xD2; 
+    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[0] = 0xD2;
     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[1] = 0xFE;
     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].LegID = leg_id;
     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MotorID = data_leg[leg_id].motor_recv_data.head.motorID;
@@ -361,30 +353,30 @@ void unitreeA1_rx(int leg_id)
     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].W = data_leg[leg_id].motor_recv_data.Mdata.W;
     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Acc = data_leg[leg_id].motor_recv_data.Mdata.Acc;
     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Pos = data_leg[leg_id].motor_recv_data.Mdata.Pos;
-    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].SumCheck = 0xff + 0xfe + leg_id +data_leg[leg_id].motor_recv_data.head.motorID +data_leg[leg_id].motor_recv_data.Mdata.mode + data_leg[leg_id].motor_recv_data.Mdata.Temp+data_leg[leg_id].motor_recv_data.Mdata.T + data_leg[leg_id].motor_recv_data.Mdata.W + data_leg[leg_id].motor_recv_data.Mdata.Acc + data_leg[leg_id].motor_recv_data.Mdata.Pos;
+    spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].SumCheck = 0xd2 + 0xfe + leg_id + data_leg[leg_id].motor_recv_data.head.motorID + data_leg[leg_id].motor_recv_data.Mdata.mode + data_leg[leg_id].motor_recv_data.Mdata.Temp + data_leg[leg_id].motor_recv_data.Mdata.T + data_leg[leg_id].motor_recv_data.Mdata.W + data_leg[leg_id].motor_recv_data.Mdata.Acc + data_leg[leg_id].motor_recv_data.Mdata.Pos + data_leg[leg_id].motor_recv_data.Mdata.MError;
 
-/*
-    data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
-    data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
-    data_leg[leg_id].T = data_leg[leg_id].motor_recv_data.Mdata.T;
-    data_leg[leg_id].W = data_leg[leg_id].motor_recv_data.Mdata.W;
-    data_leg[leg_id].Acc = data_leg[leg_id].motor_recv_data.Mdata.Acc;
-    data_leg[leg_id].Pos = data_leg[leg_id].motor_recv_data.Mdata.Pos;
+    /*
+        data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
+        data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
+        data_leg[leg_id].T = data_leg[leg_id].motor_recv_data.Mdata.T;
+        data_leg[leg_id].W = data_leg[leg_id].motor_recv_data.Mdata.W;
+        data_leg[leg_id].Acc = data_leg[leg_id].motor_recv_data.Mdata.Acc;
+        data_leg[leg_id].Pos = data_leg[leg_id].motor_recv_data.Mdata.Pos;
 
-    data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
-    data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
-    data_leg[leg_id].T = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.T / 256.0f);
-    data_leg[leg_id].W = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.W / 128.0f);
-    data_leg[leg_id].Acc = (float)data_leg[leg_id].motor_recv_data.Mdata.Acc;
-    data_leg[leg_id].Pos = (float)((data_leg[leg_id].motor_recv_data.Mdata.Pos / 16384.0f) * 6.2832f);
+        data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
+        data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
+        data_leg[leg_id].T = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.T / 256.0f);
+        data_leg[leg_id].W = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.W / 128.0f);
+        data_leg[leg_id].Acc = (float)data_leg[leg_id].motor_recv_data.Mdata.Acc;
+        data_leg[leg_id].Pos = (float)((data_leg[leg_id].motor_recv_data.Mdata.Pos / 16384.0f) * 6.2832f);
 
-    data_motor[leg_id][data_leg[leg_id].motor_id].motor_id = data_leg[leg_id].motor_id;
-    data_motor[leg_id][data_leg[leg_id].motor_id].MError = data_leg[leg_id].MError;
-    data_motor[leg_id][data_leg[leg_id].motor_id].T = data_leg[leg_id].T;
-    data_motor[leg_id][data_leg[leg_id].motor_id].W = data_leg[leg_id].W;
-    data_motor[leg_id][data_leg[leg_id].motor_id].Acc = data_leg[leg_id].Acc;
-    data_motor[leg_id][data_leg[leg_id].motor_id].Pos = data_leg[leg_id].Pos;
-*/
+        data_motor[leg_id][data_leg[leg_id].motor_id].motor_id = data_leg[leg_id].motor_id;
+        data_motor[leg_id][data_leg[leg_id].motor_id].MError = data_leg[leg_id].MError;
+        data_motor[leg_id][data_leg[leg_id].motor_id].T = data_leg[leg_id].T;
+        data_motor[leg_id][data_leg[leg_id].motor_id].W = data_leg[leg_id].W;
+        data_motor[leg_id][data_leg[leg_id].motor_id].Acc = data_leg[leg_id].Acc;
+        data_motor[leg_id][data_leg[leg_id].motor_id].Pos = data_leg[leg_id].Pos;
+    */
 }
 
 // dma接收赋值函数

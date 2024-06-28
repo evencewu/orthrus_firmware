@@ -17,7 +17,14 @@ A1msgRxTransform rx_transform;
 void GetMotorMsg(uint8_t *input)
 {
     memcpy(&rx_transform.u8[0], input, 21);
-    memcpy(&motor_rx[rx_transform.a1msg.leg_id][rx_transform.a1msg.motor_id], &rx_transform.a1msg.start[0], 21);
+
+    A1PackageSpiRx motor_rx_now;
+    memcpy(&motor_rx_now, &rx_transform.a1msg.start[0], 21);
+    
+    if(motor_rx_now.SumCheck == motor_rx_now.start[0] + motor_rx_now.start[1] + motor_rx_now.leg_id + motor_rx_now.motor_id + motor_rx_now.mode + motor_rx_now.Temp + motor_rx_now.MError + motor_rx_now.T + motor_rx_now.W + motor_rx_now.Acc + motor_rx_now.Pos)
+    {
+        memcpy(&motor_rx[rx_transform.a1msg.leg_id][rx_transform.a1msg.motor_id], &motor_rx_now, 21);
+    }
 }
 
 void PreparMotorMsg(A1PackageSpiTx motor_tx_pack, uint8_t *motor_original_tx)

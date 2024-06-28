@@ -126,8 +126,6 @@ int main(void)
 
     SPI_TRANSMIT(1, 2);
     unitreeA1_tx(1, 2);
- 
-
 
     // SPI_TRANSMIT(1,1);
     // SPI_TRANSMIT(1,2);

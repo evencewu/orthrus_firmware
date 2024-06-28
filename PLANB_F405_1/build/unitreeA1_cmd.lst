@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccZGupOt.s 			page 1
+ARM GAS  /tmp/ccZRTnF4.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccZGupOt.s 			page 1
   27:Lib/Motor/Src/unitreeA1_cmd.c **** 
   28:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.mode = spi_rx_data[leg_id][motor_id].mode;
   29:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ModifyBit = 0xFF;
-ARM GAS  /tmp/ccZGupOt.s 			page 2
+ARM GAS  /tmp/ccZRTnF4.s 			page 2
 
 
   30:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ReadBit = 0x00;
@@ -83,73 +83,62 @@ ARM GAS  /tmp/ccZGupOt.s 			page 1
   49:Lib/Motor/Src/unitreeA1_cmd.c ****         HAL_UART_Transmit(&huart1, A1cmd, 34, 0x01);
   50:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
   51:Lib/Motor/Src/unitreeA1_cmd.c ****     case 1:
-  52:Lib/Motor/Src/unitreeA1_cmd.c ****         HAL_UART_Transmit(&huart2, A1cmd, 34, 0x01);
+  52:Lib/Motor/Src/unitreeA1_cmd.c ****         HAL_UART_Transmit(&huart6, A1cmd, 34, 0x01);
   53:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
-  54:Lib/Motor/Src/unitreeA1_cmd.c ****     case 2:
-  55:Lib/Motor/Src/unitreeA1_cmd.c ****         HAL_UART_Transmit(&huart6, A1cmd, 34, 0x01);
-  56:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
-  57:Lib/Motor/Src/unitreeA1_cmd.c ****     case 3:
-  58:Lib/Motor/Src/unitreeA1_cmd.c ****         HAL_UART_Transmit(&huart3, A1cmd, 34, 0x01);
-  59:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
-  60:Lib/Motor/Src/unitreeA1_cmd.c ****     }
-  61:Lib/Motor/Src/unitreeA1_cmd.c **** }
-  62:Lib/Motor/Src/unitreeA1_cmd.c **** 
-  63:Lib/Motor/Src/unitreeA1_cmd.c **** void unitreeA1_enable(int leg_id, int motor_id)
-  64:Lib/Motor/Src/unitreeA1_cmd.c **** {
-  65:Lib/Motor/Src/unitreeA1_cmd.c ****     uint8_t A1cmd[34];
+  54:Lib/Motor/Src/unitreeA1_cmd.c ****     }
+  55:Lib/Motor/Src/unitreeA1_cmd.c **** }
+  56:Lib/Motor/Src/unitreeA1_cmd.c **** 
+  57:Lib/Motor/Src/unitreeA1_cmd.c **** void unitreeA1_enable(int leg_id, int motor_id)
+  58:Lib/Motor/Src/unitreeA1_cmd.c **** {
+  59:Lib/Motor/Src/unitreeA1_cmd.c ****     uint8_t A1cmd[34];
+  60:Lib/Motor/Src/unitreeA1_cmd.c **** 
+  61:Lib/Motor/Src/unitreeA1_cmd.c ****     // 此处为左腿电机结构体//
+  62:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.start[0] = 0xFE;
+  63:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.start[1] = 0xEE;
+  64:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.motorID = motor_id;
+  65:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.reserved = 0x00;
   66:Lib/Motor/Src/unitreeA1_cmd.c **** 
-  67:Lib/Motor/Src/unitreeA1_cmd.c ****     // 此处为左腿电机结构体//
-  68:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.start[0] = 0xFE;
-  69:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.start[1] = 0xEE;
-  70:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.motorID = motor_id;
-  71:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.reserved = 0x00;
-  72:Lib/Motor/Src/unitreeA1_cmd.c **** 
-  73:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.mode = 10;
-  74:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ModifyBit = 0xFF;
-  75:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ReadBit = 0x00;
-  76:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.reserved = 0x00;
-  77:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Modify.F = 0;
-  78:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.T = 0;
-  79:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.W = 0;
-  80:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Pos = 0;
-  81:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.K_P = 0;
-  82:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.K_W = 0;
-  83:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.LowHzMotorCmdIndex = 0;
-  84:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.LowHzMotorCmdByte = 0;
-  85:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Res[0] = cmd_motor[leg_id][motor_id].Res;
-  86:Lib/Motor/Src/unitreeA1_cmd.c **** 
-ARM GAS  /tmp/ccZGupOt.s 			page 3
+  67:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.mode = 10;
+  68:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ModifyBit = 0xFF;
+  69:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ReadBit = 0x00;
+  70:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.reserved = 0x00;
+  71:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Modify.F = 0;
+  72:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.T = 0;
+  73:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.W = 0;
+  74:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Pos = 0;
+  75:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.K_P = 0;
+  76:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.K_W = 0;
+  77:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.LowHzMotorCmdIndex = 0;
+  78:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.LowHzMotorCmdByte = 0;
+  79:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Res[0] = cmd_motor[leg_id][motor_id].Res;
+  80:Lib/Motor/Src/unitreeA1_cmd.c **** 
+  81:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.CRCdata.u32 = crc32_core((uint32_t *)(&cmd_motor[le
+  82:Lib/Motor/Src/unitreeA1_cmd.c **** 
+  83:Lib/Motor/Src/unitreeA1_cmd.c ****     memcpy(A1cmd, &cmd_motor[leg_id][motor_id].motor_send_data, 34);
+  84:Lib/Motor/Src/unitreeA1_cmd.c **** 
+  85:Lib/Motor/Src/unitreeA1_cmd.c ****     switch (leg_id)
+  86:Lib/Motor/Src/unitreeA1_cmd.c ****     {
+ARM GAS  /tmp/ccZRTnF4.s 			page 3
 
 
-  87:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.CRCdata.u32 = crc32_core((uint32_t *)(&cmd_motor[le
-  88:Lib/Motor/Src/unitreeA1_cmd.c **** 
-  89:Lib/Motor/Src/unitreeA1_cmd.c ****     memcpy(A1cmd, &cmd_motor[leg_id][motor_id].motor_send_data, 34);
-  90:Lib/Motor/Src/unitreeA1_cmd.c **** 
-  91:Lib/Motor/Src/unitreeA1_cmd.c ****     switch (leg_id)
-  92:Lib/Motor/Src/unitreeA1_cmd.c ****     {
-  93:Lib/Motor/Src/unitreeA1_cmd.c ****     case 0:
-  94:Lib/Motor/Src/unitreeA1_cmd.c ****         HAL_UART_Transmit(&huart1, A1cmd, 34, 0x01);
-  95:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
-  96:Lib/Motor/Src/unitreeA1_cmd.c ****     case 1:
-  97:Lib/Motor/Src/unitreeA1_cmd.c ****         HAL_UART_Transmit(&huart2, A1cmd, 34, 0x01);
-  98:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
-  99:Lib/Motor/Src/unitreeA1_cmd.c ****     case 2:
- 100:Lib/Motor/Src/unitreeA1_cmd.c ****         HAL_UART_Transmit(&huart6, A1cmd, 34, 0x01);
- 101:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
- 102:Lib/Motor/Src/unitreeA1_cmd.c ****     case 3:
- 103:Lib/Motor/Src/unitreeA1_cmd.c ****         HAL_UART_Transmit(&huart3, A1cmd, 34, 0x01);
- 104:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
- 105:Lib/Motor/Src/unitreeA1_cmd.c ****     }
- 106:Lib/Motor/Src/unitreeA1_cmd.c **** }
- 107:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 108:Lib/Motor/Src/unitreeA1_cmd.c **** // CRC校验位的代码
- 109:Lib/Motor/Src/unitreeA1_cmd.c **** uint32_t crc32_core(uint32_t *ptr, uint32_t len)
- 110:Lib/Motor/Src/unitreeA1_cmd.c **** {
-  30              		.loc 1 110 1 view -0
+  87:Lib/Motor/Src/unitreeA1_cmd.c ****     case 0:
+  88:Lib/Motor/Src/unitreeA1_cmd.c ****         HAL_UART_Transmit(&huart1, A1cmd, 34, 0x01);
+  89:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
+  90:Lib/Motor/Src/unitreeA1_cmd.c ****     case 1:
+  91:Lib/Motor/Src/unitreeA1_cmd.c ****         HAL_UART_Transmit(&huart6, A1cmd, 34, 0x01);
+  92:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
+  93:Lib/Motor/Src/unitreeA1_cmd.c **** 
+  94:Lib/Motor/Src/unitreeA1_cmd.c ****     }
+  95:Lib/Motor/Src/unitreeA1_cmd.c **** }
+  96:Lib/Motor/Src/unitreeA1_cmd.c **** 
+  97:Lib/Motor/Src/unitreeA1_cmd.c **** // CRC校验位的代码
+  98:Lib/Motor/Src/unitreeA1_cmd.c **** uint32_t crc32_core(uint32_t *ptr, uint32_t len)
+  99:Lib/Motor/Src/unitreeA1_cmd.c **** {
+  30              		.loc 1 99 1 view -0
   31              		.cfi_startproc
   32              		@ args = 0, pretend = 0, frame = 0
   33              		@ frame_needed = 0, uses_anonymous_args = 0
-  34              		.loc 1 110 1 is_stmt 0 view .LVU1
+  34              		.loc 1 99 1 is_stmt 0 view .LVU1
   35 0000 30B5     		push	{r4, r5, lr}
   36              		.cfi_def_cfa_offset 12
   37              		.cfi_offset 4, -12
@@ -157,168 +146,168 @@ ARM GAS  /tmp/ccZGupOt.s 			page 1
   39              		.cfi_offset 14, -4
   40 0002 0546     		mov	r5, r0
   41 0004 8E46     		mov	lr, r1
- 111:Lib/Motor/Src/unitreeA1_cmd.c ****     uint32_t bits;
-  42              		.loc 1 111 5 is_stmt 1 view .LVU2
- 112:Lib/Motor/Src/unitreeA1_cmd.c ****     uint32_t i;
-  43              		.loc 1 112 5 view .LVU3
- 113:Lib/Motor/Src/unitreeA1_cmd.c ****     uint32_t xbit = 0;
-  44              		.loc 1 113 5 view .LVU4
+ 100:Lib/Motor/Src/unitreeA1_cmd.c ****     uint32_t bits;
+  42              		.loc 1 100 5 is_stmt 1 view .LVU2
+ 101:Lib/Motor/Src/unitreeA1_cmd.c ****     uint32_t i;
+  43              		.loc 1 101 5 view .LVU3
+ 102:Lib/Motor/Src/unitreeA1_cmd.c ****     uint32_t xbit = 0;
+  44              		.loc 1 102 5 view .LVU4
   45              	.LVL1:
- 114:Lib/Motor/Src/unitreeA1_cmd.c ****     uint32_t data = 0;
-  46              		.loc 1 114 5 view .LVU5
- 115:Lib/Motor/Src/unitreeA1_cmd.c ****     uint32_t CRC32 = 0xFFFFFFFF;
-  47              		.loc 1 115 5 view .LVU6
- 116:Lib/Motor/Src/unitreeA1_cmd.c ****     const uint32_t dwPolynomial = 0x04c11db7;
-  48              		.loc 1 116 5 view .LVU7
- 117:Lib/Motor/Src/unitreeA1_cmd.c ****     for (i = 0; i < len; i++)
-  49              		.loc 1 117 5 view .LVU8
- 115:Lib/Motor/Src/unitreeA1_cmd.c ****     uint32_t CRC32 = 0xFFFFFFFF;
-  50              		.loc 1 115 14 is_stmt 0 view .LVU9
+ 103:Lib/Motor/Src/unitreeA1_cmd.c ****     uint32_t data = 0;
+  46              		.loc 1 103 5 view .LVU5
+ 104:Lib/Motor/Src/unitreeA1_cmd.c ****     uint32_t CRC32 = 0xFFFFFFFF;
+  47              		.loc 1 104 5 view .LVU6
+ 105:Lib/Motor/Src/unitreeA1_cmd.c ****     const uint32_t dwPolynomial = 0x04c11db7;
+  48              		.loc 1 105 5 view .LVU7
+ 106:Lib/Motor/Src/unitreeA1_cmd.c ****     for (i = 0; i < len; i++)
+  49              		.loc 1 106 5 view .LVU8
+ 104:Lib/Motor/Src/unitreeA1_cmd.c ****     uint32_t CRC32 = 0xFFFFFFFF;
+  50              		.loc 1 104 14 is_stmt 0 view .LVU9
   51 0006 4FF0FF30 		mov	r0, #-1
   52              	.LVL2:
-  53              		.loc 1 117 12 view .LVU10
+  53              		.loc 1 106 12 view .LVU10
   54 000a 4FF0000C 		mov	ip, #0
-ARM GAS  /tmp/ccZGupOt.s 			page 4
-
-
-  55              		.loc 1 117 5 view .LVU11
+  55              		.loc 1 106 5 view .LVU11
   56 000e 17E0     		b	.L2
   57              	.LVL3:
   58              	.L11:
- 118:Lib/Motor/Src/unitreeA1_cmd.c ****     {
- 119:Lib/Motor/Src/unitreeA1_cmd.c ****         xbit = 1 << 31;
- 120:Lib/Motor/Src/unitreeA1_cmd.c ****         data = ptr[i];
- 121:Lib/Motor/Src/unitreeA1_cmd.c ****         for (bits = 0; bits < 32; bits++)
- 122:Lib/Motor/Src/unitreeA1_cmd.c ****         {
- 123:Lib/Motor/Src/unitreeA1_cmd.c ****             if (CRC32 & 0x80000000)
- 124:Lib/Motor/Src/unitreeA1_cmd.c ****             {
- 125:Lib/Motor/Src/unitreeA1_cmd.c ****                 CRC32 <<= 1;
-  59              		.loc 1 125 17 is_stmt 1 view .LVU12
- 126:Lib/Motor/Src/unitreeA1_cmd.c ****                 CRC32 ^= dwPolynomial;
-  60              		.loc 1 126 17 view .LVU13
-  61              		.loc 1 126 23 is_stmt 0 view .LVU14
+ 107:Lib/Motor/Src/unitreeA1_cmd.c ****     {
+ 108:Lib/Motor/Src/unitreeA1_cmd.c ****         xbit = 1 << 31;
+ 109:Lib/Motor/Src/unitreeA1_cmd.c ****         data = ptr[i];
+ 110:Lib/Motor/Src/unitreeA1_cmd.c ****         for (bits = 0; bits < 32; bits++)
+ 111:Lib/Motor/Src/unitreeA1_cmd.c ****         {
+ 112:Lib/Motor/Src/unitreeA1_cmd.c ****             if (CRC32 & 0x80000000)
+ 113:Lib/Motor/Src/unitreeA1_cmd.c ****             {
+ARM GAS  /tmp/ccZRTnF4.s 			page 4
+
+
+ 114:Lib/Motor/Src/unitreeA1_cmd.c ****                 CRC32 <<= 1;
+  59              		.loc 1 114 17 is_stmt 1 view .LVU12
+ 115:Lib/Motor/Src/unitreeA1_cmd.c ****                 CRC32 ^= dwPolynomial;
+  60              		.loc 1 115 17 view .LVU13
+  61              		.loc 1 115 23 is_stmt 0 view .LVU14
   62 0010 104C     		ldr	r4, .L13
   63 0012 84EA4000 		eor	r0, r4, r0, lsl #1
   64              	.LVL4:
-  65              		.loc 1 126 23 view .LVU15
+  65              		.loc 1 115 23 view .LVU15
   66 0016 06E0     		b	.L5
   67              	.L6:
- 127:Lib/Motor/Src/unitreeA1_cmd.c ****             }
- 128:Lib/Motor/Src/unitreeA1_cmd.c ****             else
- 129:Lib/Motor/Src/unitreeA1_cmd.c ****                 CRC32 <<= 1;
- 130:Lib/Motor/Src/unitreeA1_cmd.c ****             if (data & xbit)
- 131:Lib/Motor/Src/unitreeA1_cmd.c ****                 CRC32 ^= dwPolynomial;
- 132:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 133:Lib/Motor/Src/unitreeA1_cmd.c ****             xbit >>= 1;
-  68              		.loc 1 133 13 is_stmt 1 discriminator 2 view .LVU16
-  69              		.loc 1 133 18 is_stmt 0 discriminator 2 view .LVU17
+ 116:Lib/Motor/Src/unitreeA1_cmd.c ****             }
+ 117:Lib/Motor/Src/unitreeA1_cmd.c ****             else
+ 118:Lib/Motor/Src/unitreeA1_cmd.c ****                 CRC32 <<= 1;
+ 119:Lib/Motor/Src/unitreeA1_cmd.c ****             if (data & xbit)
+ 120:Lib/Motor/Src/unitreeA1_cmd.c ****                 CRC32 ^= dwPolynomial;
+ 121:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 122:Lib/Motor/Src/unitreeA1_cmd.c ****             xbit >>= 1;
+  68              		.loc 1 122 13 is_stmt 1 discriminator 2 view .LVU16
+  69              		.loc 1 122 18 is_stmt 0 discriminator 2 view .LVU17
   70 0018 5208     		lsrs	r2, r2, #1
   71              	.LVL5:
- 121:Lib/Motor/Src/unitreeA1_cmd.c ****         {
-  72              		.loc 1 121 35 is_stmt 1 discriminator 2 view .LVU18
- 121:Lib/Motor/Src/unitreeA1_cmd.c ****         {
-  73              		.loc 1 121 39 is_stmt 0 discriminator 2 view .LVU19
+ 110:Lib/Motor/Src/unitreeA1_cmd.c ****         {
+  72              		.loc 1 110 35 is_stmt 1 discriminator 2 view .LVU18
+ 110:Lib/Motor/Src/unitreeA1_cmd.c ****         {
+  73              		.loc 1 110 39 is_stmt 0 discriminator 2 view .LVU19
   74 001a 0133     		adds	r3, r3, #1
   75              	.LVL6:
   76              	.L3:
- 121:Lib/Motor/Src/unitreeA1_cmd.c ****         {
-  77              		.loc 1 121 24 is_stmt 1 discriminator 1 view .LVU20
- 121:Lib/Motor/Src/unitreeA1_cmd.c ****         {
-  78              		.loc 1 121 9 is_stmt 0 discriminator 1 view .LVU21
+ 110:Lib/Motor/Src/unitreeA1_cmd.c ****         {
+  77              		.loc 1 110 24 is_stmt 1 discriminator 1 view .LVU20
+ 110:Lib/Motor/Src/unitreeA1_cmd.c ****         {
+  78              		.loc 1 110 9 is_stmt 0 discriminator 1 view .LVU21
   79 001c 1F2B     		cmp	r3, #31
   80 001e 0DD8     		bhi	.L10
- 123:Lib/Motor/Src/unitreeA1_cmd.c ****             {
-  81              		.loc 1 123 13 is_stmt 1 view .LVU22
- 123:Lib/Motor/Src/unitreeA1_cmd.c ****             {
-  82              		.loc 1 123 16 is_stmt 0 view .LVU23
+ 112:Lib/Motor/Src/unitreeA1_cmd.c ****             {
+  81              		.loc 1 112 13 is_stmt 1 view .LVU22
+ 112:Lib/Motor/Src/unitreeA1_cmd.c ****             {
+  82              		.loc 1 112 16 is_stmt 0 view .LVU23
   83 0020 0028     		cmp	r0, #0
   84 0022 F5DB     		blt	.L11
- 129:Lib/Motor/Src/unitreeA1_cmd.c ****             if (data & xbit)
-  85              		.loc 1 129 17 is_stmt 1 view .LVU24
- 129:Lib/Motor/Src/unitreeA1_cmd.c ****             if (data & xbit)
-  86              		.loc 1 129 23 is_stmt 0 view .LVU25
+ 118:Lib/Motor/Src/unitreeA1_cmd.c ****             if (data & xbit)
+  85              		.loc 1 118 17 is_stmt 1 view .LVU24
+ 118:Lib/Motor/Src/unitreeA1_cmd.c ****             if (data & xbit)
+  86              		.loc 1 118 23 is_stmt 0 view .LVU25
   87 0024 4000     		lsls	r0, r0, #1
-ARM GAS  /tmp/ccZGupOt.s 			page 5
-
-
   88              	.LVL7:
   89              	.L5:
- 130:Lib/Motor/Src/unitreeA1_cmd.c ****                 CRC32 ^= dwPolynomial;
-  90              		.loc 1 130 13 is_stmt 1 view .LVU26
- 130:Lib/Motor/Src/unitreeA1_cmd.c ****                 CRC32 ^= dwPolynomial;
-  91              		.loc 1 130 16 is_stmt 0 view .LVU27
+ 119:Lib/Motor/Src/unitreeA1_cmd.c ****                 CRC32 ^= dwPolynomial;
+  90              		.loc 1 119 13 is_stmt 1 view .LVU26
+ 119:Lib/Motor/Src/unitreeA1_cmd.c ****                 CRC32 ^= dwPolynomial;
+  91              		.loc 1 119 16 is_stmt 0 view .LVU27
   92 0026 0A42     		tst	r2, r1
   93 0028 F6D0     		beq	.L6
- 131:Lib/Motor/Src/unitreeA1_cmd.c **** 
-  94              		.loc 1 131 17 is_stmt 1 view .LVU28
- 131:Lib/Motor/Src/unitreeA1_cmd.c **** 
-  95              		.loc 1 131 23 is_stmt 0 view .LVU29
+ 120:Lib/Motor/Src/unitreeA1_cmd.c **** 
+  94              		.loc 1 120 17 is_stmt 1 view .LVU28
+ 120:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ARM GAS  /tmp/ccZRTnF4.s 			page 5
+
+
+  95              		.loc 1 120 23 is_stmt 0 view .LVU29
   96 002a 80F09860 		eor	r0, r0, #79691776
   97              	.LVL8:
- 131:Lib/Motor/Src/unitreeA1_cmd.c **** 
-  98              		.loc 1 131 23 view .LVU30
+ 120:Lib/Motor/Src/unitreeA1_cmd.c **** 
+  98              		.loc 1 120 23 view .LVU30
   99 002e 80F48E30 		eor	r0, r0, #72704
  100              	.LVL9:
- 131:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 101              		.loc 1 131 23 view .LVU31
+ 120:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 101              		.loc 1 120 23 view .LVU31
  102 0032 80F4DB70 		eor	r0, r0, #438
  103              	.LVL10:
- 131:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 104              		.loc 1 131 23 view .LVU32
+ 120:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 104              		.loc 1 120 23 view .LVU32
  105 0036 80F00100 		eor	r0, r0, #1
  106              	.LVL11:
- 131:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 107              		.loc 1 131 23 view .LVU33
+ 120:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 107              		.loc 1 120 23 view .LVU33
  108 003a EDE7     		b	.L6
  109              	.L10:
- 117:Lib/Motor/Src/unitreeA1_cmd.c ****     {
- 110              		.loc 1 117 26 is_stmt 1 discriminator 2 view .LVU34
- 117:Lib/Motor/Src/unitreeA1_cmd.c ****     {
- 111              		.loc 1 117 27 is_stmt 0 discriminator 2 view .LVU35
+ 106:Lib/Motor/Src/unitreeA1_cmd.c ****     {
+ 110              		.loc 1 106 26 is_stmt 1 discriminator 2 view .LVU34
+ 106:Lib/Motor/Src/unitreeA1_cmd.c ****     {
+ 111              		.loc 1 106 27 is_stmt 0 discriminator 2 view .LVU35
  112 003c 0CF1010C 		add	ip, ip, #1
  113              	.LVL12:
  114              	.L2:
- 117:Lib/Motor/Src/unitreeA1_cmd.c ****     {
- 115              		.loc 1 117 17 is_stmt 1 discriminator 1 view .LVU36
- 117:Lib/Motor/Src/unitreeA1_cmd.c ****     {
- 116              		.loc 1 117 5 is_stmt 0 discriminator 1 view .LVU37
+ 106:Lib/Motor/Src/unitreeA1_cmd.c ****     {
+ 115              		.loc 1 106 17 is_stmt 1 discriminator 1 view .LVU36
+ 106:Lib/Motor/Src/unitreeA1_cmd.c ****     {
+ 116              		.loc 1 106 5 is_stmt 0 discriminator 1 view .LVU37
  117 0040 F445     		cmp	ip, lr
  118 0042 05D2     		bcs	.L12
- 119:Lib/Motor/Src/unitreeA1_cmd.c ****         data = ptr[i];
- 119              		.loc 1 119 9 is_stmt 1 view .LVU38
+ 108:Lib/Motor/Src/unitreeA1_cmd.c ****         data = ptr[i];
+ 119              		.loc 1 108 9 is_stmt 1 view .LVU38
  120              	.LVL13:
- 120:Lib/Motor/Src/unitreeA1_cmd.c ****         for (bits = 0; bits < 32; bits++)
- 121              		.loc 1 120 9 view .LVU39
- 120:Lib/Motor/Src/unitreeA1_cmd.c ****         for (bits = 0; bits < 32; bits++)
- 122              		.loc 1 120 14 is_stmt 0 view .LVU40
+ 109:Lib/Motor/Src/unitreeA1_cmd.c ****         for (bits = 0; bits < 32; bits++)
+ 121              		.loc 1 109 9 view .LVU39
+ 109:Lib/Motor/Src/unitreeA1_cmd.c ****         for (bits = 0; bits < 32; bits++)
+ 122              		.loc 1 109 14 is_stmt 0 view .LVU40
  123 0044 55F82C10 		ldr	r1, [r5, ip, lsl #2]
  124              	.LVL14:
- 121:Lib/Motor/Src/unitreeA1_cmd.c ****         {
- 125              		.loc 1 121 9 is_stmt 1 view .LVU41
- 119:Lib/Motor/Src/unitreeA1_cmd.c ****         data = ptr[i];
- 126              		.loc 1 119 14 is_stmt 0 view .LVU42
+ 110:Lib/Motor/Src/unitreeA1_cmd.c ****         {
+ 125              		.loc 1 110 9 is_stmt 1 view .LVU41
+ 108:Lib/Motor/Src/unitreeA1_cmd.c ****         data = ptr[i];
+ 126              		.loc 1 108 14 is_stmt 0 view .LVU42
  127 0048 4FF00042 		mov	r2, #-2147483648
-ARM GAS  /tmp/ccZGupOt.s 			page 6
-
-
- 121:Lib/Motor/Src/unitreeA1_cmd.c ****         {
- 128              		.loc 1 121 19 view .LVU43
+ 110:Lib/Motor/Src/unitreeA1_cmd.c ****         {
+ 128              		.loc 1 110 19 view .LVU43
  129 004c 0023     		movs	r3, #0
- 121:Lib/Motor/Src/unitreeA1_cmd.c ****         {
- 130              		.loc 1 121 9 view .LVU44
+ 110:Lib/Motor/Src/unitreeA1_cmd.c ****         {
+ 130              		.loc 1 110 9 view .LVU44
  131 004e E5E7     		b	.L3
  132              	.LVL15:
  133              	.L12:
- 134:Lib/Motor/Src/unitreeA1_cmd.c ****         }
- 135:Lib/Motor/Src/unitreeA1_cmd.c ****     }
- 136:Lib/Motor/Src/unitreeA1_cmd.c ****     return CRC32;
- 134              		.loc 1 136 5 is_stmt 1 view .LVU45
- 137:Lib/Motor/Src/unitreeA1_cmd.c **** }
- 135              		.loc 1 137 1 is_stmt 0 view .LVU46
+ 123:Lib/Motor/Src/unitreeA1_cmd.c ****         }
+ 124:Lib/Motor/Src/unitreeA1_cmd.c ****     }
+ 125:Lib/Motor/Src/unitreeA1_cmd.c ****     return CRC32;
+ARM GAS  /tmp/ccZRTnF4.s 			page 6
+
+
+ 134              		.loc 1 125 5 is_stmt 1 view .LVU45
+ 126:Lib/Motor/Src/unitreeA1_cmd.c **** }
+ 135              		.loc 1 126 1 is_stmt 0 view .LVU46
  136 0050 30BD     		pop	{r4, r5, pc}
  137              	.LVL16:
  138              	.L14:
- 139              		.loc 1 137 1 view .LVU47
+ 139              		.loc 1 126 1 view .LVU47
  140 0052 00BF     		.align	2
  141              	.L13:
  142 0054 B71DC104 		.word	79764919
@@ -358,10 +347,7 @@ ARM GAS  /tmp/ccZGupOt.s 			page 1
  174              		.loc 1 23 5 view .LVU51
   23:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.start[1] = 0xEE;
  175              		.loc 1 23 63 is_stmt 0 view .LVU52
-ARM GAS  /tmp/ccZGupOt.s 			page 7
-
-
- 176 0008 DFF8F880 		ldr	r8, .L24+20
+ 176 0008 DFF8D080 		ldr	r8, .L21+12
  177 000c 01EB4113 		add	r3, r1, r1, lsl #5
  178 0010 C627     		movs	r7, #198
  179 0012 00FB07F7 		mul	r7, r0, r7
@@ -372,6 +358,9 @@ ARM GAS  /tmp/ccZGupOt.s 			page 1
   24:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.motorID = motor_id;
  184              		.loc 1 24 5 is_stmt 1 view .LVU53
   24:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.motorID = motor_id;
+ARM GAS  /tmp/ccZRTnF4.s 			page 7
+
+
  185              		.loc 1 24 63 is_stmt 0 view .LVU54
  186 0024 EE23     		movs	r3, #238
  187 0026 6370     		strb	r3, [r4, #1]
@@ -397,7 +386,7 @@ ARM GAS  /tmp/ccZGupOt.s 			page 1
   28:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ModifyBit = 0xFF;
  201              		.loc 1 28 91 view .LVU61
  202 003a 0B44     		add	r3, r3, r1
- 203 003c 2C49     		ldr	r1, .L24
+ 203 003c 2449     		ldr	r1, .L21
  204 003e 0B44     		add	r3, r3, r1
  205 0040 1979     		ldrb	r1, [r3, #4]	@ zero_extendqisi2
   28:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ModifyBit = 0xFF;
@@ -418,9 +407,6 @@ ARM GAS  /tmp/ccZGupOt.s 			page 1
  215              		.loc 1 31 5 is_stmt 1 view .LVU67
   31:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Modify.F = 0;
  216              		.loc 1 31 64 is_stmt 0 view .LVU68
-ARM GAS  /tmp/ccZGupOt.s 			page 8
-
-
  217 004a E271     		strb	r2, [r4, #7]
   32:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.T = spi_rx_data[leg_id][motor_id].T;
  218              		.loc 1 32 5 is_stmt 1 view .LVU69
@@ -432,6 +418,9 @@ ARM GAS  /tmp/ccZGupOt.s 			page 1
  222              		.loc 1 33 5 is_stmt 1 view .LVU71
   33:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.W = spi_rx_data[leg_id][motor_id].W;
  223              		.loc 1 33 88 is_stmt 0 view .LVU72
+ARM GAS  /tmp/ccZRTnF4.s 			page 8
+
+
  224 0050 B3F90510 		ldrsh	r1, [r3, #5]	@ unaligned
   33:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.W = spi_rx_data[leg_id][motor_id].W;
  225              		.loc 1 33 57 view .LVU73
@@ -478,9 +467,6 @@ ARM GAS  /tmp/ccZGupOt.s 			page 1
   39:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Res[0] = cmd_motor[leg_id][motor_id].Res;
  251              		.loc 1 39 73 is_stmt 0 view .LVU89
  252 0070 6276     		strb	r2, [r4, #25]
-ARM GAS  /tmp/ccZGupOt.s 			page 9
-
-
   40:Lib/Motor/Src/unitreeA1_cmd.c **** 
  253              		.loc 1 40 5 is_stmt 1 view .LVU90
   40:Lib/Motor/Src/unitreeA1_cmd.c **** 
@@ -492,6 +478,9 @@ ARM GAS  /tmp/ccZGupOt.s 			page 1
   42:Lib/Motor/Src/unitreeA1_cmd.c **** 
  258              		.loc 1 42 63 is_stmt 0 view .LVU93
  259 007a 0721     		movs	r1, #7
+ARM GAS  /tmp/ccZRTnF4.s 			page 9
+
+
  260 007c 2046     		mov	r0, r4
  261              	.LVL19:
   42:Lib/Motor/Src/unitreeA1_cmd.c **** 
@@ -521,406 +510,335 @@ ARM GAS  /tmp/ccZGupOt.s 			page 1
  283 00a4 3B80     		strh	r3, [r7]	@ unaligned
   46:Lib/Motor/Src/unitreeA1_cmd.c ****     {
  284              		.loc 1 46 5 view .LVU97
- 285 00a6 032E     		cmp	r6, #3
- 286 00a8 09D8     		bhi	.L15
- 287 00aa DFE806F0 		tbb	[pc, r6]
- 288              	.L19:
- 289 00ae 02       		.byte	(.L22-.L19)/2
- 290 00af 0B       		.byte	(.L21-.L19)/2
- 291 00b0 12       		.byte	(.L20-.L19)/2
- 292 00b1 19       		.byte	(.L18-.L19)/2
- 293              		.p2align 1
- 294              	.L22:
+ 285 00a6 26B1     		cbz	r6, .L17
+ 286 00a8 012E     		cmp	r6, #1
+ 287 00aa 09D0     		beq	.L18
+ 288              	.L15:
+  55:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 289              		.loc 1 55 1 is_stmt 0 view .LVU98
+ 290 00ac 0BB0     		add	sp, sp, #44
+ 291              		.cfi_remember_state
+ 292              		.cfi_def_cfa_offset 28
+ 293              		@ sp needed
+ 294 00ae BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 295              	.LVL21:
+ 296              	.L17:
+ 297              		.cfi_restore_state
   49:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
- 295              		.loc 1 49 9 view .LVU98
- 296 00b2 0123     		movs	r3, #1
- 297 00b4 2222     		movs	r2, #34
- 298 00b6 01A9     		add	r1, sp, #4
- 299 00b8 0E48     		ldr	r0, .L24+4
- 300 00ba FFF7FEFF 		bl	HAL_UART_Transmit
-ARM GAS  /tmp/ccZGupOt.s 			page 10
-
-
- 301              	.LVL21:
+ 298              		.loc 1 49 9 is_stmt 1 view .LVU99
+ 299 00b2 0123     		movs	r3, #1
+ 300 00b4 2222     		movs	r2, #34
+ 301 00b6 01A9     		add	r1, sp, #4
+ 302 00b8 0648     		ldr	r0, .L21+4
+ 303 00ba FFF7FEFF 		bl	HAL_UART_Transmit
+ 304              	.LVL22:
   50:Lib/Motor/Src/unitreeA1_cmd.c ****     case 1:
- 302              		.loc 1 50 9 view .LVU99
- 303              	.L15:
-  61:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 304              		.loc 1 61 1 is_stmt 0 view .LVU100
- 305 00be 0BB0     		add	sp, sp, #44
- 306              		.cfi_remember_state
- 307              		.cfi_def_cfa_offset 28
- 308              		@ sp needed
- 309 00c0 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
- 310              	.LVL22:
- 311              	.L21:
- 312              		.cfi_restore_state
+ 305              		.loc 1 50 9 view .LVU100
+ 306 00be F5E7     		b	.L15
+ 307              	.L18:
   52:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
- 313              		.loc 1 52 9 is_stmt 1 view .LVU101
- 314 00c4 0123     		movs	r3, #1
- 315 00c6 2222     		movs	r2, #34
- 316 00c8 01A9     		add	r1, sp, #4
- 317 00ca 0B48     		ldr	r0, .L24+8
- 318 00cc FFF7FEFF 		bl	HAL_UART_Transmit
- 319              	.LVL23:
-  53:Lib/Motor/Src/unitreeA1_cmd.c ****     case 2:
- 320              		.loc 1 53 9 view .LVU102
- 321 00d0 F5E7     		b	.L15
- 322              	.L20:
-  55:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
- 323              		.loc 1 55 9 view .LVU103
- 324 00d2 0123     		movs	r3, #1
- 325 00d4 2222     		movs	r2, #34
- 326 00d6 01A9     		add	r1, sp, #4
- 327 00d8 0848     		ldr	r0, .L24+12
- 328 00da FFF7FEFF 		bl	HAL_UART_Transmit
- 329              	.LVL24:
-  56:Lib/Motor/Src/unitreeA1_cmd.c ****     case 3:
- 330              		.loc 1 56 9 view .LVU104
- 331 00de EEE7     		b	.L15
- 332              	.L18:
-  58:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
- 333              		.loc 1 58 9 view .LVU105
- 334 00e0 0123     		movs	r3, #1
- 335 00e2 2222     		movs	r2, #34
- 336 00e4 01A9     		add	r1, sp, #4
- 337 00e6 0648     		ldr	r0, .L24+16
- 338 00e8 FFF7FEFF 		bl	HAL_UART_Transmit
- 339              	.LVL25:
-  59:Lib/Motor/Src/unitreeA1_cmd.c ****     }
- 340              		.loc 1 59 9 view .LVU106
-  61:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 341              		.loc 1 61 1 is_stmt 0 view .LVU107
- 342 00ec E7E7     		b	.L15
- 343              	.L25:
- 344 00ee 00BF     		.align	2
- 345              	.L24:
- 346 00f0 00000000 		.word	spi_rx_data
- 347 00f4 00000000 		.word	huart1
- 348 00f8 00000000 		.word	huart2
-ARM GAS  /tmp/ccZGupOt.s 			page 11
+ 308              		.loc 1 52 9 view .LVU101
+ARM GAS  /tmp/ccZRTnF4.s 			page 10
 
 
- 349 00fc 00000000 		.word	huart6
- 350 0100 00000000 		.word	huart3
- 351 0104 00000000 		.word	.LANCHOR0
- 352              		.cfi_endproc
- 353              	.LFE137:
- 355              		.section	.text.unitreeA1_enable,"ax",%progbits
- 356              		.align	1
- 357              		.global	unitreeA1_enable
- 358              		.syntax unified
- 359              		.thumb
- 360              		.thumb_func
- 362              	unitreeA1_enable:
- 363              	.LVL26:
- 364              	.LFB138:
-  64:Lib/Motor/Src/unitreeA1_cmd.c ****     uint8_t A1cmd[34];
- 365              		.loc 1 64 1 is_stmt 1 view -0
- 366              		.cfi_startproc
- 367              		@ args = 0, pretend = 0, frame = 40
- 368              		@ frame_needed = 0, uses_anonymous_args = 0
-  64:Lib/Motor/Src/unitreeA1_cmd.c ****     uint8_t A1cmd[34];
- 369              		.loc 1 64 1 is_stmt 0 view .LVU109
- 370 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
- 371              		.cfi_def_cfa_offset 28
- 372              		.cfi_offset 4, -28
- 373              		.cfi_offset 5, -24
- 374              		.cfi_offset 6, -20
- 375              		.cfi_offset 7, -16
- 376              		.cfi_offset 8, -12
- 377              		.cfi_offset 9, -8
- 378              		.cfi_offset 14, -4
- 379 0004 8BB0     		sub	sp, sp, #44
- 380              		.cfi_def_cfa_offset 72
- 381 0006 0746     		mov	r7, r0
+ 309 00c0 0123     		movs	r3, #1
+ 310 00c2 2222     		movs	r2, #34
+ 311 00c4 01A9     		add	r1, sp, #4
+ 312 00c6 0448     		ldr	r0, .L21+8
+ 313 00c8 FFF7FEFF 		bl	HAL_UART_Transmit
+ 314              	.LVL23:
+  53:Lib/Motor/Src/unitreeA1_cmd.c ****     }
+ 315              		.loc 1 53 9 view .LVU102
+  55:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 316              		.loc 1 55 1 is_stmt 0 view .LVU103
+ 317 00cc EEE7     		b	.L15
+ 318              	.L22:
+ 319 00ce 00BF     		.align	2
+ 320              	.L21:
+ 321 00d0 00000000 		.word	spi_rx_data
+ 322 00d4 00000000 		.word	huart1
+ 323 00d8 00000000 		.word	huart6
+ 324 00dc 00000000 		.word	.LANCHOR0
+ 325              		.cfi_endproc
+ 326              	.LFE137:
+ 328              		.section	.text.unitreeA1_enable,"ax",%progbits
+ 329              		.align	1
+ 330              		.global	unitreeA1_enable
+ 331              		.syntax unified
+ 332              		.thumb
+ 333              		.thumb_func
+ 335              	unitreeA1_enable:
+ 336              	.LVL24:
+ 337              	.LFB138:
+  58:Lib/Motor/Src/unitreeA1_cmd.c ****     uint8_t A1cmd[34];
+ 338              		.loc 1 58 1 is_stmt 1 view -0
+ 339              		.cfi_startproc
+ 340              		@ args = 0, pretend = 0, frame = 40
+ 341              		@ frame_needed = 0, uses_anonymous_args = 0
+  58:Lib/Motor/Src/unitreeA1_cmd.c ****     uint8_t A1cmd[34];
+ 342              		.loc 1 58 1 is_stmt 0 view .LVU105
+ 343 0000 2DE9F043 		push	{r4, r5, r6, r7, r8, r9, lr}
+ 344              		.cfi_def_cfa_offset 28
+ 345              		.cfi_offset 4, -28
+ 346              		.cfi_offset 5, -24
+ 347              		.cfi_offset 6, -20
+ 348              		.cfi_offset 7, -16
+ 349              		.cfi_offset 8, -12
+ 350              		.cfi_offset 9, -8
+ 351              		.cfi_offset 14, -4
+ 352 0004 8BB0     		sub	sp, sp, #44
+ 353              		.cfi_def_cfa_offset 72
+ 354 0006 0746     		mov	r7, r0
+  59:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 355              		.loc 1 59 5 is_stmt 1 view .LVU106
+  62:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.start[1] = 0xEE;
+ 356              		.loc 1 62 5 view .LVU107
+  62:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.start[1] = 0xEE;
+ 357              		.loc 1 62 63 is_stmt 0 view .LVU108
+ 358 0008 DFF8B080 		ldr	r8, .L29+8
+ 359 000c 01EB4113 		add	r3, r1, r1, lsl #5
+ 360 0010 C626     		movs	r6, #198
+ARM GAS  /tmp/ccZRTnF4.s 			page 11
+
+
+ 361 0012 00FB06F6 		mul	r6, r0, r6
+ 362 0016 06EB4303 		add	r3, r6, r3, lsl #1
+ 363 001a 08EB0304 		add	r4, r8, r3
+ 364 001e FE22     		movs	r2, #254
+ 365 0020 08F80320 		strb	r2, [r8, r3]
+  63:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.motorID = motor_id;
+ 366              		.loc 1 63 5 is_stmt 1 view .LVU109
+  63:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.motorID = motor_id;
+ 367              		.loc 1 63 63 is_stmt 0 view .LVU110
+ 368 0024 EE23     		movs	r3, #238
+ 369 0026 6370     		strb	r3, [r4, #1]
+  64:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.reserved = 0x00;
+ 370              		.loc 1 64 5 is_stmt 1 view .LVU111
+  64:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.reserved = 0x00;
+ 371              		.loc 1 64 62 is_stmt 0 view .LVU112
+ 372 0028 A170     		strb	r1, [r4, #2]
   65:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 382              		.loc 1 65 5 is_stmt 1 view .LVU110
-  68:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.start[1] = 0xEE;
- 383              		.loc 1 68 5 view .LVU111
-  68:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.start[1] = 0xEE;
- 384              		.loc 1 68 63 is_stmt 0 view .LVU112
- 385 0008 DFF8D880 		ldr	r8, .L35+16
- 386 000c 01EB4113 		add	r3, r1, r1, lsl #5
- 387 0010 C626     		movs	r6, #198
- 388 0012 00FB06F6 		mul	r6, r0, r6
- 389 0016 06EB4303 		add	r3, r6, r3, lsl #1
- 390 001a 08EB0304 		add	r4, r8, r3
- 391 001e FE22     		movs	r2, #254
- 392 0020 08F80320 		strb	r2, [r8, r3]
-  69:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.motorID = motor_id;
- 393              		.loc 1 69 5 is_stmt 1 view .LVU113
-  69:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.motorID = motor_id;
- 394              		.loc 1 69 63 is_stmt 0 view .LVU114
- 395 0024 EE23     		movs	r3, #238
- 396 0026 6370     		strb	r3, [r4, #1]
-  70:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.reserved = 0x00;
- 397              		.loc 1 70 5 is_stmt 1 view .LVU115
-  70:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.head.reserved = 0x00;
- 398              		.loc 1 70 62 is_stmt 0 view .LVU116
-ARM GAS  /tmp/ccZGupOt.s 			page 12
+ 373              		.loc 1 65 5 is_stmt 1 view .LVU113
+  65:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 374              		.loc 1 65 63 is_stmt 0 view .LVU114
+ 375 002a 0023     		movs	r3, #0
+ 376 002c E370     		strb	r3, [r4, #3]
+  67:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ModifyBit = 0xFF;
+ 377              		.loc 1 67 5 is_stmt 1 view .LVU115
+  67:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ModifyBit = 0xFF;
+ 378              		.loc 1 67 60 is_stmt 0 view .LVU116
+ 379 002e 0A22     		movs	r2, #10
+ 380 0030 2271     		strb	r2, [r4, #4]
+  68:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ReadBit = 0x00;
+ 381              		.loc 1 68 5 is_stmt 1 view .LVU117
+  68:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ReadBit = 0x00;
+ 382              		.loc 1 68 65 is_stmt 0 view .LVU118
+ 383 0032 FF22     		movs	r2, #255
+ 384 0034 6271     		strb	r2, [r4, #5]
+  69:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.reserved = 0x00;
+ 385              		.loc 1 69 5 is_stmt 1 view .LVU119
+  69:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.reserved = 0x00;
+ 386              		.loc 1 69 63 is_stmt 0 view .LVU120
+ 387 0036 A371     		strb	r3, [r4, #6]
+  70:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Modify.F = 0;
+ 388              		.loc 1 70 5 is_stmt 1 view .LVU121
+  70:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Modify.F = 0;
+ 389              		.loc 1 70 64 is_stmt 0 view .LVU122
+ 390 0038 E371     		strb	r3, [r4, #7]
+  71:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.T = 0;
+ 391              		.loc 1 71 5 is_stmt 1 view .LVU123
+  71:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.T = 0;
+ 392              		.loc 1 71 64 is_stmt 0 view .LVU124
+ 393 003a 0022     		movs	r2, #0
+ 394 003c A260     		str	r2, [r4, #8]	@ unaligned
+  72:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.W = 0;
+ 395              		.loc 1 72 5 is_stmt 1 view .LVU125
+  72:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.W = 0;
+ 396              		.loc 1 72 57 is_stmt 0 view .LVU126
+ 397 003e A381     		strh	r3, [r4, #12]	@ movhi
+  73:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Pos = 0;
+ 398              		.loc 1 73 5 is_stmt 1 view .LVU127
+ARM GAS  /tmp/ccZRTnF4.s 			page 12
 
 
- 399 0028 A170     		strb	r1, [r4, #2]
-  71:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 400              		.loc 1 71 5 is_stmt 1 view .LVU117
-  71:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 401              		.loc 1 71 63 is_stmt 0 view .LVU118
- 402 002a 0023     		movs	r3, #0
- 403 002c E370     		strb	r3, [r4, #3]
-  73:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ModifyBit = 0xFF;
- 404              		.loc 1 73 5 is_stmt 1 view .LVU119
-  73:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ModifyBit = 0xFF;
- 405              		.loc 1 73 60 is_stmt 0 view .LVU120
- 406 002e 0A22     		movs	r2, #10
- 407 0030 2271     		strb	r2, [r4, #4]
-  74:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ReadBit = 0x00;
- 408              		.loc 1 74 5 is_stmt 1 view .LVU121
-  74:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.ReadBit = 0x00;
- 409              		.loc 1 74 65 is_stmt 0 view .LVU122
- 410 0032 FF22     		movs	r2, #255
- 411 0034 6271     		strb	r2, [r4, #5]
-  75:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.reserved = 0x00;
- 412              		.loc 1 75 5 is_stmt 1 view .LVU123
-  75:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.reserved = 0x00;
- 413              		.loc 1 75 63 is_stmt 0 view .LVU124
- 414 0036 A371     		strb	r3, [r4, #6]
-  76:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Modify.F = 0;
- 415              		.loc 1 76 5 is_stmt 1 view .LVU125
-  76:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Modify.F = 0;
- 416              		.loc 1 76 64 is_stmt 0 view .LVU126
- 417 0038 E371     		strb	r3, [r4, #7]
-  77:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.T = 0;
- 418              		.loc 1 77 5 is_stmt 1 view .LVU127
-  77:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.T = 0;
- 419              		.loc 1 77 64 is_stmt 0 view .LVU128
- 420 003a 0022     		movs	r2, #0
- 421 003c A260     		str	r2, [r4, #8]	@ unaligned
-  78:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.W = 0;
- 422              		.loc 1 78 5 is_stmt 1 view .LVU129
-  78:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.W = 0;
- 423              		.loc 1 78 57 is_stmt 0 view .LVU130
- 424 003e A381     		strh	r3, [r4, #12]	@ movhi
-  79:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Pos = 0;
- 425              		.loc 1 79 5 is_stmt 1 view .LVU131
-  79:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Pos = 0;
- 426              		.loc 1 79 57 is_stmt 0 view .LVU132
- 427 0040 E381     		strh	r3, [r4, #14]	@ movhi
-  80:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.K_P = 0;
- 428              		.loc 1 80 5 is_stmt 1 view .LVU133
-  80:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.K_P = 0;
- 429              		.loc 1 80 59 is_stmt 0 view .LVU134
- 430 0042 2382     		strh	r3, [r4, #16]	@ movhi
- 431 0044 6382     		strh	r3, [r4, #18]	@ movhi
-  81:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.K_W = 0;
- 432              		.loc 1 81 5 is_stmt 1 view .LVU135
-  81:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.K_W = 0;
- 433              		.loc 1 81 59 is_stmt 0 view .LVU136
- 434 0046 A382     		strh	r3, [r4, #20]	@ movhi
-  82:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.LowHzMotorCmdIndex = 0;
-ARM GAS  /tmp/ccZGupOt.s 			page 13
+  73:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Pos = 0;
+ 399              		.loc 1 73 57 is_stmt 0 view .LVU128
+ 400 0040 E381     		strh	r3, [r4, #14]	@ movhi
+  74:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.K_P = 0;
+ 401              		.loc 1 74 5 is_stmt 1 view .LVU129
+  74:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.K_P = 0;
+ 402              		.loc 1 74 59 is_stmt 0 view .LVU130
+ 403 0042 2382     		strh	r3, [r4, #16]	@ movhi
+ 404 0044 6382     		strh	r3, [r4, #18]	@ movhi
+  75:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.K_W = 0;
+ 405              		.loc 1 75 5 is_stmt 1 view .LVU131
+  75:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.K_W = 0;
+ 406              		.loc 1 75 59 is_stmt 0 view .LVU132
+ 407 0046 A382     		strh	r3, [r4, #20]	@ movhi
+  76:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.LowHzMotorCmdIndex = 0;
+ 408              		.loc 1 76 5 is_stmt 1 view .LVU133
+  76:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.LowHzMotorCmdIndex = 0;
+ 409              		.loc 1 76 59 is_stmt 0 view .LVU134
+ 410 0048 E382     		strh	r3, [r4, #22]	@ movhi
+  77:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.LowHzMotorCmdByte = 0;
+ 411              		.loc 1 77 5 is_stmt 1 view .LVU135
+  77:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.LowHzMotorCmdByte = 0;
+ 412              		.loc 1 77 74 is_stmt 0 view .LVU136
+ 413 004a 2376     		strb	r3, [r4, #24]
+  78:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Res[0] = cmd_motor[leg_id][motor_id].Res;
+ 414              		.loc 1 78 5 is_stmt 1 view .LVU137
+  78:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Res[0] = cmd_motor[leg_id][motor_id].Res;
+ 415              		.loc 1 78 73 is_stmt 0 view .LVU138
+ 416 004c 6376     		strb	r3, [r4, #25]
+  79:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 417              		.loc 1 79 5 is_stmt 1 view .LVU139
+  79:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 418              		.loc 1 79 62 is_stmt 0 view .LVU140
+ 419 004e D4F83E30 		ldr	r3, [r4, #62]	@ unaligned
+ 420 0052 C4F81A30 		str	r3, [r4, #26]	@ unaligned
+  81:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 421              		.loc 1 81 5 is_stmt 1 view .LVU141
+  81:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 422              		.loc 1 81 63 is_stmt 0 view .LVU142
+ 423 0056 0721     		movs	r1, #7
+ 424              	.LVL25:
+  81:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 425              		.loc 1 81 63 view .LVU143
+ 426 0058 2046     		mov	r0, r4
+ 427              	.LVL26:
+  81:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 428              		.loc 1 81 63 view .LVU144
+ 429 005a FFF7FEFF 		bl	crc32_core
+ 430              	.LVL27:
+  81:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 431              		.loc 1 81 61 view .LVU145
+ 432 005e C4F81E00 		str	r0, [r4, #30]	@ unaligned
+  83:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 433              		.loc 1 83 5 is_stmt 1 view .LVU146
+ 434 0062 A446     		mov	ip, r4
+ 435 0064 01AE     		add	r6, sp, #4
+ 436 0066 2034     		adds	r4, r4, #32
+ARM GAS  /tmp/ccZRTnF4.s 			page 13
 
 
- 435              		.loc 1 82 5 is_stmt 1 view .LVU137
-  82:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.LowHzMotorCmdIndex = 0;
- 436              		.loc 1 82 59 is_stmt 0 view .LVU138
- 437 0048 E382     		strh	r3, [r4, #22]	@ movhi
-  83:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.LowHzMotorCmdByte = 0;
- 438              		.loc 1 83 5 is_stmt 1 view .LVU139
-  83:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.LowHzMotorCmdByte = 0;
- 439              		.loc 1 83 74 is_stmt 0 view .LVU140
- 440 004a 2376     		strb	r3, [r4, #24]
-  84:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Res[0] = cmd_motor[leg_id][motor_id].Res;
- 441              		.loc 1 84 5 is_stmt 1 view .LVU141
-  84:Lib/Motor/Src/unitreeA1_cmd.c ****     cmd_motor[leg_id][motor_id].motor_send_data.Mdata.Res[0] = cmd_motor[leg_id][motor_id].Res;
- 442              		.loc 1 84 73 is_stmt 0 view .LVU142
- 443 004c 6376     		strb	r3, [r4, #25]
-  85:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 444              		.loc 1 85 5 is_stmt 1 view .LVU143
-  85:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 445              		.loc 1 85 62 is_stmt 0 view .LVU144
- 446 004e D4F83E30 		ldr	r3, [r4, #62]	@ unaligned
- 447 0052 C4F81A30 		str	r3, [r4, #26]	@ unaligned
-  87:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 448              		.loc 1 87 5 is_stmt 1 view .LVU145
-  87:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 449              		.loc 1 87 63 is_stmt 0 view .LVU146
- 450 0056 0721     		movs	r1, #7
- 451              	.LVL27:
-  87:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 452              		.loc 1 87 63 view .LVU147
- 453 0058 2046     		mov	r0, r4
- 454              	.LVL28:
-  87:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 455              		.loc 1 87 63 view .LVU148
- 456 005a FFF7FEFF 		bl	crc32_core
- 457              	.LVL29:
-  87:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 458              		.loc 1 87 61 view .LVU149
- 459 005e C4F81E00 		str	r0, [r4, #30]	@ unaligned
-  89:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 460              		.loc 1 89 5 is_stmt 1 view .LVU150
- 461 0062 A446     		mov	ip, r4
- 462 0064 01AE     		add	r6, sp, #4
- 463 0066 2034     		adds	r4, r4, #32
- 464              	.L27:
- 465 0068 3546     		mov	r5, r6
- 466 006a DCF80000 		ldr	r0, [ip]	@ unaligned
- 467 006e DCF80410 		ldr	r1, [ip, #4]	@ unaligned
- 468 0072 DCF80820 		ldr	r2, [ip, #8]	@ unaligned
- 469 0076 DCF80C30 		ldr	r3, [ip, #12]	@ unaligned
- 470 007a 0FC5     		stmia	r5!, {r0, r1, r2, r3}
- 471 007c 0CF1100C 		add	ip, ip, #16
- 472 0080 2E46     		mov	r6, r5
- 473 0082 A445     		cmp	ip, r4
- 474 0084 F0D1     		bne	.L27
- 475 0086 BCF80030 		ldrh	r3, [ip]	@ unaligned
- 476 008a 2B80     		strh	r3, [r5]	@ unaligned
-  91:Lib/Motor/Src/unitreeA1_cmd.c ****     {
- 477              		.loc 1 91 5 view .LVU151
-ARM GAS  /tmp/ccZGupOt.s 			page 14
+ 437              	.L24:
+ 438 0068 3546     		mov	r5, r6
+ 439 006a DCF80000 		ldr	r0, [ip]	@ unaligned
+ 440 006e DCF80410 		ldr	r1, [ip, #4]	@ unaligned
+ 441 0072 DCF80820 		ldr	r2, [ip, #8]	@ unaligned
+ 442 0076 DCF80C30 		ldr	r3, [ip, #12]	@ unaligned
+ 443 007a 0FC5     		stmia	r5!, {r0, r1, r2, r3}
+ 444 007c 0CF1100C 		add	ip, ip, #16
+ 445 0080 2E46     		mov	r6, r5
+ 446 0082 A445     		cmp	ip, r4
+ 447 0084 F0D1     		bne	.L24
+ 448 0086 BCF80030 		ldrh	r3, [ip]	@ unaligned
+ 449 008a 2B80     		strh	r3, [r5]	@ unaligned
+  85:Lib/Motor/Src/unitreeA1_cmd.c ****     {
+ 450              		.loc 1 85 5 view .LVU147
+ 451 008c 27B1     		cbz	r7, .L25
+ 452 008e 012F     		cmp	r7, #1
+ 453 0090 09D0     		beq	.L26
+ 454              	.L23:
+  95:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 455              		.loc 1 95 1 is_stmt 0 view .LVU148
+ 456 0092 0BB0     		add	sp, sp, #44
+ 457              		.cfi_remember_state
+ 458              		.cfi_def_cfa_offset 28
+ 459              		@ sp needed
+ 460 0094 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
+ 461              	.LVL28:
+ 462              	.L25:
+ 463              		.cfi_restore_state
+  88:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
+ 464              		.loc 1 88 9 is_stmt 1 view .LVU149
+ 465 0098 0123     		movs	r3, #1
+ 466 009a 2222     		movs	r2, #34
+ 467 009c 01A9     		add	r1, sp, #4
+ 468 009e 0548     		ldr	r0, .L29
+ 469 00a0 FFF7FEFF 		bl	HAL_UART_Transmit
+ 470              	.LVL29:
+  89:Lib/Motor/Src/unitreeA1_cmd.c ****     case 1:
+ 471              		.loc 1 89 9 view .LVU150
+ 472 00a4 F5E7     		b	.L23
+ 473              	.L26:
+  91:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
+ 474              		.loc 1 91 9 view .LVU151
+ 475 00a6 0123     		movs	r3, #1
+ 476 00a8 2222     		movs	r2, #34
+ 477 00aa 01A9     		add	r1, sp, #4
+ 478 00ac 0248     		ldr	r0, .L29+4
+ 479 00ae FFF7FEFF 		bl	HAL_UART_Transmit
+ 480              	.LVL30:
+  92:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 481              		.loc 1 92 9 view .LVU152
+  95:Lib/Motor/Src/unitreeA1_cmd.c **** 
+ 482              		.loc 1 95 1 is_stmt 0 view .LVU153
+ 483 00b2 EEE7     		b	.L23
+ 484              	.L30:
+ 485              		.align	2
+ 486              	.L29:
+ARM GAS  /tmp/ccZRTnF4.s 			page 14
 
 
- 478 008c 032F     		cmp	r7, #3
- 479 008e 09D8     		bhi	.L26
- 480 0090 DFE807F0 		tbb	[pc, r7]
- 481              	.L30:
- 482 0094 02       		.byte	(.L33-.L30)/2
- 483 0095 0B       		.byte	(.L32-.L30)/2
- 484 0096 12       		.byte	(.L31-.L30)/2
- 485 0097 19       		.byte	(.L29-.L30)/2
- 486              		.p2align 1
- 487              	.L33:
-  94:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
- 488              		.loc 1 94 9 view .LVU152
- 489 0098 0123     		movs	r3, #1
- 490 009a 2222     		movs	r2, #34
- 491 009c 01A9     		add	r1, sp, #4
- 492 009e 0D48     		ldr	r0, .L35
- 493 00a0 FFF7FEFF 		bl	HAL_UART_Transmit
- 494              	.LVL30:
-  95:Lib/Motor/Src/unitreeA1_cmd.c ****     case 1:
- 495              		.loc 1 95 9 view .LVU153
- 496              	.L26:
- 106:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 497              		.loc 1 106 1 is_stmt 0 view .LVU154
- 498 00a4 0BB0     		add	sp, sp, #44
- 499              		.cfi_remember_state
- 500              		.cfi_def_cfa_offset 28
- 501              		@ sp needed
- 502 00a6 BDE8F083 		pop	{r4, r5, r6, r7, r8, r9, pc}
- 503              	.LVL31:
- 504              	.L32:
- 505              		.cfi_restore_state
-  97:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
- 506              		.loc 1 97 9 is_stmt 1 view .LVU155
- 507 00aa 0123     		movs	r3, #1
- 508 00ac 2222     		movs	r2, #34
- 509 00ae 01A9     		add	r1, sp, #4
- 510 00b0 0948     		ldr	r0, .L35+4
- 511 00b2 FFF7FEFF 		bl	HAL_UART_Transmit
- 512              	.LVL32:
-  98:Lib/Motor/Src/unitreeA1_cmd.c ****     case 2:
- 513              		.loc 1 98 9 view .LVU156
- 514 00b6 F5E7     		b	.L26
- 515              	.L31:
- 100:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
- 516              		.loc 1 100 9 view .LVU157
- 517 00b8 0123     		movs	r3, #1
- 518 00ba 2222     		movs	r2, #34
- 519 00bc 01A9     		add	r1, sp, #4
- 520 00be 0748     		ldr	r0, .L35+8
- 521 00c0 FFF7FEFF 		bl	HAL_UART_Transmit
- 522              	.LVL33:
- 101:Lib/Motor/Src/unitreeA1_cmd.c ****     case 3:
- 523              		.loc 1 101 9 view .LVU158
- 524 00c4 EEE7     		b	.L26
- 525              	.L29:
- 103:Lib/Motor/Src/unitreeA1_cmd.c ****         break;
- 526              		.loc 1 103 9 view .LVU159
-ARM GAS  /tmp/ccZGupOt.s 			page 15
-
-
- 527 00c6 0123     		movs	r3, #1
- 528 00c8 2222     		movs	r2, #34
- 529 00ca 01A9     		add	r1, sp, #4
- 530 00cc 0448     		ldr	r0, .L35+12
- 531 00ce FFF7FEFF 		bl	HAL_UART_Transmit
- 532              	.LVL34:
- 104:Lib/Motor/Src/unitreeA1_cmd.c ****     }
- 533              		.loc 1 104 9 view .LVU160
- 106:Lib/Motor/Src/unitreeA1_cmd.c **** 
- 534              		.loc 1 106 1 is_stmt 0 view .LVU161
- 535 00d2 E7E7     		b	.L26
- 536              	.L36:
- 537              		.align	2
- 538              	.L35:
- 539 00d4 00000000 		.word	huart1
- 540 00d8 00000000 		.word	huart2
- 541 00dc 00000000 		.word	huart6
- 542 00e0 00000000 		.word	huart3
- 543 00e4 00000000 		.word	.LANCHOR0
- 544              		.cfi_endproc
- 545              	.LFE138:
- 547              		.global	cmd_leg
- 548              		.global	cmd_motor
- 549              		.section	.bss.cmd_leg,"aw",%nobits
- 550              		.align	2
- 553              	cmd_leg:
- 554 0000 00000000 		.space	264
- 554      00000000 
- 554      00000000 
- 554      00000000 
- 554      00000000 
- 555              		.section	.bss.cmd_motor,"aw",%nobits
- 556              		.align	2
- 557              		.set	.LANCHOR0,. + 0
- 560              	cmd_motor:
- 561 0000 00000000 		.space	792
- 561      00000000 
- 561      00000000 
- 561      00000000 
- 561      00000000 
- 562              		.text
- 563              	.Letext0:
- 564              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
- 565              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
- 566              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f405xx.h"
- 567              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 568              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 569              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
- 570              		.file 8 "Core/Inc/usart.h"
- 571              		.file 9 "Lib/Motor/Inc/unitreeA1_msg.h"
- 572              		.file 10 "Lib/SPI_Bus/Inc/data_def.h"
- 573              		.file 11 "Lib/SPI_Bus/Inc/spi_deal.h"
- 574              		.file 12 "Lib/Motor/Inc/unitreeA1_cmd.h"
-ARM GAS  /tmp/ccZGupOt.s 			page 16
+ 487 00b4 00000000 		.word	huart1
+ 488 00b8 00000000 		.word	huart6
+ 489 00bc 00000000 		.word	.LANCHOR0
+ 490              		.cfi_endproc
+ 491              	.LFE138:
+ 493              		.global	cmd_leg
+ 494              		.global	cmd_motor
+ 495              		.section	.bss.cmd_leg,"aw",%nobits
+ 496              		.align	2
+ 499              	cmd_leg:
+ 500 0000 00000000 		.space	264
+ 500      00000000 
+ 500      00000000 
+ 500      00000000 
+ 500      00000000 
+ 501              		.section	.bss.cmd_motor,"aw",%nobits
+ 502              		.align	2
+ 503              		.set	.LANCHOR0,. + 0
+ 506              	cmd_motor:
+ 507 0000 00000000 		.space	792
+ 507      00000000 
+ 507      00000000 
+ 507      00000000 
+ 507      00000000 
+ 508              		.text
+ 509              	.Letext0:
+ 510              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 511              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 512              		.file 4 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f405xx.h"
+ 513              		.file 5 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 514              		.file 6 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 515              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 516              		.file 8 "Core/Inc/usart.h"
+ 517              		.file 9 "Lib/Motor/Inc/unitreeA1_msg.h"
+ 518              		.file 10 "Lib/SPI_Bus/Inc/data_def.h"
+ 519              		.file 11 "Lib/SPI_Bus/Inc/spi_deal.h"
+ 520              		.file 12 "Lib/Motor/Inc/unitreeA1_cmd.h"
+ARM GAS  /tmp/ccZRTnF4.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 unitreeA1_cmd.c
-     /tmp/ccZGupOt.s:20     .text.crc32_core:0000000000000000 $t
-     /tmp/ccZGupOt.s:26     .text.crc32_core:0000000000000000 crc32_core
-     /tmp/ccZGupOt.s:142    .text.crc32_core:0000000000000054 $d
-     /tmp/ccZGupOt.s:147    .text.unitreeA1_tx:0000000000000000 $t
-     /tmp/ccZGupOt.s:153    .text.unitreeA1_tx:0000000000000000 unitreeA1_tx
-     /tmp/ccZGupOt.s:289    .text.unitreeA1_tx:00000000000000ae $d
-     /tmp/ccZGupOt.s:293    .text.unitreeA1_tx:00000000000000b2 $t
-     /tmp/ccZGupOt.s:346    .text.unitreeA1_tx:00000000000000f0 $d
-     /tmp/ccZGupOt.s:356    .text.unitreeA1_enable:0000000000000000 $t
-     /tmp/ccZGupOt.s:362    .text.unitreeA1_enable:0000000000000000 unitreeA1_enable
-     /tmp/ccZGupOt.s:482    .text.unitreeA1_enable:0000000000000094 $d
-     /tmp/ccZGupOt.s:486    .text.unitreeA1_enable:0000000000000098 $t
-     /tmp/ccZGupOt.s:539    .text.unitreeA1_enable:00000000000000d4 $d
-     /tmp/ccZGupOt.s:553    .bss.cmd_leg:0000000000000000 cmd_leg
-     /tmp/ccZGupOt.s:560    .bss.cmd_motor:0000000000000000 cmd_motor
-     /tmp/ccZGupOt.s:550    .bss.cmd_leg:0000000000000000 $d
-     /tmp/ccZGupOt.s:556    .bss.cmd_motor:0000000000000000 $d
+     /tmp/ccZRTnF4.s:20     .text.crc32_core:0000000000000000 $t
+     /tmp/ccZRTnF4.s:26     .text.crc32_core:0000000000000000 crc32_core
+     /tmp/ccZRTnF4.s:142    .text.crc32_core:0000000000000054 $d
+     /tmp/ccZRTnF4.s:147    .text.unitreeA1_tx:0000000000000000 $t
+     /tmp/ccZRTnF4.s:153    .text.unitreeA1_tx:0000000000000000 unitreeA1_tx
+     /tmp/ccZRTnF4.s:321    .text.unitreeA1_tx:00000000000000d0 $d
+     /tmp/ccZRTnF4.s:329    .text.unitreeA1_enable:0000000000000000 $t
+     /tmp/ccZRTnF4.s:335    .text.unitreeA1_enable:0000000000000000 unitreeA1_enable
+     /tmp/ccZRTnF4.s:487    .text.unitreeA1_enable:00000000000000b4 $d
+     /tmp/ccZRTnF4.s:499    .bss.cmd_leg:0000000000000000 cmd_leg
+     /tmp/ccZRTnF4.s:506    .bss.cmd_motor:0000000000000000 cmd_motor
+     /tmp/ccZRTnF4.s:496    .bss.cmd_leg:0000000000000000 $d
+     /tmp/ccZRTnF4.s:502    .bss.cmd_motor:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 HAL_UART_Transmit
 spi_rx_data
 huart1
-huart2
 huart6
-huart3

@@ -49,13 +49,7 @@ void unitreeA1_tx(int leg_id,int motor_id)
         HAL_UART_Transmit(&huart1, A1cmd, 34, 0x01);
         break;
     case 1:
-        HAL_UART_Transmit(&huart2, A1cmd, 34, 0x01);
-        break;
-    case 2:
         HAL_UART_Transmit(&huart6, A1cmd, 34, 0x01);
-        break;
-    case 3:
-        HAL_UART_Transmit(&huart3, A1cmd, 34, 0x01);
         break;
     }
 }
@@ -94,14 +88,9 @@ void unitreeA1_enable(int leg_id, int motor_id)
         HAL_UART_Transmit(&huart1, A1cmd, 34, 0x01);
         break;
     case 1:
-        HAL_UART_Transmit(&huart2, A1cmd, 34, 0x01);
-        break;
-    case 2:
         HAL_UART_Transmit(&huart6, A1cmd, 34, 0x01);
         break;
-    case 3:
-        HAL_UART_Transmit(&huart3, A1cmd, 34, 0x01);
-        break;
+
     }
 }
 

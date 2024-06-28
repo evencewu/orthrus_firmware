@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cczMFmRX.s 			page 1
+ARM GAS  /tmp/cc7c0jFk.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -49,722 +49,806 @@ ARM GAS  /tmp/cczMFmRX.s 			page 1
   18:Lib/application/src/spi2_bus.c **** {
   30              		.loc 1 18 1 view -0
   31              		.cfi_startproc
-  32              		@ args = 0, pretend = 0, frame = 0
+  32              		@ args = 0, pretend = 0, frame = 24
   33              		@ frame_needed = 0, uses_anonymous_args = 0
   34              		.loc 1 18 1 is_stmt 0 view .LVU1
-  35 0000 70B5     		push	{r4, r5, r6, lr}
-  36              		.cfi_def_cfa_offset 16
-  37              		.cfi_offset 4, -16
-  38              		.cfi_offset 5, -12
-  39              		.cfi_offset 6, -8
-  40              		.cfi_offset 14, -4
-ARM GAS  /tmp/cczMFmRX.s 			page 2
+  35 0000 30B5     		push	{r4, r5, lr}
+  36              		.cfi_def_cfa_offset 12
+  37              		.cfi_offset 4, -12
+  38              		.cfi_offset 5, -8
+  39              		.cfi_offset 14, -4
+  40 0002 87B0     		sub	sp, sp, #28
+ARM GAS  /tmp/cc7c0jFk.s 			page 2
 
 
-  41 0002 0446     		mov	r4, r0
+  41              		.cfi_def_cfa_offset 40
+  42 0004 8646     		mov	lr, r0
   19:Lib/application/src/spi2_bus.c ****     memcpy(&rx_transform.u8[0], input, 21);
-  42              		.loc 1 19 5 is_stmt 1 view .LVU2
-  43 0004 DFF854C0 		ldr	ip, .L3+4
-  44 0008 E646     		mov	lr, ip
-  45 000a 0068     		ldr	r0, [r0]	@ unaligned
-  46              	.LVL1:
-  47              		.loc 1 19 5 is_stmt 0 view .LVU3
-  48 000c 6168     		ldr	r1, [r4, #4]	@ unaligned
-  49 000e A268     		ldr	r2, [r4, #8]	@ unaligned
-  50 0010 E368     		ldr	r3, [r4, #12]	@ unaligned
-  51 0012 AEE80F00 		stmia	lr!, {r0, r1, r2, r3}
-  52 0016 2069     		ldr	r0, [r4, #16]	@ unaligned
-  53 0018 CEF80000 		str	r0, [lr]
-  54 001c 237D     		ldrb	r3, [r4, #20]	@ zero_extendqisi2
-  55 001e 8EF80430 		strb	r3, [lr, #4]
-  20:Lib/application/src/spi2_bus.c ****     memcpy(&motor_rx[rx_transform.a1msg.leg_id][rx_transform.a1msg.motor_id], &rx_transform.a1msg.s
-  56              		.loc 1 20 5 is_stmt 1 view .LVU4
-  57              		.loc 1 20 40 is_stmt 0 view .LVU5
-  58 0022 9CF80230 		ldrb	r3, [ip, #2]	@ zero_extendqisi2
-  59              		.loc 1 20 67 view .LVU6
-  60 0026 9CF80340 		ldrb	r4, [ip, #3]	@ zero_extendqisi2
-  61              	.LVL2:
-  62              		.loc 1 20 12 view .LVU7
-  63 002a 0B4E     		ldr	r6, .L3
-  64 002c 04EB4404 		add	r4, r4, r4, lsl #1
-  65 0030 C4EBC404 		rsb	r4, r4, r4, lsl #3
-  66 0034 C3EB8313 		rsb	r3, r3, r3, lsl #6
-  67 0038 1C44     		add	r4, r4, r3
-  68 003a 3519     		adds	r5, r6, r4
-  69              		.loc 1 20 5 view .LVU8
-  70 003c BCE80F00 		ldmia	ip!, {r0, r1, r2, r3}
-  71 0040 3051     		str	r0, [r6, r4]	@ unaligned
-  72 0042 6960     		str	r1, [r5, #4]	@ unaligned
-  73 0044 AA60     		str	r2, [r5, #8]	@ unaligned
-  74 0046 EB60     		str	r3, [r5, #12]	@ unaligned
-  75 0048 DEF80000 		ldr	r0, [lr]
-  76 004c 2861     		str	r0, [r5, #16]	@ unaligned
-  77 004e 9EF80430 		ldrb	r3, [lr, #4]	@ zero_extendqisi2
-  78 0052 2B75     		strb	r3, [r5, #20]
-  21:Lib/application/src/spi2_bus.c **** }
-  79              		.loc 1 21 1 view .LVU9
-  80 0054 70BD     		pop	{r4, r5, r6, pc}
-  81              	.L4:
-  82 0056 00BF     		.align	2
-  83              	.L3:
-  84 0058 00000000 		.word	.LANCHOR1
-  85 005c 00000000 		.word	.LANCHOR0
-  86              		.cfi_endproc
-  87              	.LFE0:
-  89              		.section	.text.PreparMotorMsg,"ax",%progbits
-  90              		.align	1
-  91              		.global	PreparMotorMsg
-  92              		.syntax unified
-  93              		.thumb
-  94              		.thumb_func
-  96              	PreparMotorMsg:
-ARM GAS  /tmp/cczMFmRX.s 			page 3
+  43              		.loc 1 19 5 is_stmt 1 view .LVU2
+  44 0006 324C     		ldr	r4, .L5
+  45 0008 A446     		mov	ip, r4
+  46 000a 0068     		ldr	r0, [r0]	@ unaligned
+  47              	.LVL1:
+  48              		.loc 1 19 5 is_stmt 0 view .LVU3
+  49 000c DEF80410 		ldr	r1, [lr, #4]	@ unaligned
+  50 0010 DEF80820 		ldr	r2, [lr, #8]	@ unaligned
+  51 0014 DEF80C30 		ldr	r3, [lr, #12]	@ unaligned
+  52 0018 ACE80F00 		stmia	ip!, {r0, r1, r2, r3}
+  53 001c DEF81000 		ldr	r0, [lr, #16]	@ unaligned
+  54 0020 CCF80000 		str	r0, [ip]
+  55 0024 9EF81430 		ldrb	r3, [lr, #20]	@ zero_extendqisi2
+  56 0028 8CF80430 		strb	r3, [ip, #4]
+  20:Lib/application/src/spi2_bus.c **** 
+  21:Lib/application/src/spi2_bus.c ****     A1PackageSpiRx motor_rx_now;
+  57              		.loc 1 21 5 is_stmt 1 view .LVU4
+  22:Lib/application/src/spi2_bus.c ****     memcpy(&motor_rx_now, &rx_transform.a1msg.start[0], 21);
+  58              		.loc 1 22 5 view .LVU5
+  59 002c EE46     		mov	lr, sp
+  60              	.LVL2:
+  61              		.loc 1 22 5 is_stmt 0 view .LVU6
+  62 002e 0FCC     		ldmia	r4!, {r0, r1, r2, r3}
+  63 0030 AEE80F00 		stmia	lr!, {r0, r1, r2, r3}
+  64 0034 9CE80300 		ldm	ip, {r0, r1}
+  65 0038 4EF8040B 		str	r0, [lr], #4
+  66 003c 8EF80010 		strb	r1, [lr]
+  23:Lib/application/src/spi2_bus.c ****     
+  24:Lib/application/src/spi2_bus.c ****     if(motor_rx_now.SumCheck == motor_rx_now.start[0] + motor_rx_now.start[1] + motor_rx_now.leg_id
+  67              		.loc 1 24 5 is_stmt 1 view .LVU7
+  68              		.loc 1 24 20 is_stmt 0 view .LVU8
+  69 0040 DDF81120 		ldr	r2, [sp, #17]	@ unaligned
+  70              		.loc 1 24 51 view .LVU9
+  71 0044 9DF80030 		ldrb	r3, [sp]	@ zero_extendqisi2
+  72              		.loc 1 24 75 view .LVU10
+  73 0048 9DF80110 		ldrb	r1, [sp, #1]	@ zero_extendqisi2
+  74              		.loc 1 24 55 view .LVU11
+  75 004c 0B44     		add	r3, r3, r1
+  76              		.loc 1 24 93 view .LVU12
+  77 004e 9DF80210 		ldrb	r1, [sp, #2]	@ zero_extendqisi2
+  78              		.loc 1 24 79 view .LVU13
+  79 0052 0B44     		add	r3, r3, r1
+  80              		.loc 1 24 115 view .LVU14
+  81 0054 9DF80310 		ldrb	r1, [sp, #3]	@ zero_extendqisi2
+  82              		.loc 1 24 101 view .LVU15
+  83 0058 0B44     		add	r3, r3, r1
+  84              		.loc 1 24 139 view .LVU16
+  85 005a 9DF80410 		ldrb	r1, [sp, #4]	@ zero_extendqisi2
+  86              		.loc 1 24 125 view .LVU17
+  87 005e 0B44     		add	r3, r3, r1
+  88              		.loc 1 24 159 view .LVU18
+  89 0060 9DF90510 		ldrsb	r1, [sp, #5]
+  90              		.loc 1 24 145 view .LVU19
+  91 0064 0B44     		add	r3, r3, r1
+ARM GAS  /tmp/cc7c0jFk.s 			page 3
 
 
-  97              	.LVL3:
-  98              	.LFB1:
-  22:Lib/application/src/spi2_bus.c **** 
-  23:Lib/application/src/spi2_bus.c **** void PreparMotorMsg(A1PackageSpiTx motor_tx_pack, uint8_t *motor_original_tx)
-  24:Lib/application/src/spi2_bus.c **** {
-  99              		.loc 1 24 1 is_stmt 1 view -0
- 100              		.cfi_startproc
- 101              		@ args = 28, pretend = 16, frame = 24
- 102              		@ frame_needed = 0, uses_anonymous_args = 0
- 103              		@ link register save eliminated.
- 104              		.loc 1 24 1 is_stmt 0 view .LVU11
- 105 0000 84B0     		sub	sp, sp, #16
- 106              		.cfi_def_cfa_offset 16
- 107 0002 10B4     		push	{r4}
- 108              		.cfi_def_cfa_offset 20
- 109              		.cfi_offset 4, -20
- 110 0004 87B0     		sub	sp, sp, #28
- 111              		.cfi_def_cfa_offset 48
- 112 0006 08AC     		add	r4, sp, #32
- 113 0008 84E80F00 		stm	r4, {r0, r1, r2, r3}
- 114 000c 0E9C     		ldr	r4, [sp, #56]
-  25:Lib/application/src/spi2_bus.c ****     uint8_t motor_tx_msg[21];
- 115              		.loc 1 25 5 is_stmt 1 view .LVU12
-  26:Lib/application/src/spi2_bus.c ****     memcpy(motor_tx_msg, &motor_tx_pack, 21);
- 116              		.loc 1 26 5 view .LVU13
- 117 000e EC46     		mov	ip, sp
- 118 0010 0898     		ldr	r0, [sp, #32]	@ unaligned
- 119 0012 0999     		ldr	r1, [sp, #36]	@ unaligned
- 120 0014 0A9A     		ldr	r2, [sp, #40]	@ unaligned
- 121 0016 0B9B     		ldr	r3, [sp, #44]	@ unaligned
- 122 0018 ACE80F00 		stmia	ip!, {r0, r1, r2, r3}
- 123 001c 0C98     		ldr	r0, [sp, #48]	@ unaligned
- 124 001e CCF80000 		str	r0, [ip]
- 125 0022 9DF83430 		ldrb	r3, [sp, #52]	@ zero_extendqisi2
- 126 0026 8CF80430 		strb	r3, [ip, #4]
-  27:Lib/application/src/spi2_bus.c **** 
-  28:Lib/application/src/spi2_bus.c ****     for (int i = 0; i < 20; i++)
- 127              		.loc 1 28 5 view .LVU14
- 128              	.LBB2:
- 129              		.loc 1 28 10 view .LVU15
- 130              	.LVL4:
- 131              		.loc 1 28 14 is_stmt 0 view .LVU16
- 132 002a 0023     		movs	r3, #0
- 133              		.loc 1 28 5 view .LVU17
- 134 002c 07E0     		b	.L6
- 135              	.LVL5:
- 136              	.L7:
-  29:Lib/application/src/spi2_bus.c ****     {
-  30:Lib/application/src/spi2_bus.c ****         *(motor_original_tx + i) = motor_tx_msg[i + 1];
- 137              		.loc 1 30 9 is_stmt 1 discriminator 3 view .LVU18
- 138              		.loc 1 30 51 is_stmt 0 discriminator 3 view .LVU19
- 139 002e 5A1C     		adds	r2, r3, #1
- 140              		.loc 1 30 48 discriminator 3 view .LVU20
- 141 0030 03F11901 		add	r1, r3, #25
- 142 0034 6944     		add	r1, sp, r1
- 143 0036 11F8181C 		ldrb	r1, [r1, #-24]	@ zero_extendqisi2
- 144              		.loc 1 30 34 discriminator 3 view .LVU21
-ARM GAS  /tmp/cczMFmRX.s 			page 4
+  92              		.loc 1 24 179 view .LVU20
+  93 0066 9DF80610 		ldrb	r1, [sp, #6]	@ zero_extendqisi2
+  94              		.loc 1 24 165 view .LVU21
+  95 006a 0B44     		add	r3, r3, r1
+  96              		.loc 1 24 201 view .LVU22
+  97 006c BDF90710 		ldrsh	r1, [sp, #7]	@ unaligned
+  98              		.loc 1 24 187 view .LVU23
+  99 0070 0B44     		add	r3, r3, r1
+ 100              		.loc 1 24 218 view .LVU24
+ 101 0072 BDF90910 		ldrsh	r1, [sp, #9]	@ unaligned
+ 102              		.loc 1 24 204 view .LVU25
+ 103 0076 0B44     		add	r3, r3, r1
+ 104              		.loc 1 24 235 view .LVU26
+ 105 0078 BDF90B10 		ldrsh	r1, [sp, #11]	@ unaligned
+ 106              		.loc 1 24 221 view .LVU27
+ 107 007c 0B44     		add	r3, r3, r1
+ 108              		.loc 1 24 254 view .LVU28
+ 109 007e DDF80D10 		ldr	r1, [sp, #13]	@ unaligned
+ 110              		.loc 1 24 240 view .LVU29
+ 111 0082 0B44     		add	r3, r3, r1
+ 112              		.loc 1 24 7 view .LVU30
+ 113 0084 9A42     		cmp	r2, r3
+ 114 0086 01D0     		beq	.L4
+ 115              	.L1:
+  25:Lib/application/src/spi2_bus.c ****     {
+  26:Lib/application/src/spi2_bus.c ****         memcpy(&motor_rx[rx_transform.a1msg.leg_id][rx_transform.a1msg.motor_id], &motor_rx_now, 21
+  27:Lib/application/src/spi2_bus.c ****     }
+  28:Lib/application/src/spi2_bus.c **** }
+ 116              		.loc 1 28 1 view .LVU31
+ 117 0088 07B0     		add	sp, sp, #28
+ 118              		.cfi_remember_state
+ 119              		.cfi_def_cfa_offset 12
+ 120              		@ sp needed
+ 121 008a 30BD     		pop	{r4, r5, pc}
+ 122              	.L4:
+ 123              		.cfi_restore_state
+  26:Lib/application/src/spi2_bus.c ****     }
+ 124              		.loc 1 26 9 is_stmt 1 view .LVU32
+  26:Lib/application/src/spi2_bus.c ****     }
+ 125              		.loc 1 26 44 is_stmt 0 view .LVU33
+ 126 008c A4F11002 		sub	r2, r4, #16
+ 127 0090 9378     		ldrb	r3, [r2, #2]	@ zero_extendqisi2
+  26:Lib/application/src/spi2_bus.c ****     }
+ 128              		.loc 1 26 71 view .LVU34
+ 129 0092 D478     		ldrb	r4, [r2, #3]	@ zero_extendqisi2
+  26:Lib/application/src/spi2_bus.c ****     }
+ 130              		.loc 1 26 16 view .LVU35
+ 131 0094 0F4D     		ldr	r5, .L5+4
+ 132 0096 04EB4404 		add	r4, r4, r4, lsl #1
+ 133 009a C4EBC404 		rsb	r4, r4, r4, lsl #3
+ 134 009e C3EB8313 		rsb	r3, r3, r3, lsl #6
+ 135 00a2 1C44     		add	r4, r4, r3
+ 136 00a4 05EB040E 		add	lr, r5, r4
+  26:Lib/application/src/spi2_bus.c ****     }
+ 137              		.loc 1 26 9 view .LVU36
+ 138 00a8 EC46     		mov	ip, sp
+ 139 00aa BCE80F00 		ldmia	ip!, {r0, r1, r2, r3}
+ARM GAS  /tmp/cc7c0jFk.s 			page 4
 
 
- 145 003a E154     		strb	r1, [r4, r3]
-  28:Lib/application/src/spi2_bus.c ****     {
- 146              		.loc 1 28 29 is_stmt 1 discriminator 3 view .LVU22
- 147              	.LVL6:
-  28:Lib/application/src/spi2_bus.c ****     {
- 148              		.loc 1 28 30 is_stmt 0 discriminator 3 view .LVU23
- 149 003c 1346     		mov	r3, r2
- 150              	.LVL7:
- 151              	.L6:
-  28:Lib/application/src/spi2_bus.c ****     {
- 152              		.loc 1 28 21 is_stmt 1 discriminator 1 view .LVU24
-  28:Lib/application/src/spi2_bus.c ****     {
- 153              		.loc 1 28 5 is_stmt 0 discriminator 1 view .LVU25
- 154 003e 132B     		cmp	r3, #19
- 155 0040 F5DD     		ble	.L7
- 156              	.LBE2:
- 157              	.LBB3:
-  31:Lib/application/src/spi2_bus.c ****     }
-  32:Lib/application/src/spi2_bus.c **** 
-  33:Lib/application/src/spi2_bus.c ****     for (int i = 0; i < 21; i++)
- 158              		.loc 1 33 14 view .LVU26
- 159 0042 0023     		movs	r3, #0
- 160              	.LVL8:
- 161              		.loc 1 33 14 view .LVU27
- 162 0044 08E0     		b	.L8
- 163              	.LVL9:
- 164              	.L9:
-  34:Lib/application/src/spi2_bus.c ****     {
-  35:Lib/application/src/spi2_bus.c ****         *(motor_original_tx + i + 20) = motor_tx_msg[i];
- 165              		.loc 1 35 9 is_stmt 1 discriminator 3 view .LVU28
- 166              		.loc 1 35 33 is_stmt 0 discriminator 3 view .LVU29
- 167 0046 03F11402 		add	r2, r3, #20
- 168              		.loc 1 35 53 discriminator 3 view .LVU30
- 169 004a 03F11801 		add	r1, r3, #24
- 170 004e 6944     		add	r1, sp, r1
- 171 0050 11F8181C 		ldrb	r1, [r1, #-24]	@ zero_extendqisi2
- 172              		.loc 1 35 39 discriminator 3 view .LVU31
- 173 0054 A154     		strb	r1, [r4, r2]
-  33:Lib/application/src/spi2_bus.c ****     {
- 174              		.loc 1 33 29 is_stmt 1 discriminator 3 view .LVU32
-  33:Lib/application/src/spi2_bus.c ****     {
- 175              		.loc 1 33 30 is_stmt 0 discriminator 3 view .LVU33
- 176 0056 0133     		adds	r3, r3, #1
- 177              	.LVL10:
- 178              	.L8:
-  33:Lib/application/src/spi2_bus.c ****     {
- 179              		.loc 1 33 21 is_stmt 1 discriminator 1 view .LVU34
-  33:Lib/application/src/spi2_bus.c ****     {
- 180              		.loc 1 33 5 is_stmt 0 discriminator 1 view .LVU35
- 181 0058 142B     		cmp	r3, #20
- 182 005a F4DD     		ble	.L9
- 183              	.LBE3:
-  36:Lib/application/src/spi2_bus.c ****     }
-  37:Lib/application/src/spi2_bus.c **** }
- 184              		.loc 1 37 1 view .LVU36
- 185 005c 07B0     		add	sp, sp, #28
- 186              		.cfi_def_cfa_offset 20
-ARM GAS  /tmp/cczMFmRX.s 			page 5
+ 140 00ae 2851     		str	r0, [r5, r4]	@ unaligned
+ 141 00b0 CEF80410 		str	r1, [lr, #4]	@ unaligned
+ 142 00b4 CEF80820 		str	r2, [lr, #8]	@ unaligned
+ 143 00b8 CEF80C30 		str	r3, [lr, #12]	@ unaligned
+ 144 00bc DCF80000 		ldr	r0, [ip]
+ 145 00c0 CEF81000 		str	r0, [lr, #16]	@ unaligned
+ 146 00c4 9CF80430 		ldrb	r3, [ip, #4]	@ zero_extendqisi2
+ 147 00c8 8EF81430 		strb	r3, [lr, #20]
+ 148              		.loc 1 28 1 view .LVU37
+ 149 00cc DCE7     		b	.L1
+ 150              	.L6:
+ 151 00ce 00BF     		.align	2
+ 152              	.L5:
+ 153 00d0 00000000 		.word	.LANCHOR0
+ 154 00d4 00000000 		.word	.LANCHOR1
+ 155              		.cfi_endproc
+ 156              	.LFE0:
+ 158              		.section	.text.PreparMotorMsg,"ax",%progbits
+ 159              		.align	1
+ 160              		.global	PreparMotorMsg
+ 161              		.syntax unified
+ 162              		.thumb
+ 163              		.thumb_func
+ 165              	PreparMotorMsg:
+ 166              	.LVL3:
+ 167              	.LFB1:
+  29:Lib/application/src/spi2_bus.c **** 
+  30:Lib/application/src/spi2_bus.c **** void PreparMotorMsg(A1PackageSpiTx motor_tx_pack, uint8_t *motor_original_tx)
+  31:Lib/application/src/spi2_bus.c **** {
+ 168              		.loc 1 31 1 is_stmt 1 view -0
+ 169              		.cfi_startproc
+ 170              		@ args = 28, pretend = 16, frame = 24
+ 171              		@ frame_needed = 0, uses_anonymous_args = 0
+ 172              		@ link register save eliminated.
+ 173              		.loc 1 31 1 is_stmt 0 view .LVU39
+ 174 0000 84B0     		sub	sp, sp, #16
+ 175              		.cfi_def_cfa_offset 16
+ 176 0002 10B4     		push	{r4}
+ 177              		.cfi_def_cfa_offset 20
+ 178              		.cfi_offset 4, -20
+ 179 0004 87B0     		sub	sp, sp, #28
+ 180              		.cfi_def_cfa_offset 48
+ 181 0006 08AC     		add	r4, sp, #32
+ 182 0008 84E80F00 		stm	r4, {r0, r1, r2, r3}
+ 183 000c 0E9C     		ldr	r4, [sp, #56]
+  32:Lib/application/src/spi2_bus.c ****     uint8_t motor_tx_msg[21];
+ 184              		.loc 1 32 5 is_stmt 1 view .LVU40
+  33:Lib/application/src/spi2_bus.c ****     memcpy(motor_tx_msg, &motor_tx_pack, 21);
+ 185              		.loc 1 33 5 view .LVU41
+ 186 000e EC46     		mov	ip, sp
+ 187 0010 0898     		ldr	r0, [sp, #32]	@ unaligned
+ 188 0012 0999     		ldr	r1, [sp, #36]	@ unaligned
+ 189 0014 0A9A     		ldr	r2, [sp, #40]	@ unaligned
+ 190 0016 0B9B     		ldr	r3, [sp, #44]	@ unaligned
+ 191 0018 ACE80F00 		stmia	ip!, {r0, r1, r2, r3}
+ 192 001c 0C98     		ldr	r0, [sp, #48]	@ unaligned
+ 193 001e CCF80000 		str	r0, [ip]
+ARM GAS  /tmp/cc7c0jFk.s 			page 5
 
 
- 187              		@ sp needed
- 188 005e 5DF8044B 		ldr	r4, [sp], #4
- 189              		.cfi_restore 4
- 190              		.cfi_def_cfa_offset 16
- 191 0062 04B0     		add	sp, sp, #16
- 192              		.cfi_def_cfa_offset 0
- 193 0064 7047     		bx	lr
- 194              		.cfi_endproc
- 195              	.LFE1:
- 197              		.section	.text.ecat_spi_motor,"ax",%progbits
- 198              		.align	1
- 199              		.global	ecat_spi_motor
- 200              		.syntax unified
- 201              		.thumb
- 202              		.thumb_func
- 204              	ecat_spi_motor:
- 205              	.LVL11:
- 206              	.LFB2:
-  38:Lib/application/src/spi2_bus.c **** 
-  39:Lib/application/src/spi2_bus.c **** void ecat_spi_motor(int leg_id, int motor_id)
-  40:Lib/application/src/spi2_bus.c **** {
- 207              		.loc 1 40 1 is_stmt 1 view -0
- 208              		.cfi_startproc
- 209              		@ args = 0, pretend = 0, frame = 0
- 210              		@ frame_needed = 0, uses_anonymous_args = 0
- 211              		.loc 1 40 1 is_stmt 0 view .LVU38
- 212 0000 10B5     		push	{r4, lr}
- 213              		.cfi_def_cfa_offset 8
- 214              		.cfi_offset 4, -8
- 215              		.cfi_offset 14, -4
- 216 0002 84B0     		sub	sp, sp, #16
- 217              		.cfi_def_cfa_offset 24
-  41:Lib/application/src/spi2_bus.c ****     PreparMotorMsg(motor_tx[leg_id][motor_id], motor_original_tx);
- 218              		.loc 1 41 5 is_stmt 1 view .LVU39
- 219 0004 2A4A     		ldr	r2, .L28
- 220 0006 01EB4101 		add	r1, r1, r1, lsl #1
- 221              	.LVL12:
- 222              		.loc 1 41 5 is_stmt 0 view .LVU40
- 223 000a C1EBC101 		rsb	r1, r1, r1, lsl #3
- 224 000e C0EB8010 		rsb	r0, r0, r0, lsl #6
- 225              	.LVL13:
- 226              		.loc 1 41 5 view .LVU41
- 227 0012 0B18     		adds	r3, r1, r0
- 228 0014 D418     		adds	r4, r2, r3
- 229 0016 2749     		ldr	r1, .L28+4
- 230 0018 0291     		str	r1, [sp, #8]
- 231 001a 2069     		ldr	r0, [r4, #16]	@ unaligned
- 232 001c 0090     		str	r0, [sp]
- 233 001e 217D     		ldrb	r1, [r4, #20]	@ zero_extendqisi2
- 234 0020 8DF80410 		strb	r1, [sp, #4]
- 235 0024 D058     		ldr	r0, [r2, r3]	@ unaligned
- 236 0026 6168     		ldr	r1, [r4, #4]	@ unaligned
- 237 0028 A268     		ldr	r2, [r4, #8]	@ unaligned
- 238 002a E368     		ldr	r3, [r4, #12]	@ unaligned
- 239 002c FFF7FEFF 		bl	PreparMotorMsg
- 240              	.LVL14:
-  42:Lib/application/src/spi2_bus.c **** 
-ARM GAS  /tmp/cczMFmRX.s 			page 6
+ 194 0022 9DF83430 		ldrb	r3, [sp, #52]	@ zero_extendqisi2
+ 195 0026 8CF80430 		strb	r3, [ip, #4]
+  34:Lib/application/src/spi2_bus.c **** 
+  35:Lib/application/src/spi2_bus.c ****     for (int i = 0; i < 20; i++)
+ 196              		.loc 1 35 5 view .LVU42
+ 197              	.LBB2:
+ 198              		.loc 1 35 10 view .LVU43
+ 199              	.LVL4:
+ 200              		.loc 1 35 14 is_stmt 0 view .LVU44
+ 201 002a 0023     		movs	r3, #0
+ 202              		.loc 1 35 5 view .LVU45
+ 203 002c 07E0     		b	.L8
+ 204              	.LVL5:
+ 205              	.L9:
+  36:Lib/application/src/spi2_bus.c ****     {
+  37:Lib/application/src/spi2_bus.c ****         *(motor_original_tx + i) = motor_tx_msg[i + 1];
+ 206              		.loc 1 37 9 is_stmt 1 discriminator 3 view .LVU46
+ 207              		.loc 1 37 51 is_stmt 0 discriminator 3 view .LVU47
+ 208 002e 5A1C     		adds	r2, r3, #1
+ 209              		.loc 1 37 48 discriminator 3 view .LVU48
+ 210 0030 03F11901 		add	r1, r3, #25
+ 211 0034 6944     		add	r1, sp, r1
+ 212 0036 11F8181C 		ldrb	r1, [r1, #-24]	@ zero_extendqisi2
+ 213              		.loc 1 37 34 discriminator 3 view .LVU49
+ 214 003a E154     		strb	r1, [r4, r3]
+  35:Lib/application/src/spi2_bus.c ****     {
+ 215              		.loc 1 35 29 is_stmt 1 discriminator 3 view .LVU50
+ 216              	.LVL6:
+  35:Lib/application/src/spi2_bus.c ****     {
+ 217              		.loc 1 35 30 is_stmt 0 discriminator 3 view .LVU51
+ 218 003c 1346     		mov	r3, r2
+ 219              	.LVL7:
+ 220              	.L8:
+  35:Lib/application/src/spi2_bus.c ****     {
+ 221              		.loc 1 35 21 is_stmt 1 discriminator 1 view .LVU52
+  35:Lib/application/src/spi2_bus.c ****     {
+ 222              		.loc 1 35 5 is_stmt 0 discriminator 1 view .LVU53
+ 223 003e 132B     		cmp	r3, #19
+ 224 0040 F5DD     		ble	.L9
+ 225              	.LBE2:
+ 226              	.LBB3:
+  38:Lib/application/src/spi2_bus.c ****     }
+  39:Lib/application/src/spi2_bus.c **** 
+  40:Lib/application/src/spi2_bus.c ****     for (int i = 0; i < 21; i++)
+ 227              		.loc 1 40 14 view .LVU54
+ 228 0042 0023     		movs	r3, #0
+ 229              	.LVL8:
+ 230              		.loc 1 40 14 view .LVU55
+ 231 0044 08E0     		b	.L10
+ 232              	.LVL9:
+ 233              	.L11:
+  41:Lib/application/src/spi2_bus.c ****     {
+  42:Lib/application/src/spi2_bus.c ****         *(motor_original_tx + i + 20) = motor_tx_msg[i];
+ 234              		.loc 1 42 9 is_stmt 1 discriminator 3 view .LVU56
+ 235              		.loc 1 42 33 is_stmt 0 discriminator 3 view .LVU57
+ 236 0046 03F11402 		add	r2, r3, #20
+ 237              		.loc 1 42 53 discriminator 3 view .LVU58
+ARM GAS  /tmp/cc7c0jFk.s 			page 6
 
 
-  43:Lib/application/src/spi2_bus.c ****     spi2_flag = 0;
- 241              		.loc 1 43 5 is_stmt 1 view .LVU42
- 242              		.loc 1 43 15 is_stmt 0 view .LVU43
- 243 0030 214B     		ldr	r3, .L28+8
- 244 0032 0022     		movs	r2, #0
- 245 0034 1A70     		strb	r2, [r3]
-  44:Lib/application/src/spi2_bus.c **** 
-  45:Lib/application/src/spi2_bus.c ****     if (call_flag == 0)
- 246              		.loc 1 45 5 is_stmt 1 view .LVU44
- 247              		.loc 1 45 19 is_stmt 0 view .LVU45
- 248 0036 214B     		ldr	r3, .L28+12
- 249 0038 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
- 250              		.loc 1 45 8 view .LVU46
- 251 003a 43B1     		cbz	r3, .L24
- 252              	.L12:
-  46:Lib/application/src/spi2_bus.c ****     {
-  47:Lib/application/src/spi2_bus.c ****         spi2_w_cmd(0xD2);
-  48:Lib/application/src/spi2_bus.c ****         call_flag = 1;
-  49:Lib/application/src/spi2_bus.c ****     }
-  50:Lib/application/src/spi2_bus.c **** 
-  51:Lib/application/src/spi2_bus.c ****     spi2_flag = spi2_r_cmd();
- 253              		.loc 1 51 5 is_stmt 1 view .LVU47
- 254              		.loc 1 51 17 is_stmt 0 view .LVU48
- 255 003c FFF7FEFF 		bl	spi2_r_cmd
- 256              	.LVL15:
- 257              		.loc 1 51 15 view .LVU49
- 258 0040 C0B2     		uxtb	r0, r0
- 259 0042 1D4B     		ldr	r3, .L28+8
- 260 0044 1870     		strb	r0, [r3]
-  52:Lib/application/src/spi2_bus.c **** 
-  53:Lib/application/src/spi2_bus.c ****     // spi
-  54:Lib/application/src/spi2_bus.c ****     if (spi2_flag == 0xD2)
- 261              		.loc 1 54 5 is_stmt 1 view .LVU50
- 262              		.loc 1 54 8 is_stmt 0 view .LVU51
- 263 0046 D228     		cmp	r0, #210
- 264 0048 13D0     		beq	.L25
- 265              	.L11:
-  55:Lib/application/src/spi2_bus.c ****     {
-  56:Lib/application/src/spi2_bus.c ****         for (int i = 0; i < 41; i++)
-  57:Lib/application/src/spi2_bus.c ****         {
-  58:Lib/application/src/spi2_bus.c ****             motor_original_rx[i] = spi2_wr_cmd(motor_original_tx[i]);
-  59:Lib/application/src/spi2_bus.c ****         }
-  60:Lib/application/src/spi2_bus.c **** 
-  61:Lib/application/src/spi2_bus.c ****         for (int i = 0; i < 21; i++)
-  62:Lib/application/src/spi2_bus.c ****         {
-  63:Lib/application/src/spi2_bus.c ****             if (motor_original_rx[i] == 0xD2 && motor_original_rx[i + 1] == 0xFE)
-  64:Lib/application/src/spi2_bus.c ****             {
-  65:Lib/application/src/spi2_bus.c ****                 for (int j = 0; j < 21; j++)
-  66:Lib/application/src/spi2_bus.c ****                 {
-  67:Lib/application/src/spi2_bus.c ****                     motormsg_get[j] = motor_original_rx[i + j];
-  68:Lib/application/src/spi2_bus.c ****                 }
-  69:Lib/application/src/spi2_bus.c ****                 GetMotorMsg(&motormsg_get[0]);
-  70:Lib/application/src/spi2_bus.c ****             }
-  71:Lib/application/src/spi2_bus.c ****         }
-  72:Lib/application/src/spi2_bus.c **** 
-  73:Lib/application/src/spi2_bus.c ****         call_flag = 0;
-  74:Lib/application/src/spi2_bus.c ****     }
-ARM GAS  /tmp/cczMFmRX.s 			page 7
+ 238 004a 03F11801 		add	r1, r3, #24
+ 239 004e 6944     		add	r1, sp, r1
+ 240 0050 11F8181C 		ldrb	r1, [r1, #-24]	@ zero_extendqisi2
+ 241              		.loc 1 42 39 discriminator 3 view .LVU59
+ 242 0054 A154     		strb	r1, [r4, r2]
+  40:Lib/application/src/spi2_bus.c ****     {
+ 243              		.loc 1 40 29 is_stmt 1 discriminator 3 view .LVU60
+  40:Lib/application/src/spi2_bus.c ****     {
+ 244              		.loc 1 40 30 is_stmt 0 discriminator 3 view .LVU61
+ 245 0056 0133     		adds	r3, r3, #1
+ 246              	.LVL10:
+ 247              	.L10:
+  40:Lib/application/src/spi2_bus.c ****     {
+ 248              		.loc 1 40 21 is_stmt 1 discriminator 1 view .LVU62
+  40:Lib/application/src/spi2_bus.c ****     {
+ 249              		.loc 1 40 5 is_stmt 0 discriminator 1 view .LVU63
+ 250 0058 142B     		cmp	r3, #20
+ 251 005a F4DD     		ble	.L11
+ 252              	.LBE3:
+  43:Lib/application/src/spi2_bus.c ****     }
+  44:Lib/application/src/spi2_bus.c **** }
+ 253              		.loc 1 44 1 view .LVU64
+ 254 005c 07B0     		add	sp, sp, #28
+ 255              		.cfi_def_cfa_offset 20
+ 256              		@ sp needed
+ 257 005e 5DF8044B 		ldr	r4, [sp], #4
+ 258              		.cfi_restore 4
+ 259              		.cfi_def_cfa_offset 16
+ 260 0062 04B0     		add	sp, sp, #16
+ 261              		.cfi_def_cfa_offset 0
+ 262 0064 7047     		bx	lr
+ 263              		.cfi_endproc
+ 264              	.LFE1:
+ 266              		.section	.text.ecat_spi_motor,"ax",%progbits
+ 267              		.align	1
+ 268              		.global	ecat_spi_motor
+ 269              		.syntax unified
+ 270              		.thumb
+ 271              		.thumb_func
+ 273              	ecat_spi_motor:
+ 274              	.LVL11:
+ 275              	.LFB2:
+  45:Lib/application/src/spi2_bus.c **** 
+  46:Lib/application/src/spi2_bus.c **** void ecat_spi_motor(int leg_id, int motor_id)
+  47:Lib/application/src/spi2_bus.c **** {
+ 276              		.loc 1 47 1 is_stmt 1 view -0
+ 277              		.cfi_startproc
+ 278              		@ args = 0, pretend = 0, frame = 0
+ 279              		@ frame_needed = 0, uses_anonymous_args = 0
+ 280              		.loc 1 47 1 is_stmt 0 view .LVU66
+ 281 0000 10B5     		push	{r4, lr}
+ 282              		.cfi_def_cfa_offset 8
+ 283              		.cfi_offset 4, -8
+ 284              		.cfi_offset 14, -4
+ 285 0002 84B0     		sub	sp, sp, #16
+ 286              		.cfi_def_cfa_offset 24
+  48:Lib/application/src/spi2_bus.c ****     PreparMotorMsg(motor_tx[leg_id][motor_id], motor_original_tx);
+ARM GAS  /tmp/cc7c0jFk.s 			page 7
 
 
-  75:Lib/application/src/spi2_bus.c **** }
- 266              		.loc 1 75 1 view .LVU52
- 267 004a 04B0     		add	sp, sp, #16
- 268              		.cfi_remember_state
- 269              		.cfi_def_cfa_offset 8
- 270              		@ sp needed
- 271 004c 10BD     		pop	{r4, pc}
- 272              	.L24:
- 273              		.cfi_restore_state
- 274              	.LBB4:
-  47:Lib/application/src/spi2_bus.c ****         call_flag = 1;
- 275              		.loc 1 47 9 is_stmt 1 view .LVU53
- 276 004e D220     		movs	r0, #210
- 277 0050 FFF7FEFF 		bl	spi2_w_cmd
- 278              	.LVL16:
-  48:Lib/application/src/spi2_bus.c ****     }
- 279              		.loc 1 48 9 view .LVU54
-  48:Lib/application/src/spi2_bus.c ****     }
- 280              		.loc 1 48 19 is_stmt 0 view .LVU55
- 281 0054 194B     		ldr	r3, .L28+12
- 282 0056 0122     		movs	r2, #1
- 283 0058 1A70     		strb	r2, [r3]
- 284 005a EFE7     		b	.L12
- 285              	.LVL17:
- 286              	.L15:
-  48:Lib/application/src/spi2_bus.c ****     }
- 287              		.loc 1 48 19 view .LVU56
- 288              	.LBE4:
- 289              	.LBB5:
- 290              	.LBB6:
-  58:Lib/application/src/spi2_bus.c ****         }
- 291              		.loc 1 58 13 is_stmt 1 discriminator 3 view .LVU57
-  58:Lib/application/src/spi2_bus.c ****         }
- 292              		.loc 1 58 36 is_stmt 0 discriminator 3 view .LVU58
- 293 005c 154B     		ldr	r3, .L28+4
- 294 005e 185D     		ldrb	r0, [r3, r4]	@ zero_extendqisi2
- 295 0060 FFF7FEFF 		bl	spi2_wr_cmd
- 296              	.LVL18:
-  58:Lib/application/src/spi2_bus.c ****         }
- 297              		.loc 1 58 34 discriminator 3 view .LVU59
- 298 0064 164B     		ldr	r3, .L28+16
- 299 0066 1855     		strb	r0, [r3, r4]
- 300              	.LBE6:
-  56:Lib/application/src/spi2_bus.c ****         {
- 301              		.loc 1 56 33 is_stmt 1 discriminator 3 view .LVU60
-  56:Lib/application/src/spi2_bus.c ****         {
- 302              		.loc 1 56 34 is_stmt 0 discriminator 3 view .LVU61
- 303 0068 0134     		adds	r4, r4, #1
- 304              	.LVL19:
- 305              	.L13:
-  56:Lib/application/src/spi2_bus.c ****         {
- 306              		.loc 1 56 25 is_stmt 1 discriminator 1 view .LVU62
-  56:Lib/application/src/spi2_bus.c ****         {
- 307              		.loc 1 56 9 is_stmt 0 discriminator 1 view .LVU63
- 308 006a 282C     		cmp	r4, #40
- 309 006c F6DD     		ble	.L15
- 310              	.LBE5:
-ARM GAS  /tmp/cczMFmRX.s 			page 8
+ 287              		.loc 1 48 5 is_stmt 1 view .LVU67
+ 288 0004 2A4A     		ldr	r2, .L30
+ 289 0006 01EB4101 		add	r1, r1, r1, lsl #1
+ 290              	.LVL12:
+ 291              		.loc 1 48 5 is_stmt 0 view .LVU68
+ 292 000a C1EBC101 		rsb	r1, r1, r1, lsl #3
+ 293 000e C0EB8010 		rsb	r0, r0, r0, lsl #6
+ 294              	.LVL13:
+ 295              		.loc 1 48 5 view .LVU69
+ 296 0012 0B18     		adds	r3, r1, r0
+ 297 0014 D418     		adds	r4, r2, r3
+ 298 0016 2749     		ldr	r1, .L30+4
+ 299 0018 0291     		str	r1, [sp, #8]
+ 300 001a 2069     		ldr	r0, [r4, #16]	@ unaligned
+ 301 001c 0090     		str	r0, [sp]
+ 302 001e 217D     		ldrb	r1, [r4, #20]	@ zero_extendqisi2
+ 303 0020 8DF80410 		strb	r1, [sp, #4]
+ 304 0024 D058     		ldr	r0, [r2, r3]	@ unaligned
+ 305 0026 6168     		ldr	r1, [r4, #4]	@ unaligned
+ 306 0028 A268     		ldr	r2, [r4, #8]	@ unaligned
+ 307 002a E368     		ldr	r3, [r4, #12]	@ unaligned
+ 308 002c FFF7FEFF 		bl	PreparMotorMsg
+ 309              	.LVL14:
+  49:Lib/application/src/spi2_bus.c **** 
+  50:Lib/application/src/spi2_bus.c ****     spi2_flag = 0;
+ 310              		.loc 1 50 5 is_stmt 1 view .LVU70
+ 311              		.loc 1 50 15 is_stmt 0 view .LVU71
+ 312 0030 214B     		ldr	r3, .L30+8
+ 313 0032 0022     		movs	r2, #0
+ 314 0034 1A70     		strb	r2, [r3]
+  51:Lib/application/src/spi2_bus.c **** 
+  52:Lib/application/src/spi2_bus.c ****     if (call_flag == 0)
+ 315              		.loc 1 52 5 is_stmt 1 view .LVU72
+ 316              		.loc 1 52 19 is_stmt 0 view .LVU73
+ 317 0036 214B     		ldr	r3, .L30+12
+ 318 0038 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 319              		.loc 1 52 8 view .LVU74
+ 320 003a 43B1     		cbz	r3, .L26
+ 321              	.L14:
+  53:Lib/application/src/spi2_bus.c ****     {
+  54:Lib/application/src/spi2_bus.c ****         spi2_w_cmd(0xD2);
+  55:Lib/application/src/spi2_bus.c ****         call_flag = 1;
+  56:Lib/application/src/spi2_bus.c ****     }
+  57:Lib/application/src/spi2_bus.c **** 
+  58:Lib/application/src/spi2_bus.c ****     spi2_flag = spi2_r_cmd();
+ 322              		.loc 1 58 5 is_stmt 1 view .LVU75
+ 323              		.loc 1 58 17 is_stmt 0 view .LVU76
+ 324 003c FFF7FEFF 		bl	spi2_r_cmd
+ 325              	.LVL15:
+ 326              		.loc 1 58 15 view .LVU77
+ 327 0040 C0B2     		uxtb	r0, r0
+ 328 0042 1D4B     		ldr	r3, .L30+8
+ 329 0044 1870     		strb	r0, [r3]
+  59:Lib/application/src/spi2_bus.c **** 
+  60:Lib/application/src/spi2_bus.c ****     // spi
+  61:Lib/application/src/spi2_bus.c ****     if (spi2_flag == 0xD2)
+ 330              		.loc 1 61 5 is_stmt 1 view .LVU78
+ARM GAS  /tmp/cc7c0jFk.s 			page 8
 
 
- 311              	.LBB7:
-  61:Lib/application/src/spi2_bus.c ****         {
- 312              		.loc 1 61 18 view .LVU64
- 313 006e 0024     		movs	r4, #0
- 314              	.LVL20:
-  61:Lib/application/src/spi2_bus.c ****         {
- 315              		.loc 1 61 18 view .LVU65
- 316 0070 05E0     		b	.L16
- 317              	.L25:
-  61:Lib/application/src/spi2_bus.c ****         {
- 318              		.loc 1 61 18 view .LVU66
- 319              	.LBE7:
- 320              	.LBB9:
-  56:Lib/application/src/spi2_bus.c ****         {
- 321              		.loc 1 56 18 view .LVU67
- 322 0072 0024     		movs	r4, #0
- 323 0074 F9E7     		b	.L13
- 324              	.LVL21:
- 325              	.L27:
-  56:Lib/application/src/spi2_bus.c ****         {
- 326              		.loc 1 56 18 view .LVU68
- 327              	.LBE9:
- 328              	.LBB10:
-  69:Lib/application/src/spi2_bus.c ****             }
- 329              		.loc 1 69 17 is_stmt 1 view .LVU69
- 330 0076 1348     		ldr	r0, .L28+20
- 331 0078 FFF7FEFF 		bl	GetMotorMsg
- 332              	.LVL22:
- 333              	.L17:
-  61:Lib/application/src/spi2_bus.c ****         {
- 334              		.loc 1 61 33 discriminator 2 view .LVU70
-  61:Lib/application/src/spi2_bus.c ****         {
- 335              		.loc 1 61 34 is_stmt 0 discriminator 2 view .LVU71
- 336 007c 0134     		adds	r4, r4, #1
- 337              	.LVL23:
- 338              	.L16:
-  61:Lib/application/src/spi2_bus.c ****         {
- 339              		.loc 1 61 25 is_stmt 1 discriminator 1 view .LVU72
-  61:Lib/application/src/spi2_bus.c ****         {
- 340              		.loc 1 61 9 is_stmt 0 discriminator 1 view .LVU73
- 341 007e 142C     		cmp	r4, #20
- 342 0080 12DC     		bgt	.L26
-  63:Lib/application/src/spi2_bus.c ****             {
- 343              		.loc 1 63 13 is_stmt 1 view .LVU74
-  63:Lib/application/src/spi2_bus.c ****             {
- 344              		.loc 1 63 34 is_stmt 0 view .LVU75
- 345 0082 0F4B     		ldr	r3, .L28+16
- 346 0084 1B5D     		ldrb	r3, [r3, r4]	@ zero_extendqisi2
-  63:Lib/application/src/spi2_bus.c ****             {
- 347              		.loc 1 63 16 view .LVU76
- 348 0086 D22B     		cmp	r3, #210
- 349 0088 F8D1     		bne	.L17
-  63:Lib/application/src/spi2_bus.c ****             {
- 350              		.loc 1 63 69 discriminator 1 view .LVU77
- 351 008a 631C     		adds	r3, r4, #1
-  63:Lib/application/src/spi2_bus.c ****             {
- 352              		.loc 1 63 66 discriminator 1 view .LVU78
-ARM GAS  /tmp/cczMFmRX.s 			page 9
+ 331              		.loc 1 61 8 is_stmt 0 view .LVU79
+ 332 0046 D228     		cmp	r0, #210
+ 333 0048 13D0     		beq	.L27
+ 334              	.L13:
+  62:Lib/application/src/spi2_bus.c ****     {
+  63:Lib/application/src/spi2_bus.c ****         for (int i = 0; i < 41; i++)
+  64:Lib/application/src/spi2_bus.c ****         {
+  65:Lib/application/src/spi2_bus.c ****             motor_original_rx[i] = spi2_wr_cmd(motor_original_tx[i]);
+  66:Lib/application/src/spi2_bus.c ****         }
+  67:Lib/application/src/spi2_bus.c **** 
+  68:Lib/application/src/spi2_bus.c ****         for (int i = 0; i < 21; i++)
+  69:Lib/application/src/spi2_bus.c ****         {
+  70:Lib/application/src/spi2_bus.c ****             if (motor_original_rx[i] == 0xD2 && motor_original_rx[i + 1] == 0xFE)
+  71:Lib/application/src/spi2_bus.c ****             {
+  72:Lib/application/src/spi2_bus.c ****                 for (int j = 0; j < 21; j++)
+  73:Lib/application/src/spi2_bus.c ****                 {
+  74:Lib/application/src/spi2_bus.c ****                     motormsg_get[j] = motor_original_rx[i + j];
+  75:Lib/application/src/spi2_bus.c ****                 }
+  76:Lib/application/src/spi2_bus.c ****                 GetMotorMsg(&motormsg_get[0]);
+  77:Lib/application/src/spi2_bus.c ****             }
+  78:Lib/application/src/spi2_bus.c ****         }
+  79:Lib/application/src/spi2_bus.c **** 
+  80:Lib/application/src/spi2_bus.c ****         call_flag = 0;
+  81:Lib/application/src/spi2_bus.c ****     }
+  82:Lib/application/src/spi2_bus.c **** }
+ 335              		.loc 1 82 1 view .LVU80
+ 336 004a 04B0     		add	sp, sp, #16
+ 337              		.cfi_remember_state
+ 338              		.cfi_def_cfa_offset 8
+ 339              		@ sp needed
+ 340 004c 10BD     		pop	{r4, pc}
+ 341              	.L26:
+ 342              		.cfi_restore_state
+ 343              	.LBB4:
+  54:Lib/application/src/spi2_bus.c ****         call_flag = 1;
+ 344              		.loc 1 54 9 is_stmt 1 view .LVU81
+ 345 004e D220     		movs	r0, #210
+ 346 0050 FFF7FEFF 		bl	spi2_w_cmd
+ 347              	.LVL16:
+  55:Lib/application/src/spi2_bus.c ****     }
+ 348              		.loc 1 55 9 view .LVU82
+  55:Lib/application/src/spi2_bus.c ****     }
+ 349              		.loc 1 55 19 is_stmt 0 view .LVU83
+ 350 0054 194B     		ldr	r3, .L30+12
+ 351 0056 0122     		movs	r2, #1
+ 352 0058 1A70     		strb	r2, [r3]
+ 353 005a EFE7     		b	.L14
+ 354              	.LVL17:
+ 355              	.L17:
+  55:Lib/application/src/spi2_bus.c ****     }
+ 356              		.loc 1 55 19 view .LVU84
+ 357              	.LBE4:
+ 358              	.LBB5:
+ 359              	.LBB6:
+  65:Lib/application/src/spi2_bus.c ****         }
+ 360              		.loc 1 65 13 is_stmt 1 discriminator 3 view .LVU85
+  65:Lib/application/src/spi2_bus.c ****         }
+ARM GAS  /tmp/cc7c0jFk.s 			page 9
 
 
- 353 008c 0C4A     		ldr	r2, .L28+16
- 354 008e D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
-  63:Lib/application/src/spi2_bus.c ****             {
- 355              		.loc 1 63 46 discriminator 1 view .LVU79
- 356 0090 FE2B     		cmp	r3, #254
- 357 0092 F3D1     		bne	.L17
- 358              	.LBB8:
-  65:Lib/application/src/spi2_bus.c ****                 {
- 359              		.loc 1 65 26 view .LVU80
- 360 0094 0023     		movs	r3, #0
- 361              	.L18:
- 362              	.LVL24:
-  65:Lib/application/src/spi2_bus.c ****                 {
- 363              		.loc 1 65 33 is_stmt 1 discriminator 1 view .LVU81
-  65:Lib/application/src/spi2_bus.c ****                 {
- 364              		.loc 1 65 17 is_stmt 0 discriminator 1 view .LVU82
- 365 0096 142B     		cmp	r3, #20
- 366 0098 EDDC     		bgt	.L27
-  67:Lib/application/src/spi2_bus.c ****                 }
- 367              		.loc 1 67 21 is_stmt 1 discriminator 3 view .LVU83
-  67:Lib/application/src/spi2_bus.c ****                 }
- 368              		.loc 1 67 59 is_stmt 0 discriminator 3 view .LVU84
- 369 009a E218     		adds	r2, r4, r3
-  67:Lib/application/src/spi2_bus.c ****                 }
- 370              		.loc 1 67 56 discriminator 3 view .LVU85
- 371 009c 0849     		ldr	r1, .L28+16
- 372 009e 895C     		ldrb	r1, [r1, r2]	@ zero_extendqisi2
-  67:Lib/application/src/spi2_bus.c ****                 }
- 373              		.loc 1 67 37 discriminator 3 view .LVU86
- 374 00a0 084A     		ldr	r2, .L28+20
- 375 00a2 D154     		strb	r1, [r2, r3]
-  65:Lib/application/src/spi2_bus.c ****                 {
- 376              		.loc 1 65 41 is_stmt 1 discriminator 3 view .LVU87
-  65:Lib/application/src/spi2_bus.c ****                 {
- 377              		.loc 1 65 42 is_stmt 0 discriminator 3 view .LVU88
- 378 00a4 0133     		adds	r3, r3, #1
- 379              	.LVL25:
-  65:Lib/application/src/spi2_bus.c ****                 {
- 380              		.loc 1 65 42 discriminator 3 view .LVU89
- 381 00a6 F6E7     		b	.L18
- 382              	.LVL26:
- 383              	.L26:
-  65:Lib/application/src/spi2_bus.c ****                 {
- 384              		.loc 1 65 42 discriminator 3 view .LVU90
- 385              	.LBE8:
- 386              	.LBE10:
-  73:Lib/application/src/spi2_bus.c ****     }
- 387              		.loc 1 73 9 is_stmt 1 view .LVU91
-  73:Lib/application/src/spi2_bus.c ****     }
- 388              		.loc 1 73 19 is_stmt 0 view .LVU92
- 389 00a8 044B     		ldr	r3, .L28+12
- 390 00aa 0022     		movs	r2, #0
- 391 00ac 1A70     		strb	r2, [r3]
- 392              		.loc 1 75 1 view .LVU93
- 393 00ae CCE7     		b	.L11
+ 361              		.loc 1 65 36 is_stmt 0 discriminator 3 view .LVU86
+ 362 005c 154B     		ldr	r3, .L30+4
+ 363 005e 185D     		ldrb	r0, [r3, r4]	@ zero_extendqisi2
+ 364 0060 FFF7FEFF 		bl	spi2_wr_cmd
+ 365              	.LVL18:
+  65:Lib/application/src/spi2_bus.c ****         }
+ 366              		.loc 1 65 34 discriminator 3 view .LVU87
+ 367 0064 164B     		ldr	r3, .L30+16
+ 368 0066 1855     		strb	r0, [r3, r4]
+ 369              	.LBE6:
+  63:Lib/application/src/spi2_bus.c ****         {
+ 370              		.loc 1 63 33 is_stmt 1 discriminator 3 view .LVU88
+  63:Lib/application/src/spi2_bus.c ****         {
+ 371              		.loc 1 63 34 is_stmt 0 discriminator 3 view .LVU89
+ 372 0068 0134     		adds	r4, r4, #1
+ 373              	.LVL19:
+ 374              	.L15:
+  63:Lib/application/src/spi2_bus.c ****         {
+ 375              		.loc 1 63 25 is_stmt 1 discriminator 1 view .LVU90
+  63:Lib/application/src/spi2_bus.c ****         {
+ 376              		.loc 1 63 9 is_stmt 0 discriminator 1 view .LVU91
+ 377 006a 282C     		cmp	r4, #40
+ 378 006c F6DD     		ble	.L17
+ 379              	.LBE5:
+ 380              	.LBB7:
+  68:Lib/application/src/spi2_bus.c ****         {
+ 381              		.loc 1 68 18 view .LVU92
+ 382 006e 0024     		movs	r4, #0
+ 383              	.LVL20:
+  68:Lib/application/src/spi2_bus.c ****         {
+ 384              		.loc 1 68 18 view .LVU93
+ 385 0070 05E0     		b	.L18
+ 386              	.L27:
+  68:Lib/application/src/spi2_bus.c ****         {
+ 387              		.loc 1 68 18 view .LVU94
+ 388              	.LBE7:
+ 389              	.LBB9:
+  63:Lib/application/src/spi2_bus.c ****         {
+ 390              		.loc 1 63 18 view .LVU95
+ 391 0072 0024     		movs	r4, #0
+ 392 0074 F9E7     		b	.L15
+ 393              	.LVL21:
  394              	.L29:
- 395              		.align	2
-ARM GAS  /tmp/cczMFmRX.s 			page 10
+  63:Lib/application/src/spi2_bus.c ****         {
+ 395              		.loc 1 63 18 view .LVU96
+ 396              	.LBE9:
+ 397              	.LBB10:
+  76:Lib/application/src/spi2_bus.c ****             }
+ 398              		.loc 1 76 17 is_stmt 1 view .LVU97
+ 399 0076 1348     		ldr	r0, .L30+20
+ 400 0078 FFF7FEFF 		bl	GetMotorMsg
+ 401              	.LVL22:
+ 402              	.L19:
+  68:Lib/application/src/spi2_bus.c ****         {
+ 403              		.loc 1 68 33 discriminator 2 view .LVU98
+  68:Lib/application/src/spi2_bus.c ****         {
+ 404              		.loc 1 68 34 is_stmt 0 discriminator 2 view .LVU99
+ARM GAS  /tmp/cc7c0jFk.s 			page 10
 
 
- 396              	.L28:
- 397 00b0 00000000 		.word	.LANCHOR2
- 398 00b4 00000000 		.word	.LANCHOR3
- 399 00b8 00000000 		.word	.LANCHOR4
- 400 00bc 00000000 		.word	.LANCHOR5
- 401 00c0 00000000 		.word	.LANCHOR6
- 402 00c4 00000000 		.word	.LANCHOR7
- 403              		.cfi_endproc
- 404              	.LFE2:
- 406              		.section	.text.MotorTxDataInit,"ax",%progbits
- 407              		.align	1
- 408              		.global	MotorTxDataInit
- 409              		.syntax unified
- 410              		.thumb
- 411              		.thumb_func
- 413              	MotorTxDataInit:
- 414              	.LFB3:
-  76:Lib/application/src/spi2_bus.c **** 
-  77:Lib/application/src/spi2_bus.c **** void MotorTxDataInit()
-  78:Lib/application/src/spi2_bus.c **** {
- 415              		.loc 1 78 1 is_stmt 1 view -0
- 416              		.cfi_startproc
- 417              		@ args = 0, pretend = 0, frame = 0
- 418              		@ frame_needed = 0, uses_anonymous_args = 0
- 419              		@ link register save eliminated.
-  79:Lib/application/src/spi2_bus.c ****     for (int i = 0; i < 12; i++)
- 420              		.loc 1 79 5 view .LVU95
- 421              	.LBB11:
- 422              		.loc 1 79 10 view .LVU96
- 423              	.LVL27:
- 424              		.loc 1 79 14 is_stmt 0 view .LVU97
- 425 0000 0020     		movs	r0, #0
- 426              	.LVL28:
- 427              		.loc 1 79 21 is_stmt 1 view .LVU98
- 428              		.loc 1 79 5 is_stmt 0 view .LVU99
- 429 0002 0B28     		cmp	r0, #11
- 430 0004 19DC     		bgt	.L36
- 431              	.LBE11:
-  78:Lib/application/src/spi2_bus.c ****     for (int i = 0; i < 12; i++)
- 432              		.loc 1 78 1 view .LVU100
- 433 0006 10B4     		push	{r4}
- 434              		.cfi_def_cfa_offset 4
- 435              		.cfi_offset 4, -4
- 436              	.L32:
- 437              	.LBB12:
-  80:Lib/application/src/spi2_bus.c ****     {
-  81:Lib/application/src/spi2_bus.c ****         motor_tx[i / 3][i % 3].leg_id = i / 3;
- 438              		.loc 1 81 9 is_stmt 1 discriminator 3 view .LVU101
- 439              		.loc 1 81 43 is_stmt 0 discriminator 3 view .LVU102
- 440 0008 0C4B     		ldr	r3, .L37
- 441 000a 83FB0023 		smull	r2, r3, r3, r0
- 442 000e A3EBE073 		sub	r3, r3, r0, asr #31
- 443              		.loc 1 81 27 discriminator 3 view .LVU103
- 444 0012 03EB4302 		add	r2, r3, r3, lsl #1
- 445 0016 821A     		subs	r2, r0, r2
- 446              		.loc 1 81 39 discriminator 3 view .LVU104
- 447 0018 02EB4201 		add	r1, r2, r2, lsl #1
-ARM GAS  /tmp/cczMFmRX.s 			page 11
+ 405 007c 0134     		adds	r4, r4, #1
+ 406              	.LVL23:
+ 407              	.L18:
+  68:Lib/application/src/spi2_bus.c ****         {
+ 408              		.loc 1 68 25 is_stmt 1 discriminator 1 view .LVU100
+  68:Lib/application/src/spi2_bus.c ****         {
+ 409              		.loc 1 68 9 is_stmt 0 discriminator 1 view .LVU101
+ 410 007e 142C     		cmp	r4, #20
+ 411 0080 12DC     		bgt	.L28
+  70:Lib/application/src/spi2_bus.c ****             {
+ 412              		.loc 1 70 13 is_stmt 1 view .LVU102
+  70:Lib/application/src/spi2_bus.c ****             {
+ 413              		.loc 1 70 34 is_stmt 0 view .LVU103
+ 414 0082 0F4B     		ldr	r3, .L30+16
+ 415 0084 1B5D     		ldrb	r3, [r3, r4]	@ zero_extendqisi2
+  70:Lib/application/src/spi2_bus.c ****             {
+ 416              		.loc 1 70 16 view .LVU104
+ 417 0086 D22B     		cmp	r3, #210
+ 418 0088 F8D1     		bne	.L19
+  70:Lib/application/src/spi2_bus.c ****             {
+ 419              		.loc 1 70 69 discriminator 1 view .LVU105
+ 420 008a 631C     		adds	r3, r4, #1
+  70:Lib/application/src/spi2_bus.c ****             {
+ 421              		.loc 1 70 66 discriminator 1 view .LVU106
+ 422 008c 0C4A     		ldr	r2, .L30+16
+ 423 008e D35C     		ldrb	r3, [r2, r3]	@ zero_extendqisi2
+  70:Lib/application/src/spi2_bus.c ****             {
+ 424              		.loc 1 70 46 discriminator 1 view .LVU107
+ 425 0090 FE2B     		cmp	r3, #254
+ 426 0092 F3D1     		bne	.L19
+ 427              	.LBB8:
+  72:Lib/application/src/spi2_bus.c ****                 {
+ 428              		.loc 1 72 26 view .LVU108
+ 429 0094 0023     		movs	r3, #0
+ 430              	.L20:
+ 431              	.LVL24:
+  72:Lib/application/src/spi2_bus.c ****                 {
+ 432              		.loc 1 72 33 is_stmt 1 discriminator 1 view .LVU109
+  72:Lib/application/src/spi2_bus.c ****                 {
+ 433              		.loc 1 72 17 is_stmt 0 discriminator 1 view .LVU110
+ 434 0096 142B     		cmp	r3, #20
+ 435 0098 EDDC     		bgt	.L29
+  74:Lib/application/src/spi2_bus.c ****                 }
+ 436              		.loc 1 74 21 is_stmt 1 discriminator 3 view .LVU111
+  74:Lib/application/src/spi2_bus.c ****                 }
+ 437              		.loc 1 74 59 is_stmt 0 discriminator 3 view .LVU112
+ 438 009a E218     		adds	r2, r4, r3
+  74:Lib/application/src/spi2_bus.c ****                 }
+ 439              		.loc 1 74 56 discriminator 3 view .LVU113
+ 440 009c 0849     		ldr	r1, .L30+16
+ 441 009e 895C     		ldrb	r1, [r1, r2]	@ zero_extendqisi2
+  74:Lib/application/src/spi2_bus.c ****                 }
+ 442              		.loc 1 74 37 discriminator 3 view .LVU114
+ 443 00a0 084A     		ldr	r2, .L30+20
+ 444 00a2 D154     		strb	r1, [r2, r3]
+  72:Lib/application/src/spi2_bus.c ****                 {
+ 445              		.loc 1 72 41 is_stmt 1 discriminator 3 view .LVU115
+ARM GAS  /tmp/cc7c0jFk.s 			page 11
 
 
- 448 001c C1EBC101 		rsb	r1, r1, r1, lsl #3
- 449 0020 C3EB8314 		rsb	r4, r3, r3, lsl #6
- 450 0024 2144     		add	r1, r1, r4
- 451 0026 064C     		ldr	r4, .L37+4
- 452 0028 2144     		add	r1, r1, r4
- 453 002a 8B70     		strb	r3, [r1, #2]
-  82:Lib/application/src/spi2_bus.c ****         motor_tx[i / 3][i % 3].motor_id = i % 3;
- 454              		.loc 1 82 9 is_stmt 1 discriminator 3 view .LVU105
- 455              		.loc 1 82 41 is_stmt 0 discriminator 3 view .LVU106
- 456 002c CA70     		strb	r2, [r1, #3]
-  79:Lib/application/src/spi2_bus.c ****     {
- 457              		.loc 1 79 29 is_stmt 1 discriminator 3 view .LVU107
-  79:Lib/application/src/spi2_bus.c ****     {
- 458              		.loc 1 79 30 is_stmt 0 discriminator 3 view .LVU108
- 459 002e 0130     		adds	r0, r0, #1
- 460              	.LVL29:
-  79:Lib/application/src/spi2_bus.c ****     {
- 461              		.loc 1 79 21 is_stmt 1 discriminator 3 view .LVU109
-  79:Lib/application/src/spi2_bus.c ****     {
- 462              		.loc 1 79 5 is_stmt 0 discriminator 3 view .LVU110
- 463 0030 0B28     		cmp	r0, #11
- 464 0032 E9DD     		ble	.L32
- 465              	.LBE12:
-  83:Lib/application/src/spi2_bus.c ****     }
-  84:Lib/application/src/spi2_bus.c **** }...
- 466              		.loc 1 84 1 view .LVU111
- 467 0034 5DF8044B 		ldr	r4, [sp], #4
- 468              		.cfi_restore 4
- 469              		.cfi_def_cfa_offset 0
- 470 0038 7047     		bx	lr
- 471              	.L36:
- 472              		.loc 1 84 1 view .LVU112
- 473 003a 7047     		bx	lr
- 474              	.L38:
- 475              		.align	2
- 476              	.L37:
- 477 003c 56555555 		.word	1431655766
- 478 0040 00000000 		.word	.LANCHOR2
- 479              		.cfi_endproc
- 480              	.LFE3:
- 482              		.global	rx_transform
- 483              		.global	tx_transform
- 484              		.global	call_flag
- 485              		.global	spi2_flag
- 486              		.global	motormsg_get
- 487              		.global	motor_original_tx
- 488              		.global	motor_original_rx
- 489              		.global	motor_rx
- 490              		.global	motor_tx
- 491              		.section	.bss.call_flag,"aw",%nobits
- 492              		.set	.LANCHOR5,. + 0
- 495              	call_flag:
- 496 0000 00       		.space	1
- 497              		.section	.bss.motor_original_rx,"aw",%nobits
- 498              		.align	2
- 499              		.set	.LANCHOR6,. + 0
- 502              	motor_original_rx:
-ARM GAS  /tmp/cczMFmRX.s 			page 12
+  72:Lib/application/src/spi2_bus.c ****                 {
+ 446              		.loc 1 72 42 is_stmt 0 discriminator 3 view .LVU116
+ 447 00a4 0133     		adds	r3, r3, #1
+ 448              	.LVL25:
+  72:Lib/application/src/spi2_bus.c ****                 {
+ 449              		.loc 1 72 42 discriminator 3 view .LVU117
+ 450 00a6 F6E7     		b	.L20
+ 451              	.LVL26:
+ 452              	.L28:
+  72:Lib/application/src/spi2_bus.c ****                 {
+ 453              		.loc 1 72 42 discriminator 3 view .LVU118
+ 454              	.LBE8:
+ 455              	.LBE10:
+  80:Lib/application/src/spi2_bus.c ****     }
+ 456              		.loc 1 80 9 is_stmt 1 view .LVU119
+  80:Lib/application/src/spi2_bus.c ****     }
+ 457              		.loc 1 80 19 is_stmt 0 view .LVU120
+ 458 00a8 044B     		ldr	r3, .L30+12
+ 459 00aa 0022     		movs	r2, #0
+ 460 00ac 1A70     		strb	r2, [r3]
+ 461              		.loc 1 82 1 view .LVU121
+ 462 00ae CCE7     		b	.L13
+ 463              	.L31:
+ 464              		.align	2
+ 465              	.L30:
+ 466 00b0 00000000 		.word	.LANCHOR2
+ 467 00b4 00000000 		.word	.LANCHOR3
+ 468 00b8 00000000 		.word	.LANCHOR4
+ 469 00bc 00000000 		.word	.LANCHOR5
+ 470 00c0 00000000 		.word	.LANCHOR6
+ 471 00c4 00000000 		.word	.LANCHOR7
+ 472              		.cfi_endproc
+ 473              	.LFE2:
+ 475              		.section	.text.MotorTxDataInit,"ax",%progbits
+ 476              		.align	1
+ 477              		.global	MotorTxDataInit
+ 478              		.syntax unified
+ 479              		.thumb
+ 480              		.thumb_func
+ 482              	MotorTxDataInit:
+ 483              	.LFB3:
+  83:Lib/application/src/spi2_bus.c **** 
+  84:Lib/application/src/spi2_bus.c **** void MotorTxDataInit()
+  85:Lib/application/src/spi2_bus.c **** {
+ 484              		.loc 1 85 1 is_stmt 1 view -0
+ 485              		.cfi_startproc
+ 486              		@ args = 0, pretend = 0, frame = 0
+ 487              		@ frame_needed = 0, uses_anonymous_args = 0
+ 488              		@ link register save eliminated.
+  86:Lib/application/src/spi2_bus.c ****     for (int i = 0; i < 12; i++)
+ 489              		.loc 1 86 5 view .LVU123
+ 490              	.LBB11:
+ 491              		.loc 1 86 10 view .LVU124
+ 492              	.LVL27:
+ 493              		.loc 1 86 14 is_stmt 0 view .LVU125
+ 494 0000 0020     		movs	r0, #0
+ 495              	.LVL28:
+ARM GAS  /tmp/cc7c0jFk.s 			page 12
 
 
- 503 0000 00000000 		.space	41
- 503      00000000 
- 503      00000000 
- 503      00000000 
- 503      00000000 
- 504              		.section	.bss.motor_original_tx,"aw",%nobits
- 505              		.align	2
- 506              		.set	.LANCHOR3,. + 0
- 509              	motor_original_tx:
- 510 0000 00000000 		.space	41
- 510      00000000 
- 510      00000000 
- 510      00000000 
- 510      00000000 
- 511              		.section	.bss.motor_rx,"aw",%nobits
- 512              		.align	2
- 513              		.set	.LANCHOR1,. + 0
- 516              	motor_rx:
- 517 0000 00000000 		.space	252
- 517      00000000 
- 517      00000000 
- 517      00000000 
- 517      00000000 
- 518              		.section	.bss.motor_tx,"aw",%nobits
- 519              		.align	2
- 520              		.set	.LANCHOR2,. + 0
- 523              	motor_tx:
- 524 0000 00000000 		.space	252
- 524      00000000 
- 524      00000000 
- 524      00000000 
- 524      00000000 
- 525              		.section	.bss.motormsg_get,"aw",%nobits
- 526              		.align	2
- 527              		.set	.LANCHOR7,. + 0
- 530              	motormsg_get:
- 531 0000 00000000 		.space	21
- 531      00000000 
- 531      00000000 
- 531      00000000 
- 531      00000000 
- 532              		.section	.bss.rx_transform,"aw",%nobits
- 533              		.align	2
- 534              		.set	.LANCHOR0,. + 0
- 537              	rx_transform:
- 538 0000 00000000 		.space	21
- 538      00000000 
- 538      00000000 
- 538      00000000 
- 538      00000000 
- 539              		.section	.bss.spi2_flag,"aw",%nobits
- 540              		.set	.LANCHOR4,. + 0
- 543              	spi2_flag:
- 544 0000 00       		.space	1
- 545              		.section	.bss.tx_transform,"aw",%nobits
- 546              		.align	2
- 549              	tx_transform:
-ARM GAS  /tmp/cczMFmRX.s 			page 13
+ 496              		.loc 1 86 21 is_stmt 1 view .LVU126
+ 497              		.loc 1 86 5 is_stmt 0 view .LVU127
+ 498 0002 0B28     		cmp	r0, #11
+ 499 0004 19DC     		bgt	.L38
+ 500              	.LBE11:
+  85:Lib/application/src/spi2_bus.c ****     for (int i = 0; i < 12; i++)
+ 501              		.loc 1 85 1 view .LVU128
+ 502 0006 10B4     		push	{r4}
+ 503              		.cfi_def_cfa_offset 4
+ 504              		.cfi_offset 4, -4
+ 505              	.L34:
+ 506              	.LBB12:
+  87:Lib/application/src/spi2_bus.c ****     {
+  88:Lib/application/src/spi2_bus.c ****         motor_tx[i / 3][i % 3].leg_id = i / 3;
+ 507              		.loc 1 88 9 is_stmt 1 discriminator 3 view .LVU129
+ 508              		.loc 1 88 43 is_stmt 0 discriminator 3 view .LVU130
+ 509 0008 0C4B     		ldr	r3, .L39
+ 510 000a 83FB0023 		smull	r2, r3, r3, r0
+ 511 000e A3EBE073 		sub	r3, r3, r0, asr #31
+ 512              		.loc 1 88 27 discriminator 3 view .LVU131
+ 513 0012 03EB4302 		add	r2, r3, r3, lsl #1
+ 514 0016 821A     		subs	r2, r0, r2
+ 515              		.loc 1 88 39 discriminator 3 view .LVU132
+ 516 0018 02EB4201 		add	r1, r2, r2, lsl #1
+ 517 001c C1EBC101 		rsb	r1, r1, r1, lsl #3
+ 518 0020 C3EB8314 		rsb	r4, r3, r3, lsl #6
+ 519 0024 2144     		add	r1, r1, r4
+ 520 0026 064C     		ldr	r4, .L39+4
+ 521 0028 2144     		add	r1, r1, r4
+ 522 002a 8B70     		strb	r3, [r1, #2]
+  89:Lib/application/src/spi2_bus.c ****         motor_tx[i / 3][i % 3].motor_id = i % 3;
+ 523              		.loc 1 89 9 is_stmt 1 discriminator 3 view .LVU133
+ 524              		.loc 1 89 41 is_stmt 0 discriminator 3 view .LVU134
+ 525 002c CA70     		strb	r2, [r1, #3]
+  86:Lib/application/src/spi2_bus.c ****     {
+ 526              		.loc 1 86 29 is_stmt 1 discriminator 3 view .LVU135
+  86:Lib/application/src/spi2_bus.c ****     {
+ 527              		.loc 1 86 30 is_stmt 0 discriminator 3 view .LVU136
+ 528 002e 0130     		adds	r0, r0, #1
+ 529              	.LVL29:
+  86:Lib/application/src/spi2_bus.c ****     {
+ 530              		.loc 1 86 21 is_stmt 1 discriminator 3 view .LVU137
+  86:Lib/application/src/spi2_bus.c ****     {
+ 531              		.loc 1 86 5 is_stmt 0 discriminator 3 view .LVU138
+ 532 0030 0B28     		cmp	r0, #11
+ 533 0032 E9DD     		ble	.L34
+ 534              	.LBE12:
+  90:Lib/application/src/spi2_bus.c ****     }
+  91:Lib/application/src/spi2_bus.c **** }...
+ 535              		.loc 1 91 1 view .LVU139
+ 536 0034 5DF8044B 		ldr	r4, [sp], #4
+ 537              		.cfi_restore 4
+ 538              		.cfi_def_cfa_offset 0
+ 539 0038 7047     		bx	lr
+ 540              	.L38:
+ 541              		.loc 1 91 1 view .LVU140
+ 542 003a 7047     		bx	lr
+ARM GAS  /tmp/cc7c0jFk.s 			page 13
 
 
- 550 0000 00000000 		.space	21
- 550      00000000 
- 550      00000000 
- 550      00000000 
- 550      00000000 
- 551              		.text
- 552              	.Letext0:
- 553              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
- 554              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
- 555              		.file 4 "Lib/application/include/spi2_bus.h"
-ARM GAS  /tmp/cczMFmRX.s 			page 14
+ 543              	.L40:
+ 544              		.align	2
+ 545              	.L39:
+ 546 003c 56555555 		.word	1431655766
+ 547 0040 00000000 		.word	.LANCHOR2
+ 548              		.cfi_endproc
+ 549              	.LFE3:
+ 551              		.global	rx_transform
+ 552              		.global	tx_transform
+ 553              		.global	call_flag
+ 554              		.global	spi2_flag
+ 555              		.global	motormsg_get
+ 556              		.global	motor_original_tx
+ 557              		.global	motor_original_rx
+ 558              		.global	motor_rx
+ 559              		.global	motor_tx
+ 560              		.section	.bss.call_flag,"aw",%nobits
+ 561              		.set	.LANCHOR5,. + 0
+ 564              	call_flag:
+ 565 0000 00       		.space	1
+ 566              		.section	.bss.motor_original_rx,"aw",%nobits
+ 567              		.align	2
+ 568              		.set	.LANCHOR6,. + 0
+ 571              	motor_original_rx:
+ 572 0000 00000000 		.space	41
+ 572      00000000 
+ 572      00000000 
+ 572      00000000 
+ 572      00000000 
+ 573              		.section	.bss.motor_original_tx,"aw",%nobits
+ 574              		.align	2
+ 575              		.set	.LANCHOR3,. + 0
+ 578              	motor_original_tx:
+ 579 0000 00000000 		.space	41
+ 579      00000000 
+ 579      00000000 
+ 579      00000000 
+ 579      00000000 
+ 580              		.section	.bss.motor_rx,"aw",%nobits
+ 581              		.align	2
+ 582              		.set	.LANCHOR1,. + 0
+ 585              	motor_rx:
+ 586 0000 00000000 		.space	252
+ 586      00000000 
+ 586      00000000 
+ 586      00000000 
+ 586      00000000 
+ 587              		.section	.bss.motor_tx,"aw",%nobits
+ 588              		.align	2
+ 589              		.set	.LANCHOR2,. + 0
+ 592              	motor_tx:
+ 593 0000 00000000 		.space	252
+ 593      00000000 
+ 593      00000000 
+ 593      00000000 
+ 593      00000000 
+ 594              		.section	.bss.motormsg_get,"aw",%nobits
+ARM GAS  /tmp/cc7c0jFk.s 			page 14
+
+
+ 595              		.align	2
+ 596              		.set	.LANCHOR7,. + 0
+ 599              	motormsg_get:
+ 600 0000 00000000 		.space	21
+ 600      00000000 
+ 600      00000000 
+ 600      00000000 
+ 600      00000000 
+ 601              		.section	.bss.rx_transform,"aw",%nobits
+ 602              		.align	2
+ 603              		.set	.LANCHOR0,. + 0
+ 606              	rx_transform:
+ 607 0000 00000000 		.space	21
+ 607      00000000 
+ 607      00000000 
+ 607      00000000 
+ 607      00000000 
+ 608              		.section	.bss.spi2_flag,"aw",%nobits
+ 609              		.set	.LANCHOR4,. + 0
+ 612              	spi2_flag:
+ 613 0000 00       		.space	1
+ 614              		.section	.bss.tx_transform,"aw",%nobits
+ 615              		.align	2
+ 618              	tx_transform:
+ 619 0000 00000000 		.space	21
+ 619      00000000 
+ 619      00000000 
+ 619      00000000 
+ 619      00000000 
+ 620              		.text
+ 621              	.Letext0:
+ 622              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 623              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 624              		.file 4 "Lib/application/include/spi2_bus.h"
+ARM GAS  /tmp/cc7c0jFk.s 			page 15
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 spi2_bus.c
-     /tmp/cczMFmRX.s:20     .text.GetMotorMsg:0000000000000000 $t
-     /tmp/cczMFmRX.s:26     .text.GetMotorMsg:0000000000000000 GetMotorMsg
-     /tmp/cczMFmRX.s:84     .text.GetMotorMsg:0000000000000058 $d
-     /tmp/cczMFmRX.s:90     .text.PreparMotorMsg:0000000000000000 $t
-     /tmp/cczMFmRX.s:96     .text.PreparMotorMsg:0000000000000000 PreparMotorMsg
-     /tmp/cczMFmRX.s:198    .text.ecat_spi_motor:0000000000000000 $t
-     /tmp/cczMFmRX.s:204    .text.ecat_spi_motor:0000000000000000 ecat_spi_motor
-     /tmp/cczMFmRX.s:397    .text.ecat_spi_motor:00000000000000b0 $d
-     /tmp/cczMFmRX.s:407    .text.MotorTxDataInit:0000000000000000 $t
-     /tmp/cczMFmRX.s:413    .text.MotorTxDataInit:0000000000000000 MotorTxDataInit
-     /tmp/cczMFmRX.s:477    .text.MotorTxDataInit:000000000000003c $d
-     /tmp/cczMFmRX.s:537    .bss.rx_transform:0000000000000000 rx_transform
-     /tmp/cczMFmRX.s:549    .bss.tx_transform:0000000000000000 tx_transform
-     /tmp/cczMFmRX.s:495    .bss.call_flag:0000000000000000 call_flag
-     /tmp/cczMFmRX.s:543    .bss.spi2_flag:0000000000000000 spi2_flag
-     /tmp/cczMFmRX.s:530    .bss.motormsg_get:0000000000000000 motormsg_get
-     /tmp/cczMFmRX.s:509    .bss.motor_original_tx:0000000000000000 motor_original_tx
-     /tmp/cczMFmRX.s:502    .bss.motor_original_rx:0000000000000000 motor_original_rx
-     /tmp/cczMFmRX.s:516    .bss.motor_rx:0000000000000000 motor_rx
-     /tmp/cczMFmRX.s:523    .bss.motor_tx:0000000000000000 motor_tx
-     /tmp/cczMFmRX.s:496    .bss.call_flag:0000000000000000 $d
-     /tmp/cczMFmRX.s:498    .bss.motor_original_rx:0000000000000000 $d
-     /tmp/cczMFmRX.s:505    .bss.motor_original_tx:0000000000000000 $d
-     /tmp/cczMFmRX.s:512    .bss.motor_rx:0000000000000000 $d
-     /tmp/cczMFmRX.s:519    .bss.motor_tx:0000000000000000 $d
-     /tmp/cczMFmRX.s:526    .bss.motormsg_get:0000000000000000 $d
-     /tmp/cczMFmRX.s:533    .bss.rx_transform:0000000000000000 $d
-     /tmp/cczMFmRX.s:544    .bss.spi2_flag:0000000000000000 $d
-     /tmp/cczMFmRX.s:546    .bss.tx_transform:0000000000000000 $d
+     /tmp/cc7c0jFk.s:20     .text.GetMotorMsg:0000000000000000 $t
+     /tmp/cc7c0jFk.s:26     .text.GetMotorMsg:0000000000000000 GetMotorMsg
+     /tmp/cc7c0jFk.s:153    .text.GetMotorMsg:00000000000000d0 $d
+     /tmp/cc7c0jFk.s:159    .text.PreparMotorMsg:0000000000000000 $t
+     /tmp/cc7c0jFk.s:165    .text.PreparMotorMsg:0000000000000000 PreparMotorMsg
+     /tmp/cc7c0jFk.s:267    .text.ecat_spi_motor:0000000000000000 $t
+     /tmp/cc7c0jFk.s:273    .text.ecat_spi_motor:0000000000000000 ecat_spi_motor
+     /tmp/cc7c0jFk.s:466    .text.ecat_spi_motor:00000000000000b0 $d
+     /tmp/cc7c0jFk.s:476    .text.MotorTxDataInit:0000000000000000 $t
+     /tmp/cc7c0jFk.s:482    .text.MotorTxDataInit:0000000000000000 MotorTxDataInit
+     /tmp/cc7c0jFk.s:546    .text.MotorTxDataInit:000000000000003c $d
+     /tmp/cc7c0jFk.s:606    .bss.rx_transform:0000000000000000 rx_transform
+     /tmp/cc7c0jFk.s:618    .bss.tx_transform:0000000000000000 tx_transform
+     /tmp/cc7c0jFk.s:564    .bss.call_flag:0000000000000000 call_flag
+     /tmp/cc7c0jFk.s:612    .bss.spi2_flag:0000000000000000 spi2_flag
+     /tmp/cc7c0jFk.s:599    .bss.motormsg_get:0000000000000000 motormsg_get
+     /tmp/cc7c0jFk.s:578    .bss.motor_original_tx:0000000000000000 motor_original_tx
+     /tmp/cc7c0jFk.s:571    .bss.motor_original_rx:0000000000000000 motor_original_rx
+     /tmp/cc7c0jFk.s:585    .bss.motor_rx:0000000000000000 motor_rx
+     /tmp/cc7c0jFk.s:592    .bss.motor_tx:0000000000000000 motor_tx
+     /tmp/cc7c0jFk.s:565    .bss.call_flag:0000000000000000 $d
+     /tmp/cc7c0jFk.s:567    .bss.motor_original_rx:0000000000000000 $d
+     /tmp/cc7c0jFk.s:574    .bss.motor_original_tx:0000000000000000 $d
+     /tmp/cc7c0jFk.s:581    .bss.motor_rx:0000000000000000 $d
+     /tmp/cc7c0jFk.s:588    .bss.motor_tx:0000000000000000 $d
+     /tmp/cc7c0jFk.s:595    .bss.motormsg_get:0000000000000000 $d
+     /tmp/cc7c0jFk.s:602    .bss.rx_transform:0000000000000000 $d
+     /tmp/cc7c0jFk.s:613    .bss.spi2_flag:0000000000000000 $d
+     /tmp/cc7c0jFk.s:615    .bss.tx_transform:0000000000000000 $d
 
 UNDEFINED SYMBOLS
 spi2_r_cmd
