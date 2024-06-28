@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cc0IYDZI.s 			page 1
+ARM GAS  /tmp/cc89wHiZ.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -26,7 +26,7 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
   23              		.thumb_func
   25              	sbus_to_rc:
   26              	.LVL0:
-  27              	.LFB140:
+  27              	.LFB138:
   28              		.file 1 "Lib/Motor/Src/unitreeA1_recv.c"
    1:Lib/Motor/Src/unitreeA1_recv.c **** #include "unitreeA1_recv.h"
    2:Lib/Motor/Src/unitreeA1_recv.c **** 
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
   28:Lib/Motor/Src/unitreeA1_recv.c **** 
   29:Lib/Motor/Src/unitreeA1_recv.c **** void USART1_IRQHandler(void)
   30:Lib/Motor/Src/unitreeA1_recv.c **** {
-ARM GAS  /tmp/cc0IYDZI.s 			page 2
+ARM GAS  /tmp/cc89wHiZ.s 			page 2
 
 
   31:Lib/Motor/Src/unitreeA1_recv.c **** 
@@ -98,7 +98,7 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
   65:Lib/Motor/Src/unitreeA1_recv.c **** 
   66:Lib/Motor/Src/unitreeA1_recv.c ****             if (this_time_rx_len == RC_FRAME_LENGTH)
   67:Lib/Motor/Src/unitreeA1_recv.c ****             {
-  68:Lib/Motor/Src/unitreeA1_recv.c ****                 sbus_to_rc(sbus_rx_buf_LF[0], &leg[LF].a1_buf);
+  68:Lib/Motor/Src/unitreeA1_recv.c ****                 sbus_to_rc(sbus_rx_buf_LF[0], &leg[0].a1_buf);
   69:Lib/Motor/Src/unitreeA1_recv.c ****                 unitreeA1_rx(0);
   70:Lib/Motor/Src/unitreeA1_recv.c ****             }
   71:Lib/Motor/Src/unitreeA1_recv.c ****         }
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
   85:Lib/Motor/Src/unitreeA1_recv.c ****             hdma_usart1_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
   86:Lib/Motor/Src/unitreeA1_recv.c **** 
   87:Lib/Motor/Src/unitreeA1_recv.c ****             // set memory buffer 0
-ARM GAS  /tmp/cc0IYDZI.s 			page 3
+ARM GAS  /tmp/cc89wHiZ.s 			page 3
 
 
   88:Lib/Motor/Src/unitreeA1_recv.c ****             // 设定缓冲区0
@@ -131,54 +131,54 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
   95:Lib/Motor/Src/unitreeA1_recv.c ****             if (this_time_rx_len == RC_FRAME_LENGTH)
   96:Lib/Motor/Src/unitreeA1_recv.c ****             {
   97:Lib/Motor/Src/unitreeA1_recv.c ****                 // 处理数据
-  98:Lib/Motor/Src/unitreeA1_recv.c ****                 sbus_to_rc(sbus_rx_buf_LF[1], &leg[LF].a1_buf);
+  98:Lib/Motor/Src/unitreeA1_recv.c ****                 sbus_to_rc(sbus_rx_buf_LF[1], &leg[0].a1_buf);
   99:Lib/Motor/Src/unitreeA1_recv.c ****                 unitreeA1_rx(0);
  100:Lib/Motor/Src/unitreeA1_recv.c ****             }
  101:Lib/Motor/Src/unitreeA1_recv.c ****         }
  102:Lib/Motor/Src/unitreeA1_recv.c ****     }
  103:Lib/Motor/Src/unitreeA1_recv.c **** }
  104:Lib/Motor/Src/unitreeA1_recv.c **** 
- 105:Lib/Motor/Src/unitreeA1_recv.c **** void USART2_IRQHandler(void)
+ 105:Lib/Motor/Src/unitreeA1_recv.c **** void USART6_IRQHandler(void)
  106:Lib/Motor/Src/unitreeA1_recv.c **** {
  107:Lib/Motor/Src/unitreeA1_recv.c **** 
- 108:Lib/Motor/Src/unitreeA1_recv.c ****     if (huart2.Instance->SR & UART_FLAG_RXNE) // 接收到数据
+ 108:Lib/Motor/Src/unitreeA1_recv.c ****     if (huart6.Instance->SR & UART_FLAG_RXNE) // 接收到数据
  109:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 110:Lib/Motor/Src/unitreeA1_recv.c ****         __HAL_UART_CLEAR_PEFLAG(&huart2);
+ 110:Lib/Motor/Src/unitreeA1_recv.c ****         __HAL_UART_CLEAR_PEFLAG(&huart6);
  111:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 112:Lib/Motor/Src/unitreeA1_recv.c ****     else if (USART2->SR & UART_FLAG_IDLE)
+ 112:Lib/Motor/Src/unitreeA1_recv.c ****     else if (USART6->SR & UART_FLAG_IDLE)
  113:Lib/Motor/Src/unitreeA1_recv.c ****     {
  114:Lib/Motor/Src/unitreeA1_recv.c ****         static uint16_t this_time_rx_len = 0;
  115:Lib/Motor/Src/unitreeA1_recv.c **** 
- 116:Lib/Motor/Src/unitreeA1_recv.c ****         __HAL_UART_CLEAR_PEFLAG(&huart2);
+ 116:Lib/Motor/Src/unitreeA1_recv.c ****         __HAL_UART_CLEAR_PEFLAG(&huart6);
  117:Lib/Motor/Src/unitreeA1_recv.c **** 
- 118:Lib/Motor/Src/unitreeA1_recv.c ****         if ((hdma_usart2_rx.Instance->CR & DMA_SxCR_CT) == RESET)
+ 118:Lib/Motor/Src/unitreeA1_recv.c ****         if ((hdma_usart6_rx.Instance->CR & DMA_SxCR_CT) == RESET)
  119:Lib/Motor/Src/unitreeA1_recv.c ****         {
  120:Lib/Motor/Src/unitreeA1_recv.c ****             /* Current memory buffer used is Memory 0 */
  121:Lib/Motor/Src/unitreeA1_recv.c **** 
  122:Lib/Motor/Src/unitreeA1_recv.c ****             // disable DMA
  123:Lib/Motor/Src/unitreeA1_recv.c ****             // 失效DMA
- 124:Lib/Motor/Src/unitreeA1_recv.c ****             __HAL_DMA_DISABLE(&hdma_usart2_rx);
+ 124:Lib/Motor/Src/unitreeA1_recv.c ****             __HAL_DMA_DISABLE(&hdma_usart6_rx);
  125:Lib/Motor/Src/unitreeA1_recv.c **** 
  126:Lib/Motor/Src/unitreeA1_recv.c ****             // get receive data length, length = set_data_length - remain_length
  127:Lib/Motor/Src/unitreeA1_recv.c ****             // 获取接收数据长度,长度 = 设定长度 - 剩余长度
- 128:Lib/Motor/Src/unitreeA1_recv.c ****             this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart2_rx.Instance->NDTR;
+ 128:Lib/Motor/Src/unitreeA1_recv.c ****             this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart6_rx.Instance->NDTR;
  129:Lib/Motor/Src/unitreeA1_recv.c **** 
  130:Lib/Motor/Src/unitreeA1_recv.c ****             // reset set_data_lenght
  131:Lib/Motor/Src/unitreeA1_recv.c ****             // 重新设定数据长度
- 132:Lib/Motor/Src/unitreeA1_recv.c ****             hdma_usart2_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
+ 132:Lib/Motor/Src/unitreeA1_recv.c ****             hdma_usart6_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
  133:Lib/Motor/Src/unitreeA1_recv.c **** 
  134:Lib/Motor/Src/unitreeA1_recv.c ****             // set memory buffer 1
  135:Lib/Motor/Src/unitreeA1_recv.c ****             // 设定缓冲区1
- 136:Lib/Motor/Src/unitreeA1_recv.c ****             hdma_usart2_rx.Instance->CR |= DMA_SxCR_CT;
+ 136:Lib/Motor/Src/unitreeA1_recv.c ****             hdma_usart6_rx.Instance->CR |= DMA_SxCR_CT;
  137:Lib/Motor/Src/unitreeA1_recv.c **** 
  138:Lib/Motor/Src/unitreeA1_recv.c ****             // enable DMA
  139:Lib/Motor/Src/unitreeA1_recv.c ****             // 使能DMA
- 140:Lib/Motor/Src/unitreeA1_recv.c ****             __HAL_DMA_ENABLE(&hdma_usart2_rx);
+ 140:Lib/Motor/Src/unitreeA1_recv.c ****             __HAL_DMA_ENABLE(&hdma_usart6_rx);
  141:Lib/Motor/Src/unitreeA1_recv.c **** 
  142:Lib/Motor/Src/unitreeA1_recv.c ****             if (this_time_rx_len == RC_FRAME_LENGTH)
  143:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 144:Lib/Motor/Src/unitreeA1_recv.c ****                 sbus_to_rc(sbus_rx_buf_LB[0], &leg[LB].a1_buf);
-ARM GAS  /tmp/cc0IYDZI.s 			page 4
+ 144:Lib/Motor/Src/unitreeA1_recv.c ****                 sbus_to_rc(sbus_rx_buf_RF[0], &leg[1].a1_buf);
+ARM GAS  /tmp/cc89wHiZ.s 			page 4
 
 
  145:Lib/Motor/Src/unitreeA1_recv.c ****                 unitreeA1_rx(1);
@@ -210,327 +210,169 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  171:Lib/Motor/Src/unitreeA1_recv.c ****             if (this_time_rx_len == RC_FRAME_LENGTH)
  172:Lib/Motor/Src/unitreeA1_recv.c ****             {
  173:Lib/Motor/Src/unitreeA1_recv.c ****                 // 处理数据
- 174:Lib/Motor/Src/unitreeA1_recv.c ****                 sbus_to_rc(sbus_rx_buf_LB[1], &leg[LB].a1_buf);
+ 174:Lib/Motor/Src/unitreeA1_recv.c ****                 sbus_to_rc(sbus_rx_buf_RF[1], &leg[1].a1_buf);
  175:Lib/Motor/Src/unitreeA1_recv.c ****                 unitreeA1_rx(1);
  176:Lib/Motor/Src/unitreeA1_recv.c ****             }
  177:Lib/Motor/Src/unitreeA1_recv.c ****         }
  178:Lib/Motor/Src/unitreeA1_recv.c ****     }
  179:Lib/Motor/Src/unitreeA1_recv.c **** }
  180:Lib/Motor/Src/unitreeA1_recv.c **** 
- 181:Lib/Motor/Src/unitreeA1_recv.c **** void USART3_IRQHandler(void)
+ 181:Lib/Motor/Src/unitreeA1_recv.c **** void unitreeA1_rx(int leg_id)
  182:Lib/Motor/Src/unitreeA1_recv.c **** {
- 183:Lib/Motor/Src/unitreeA1_recv.c **** 
- 184:Lib/Motor/Src/unitreeA1_recv.c ****     if (huart3.Instance->SR & UART_FLAG_RXNE) // 接收到数据
- 185:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 186:Lib/Motor/Src/unitreeA1_recv.c ****         __HAL_UART_CLEAR_PEFLAG(&huart3);
- 187:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 188:Lib/Motor/Src/unitreeA1_recv.c ****     else if (USART3->SR & UART_FLAG_IDLE)
- 189:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 190:Lib/Motor/Src/unitreeA1_recv.c ****         static uint16_t this_time_rx_len = 0;
- 191:Lib/Motor/Src/unitreeA1_recv.c **** 
- 192:Lib/Motor/Src/unitreeA1_recv.c ****         __HAL_UART_CLEAR_PEFLAG(&huart3);
- 193:Lib/Motor/Src/unitreeA1_recv.c **** 
- 194:Lib/Motor/Src/unitreeA1_recv.c ****         if ((hdma_usart3_rx.Instance->CR & DMA_SxCR_CT) == RESET)
- 195:Lib/Motor/Src/unitreeA1_recv.c ****         {
- 196:Lib/Motor/Src/unitreeA1_recv.c ****             /* Current memory buffer used is Memory 0 */
- 197:Lib/Motor/Src/unitreeA1_recv.c **** 
- 198:Lib/Motor/Src/unitreeA1_recv.c ****             // disable DMA
- 199:Lib/Motor/Src/unitreeA1_recv.c ****             // 失效DMA
- 200:Lib/Motor/Src/unitreeA1_recv.c ****             __HAL_DMA_DISABLE(&hdma_usart3_rx);
- 201:Lib/Motor/Src/unitreeA1_recv.c **** 
-ARM GAS  /tmp/cc0IYDZI.s 			page 5
+ 183:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.head.motorID = leg[leg_id].a1_buf.motorID;
+ 184:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
+ 185:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.mode = leg[leg_id].a1_buf.mode;
+ 186:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Temp = leg[leg_id].a1_buf.Temp;
+ 187:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
+ 188:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.T = leg[leg_id].a1_buf.T;
+ 189:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.W = leg[leg_id].a1_buf.W;
+ 190:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
+ 191:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
+ 192:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 193:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[0] = 0xD2;
+ 194:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[1] = 0xFE;
+ 195:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].LegID = leg_id;
+ 196:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MotorID = data_leg[leg_id].m
+ 197:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MError = data_leg[leg_id].mo
+ 198:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].mode = data_leg[leg_id].moto
+ 199:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Temp = data_leg[leg_id].moto
+ 200:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].T = data_leg[leg_id].motor_r
+ 201:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].W = data_leg[leg_id].motor_r
+ARM GAS  /tmp/cc89wHiZ.s 			page 5
 
 
- 202:Lib/Motor/Src/unitreeA1_recv.c ****             // get receive data length, length = set_data_length - remain_length
- 203:Lib/Motor/Src/unitreeA1_recv.c ****             // 获取接收数据长度,长度 = 设定长度 - 剩余长度
- 204:Lib/Motor/Src/unitreeA1_recv.c ****             this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart3_rx.Instance->NDTR;
+ 202:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Acc = data_leg[leg_id].motor
+ 203:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Pos = data_leg[leg_id].motor
+ 204:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].SumCheck = 0xd2 + 0xfe + leg
  205:Lib/Motor/Src/unitreeA1_recv.c **** 
- 206:Lib/Motor/Src/unitreeA1_recv.c ****             // reset set_data_lenght
- 207:Lib/Motor/Src/unitreeA1_recv.c ****             // 重新设定数据长度
- 208:Lib/Motor/Src/unitreeA1_recv.c ****             hdma_usart3_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
- 209:Lib/Motor/Src/unitreeA1_recv.c **** 
- 210:Lib/Motor/Src/unitreeA1_recv.c ****             // set memory buffer 1
- 211:Lib/Motor/Src/unitreeA1_recv.c ****             // 设定缓冲区1
- 212:Lib/Motor/Src/unitreeA1_recv.c ****             hdma_usart3_rx.Instance->CR |= DMA_SxCR_CT;
+ 206:Lib/Motor/Src/unitreeA1_recv.c ****     /*
+ 207:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
+ 208:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
+ 209:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].T = data_leg[leg_id].motor_recv_data.Mdata.T;
+ 210:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].W = data_leg[leg_id].motor_recv_data.Mdata.W;
+ 211:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].Acc = data_leg[leg_id].motor_recv_data.Mdata.Acc;
+ 212:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].Pos = data_leg[leg_id].motor_recv_data.Mdata.Pos;
  213:Lib/Motor/Src/unitreeA1_recv.c **** 
- 214:Lib/Motor/Src/unitreeA1_recv.c ****             // enable DMA
- 215:Lib/Motor/Src/unitreeA1_recv.c ****             // 使能DMA
- 216:Lib/Motor/Src/unitreeA1_recv.c ****             __HAL_DMA_ENABLE(&hdma_usart3_rx);
- 217:Lib/Motor/Src/unitreeA1_recv.c **** 
- 218:Lib/Motor/Src/unitreeA1_recv.c ****             if (this_time_rx_len == RC_FRAME_LENGTH)
- 219:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 220:Lib/Motor/Src/unitreeA1_recv.c ****                 sbus_to_rc(sbus_rx_buf_RB[0], &leg[RB].a1_buf);
- 221:Lib/Motor/Src/unitreeA1_recv.c ****                 unitreeA1_rx(3);
- 222:Lib/Motor/Src/unitreeA1_recv.c ****             }
- 223:Lib/Motor/Src/unitreeA1_recv.c ****         }
- 224:Lib/Motor/Src/unitreeA1_recv.c ****         else
- 225:Lib/Motor/Src/unitreeA1_recv.c ****         {
- 226:Lib/Motor/Src/unitreeA1_recv.c ****             /* Current memory buffer used is Memory 1 */
- 227:Lib/Motor/Src/unitreeA1_recv.c ****             // disable DMA
- 228:Lib/Motor/Src/unitreeA1_recv.c ****             // 失效DMA
- 229:Lib/Motor/Src/unitreeA1_recv.c ****             __HAL_DMA_DISABLE(&hdma_usart6_rx);
- 230:Lib/Motor/Src/unitreeA1_recv.c **** 
- 231:Lib/Motor/Src/unitreeA1_recv.c ****             // get receive data length, length = set_data_length - remain_length
- 232:Lib/Motor/Src/unitreeA1_recv.c ****             // 获取接收数据长度,长度 = 设定长度 - 剩余长度
- 233:Lib/Motor/Src/unitreeA1_recv.c ****             this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart6_rx.Instance->NDTR;
- 234:Lib/Motor/Src/unitreeA1_recv.c **** 
- 235:Lib/Motor/Src/unitreeA1_recv.c ****             // reset set_data_lenght
- 236:Lib/Motor/Src/unitreeA1_recv.c ****             // 重新设定数据长度
- 237:Lib/Motor/Src/unitreeA1_recv.c ****             hdma_usart6_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
- 238:Lib/Motor/Src/unitreeA1_recv.c **** 
- 239:Lib/Motor/Src/unitreeA1_recv.c ****             // set memory buffer 0
- 240:Lib/Motor/Src/unitreeA1_recv.c ****             // 设定缓冲区0
- 241:Lib/Motor/Src/unitreeA1_recv.c ****             DMA2_Stream1->CR &= ~(DMA_SxCR_CT);
- 242:Lib/Motor/Src/unitreeA1_recv.c **** 
- 243:Lib/Motor/Src/unitreeA1_recv.c ****             // enable DMA
- 244:Lib/Motor/Src/unitreeA1_recv.c ****             // 使能DMA
- 245:Lib/Motor/Src/unitreeA1_recv.c ****             __HAL_DMA_ENABLE(&hdma_usart6_rx);
- 246:Lib/Motor/Src/unitreeA1_recv.c **** 
- 247:Lib/Motor/Src/unitreeA1_recv.c ****             if (this_time_rx_len == RC_FRAME_LENGTH)
- 248:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 249:Lib/Motor/Src/unitreeA1_recv.c ****                 // 处理数据
- 250:Lib/Motor/Src/unitreeA1_recv.c ****                 sbus_to_rc(sbus_rx_buf_RB[1], &leg[RB].a1_buf);
- 251:Lib/Motor/Src/unitreeA1_recv.c ****                 unitreeA1_rx(3);
- 252:Lib/Motor/Src/unitreeA1_recv.c ****             }
- 253:Lib/Motor/Src/unitreeA1_recv.c ****         }
- 254:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 255:Lib/Motor/Src/unitreeA1_recv.c **** }
- 256:Lib/Motor/Src/unitreeA1_recv.c **** 
- 257:Lib/Motor/Src/unitreeA1_recv.c **** void USART6_IRQHandler(void)
- 258:Lib/Motor/Src/unitreeA1_recv.c **** {
-ARM GAS  /tmp/cc0IYDZI.s 			page 6
-
-
- 259:Lib/Motor/Src/unitreeA1_recv.c **** 
- 260:Lib/Motor/Src/unitreeA1_recv.c ****     if (huart6.Instance->SR & UART_FLAG_RXNE) // 接收到数据
- 261:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 262:Lib/Motor/Src/unitreeA1_recv.c ****         __HAL_UART_CLEAR_PEFLAG(&huart6);
- 263:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 264:Lib/Motor/Src/unitreeA1_recv.c ****     else if (USART6->SR & UART_FLAG_IDLE)
- 265:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 266:Lib/Motor/Src/unitreeA1_recv.c ****         static uint16_t this_time_rx_len = 0;
- 267:Lib/Motor/Src/unitreeA1_recv.c **** 
- 268:Lib/Motor/Src/unitreeA1_recv.c ****         __HAL_UART_CLEAR_PEFLAG(&huart6);
- 269:Lib/Motor/Src/unitreeA1_recv.c **** 
- 270:Lib/Motor/Src/unitreeA1_recv.c ****         if ((hdma_usart6_rx.Instance->CR & DMA_SxCR_CT) == RESET)
- 271:Lib/Motor/Src/unitreeA1_recv.c ****         {
- 272:Lib/Motor/Src/unitreeA1_recv.c ****             /* Current memory buffer used is Memory 0 */
- 273:Lib/Motor/Src/unitreeA1_recv.c **** 
- 274:Lib/Motor/Src/unitreeA1_recv.c ****             // disable DMA
- 275:Lib/Motor/Src/unitreeA1_recv.c ****             // 失效DMA
- 276:Lib/Motor/Src/unitreeA1_recv.c ****             __HAL_DMA_DISABLE(&hdma_usart6_rx);
- 277:Lib/Motor/Src/unitreeA1_recv.c **** 
- 278:Lib/Motor/Src/unitreeA1_recv.c ****             // get receive data length, length = set_data_length - remain_length
- 279:Lib/Motor/Src/unitreeA1_recv.c ****             // 获取接收数据长度,长度 = 设定长度 - 剩余长度
- 280:Lib/Motor/Src/unitreeA1_recv.c ****             this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart6_rx.Instance->NDTR;
- 281:Lib/Motor/Src/unitreeA1_recv.c **** 
- 282:Lib/Motor/Src/unitreeA1_recv.c ****             // reset set_data_lenght
- 283:Lib/Motor/Src/unitreeA1_recv.c ****             // 重新设定数据长度
- 284:Lib/Motor/Src/unitreeA1_recv.c ****             hdma_usart6_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
- 285:Lib/Motor/Src/unitreeA1_recv.c **** 
- 286:Lib/Motor/Src/unitreeA1_recv.c ****             // set memory buffer 1
- 287:Lib/Motor/Src/unitreeA1_recv.c ****             // 设定缓冲区1
- 288:Lib/Motor/Src/unitreeA1_recv.c ****             hdma_usart6_rx.Instance->CR |= DMA_SxCR_CT;
- 289:Lib/Motor/Src/unitreeA1_recv.c **** 
- 290:Lib/Motor/Src/unitreeA1_recv.c ****             // enable DMA
- 291:Lib/Motor/Src/unitreeA1_recv.c ****             // 使能DMA
- 292:Lib/Motor/Src/unitreeA1_recv.c ****             __HAL_DMA_ENABLE(&hdma_usart6_rx);
- 293:Lib/Motor/Src/unitreeA1_recv.c **** 
- 294:Lib/Motor/Src/unitreeA1_recv.c ****             if (this_time_rx_len == RC_FRAME_LENGTH)
- 295:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 296:Lib/Motor/Src/unitreeA1_recv.c ****                 sbus_to_rc(sbus_rx_buf_RF[0], &leg[RF].a1_buf);
- 297:Lib/Motor/Src/unitreeA1_recv.c ****                 unitreeA1_rx(2);
- 298:Lib/Motor/Src/unitreeA1_recv.c ****             }
- 299:Lib/Motor/Src/unitreeA1_recv.c ****         }
- 300:Lib/Motor/Src/unitreeA1_recv.c ****         else
- 301:Lib/Motor/Src/unitreeA1_recv.c ****         {
- 302:Lib/Motor/Src/unitreeA1_recv.c ****             /* Current memory buffer used is Memory 1 */
- 303:Lib/Motor/Src/unitreeA1_recv.c ****             // disable DMA
- 304:Lib/Motor/Src/unitreeA1_recv.c ****             // 失效DMA
- 305:Lib/Motor/Src/unitreeA1_recv.c ****             __HAL_DMA_DISABLE(&hdma_usart6_rx);
- 306:Lib/Motor/Src/unitreeA1_recv.c **** 
- 307:Lib/Motor/Src/unitreeA1_recv.c ****             // get receive data length, length = set_data_length - remain_length
- 308:Lib/Motor/Src/unitreeA1_recv.c ****             // 获取接收数据长度,长度 = 设定长度 - 剩余长度
- 309:Lib/Motor/Src/unitreeA1_recv.c ****             this_time_rx_len = SBUS_RX_BUF_NUM - hdma_usart6_rx.Instance->NDTR;
- 310:Lib/Motor/Src/unitreeA1_recv.c **** 
- 311:Lib/Motor/Src/unitreeA1_recv.c ****             // reset set_data_lenght
- 312:Lib/Motor/Src/unitreeA1_recv.c ****             // 重新设定数据长度
- 313:Lib/Motor/Src/unitreeA1_recv.c ****             hdma_usart6_rx.Instance->NDTR = SBUS_RX_BUF_NUM;
- 314:Lib/Motor/Src/unitreeA1_recv.c **** 
- 315:Lib/Motor/Src/unitreeA1_recv.c ****             // set memory buffer 0
-ARM GAS  /tmp/cc0IYDZI.s 			page 7
-
-
- 316:Lib/Motor/Src/unitreeA1_recv.c ****             // 设定缓冲区0
- 317:Lib/Motor/Src/unitreeA1_recv.c ****             DMA2_Stream1->CR &= ~(DMA_SxCR_CT);
- 318:Lib/Motor/Src/unitreeA1_recv.c **** 
- 319:Lib/Motor/Src/unitreeA1_recv.c ****             // enable DMA
- 320:Lib/Motor/Src/unitreeA1_recv.c ****             // 使能DMA
- 321:Lib/Motor/Src/unitreeA1_recv.c ****             __HAL_DMA_ENABLE(&hdma_usart6_rx);
- 322:Lib/Motor/Src/unitreeA1_recv.c **** 
- 323:Lib/Motor/Src/unitreeA1_recv.c ****             if (this_time_rx_len == RC_FRAME_LENGTH)
- 324:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 325:Lib/Motor/Src/unitreeA1_recv.c ****                 // 处理数据
- 326:Lib/Motor/Src/unitreeA1_recv.c ****                 sbus_to_rc(sbus_rx_buf_RF[1], &leg[RF].a1_buf);
- 327:Lib/Motor/Src/unitreeA1_recv.c ****                 unitreeA1_rx(2);
- 328:Lib/Motor/Src/unitreeA1_recv.c ****             }
- 329:Lib/Motor/Src/unitreeA1_recv.c ****         }
- 330:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 331:Lib/Motor/Src/unitreeA1_recv.c **** }
- 332:Lib/Motor/Src/unitreeA1_recv.c **** 
- 333:Lib/Motor/Src/unitreeA1_recv.c **** void unitreeA1_rx(int leg_id)
- 334:Lib/Motor/Src/unitreeA1_recv.c **** {
- 335:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.head.motorID = leg[leg_id].a1_buf.motorID;
- 336:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
- 337:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.mode = leg[leg_id].a1_buf.mode;
- 338:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Temp = leg[leg_id].a1_buf.Temp;
- 339:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
- 340:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.T = leg[leg_id].a1_buf.T;
- 341:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.W = leg[leg_id].a1_buf.W;
- 342:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
- 343:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
- 344:Lib/Motor/Src/unitreeA1_recv.c **** 
- 345:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[0] = 0xD2;
- 346:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[1] = 0xFE;
- 347:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].LegID = leg_id;
- 348:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MotorID = data_leg[leg_id].m
- 349:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MError = data_leg[leg_id].mo
- 350:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].mode = data_leg[leg_id].moto
- 351:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Temp = data_leg[leg_id].moto
- 352:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].T = data_leg[leg_id].motor_r
- 353:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].W = data_leg[leg_id].motor_r
- 354:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Acc = data_leg[leg_id].motor
- 355:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Pos = data_leg[leg_id].motor
- 356:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].SumCheck = 0xd2 + 0xfe + leg
- 357:Lib/Motor/Src/unitreeA1_recv.c **** 
- 358:Lib/Motor/Src/unitreeA1_recv.c ****     /*
- 359:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
- 360:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
- 361:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].T = data_leg[leg_id].motor_recv_data.Mdata.T;
- 362:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].W = data_leg[leg_id].motor_recv_data.Mdata.W;
- 363:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].Acc = data_leg[leg_id].motor_recv_data.Mdata.Acc;
- 364:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].Pos = data_leg[leg_id].motor_recv_data.Mdata.Pos;
- 365:Lib/Motor/Src/unitreeA1_recv.c **** 
- 366:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
- 367:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
- 368:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].T = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.T / 256.0f);
- 369:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].W = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.W / 128.0f);
- 370:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].Acc = (float)data_leg[leg_id].motor_recv_data.Mdata.Acc;
- 371:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].Pos = (float)((data_leg[leg_id].motor_recv_data.Mdata.Pos / 16384.0f) * 6.
- 372:Lib/Motor/Src/unitreeA1_recv.c **** 
-ARM GAS  /tmp/cc0IYDZI.s 			page 8
-
-
- 373:Lib/Motor/Src/unitreeA1_recv.c ****         data_motor[leg_id][data_leg[leg_id].motor_id].motor_id = data_leg[leg_id].motor_id;
- 374:Lib/Motor/Src/unitreeA1_recv.c ****         data_motor[leg_id][data_leg[leg_id].motor_id].MError = data_leg[leg_id].MError;
- 375:Lib/Motor/Src/unitreeA1_recv.c ****         data_motor[leg_id][data_leg[leg_id].motor_id].T = data_leg[leg_id].T;
- 376:Lib/Motor/Src/unitreeA1_recv.c ****         data_motor[leg_id][data_leg[leg_id].motor_id].W = data_leg[leg_id].W;
- 377:Lib/Motor/Src/unitreeA1_recv.c ****         data_motor[leg_id][data_leg[leg_id].motor_id].Acc = data_leg[leg_id].Acc;
- 378:Lib/Motor/Src/unitreeA1_recv.c ****         data_motor[leg_id][data_leg[leg_id].motor_id].Pos = data_leg[leg_id].Pos;
- 379:Lib/Motor/Src/unitreeA1_recv.c ****     */
- 380:Lib/Motor/Src/unitreeA1_recv.c **** }
- 381:Lib/Motor/Src/unitreeA1_recv.c **** 
- 382:Lib/Motor/Src/unitreeA1_recv.c **** // dma接收赋值函数
- 383:Lib/Motor/Src/unitreeA1_recv.c **** static void sbus_to_rc(volatile const uint8_t *sbus_buf, A1_buf *a1_buf)
- 384:Lib/Motor/Src/unitreeA1_recv.c **** {
-  29              		.loc 1 384 1 view -0
+ 214:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
+ 215:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
+ 216:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].T = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.T / 256.0f);
+ 217:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].W = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.W / 128.0f);
+ 218:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].Acc = (float)data_leg[leg_id].motor_recv_data.Mdata.Acc;
+ 219:Lib/Motor/Src/unitreeA1_recv.c ****         data_leg[leg_id].Pos = (float)((data_leg[leg_id].motor_recv_data.Mdata.Pos / 16384.0f) * 6.
+ 220:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 221:Lib/Motor/Src/unitreeA1_recv.c ****         data_motor[leg_id][data_leg[leg_id].motor_id].motor_id = data_leg[leg_id].motor_id;
+ 222:Lib/Motor/Src/unitreeA1_recv.c ****         data_motor[leg_id][data_leg[leg_id].motor_id].MError = data_leg[leg_id].MError;
+ 223:Lib/Motor/Src/unitreeA1_recv.c ****         data_motor[leg_id][data_leg[leg_id].motor_id].T = data_leg[leg_id].T;
+ 224:Lib/Motor/Src/unitreeA1_recv.c ****         data_motor[leg_id][data_leg[leg_id].motor_id].W = data_leg[leg_id].W;
+ 225:Lib/Motor/Src/unitreeA1_recv.c ****         data_motor[leg_id][data_leg[leg_id].motor_id].Acc = data_leg[leg_id].Acc;
+ 226:Lib/Motor/Src/unitreeA1_recv.c ****         data_motor[leg_id][data_leg[leg_id].motor_id].Pos = data_leg[leg_id].Pos;
+ 227:Lib/Motor/Src/unitreeA1_recv.c ****     */
+ 228:Lib/Motor/Src/unitreeA1_recv.c **** }
+ 229:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 230:Lib/Motor/Src/unitreeA1_recv.c **** // dma接收赋值函数
+ 231:Lib/Motor/Src/unitreeA1_recv.c **** static void sbus_to_rc(volatile const uint8_t *sbus_buf, A1_buf *a1_buf)
+ 232:Lib/Motor/Src/unitreeA1_recv.c **** {
+  29              		.loc 1 232 1 view -0
   30              		.cfi_startproc
   31              		@ args = 0, pretend = 0, frame = 0
   32              		@ frame_needed = 0, uses_anonymous_args = 0
   33              		@ link register save eliminated.
- 385:Lib/Motor/Src/unitreeA1_recv.c ****     if (sbus_buf == NULL || a1_buf == NULL)
-  34              		.loc 1 385 5 view .LVU1
-  35              		.loc 1 385 8 is_stmt 0 view .LVU2
+ 233:Lib/Motor/Src/unitreeA1_recv.c ****     if (sbus_buf == NULL || a1_buf == NULL)
+  34              		.loc 1 233 5 view .LVU1
+  35              		.loc 1 233 8 is_stmt 0 view .LVU2
   36 0000 0346     		mov	r3, r0
   37 0002 20B3     		cbz	r0, .L1
-  38              		.loc 1 385 26 discriminator 1 view .LVU3
+  38              		.loc 1 233 26 discriminator 1 view .LVU3
   39 0004 19B3     		cbz	r1, .L1
- 386:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 387:Lib/Motor/Src/unitreeA1_recv.c ****         return;
- 388:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 389:Lib/Motor/Src/unitreeA1_recv.c **** 
- 390:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->motorID = sbus_buf[2];
-  40              		.loc 1 390 5 is_stmt 1 view .LVU4
-  41              		.loc 1 390 21 is_stmt 0 view .LVU5
+ 234:Lib/Motor/Src/unitreeA1_recv.c ****     {
+ 235:Lib/Motor/Src/unitreeA1_recv.c ****         return;
+ 236:Lib/Motor/Src/unitreeA1_recv.c ****     }
+ 237:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 238:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->motorID = sbus_buf[2];
+  40              		.loc 1 238 5 is_stmt 1 view .LVU4
+  41              		.loc 1 238 21 is_stmt 0 view .LVU5
   42 0006 8278     		ldrb	r2, [r0, #2]	@ zero_extendqisi2
   43 0008 0A70     		strb	r2, [r1]
- 391:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->mode = sbus_buf[4];
-  44              		.loc 1 391 5 is_stmt 1 view .LVU6
-  45              		.loc 1 391 18 is_stmt 0 view .LVU7
+ 239:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->mode = sbus_buf[4];
+  44              		.loc 1 239 5 is_stmt 1 view .LVU6
+  45              		.loc 1 239 18 is_stmt 0 view .LVU7
   46 000a 0279     		ldrb	r2, [r0, #4]	@ zero_extendqisi2
   47 000c 4A70     		strb	r2, [r1, #1]
- 392:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->Temp = sbus_buf[6];
-  48              		.loc 1 392 5 is_stmt 1 view .LVU8
-  49              		.loc 1 392 28 is_stmt 0 view .LVU9
+ARM GAS  /tmp/cc89wHiZ.s 			page 6
+
+
+ 240:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->Temp = sbus_buf[6];
+  48              		.loc 1 240 5 is_stmt 1 view .LVU8
+  49              		.loc 1 240 28 is_stmt 0 view .LVU9
   50 000e 8279     		ldrb	r2, [r0, #6]	@ zero_extendqisi2
-  51              		.loc 1 392 18 view .LVU10
+  51              		.loc 1 240 18 view .LVU10
   52 0010 8A70     		strb	r2, [r1, #2]
- 393:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->MError = sbus_buf[7];
-  53              		.loc 1 393 5 is_stmt 1 view .LVU11
-  54              		.loc 1 393 20 is_stmt 0 view .LVU12
+ 241:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->MError = sbus_buf[7];
+  53              		.loc 1 241 5 is_stmt 1 view .LVU11
+  54              		.loc 1 241 20 is_stmt 0 view .LVU12
   55 0012 C279     		ldrb	r2, [r0, #7]	@ zero_extendqisi2
   56 0014 CA70     		strb	r2, [r1, #3]
- 394:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->T = sbus_buf[13] << 8 | sbus_buf[12];
-  57              		.loc 1 394 5 is_stmt 1 view .LVU13
-  58              		.loc 1 394 25 is_stmt 0 view .LVU14
+ 242:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->T = sbus_buf[13] << 8 | sbus_buf[12];
+  57              		.loc 1 242 5 is_stmt 1 view .LVU13
+  58              		.loc 1 242 25 is_stmt 0 view .LVU14
   59 0016 407B     		ldrb	r0, [r0, #13]	@ zero_extendqisi2
   60              	.LVL1:
-  61              		.loc 1 394 45 view .LVU15
+  61              		.loc 1 242 45 view .LVU15
   62 0018 1A7B     		ldrb	r2, [r3, #12]	@ zero_extendqisi2
-  63              		.loc 1 394 35 view .LVU16
-ARM GAS  /tmp/cc0IYDZI.s 			page 9
-
-
+  63              		.loc 1 242 35 view .LVU16
   64 001a 42EA0022 		orr	r2, r2, r0, lsl #8
-  65              		.loc 1 394 15 view .LVU17
+  65              		.loc 1 242 15 view .LVU17
   66 001e 8A80     		strh	r2, [r1, #4]	@ movhi
- 395:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->W = sbus_buf[15] << 8 | sbus_buf[14];
-  67              		.loc 1 395 5 is_stmt 1 view .LVU18
-  68              		.loc 1 395 25 is_stmt 0 view .LVU19
+ 243:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->W = sbus_buf[15] << 8 | sbus_buf[14];
+  67              		.loc 1 243 5 is_stmt 1 view .LVU18
+  68              		.loc 1 243 25 is_stmt 0 view .LVU19
   69 0020 D87B     		ldrb	r0, [r3, #15]	@ zero_extendqisi2
-  70              		.loc 1 395 45 view .LVU20
+  70              		.loc 1 243 45 view .LVU20
   71 0022 9A7B     		ldrb	r2, [r3, #14]	@ zero_extendqisi2
-  72              		.loc 1 395 35 view .LVU21
+  72              		.loc 1 243 35 view .LVU21
   73 0024 42EA0022 		orr	r2, r2, r0, lsl #8
-  74              		.loc 1 395 15 view .LVU22
+  74              		.loc 1 243 15 view .LVU22
   75 0028 CA80     		strh	r2, [r1, #6]	@ movhi
- 396:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->Acc = sbus_buf[28] << 8 | sbus_buf[27];
-  76              		.loc 1 396 5 is_stmt 1 view .LVU23
-  77              		.loc 1 396 27 is_stmt 0 view .LVU24
+ 244:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->Acc = sbus_buf[28] << 8 | sbus_buf[27];
+  76              		.loc 1 244 5 is_stmt 1 view .LVU23
+  77              		.loc 1 244 27 is_stmt 0 view .LVU24
   78 002a 187F     		ldrb	r0, [r3, #28]	@ zero_extendqisi2
-  79              		.loc 1 396 47 view .LVU25
+  79              		.loc 1 244 47 view .LVU25
   80 002c DA7E     		ldrb	r2, [r3, #27]	@ zero_extendqisi2
-  81              		.loc 1 396 37 view .LVU26
+  81              		.loc 1 244 37 view .LVU26
   82 002e 42EA0022 		orr	r2, r2, r0, lsl #8
-  83              		.loc 1 396 17 view .LVU27
+  83              		.loc 1 244 17 view .LVU27
   84 0032 0A81     		strh	r2, [r1, #8]	@ movhi
- 397:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->Pos = sbus_buf[33] << 24 | sbus_buf[32] << 16 | sbus_buf[31] << 8 | sbus_buf[30];
-  85              		.loc 1 397 5 is_stmt 1 view .LVU28
-  86              		.loc 1 397 27 is_stmt 0 view .LVU29
+ 245:Lib/Motor/Src/unitreeA1_recv.c ****     a1_buf->Pos = sbus_buf[33] << 24 | sbus_buf[32] << 16 | sbus_buf[31] << 8 | sbus_buf[30];
+  85              		.loc 1 245 5 is_stmt 1 view .LVU28
+  86              		.loc 1 245 27 is_stmt 0 view .LVU29
   87 0034 93F82100 		ldrb	r0, [r3, #33]	@ zero_extendqisi2
-  88              		.loc 1 397 48 view .LVU30
+  88              		.loc 1 245 48 view .LVU30
   89 0038 93F82020 		ldrb	r2, [r3, #32]	@ zero_extendqisi2
-  90              		.loc 1 397 53 view .LVU31
+  90              		.loc 1 245 53 view .LVU31
   91 003c 1204     		lsls	r2, r2, #16
-  92              		.loc 1 397 38 view .LVU32
+  92              		.loc 1 245 38 view .LVU32
   93 003e 42EA0062 		orr	r2, r2, r0, lsl #24
-  94              		.loc 1 397 69 view .LVU33
+  94              		.loc 1 245 69 view .LVU33
   95 0042 D87F     		ldrb	r0, [r3, #31]	@ zero_extendqisi2
-  96              		.loc 1 397 59 view .LVU34
+  96              		.loc 1 245 59 view .LVU34
   97 0044 42EA0022 		orr	r2, r2, r0, lsl #8
-  98              		.loc 1 397 89 view .LVU35
+  98              		.loc 1 245 89 view .LVU35
+ARM GAS  /tmp/cc89wHiZ.s 			page 7
+
+
   99 0048 9B7F     		ldrb	r3, [r3, #30]	@ zero_extendqisi2
  100              	.LVL2:
- 101              		.loc 1 397 79 view .LVU36
+ 101              		.loc 1 245 79 view .LVU36
  102 004a 1A43     		orrs	r2, r2, r3
- 103              		.loc 1 397 17 view .LVU37
+ 103              		.loc 1 245 17 view .LVU37
  104 004c CA60     		str	r2, [r1, #12]
  105              	.L1:
- 398:Lib/Motor/Src/unitreeA1_recv.c **** }
- 106              		.loc 1 398 1 view .LVU38
+ 246:Lib/Motor/Src/unitreeA1_recv.c **** }
+ 106              		.loc 1 246 1 view .LVU38
  107 004e 7047     		bx	lr
  108              		.cfi_endproc
- 109              	.LFE140:
+ 109              	.LFE138:
  111              		.section	.text.remote_control_init,"ax",%progbits
  112              		.align	1
  113              		.global	remote_control_init
@@ -538,9 +380,6 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  115              		.thumb
  116              		.thumb_func
  118              	remote_control_init:
-ARM GAS  /tmp/cc0IYDZI.s 			page 10
-
-
  119              	.LFB134:
   22:Lib/Motor/Src/unitreeA1_recv.c ****     RC1_init(sbus_rx_buf_LF[0], sbus_rx_buf_LF[1], SBUS_RX_BUF_NUM);
  120              		.loc 1 22 1 is_stmt 1 view -0
@@ -579,6 +418,9 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  149 0024 8118     		adds	r1, r0, r2
  150 0026 FFF7FEFF 		bl	RC6_init
  151              	.LVL6:
+ARM GAS  /tmp/cc89wHiZ.s 			page 8
+
+
   27:Lib/Motor/Src/unitreeA1_recv.c **** 
  152              		.loc 1 27 1 is_stmt 0 view .LVU44
  153 002a 08BD     		pop	{r3, pc}
@@ -598,18 +440,15 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  168              		.thumb
  169              		.thumb_func
  171              	unitreeA1_rx:
-ARM GAS  /tmp/cc0IYDZI.s 			page 11
-
-
  172              	.LVL7:
- 173              	.LFB139:
- 334:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.head.motorID = leg[leg_id].a1_buf.motorID;
- 174              		.loc 1 334 1 is_stmt 1 view -0
+ 173              	.LFB137:
+ 182:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.head.motorID = leg[leg_id].a1_buf.motorID;
+ 174              		.loc 1 182 1 is_stmt 1 view -0
  175              		.cfi_startproc
  176              		@ args = 0, pretend = 0, frame = 0
  177              		@ frame_needed = 0, uses_anonymous_args = 0
- 334:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.head.motorID = leg[leg_id].a1_buf.motorID;
- 178              		.loc 1 334 1 is_stmt 0 view .LVU46
+ 182:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.head.motorID = leg[leg_id].a1_buf.motorID;
+ 178              		.loc 1 182 1 is_stmt 0 view .LVU46
  179 0000 2DE9F047 		push	{r4, r5, r6, r7, r8, r9, r10, lr}
  180              		.cfi_def_cfa_offset 32
  181              		.cfi_offset 4, -32
@@ -620,85 +459,88 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  186              		.cfi_offset 9, -12
  187              		.cfi_offset 10, -8
  188              		.cfi_offset 14, -4
- 335:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
- 189              		.loc 1 335 5 is_stmt 1 view .LVU47
- 335:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
- 190              		.loc 1 335 71 is_stmt 0 view .LVU48
+ 183:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
+ 189              		.loc 1 183 5 is_stmt 1 view .LVU47
+ 183:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
+ 190              		.loc 1 183 71 is_stmt 0 view .LVU48
  191 0004 2949     		ldr	r1, .L9
  192 0006 4FF4D473 		mov	r3, #424
  193 000a 03FB0011 		mla	r1, r3, r0, r1
  194 000e 91F89831 		ldrb	r3, [r1, #408]	@ zero_extendqisi2
- 335:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
- 195              		.loc 1 335 51 view .LVU49
+ 183:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
+ 195              		.loc 1 183 51 view .LVU49
  196 0012 00EB0014 		add	r4, r0, r0, lsl #4
  197 0016 264A     		ldr	r2, .L9+4
  198 0018 02EBC402 		add	r2, r2, r4, lsl #3
  199 001c 9370     		strb	r3, [r2, #2]
- 336:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.mode = leg[leg_id].a1_buf.mode;
- 200              		.loc 1 336 5 is_stmt 1 view .LVU50
- 336:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.mode = leg[leg_id].a1_buf.mode;
- 201              		.loc 1 336 71 is_stmt 0 view .LVU51
+ 184:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.mode = leg[leg_id].a1_buf.mode;
+ 200              		.loc 1 184 5 is_stmt 1 view .LVU50
+ 184:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.mode = leg[leg_id].a1_buf.mode;
+ 201              		.loc 1 184 71 is_stmt 0 view .LVU51
  202 001e 91F89BC1 		ldrb	ip, [r1, #411]	@ zero_extendqisi2
- 336:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.mode = leg[leg_id].a1_buf.mode;
- 203              		.loc 1 336 51 view .LVU52
+ARM GAS  /tmp/cc89wHiZ.s 			page 9
+
+
+ 184:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.mode = leg[leg_id].a1_buf.mode;
+ 203              		.loc 1 184 51 view .LVU52
  204 0022 82F807C0 		strb	ip, [r2, #7]
- 337:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Temp = leg[leg_id].a1_buf.Temp;
- 205              		.loc 1 337 5 is_stmt 1 view .LVU53
- 337:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Temp = leg[leg_id].a1_buf.Temp;
- 206              		.loc 1 337 69 is_stmt 0 view .LVU54
+ 185:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Temp = leg[leg_id].a1_buf.Temp;
+ 205              		.loc 1 185 5 is_stmt 1 view .LVU53
+ 185:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Temp = leg[leg_id].a1_buf.Temp;
+ 206              		.loc 1 185 69 is_stmt 0 view .LVU54
  207 0026 91F89971 		ldrb	r7, [r1, #409]	@ zero_extendqisi2
- 337:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Temp = leg[leg_id].a1_buf.Temp;
- 208              		.loc 1 337 49 view .LVU55
+ 185:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Temp = leg[leg_id].a1_buf.Temp;
+ 208              		.loc 1 185 49 view .LVU55
  209 002a 1771     		strb	r7, [r2, #4]
- 338:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
- 210              		.loc 1 338 5 is_stmt 1 view .LVU56
- 338:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
- 211              		.loc 1 338 69 is_stmt 0 view .LVU57
+ 186:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
+ 210              		.loc 1 186 5 is_stmt 1 view .LVU56
+ 186:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
+ 211              		.loc 1 186 69 is_stmt 0 view .LVU57
  212 002c 91F99A61 		ldrsb	r6, [r1, #410]
- 338:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
- 213              		.loc 1 338 49 view .LVU58
+ 186:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.MError = leg[leg_id].a1_buf.MError;
+ 213              		.loc 1 186 49 view .LVU58
  214 0030 9671     		strb	r6, [r2, #6]
-ARM GAS  /tmp/cc0IYDZI.s 			page 12
-
-
- 339:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.T = leg[leg_id].a1_buf.T;
- 215              		.loc 1 339 5 is_stmt 1 view .LVU59
- 340:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.W = leg[leg_id].a1_buf.W;
- 216              		.loc 1 340 5 view .LVU60
- 340:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.W = leg[leg_id].a1_buf.W;
- 217              		.loc 1 340 66 is_stmt 0 view .LVU61
+ 187:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.T = leg[leg_id].a1_buf.T;
+ 215              		.loc 1 187 5 is_stmt 1 view .LVU59
+ 188:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.W = leg[leg_id].a1_buf.W;
+ 216              		.loc 1 188 5 view .LVU60
+ 188:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.W = leg[leg_id].a1_buf.W;
+ 217              		.loc 1 188 66 is_stmt 0 view .LVU61
  218 0032 B1F99C51 		ldrsh	r5, [r1, #412]
- 340:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.W = leg[leg_id].a1_buf.W;
- 219              		.loc 1 340 46 view .LVU62
+ 188:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.W = leg[leg_id].a1_buf.W;
+ 219              		.loc 1 188 46 view .LVU62
  220 0036 9581     		strh	r5, [r2, #12]	@ movhi
- 341:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
- 221              		.loc 1 341 5 is_stmt 1 view .LVU63
- 341:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
- 222              		.loc 1 341 66 is_stmt 0 view .LVU64
+ 189:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
+ 221              		.loc 1 189 5 is_stmt 1 view .LVU63
+ 189:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
+ 222              		.loc 1 189 66 is_stmt 0 view .LVU64
  223 0038 B1F99E41 		ldrsh	r4, [r1, #414]
- 341:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
- 224              		.loc 1 341 46 view .LVU65
+ 189:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Acc = leg[leg_id].a1_buf.Acc;
+ 224              		.loc 1 189 46 view .LVU65
  225 003c D481     		strh	r4, [r2, #14]	@ movhi
- 342:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
- 226              		.loc 1 342 5 is_stmt 1 view .LVU66
- 342:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
- 227              		.loc 1 342 68 is_stmt 0 view .LVU67
+ 190:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
+ 226              		.loc 1 190 5 is_stmt 1 view .LVU66
+ 190:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
+ 227              		.loc 1 190 68 is_stmt 0 view .LVU67
  228 003e B1F9A0E1 		ldrsh	lr, [r1, #416]
- 342:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
- 229              		.loc 1 342 48 view .LVU68
+ 190:Lib/Motor/Src/unitreeA1_recv.c ****     data_leg[leg_id].motor_recv_data.Mdata.Pos = leg[leg_id].a1_buf.Pos;
+ 229              		.loc 1 190 48 view .LVU68
  230 0042 A2F81AE0 		strh	lr, [r2, #26]	@ movhi
- 343:Lib/Motor/Src/unitreeA1_recv.c **** 
- 231              		.loc 1 343 5 is_stmt 1 view .LVU69
- 343:Lib/Motor/Src/unitreeA1_recv.c **** 
- 232              		.loc 1 343 68 is_stmt 0 view .LVU70
+ 191:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 231              		.loc 1 191 5 is_stmt 1 view .LVU69
+ 191:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 232              		.loc 1 191 68 is_stmt 0 view .LVU70
  233 0046 D1F8A411 		ldr	r1, [r1, #420]
- 343:Lib/Motor/Src/unitreeA1_recv.c **** 
- 234              		.loc 1 343 48 view .LVU71
+ 191:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 234              		.loc 1 191 48 view .LVU71
  235 004a C2F81E10 		str	r1, [r2, #30]	@ unaligned
- 345:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[1] = 0xFE;
- 236              		.loc 1 345 5 is_stmt 1 view .LVU72
- 345:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[1] = 0xFE;
- 237              		.loc 1 345 81 is_stmt 0 view .LVU73
+ 193:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[1] = 0xFE;
+ 236              		.loc 1 193 5 is_stmt 1 view .LVU72
+ 193:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].start[1] = 0xFE;
+ 237              		.loc 1 193 81 is_stmt 0 view .LVU73
+ARM GAS  /tmp/cc89wHiZ.s 			page 10
+
+
  238 004e DFF86490 		ldr	r9, .L9+8
  239 0052 03EB4308 		add	r8, r3, r3, lsl #1
  240 0056 C8EBC808 		rsb	r8, r8, r8, lsl #3
@@ -707,98 +549,95 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  243 0060 09EB0802 		add	r2, r9, r8
  244 0064 4FF0D20A 		mov	r10, #210
  245 0068 09F808A0 		strb	r10, [r9, r8]
- 346:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].LegID = leg_id;
- 246              		.loc 1 346 5 is_stmt 1 view .LVU74
- 346:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].LegID = leg_id;
- 247              		.loc 1 346 81 is_stmt 0 view .LVU75
+ 194:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].LegID = leg_id;
+ 246              		.loc 1 194 5 is_stmt 1 view .LVU74
+ 194:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].LegID = leg_id;
+ 247              		.loc 1 194 81 is_stmt 0 view .LVU75
  248 006c 4FF0FE08 		mov	r8, #254
  249 0070 82F80180 		strb	r8, [r2, #1]
- 347:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MotorID = data_leg[leg_id].m
- 250              		.loc 1 347 5 is_stmt 1 view .LVU76
- 347:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MotorID = data_leg[leg_id].m
- 251              		.loc 1 347 78 is_stmt 0 view .LVU77
+ 195:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MotorID = data_leg[leg_id].m
+ 250              		.loc 1 195 5 is_stmt 1 view .LVU76
+ 195:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MotorID = data_leg[leg_id].m
+ 251              		.loc 1 195 78 is_stmt 0 view .LVU77
  252 0074 9070     		strb	r0, [r2, #2]
-ARM GAS  /tmp/cc0IYDZI.s 			page 13
-
-
- 348:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MError = data_leg[leg_id].mo
- 253              		.loc 1 348 5 is_stmt 1 view .LVU78
- 348:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MError = data_leg[leg_id].mo
- 254              		.loc 1 348 80 is_stmt 0 view .LVU79
+ 196:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MError = data_leg[leg_id].mo
+ 253              		.loc 1 196 5 is_stmt 1 view .LVU78
+ 196:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].MError = data_leg[leg_id].mo
+ 254              		.loc 1 196 80 is_stmt 0 view .LVU79
  255 0076 D370     		strb	r3, [r2, #3]
- 349:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].mode = data_leg[leg_id].moto
- 256              		.loc 1 349 5 is_stmt 1 view .LVU80
- 349:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].mode = data_leg[leg_id].moto
- 257              		.loc 1 349 79 is_stmt 0 view .LVU81
+ 197:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].mode = data_leg[leg_id].moto
+ 256              		.loc 1 197 5 is_stmt 1 view .LVU80
+ 197:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].mode = data_leg[leg_id].moto
+ 257              		.loc 1 197 79 is_stmt 0 view .LVU81
  258 0078 82F806C0 		strb	ip, [r2, #6]
- 350:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Temp = data_leg[leg_id].moto
- 259              		.loc 1 350 5 is_stmt 1 view .LVU82
- 350:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Temp = data_leg[leg_id].moto
- 260              		.loc 1 350 77 is_stmt 0 view .LVU83
+ 198:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Temp = data_leg[leg_id].moto
+ 259              		.loc 1 198 5 is_stmt 1 view .LVU82
+ 198:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Temp = data_leg[leg_id].moto
+ 260              		.loc 1 198 77 is_stmt 0 view .LVU83
  261 007c 1771     		strb	r7, [r2, #4]
- 351:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].T = data_leg[leg_id].motor_r
- 262              		.loc 1 351 5 is_stmt 1 view .LVU84
- 351:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].T = data_leg[leg_id].motor_r
- 263              		.loc 1 351 77 is_stmt 0 view .LVU85
+ 199:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].T = data_leg[leg_id].motor_r
+ 262              		.loc 1 199 5 is_stmt 1 view .LVU84
+ 199:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].T = data_leg[leg_id].motor_r
+ 263              		.loc 1 199 77 is_stmt 0 view .LVU85
  264 007e 5671     		strb	r6, [r2, #5]
- 352:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].W = data_leg[leg_id].motor_r
- 265              		.loc 1 352 5 is_stmt 1 view .LVU86
- 352:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].W = data_leg[leg_id].motor_r
- 266              		.loc 1 352 74 is_stmt 0 view .LVU87
+ 200:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].W = data_leg[leg_id].motor_r
+ 265              		.loc 1 200 5 is_stmt 1 view .LVU86
+ 200:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].W = data_leg[leg_id].motor_r
+ 266              		.loc 1 200 74 is_stmt 0 view .LVU87
  267 0080 A2F80750 		strh	r5, [r2, #7]	@ unaligned
- 353:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Acc = data_leg[leg_id].motor
- 268              		.loc 1 353 5 is_stmt 1 view .LVU88
- 353:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Acc = data_leg[leg_id].motor
- 269              		.loc 1 353 74 is_stmt 0 view .LVU89
+ 201:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Acc = data_leg[leg_id].motor
+ 268              		.loc 1 201 5 is_stmt 1 view .LVU88
+ 201:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Acc = data_leg[leg_id].motor
+ 269              		.loc 1 201 74 is_stmt 0 view .LVU89
  270 0084 A2F80940 		strh	r4, [r2, #9]	@ unaligned
- 354:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Pos = data_leg[leg_id].motor
- 271              		.loc 1 354 5 is_stmt 1 view .LVU90
- 354:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Pos = data_leg[leg_id].motor
- 272              		.loc 1 354 76 is_stmt 0 view .LVU91
+ 202:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Pos = data_leg[leg_id].motor
+ 271              		.loc 1 202 5 is_stmt 1 view .LVU90
+ 202:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Pos = data_leg[leg_id].motor
+ 272              		.loc 1 202 76 is_stmt 0 view .LVU91
  273 0088 A2F80BE0 		strh	lr, [r2, #11]	@ unaligned
- 355:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].SumCheck = 0xd2 + 0xfe + leg
- 274              		.loc 1 355 5 is_stmt 1 view .LVU92
- 355:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].SumCheck = 0xd2 + 0xfe + leg
- 275              		.loc 1 355 76 is_stmt 0 view .LVU93
+ 203:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].SumCheck = 0xd2 + 0xfe + leg
+ 274              		.loc 1 203 5 is_stmt 1 view .LVU92
+ 203:Lib/Motor/Src/unitreeA1_recv.c ****     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].SumCheck = 0xd2 + 0xfe + leg
+ARM GAS  /tmp/cc89wHiZ.s 			page 11
+
+
+ 275              		.loc 1 203 76 is_stmt 0 view .LVU93
  276 008c C2F80D10 		str	r1, [r2, #13]	@ unaligned
- 356:Lib/Motor/Src/unitreeA1_recv.c **** 
- 277              		.loc 1 356 5 is_stmt 1 view .LVU94
- 356:Lib/Motor/Src/unitreeA1_recv.c **** 
- 278              		.loc 1 356 95 is_stmt 0 view .LVU95
+ 204:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 277              		.loc 1 204 5 is_stmt 1 view .LVU94
+ 204:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 278              		.loc 1 204 95 is_stmt 0 view .LVU95
  279 0090 00F5E870 		add	r0, r0, #464
  280              	.LVL8:
- 356:Lib/Motor/Src/unitreeA1_recv.c **** 
- 281              		.loc 1 356 104 view .LVU96
+ 204:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 281              		.loc 1 204 104 view .LVU96
  282 0094 0344     		add	r3, r3, r0
- 356:Lib/Motor/Src/unitreeA1_recv.c **** 
- 283              		.loc 1 356 152 view .LVU97
+ 204:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 283              		.loc 1 204 152 view .LVU97
  284 0096 3B44     		add	r3, r3, r7
- 356:Lib/Motor/Src/unitreeA1_recv.c **** 
- 285              		.loc 1 356 198 view .LVU98
+ 204:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 285              		.loc 1 204 198 view .LVU98
  286 0098 3344     		add	r3, r3, r6
- 356:Lib/Motor/Src/unitreeA1_recv.c **** 
- 287              		.loc 1 356 244 view .LVU99
-ARM GAS  /tmp/cc0IYDZI.s 			page 14
-
-
+ 204:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 287              		.loc 1 204 244 view .LVU99
  288 009a 2B44     		add	r3, r3, r5
- 356:Lib/Motor/Src/unitreeA1_recv.c **** 
- 289              		.loc 1 356 287 view .LVU100
+ 204:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 289              		.loc 1 204 287 view .LVU100
  290 009c 2344     		add	r3, r3, r4
- 356:Lib/Motor/Src/unitreeA1_recv.c **** 
- 291              		.loc 1 356 330 view .LVU101
+ 204:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 291              		.loc 1 204 330 view .LVU101
  292 009e 7344     		add	r3, r3, lr
- 356:Lib/Motor/Src/unitreeA1_recv.c **** 
- 293              		.loc 1 356 375 view .LVU102
+ 204:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 293              		.loc 1 204 375 view .LVU102
  294 00a0 1944     		add	r1, r1, r3
- 356:Lib/Motor/Src/unitreeA1_recv.c **** 
- 295              		.loc 1 356 420 view .LVU103
+ 204:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 295              		.loc 1 204 420 view .LVU103
  296 00a2 6144     		add	r1, r1, ip
- 356:Lib/Motor/Src/unitreeA1_recv.c **** 
- 297              		.loc 1 356 81 view .LVU104
+ 204:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 297              		.loc 1 204 81 view .LVU104
  298 00a4 C2F81110 		str	r1, [r2, #17]	@ unaligned
- 380:Lib/Motor/Src/unitreeA1_recv.c **** 
- 299              		.loc 1 380 1 view .LVU105
+ 228:Lib/Motor/Src/unitreeA1_recv.c **** 
+ 299              		.loc 1 228 1 view .LVU105
  300 00a8 BDE8F087 		pop	{r4, r5, r6, r7, r8, r9, r10, pc}
  301              	.L10:
  302              		.align	2
@@ -807,7 +646,7 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  305 00b0 00000000 		.word	.LANCHOR5
  306 00b4 00000000 		.word	spi_tx_data
  307              		.cfi_endproc
- 308              	.LFE139:
+ 308              	.LFE137:
  310              		.section	.text.USART1_IRQHandler,"ax",%progbits
  311              		.align	1
  312              		.global	USART1_IRQHandler
@@ -819,6 +658,9 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
   30:Lib/Motor/Src/unitreeA1_recv.c **** 
  319              		.loc 1 30 1 is_stmt 1 view -0
  320              		.cfi_startproc
+ARM GAS  /tmp/cc89wHiZ.s 			page 12
+
+
  321              		@ args = 0, pretend = 0, frame = 8
  322              		@ frame_needed = 0, uses_anonymous_args = 0
  323 0000 00B5     		push	{lr}
@@ -838,9 +680,6 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
   32:Lib/Motor/Src/unitreeA1_recv.c ****     {
  334              		.loc 1 32 8 view .LVU110
  335 000a 12F0200F 		tst	r2, #32
-ARM GAS  /tmp/cc0IYDZI.s 			page 15
-
-
  336 000e 09D0     		beq	.L12
   34:Lib/Motor/Src/unitreeA1_recv.c ****     }
  337              		.loc 1 34 9 is_stmt 1 view .LVU111
@@ -879,6 +718,9 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  362              		.loc 1 36 20 is_stmt 0 view .LVU119
  363 0024 2B4A     		ldr	r2, .L16+4
  364 0026 1268     		ldr	r2, [r2]
+ARM GAS  /tmp/cc89wHiZ.s 			page 13
+
+
   36:Lib/Motor/Src/unitreeA1_recv.c ****     {
  365              		.loc 1 36 13 view .LVU120
  366 0028 12F0100F 		tst	r2, #16
@@ -898,9 +740,6 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  376 0032 1A68     		ldr	r2, [r3]
  377 0034 0192     		str	r2, [sp, #4]
   40:Lib/Motor/Src/unitreeA1_recv.c **** 
-ARM GAS  /tmp/cc0IYDZI.s 			page 16
-
-
  378              		.loc 1 40 9 view .LVU125
  379 0036 5B68     		ldr	r3, [r3, #4]
  380 0038 0193     		str	r3, [sp, #4]
@@ -939,6 +778,9 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  403 0054 5368     		ldr	r3, [r2, #4]
   52:Lib/Motor/Src/unitreeA1_recv.c **** 
  404              		.loc 1 52 48 view .LVU136
+ARM GAS  /tmp/cc89wHiZ.s 			page 14
+
+
  405 0056 C3F18003 		rsb	r3, r3, #128
  406 005a 9BB2     		uxth	r3, r3
   52:Lib/Motor/Src/unitreeA1_recv.c **** 
@@ -958,9 +800,6 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  416 0064 1168     		ldr	r1, [r2]
  417 0066 41F40021 		orr	r1, r1, #524288
  418 006a 1160     		str	r1, [r2]
-ARM GAS  /tmp/cc0IYDZI.s 			page 17
-
-
   64:Lib/Motor/Src/unitreeA1_recv.c **** 
  419              		.loc 1 64 13 is_stmt 1 view .LVU142
  420 006c 0168     		ldr	r1, [r0]
@@ -999,6 +838,9 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  446 0094 0868     		ldr	r0, [r1]
   81:Lib/Motor/Src/unitreeA1_recv.c **** 
  447              		.loc 1 81 73 view .LVU150
+ARM GAS  /tmp/cc89wHiZ.s 			page 15
+
+
  448 0096 4368     		ldr	r3, [r0, #4]
   81:Lib/Motor/Src/unitreeA1_recv.c **** 
  449              		.loc 1 81 48 view .LVU151
@@ -1018,9 +860,6 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
   89:Lib/Motor/Src/unitreeA1_recv.c **** 
  459              		.loc 1 89 30 is_stmt 0 view .LVU156
  460 00a4 1048     		ldr	r0, .L16+24
-ARM GAS  /tmp/cc0IYDZI.s 			page 18
-
-
  461 00a6 036C     		ldr	r3, [r0, #64]
  462 00a8 23F40023 		bic	r3, r3, #524288
  463 00ac 0364     		str	r3, [r0, #64]
@@ -1059,6 +898,9 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  489              	.L16:
  490 00d0 00000000 		.word	huart1
  491 00d4 00100140 		.word	1073811456
+ARM GAS  /tmp/cc89wHiZ.s 			page 16
+
+
  492 00d8 00000000 		.word	hdma_usart1_rx
  493 00dc 00000000 		.word	.LANCHOR6
  494 00e0 98010000 		.word	.LANCHOR4+408
@@ -1067,20 +909,17 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  497 00ec 80000000 		.word	.LANCHOR0+128
  498              		.cfi_endproc
  499              	.LFE135:
- 501              		.section	.text.USART2_IRQHandler,"ax",%progbits
+ 501              		.section	.text.USART6_IRQHandler,"ax",%progbits
  502              		.align	1
- 503              		.global	USART2_IRQHandler
+ 503              		.global	USART6_IRQHandler
  504              		.syntax unified
  505              		.thumb
  506              		.thumb_func
- 508              	USART2_IRQHandler:
+ 508              	USART6_IRQHandler:
  509              	.LFB136:
  106:Lib/Motor/Src/unitreeA1_recv.c **** 
  510              		.loc 1 106 1 is_stmt 1 view -0
  511              		.cfi_startproc
-ARM GAS  /tmp/cc0IYDZI.s 			page 19
-
-
  512              		@ args = 0, pretend = 0, frame = 8
  513              		@ frame_needed = 0, uses_anonymous_args = 0
  514 0000 00B5     		push	{lr}
@@ -1119,6 +958,9 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  110:Lib/Motor/Src/unitreeA1_recv.c ****     }
  539              		.loc 1 110 9 view .LVU173
  540 001c 009B     		ldr	r3, [sp]
+ARM GAS  /tmp/cc89wHiZ.s 			page 17
+
+
  541              	.LBE5:
  110:Lib/Motor/Src/unitreeA1_recv.c ****     }
  542              		.loc 1 110 9 view .LVU174
@@ -1138,9 +980,6 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  553              		.loc 1 112 20 is_stmt 0 view .LVU177
  554 0024 2B4A     		ldr	r2, .L23+4
  555 0026 1268     		ldr	r2, [r2]
-ARM GAS  /tmp/cc0IYDZI.s 			page 20
-
-
  112:Lib/Motor/Src/unitreeA1_recv.c ****     {
  556              		.loc 1 112 13 view .LVU178
  557 0028 12F0100F 		tst	r2, #16
@@ -1179,6 +1018,9 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  580              		.loc 1 118 37 view .LVU188
  581 0040 1A68     		ldr	r2, [r3]
  118:Lib/Motor/Src/unitreeA1_recv.c ****         {
+ARM GAS  /tmp/cc89wHiZ.s 			page 18
+
+
  582              		.loc 1 118 12 view .LVU189
  583 0042 12F4002F 		tst	r2, #524288
  584 0046 20D1     		bne	.L21
@@ -1198,9 +1040,6 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  594 0054 5368     		ldr	r3, [r2, #4]
  128:Lib/Motor/Src/unitreeA1_recv.c **** 
  595              		.loc 1 128 48 view .LVU194
-ARM GAS  /tmp/cc0IYDZI.s 			page 21
-
-
  596 0056 C3F18003 		rsb	r3, r3, #128
  597 005a 9BB2     		uxth	r3, r3
  128:Lib/Motor/Src/unitreeA1_recv.c **** 
@@ -1239,6 +1078,9 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  622 007e FFF7FEFF 		bl	sbus_to_rc
  623              	.LVL13:
  145:Lib/Motor/Src/unitreeA1_recv.c ****             }
+ARM GAS  /tmp/cc89wHiZ.s 			page 19
+
+
  624              		.loc 1 145 17 view .LVU204
  625 0082 0120     		movs	r0, #1
  626 0084 FFF7FEFF 		bl	unitreeA1_rx
@@ -1247,764 +1089,219 @@ ARM GAS  /tmp/cc0IYDZI.s 			page 1
  629              	.L21:
  153:Lib/Motor/Src/unitreeA1_recv.c **** 
  630              		.loc 1 153 13 view .LVU205
- 631 008a 174B     		ldr	r3, .L23+24
- 632 008c 1968     		ldr	r1, [r3]
- 633 008e 0A68     		ldr	r2, [r1]
- 634 0090 22F00102 		bic	r2, r2, #1
- 635 0094 0A60     		str	r2, [r1]
+ 631 008a 1A68     		ldr	r2, [r3]
+ 632 008c 22F00102 		bic	r2, r2, #1
+ 633 0090 1A60     		str	r2, [r3]
  157:Lib/Motor/Src/unitreeA1_recv.c **** 
- 636              		.loc 1 157 13 view .LVU206
+ 634              		.loc 1 157 13 view .LVU206
  157:Lib/Motor/Src/unitreeA1_recv.c **** 
- 637              		.loc 1 157 64 is_stmt 0 view .LVU207
- 638 0096 1868     		ldr	r0, [r3]
+ 635              		.loc 1 157 64 is_stmt 0 view .LVU207
+ 636 0092 1149     		ldr	r1, .L23+8
+ 637 0094 0868     		ldr	r0, [r1]
  157:Lib/Motor/Src/unitreeA1_recv.c **** 
-ARM GAS  /tmp/cc0IYDZI.s 			page 22
-
-
- 639              		.loc 1 157 73 view .LVU208
- 640 0098 4268     		ldr	r2, [r0, #4]
+ 638              		.loc 1 157 73 view .LVU208
+ 639 0096 4368     		ldr	r3, [r0, #4]
  157:Lib/Motor/Src/unitreeA1_recv.c **** 
- 641              		.loc 1 157 48 view .LVU209
- 642 009a C2F18002 		rsb	r2, r2, #128
+ 640              		.loc 1 157 48 view .LVU209
+ 641 0098 C3F18003 		rsb	r3, r3, #128
  157:Lib/Motor/Src/unitreeA1_recv.c **** 
- 643              		.loc 1 157 30 view .LVU210
- 644 009e 0F49     		ldr	r1, .L23+12
- 645 00a0 0A80     		strh	r2, [r1]	@ movhi
+ 642              		.loc 1 157 30 view .LVU210
+ 643 009c 0F4A     		ldr	r2, .L23+12
+ 644 009e 1380     		strh	r3, [r2]	@ movhi
  161:Lib/Motor/Src/unitreeA1_recv.c **** 
- 646              		.loc 1 161 13 is_stmt 1 view .LVU211
+ 645              		.loc 1 161 13 is_stmt 1 view .LVU211
  161:Lib/Motor/Src/unitreeA1_recv.c **** 
- 647              		.loc 1 161 43 is_stmt 0 view .LVU212
- 648 00a2 8022     		movs	r2, #128
- 649 00a4 4260     		str	r2, [r0, #4]
+ 646              		.loc 1 161 43 is_stmt 0 view .LVU212
+ 647 00a0 8023     		movs	r3, #128
+ 648 00a2 4360     		str	r3, [r0, #4]
  165:Lib/Motor/Src/unitreeA1_recv.c **** 
- 650              		.loc 1 165 13 is_stmt 1 view .LVU213
+ 649              		.loc 1 165 13 is_stmt 1 view .LVU213
  165:Lib/Motor/Src/unitreeA1_recv.c **** 
- 651              		.loc 1 165 30 is_stmt 0 view .LVU214
- 652 00a6 1148     		ldr	r0, .L23+28
- 653 00a8 826A     		ldr	r2, [r0, #40]
- 654 00aa 22F40022 		bic	r2, r2, #524288
- 655 00ae 8262     		str	r2, [r0, #40]
+ 650              		.loc 1 165 30 is_stmt 0 view .LVU214
+ 651 00a4 1048     		ldr	r0, .L23+24
+ 652 00a6 836A     		ldr	r3, [r0, #40]
+ 653 00a8 23F40023 		bic	r3, r3, #524288
+ 654 00ac 8362     		str	r3, [r0, #40]
  169:Lib/Motor/Src/unitreeA1_recv.c **** 
- 656              		.loc 1 169 13 is_stmt 1 view .LVU215
- 657 00b0 1A68     		ldr	r2, [r3]
- 658 00b2 1368     		ldr	r3, [r2]
- 659 00b4 43F00103 		orr	r3, r3, #1
- 660 00b8 1360     		str	r3, [r2]
+ 655              		.loc 1 169 13 is_stmt 1 view .LVU215
+ 656 00ae 0968     		ldr	r1, [r1]
+ 657 00b0 0B68     		ldr	r3, [r1]
+ 658 00b2 43F00103 		orr	r3, r3, #1
+ 659 00b6 0B60     		str	r3, [r1]
  171:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 661              		.loc 1 171 13 view .LVU216
+ 660              		.loc 1 171 13 view .LVU216
  171:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 662              		.loc 1 171 34 is_stmt 0 view .LVU217
- 663 00ba 0B88     		ldrh	r3, [r1]
+ 661              		.loc 1 171 34 is_stmt 0 view .LVU217
+ 662 00b8 1388     		ldrh	r3, [r2]
  171:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 664              		.loc 1 171 16 view .LVU218
- 665 00bc 4E2B     		cmp	r3, #78
- 666 00be AED1     		bne	.L18
+ 663              		.loc 1 171 16 view .LVU218
+ 664 00ba 4E2B     		cmp	r3, #78
+ 665 00bc AFD1     		bne	.L18
  174:Lib/Motor/Src/unitreeA1_recv.c ****                 unitreeA1_rx(1);
- 667              		.loc 1 174 17 is_stmt 1 view .LVU219
- 668 00c0 0749     		ldr	r1, .L23+16
- 669 00c2 0B48     		ldr	r0, .L23+32
- 670 00c4 FFF7FEFF 		bl	sbus_to_rc
- 671              	.LVL15:
+ARM GAS  /tmp/cc89wHiZ.s 			page 20
+
+
+ 666              		.loc 1 174 17 is_stmt 1 view .LVU219
+ 667 00be 0849     		ldr	r1, .L23+16
+ 668 00c0 0A48     		ldr	r0, .L23+28
+ 669 00c2 FFF7FEFF 		bl	sbus_to_rc
+ 670              	.LVL15:
  175:Lib/Motor/Src/unitreeA1_recv.c ****             }
- 672              		.loc 1 175 17 view .LVU220
- 673 00c8 0120     		movs	r0, #1
- 674 00ca FFF7FEFF 		bl	unitreeA1_rx
- 675              	.LVL16:
- 676              	.LBE6:
+ 671              		.loc 1 175 17 view .LVU220
+ 672 00c6 0120     		movs	r0, #1
+ 673 00c8 FFF7FEFF 		bl	unitreeA1_rx
+ 674              	.LVL16:
+ 675              	.LBE6:
  179:Lib/Motor/Src/unitreeA1_recv.c **** 
- 677              		.loc 1 179 1 is_stmt 0 view .LVU221
- 678 00ce A6E7     		b	.L18
- 679              	.L24:
- 680              		.align	2
- 681              	.L23:
- 682 00d0 00000000 		.word	huart2
-ARM GAS  /tmp/cc0IYDZI.s 			page 23
+ 676              		.loc 1 179 1 is_stmt 0 view .LVU221
+ 677 00cc A7E7     		b	.L18
+ 678              	.L24:
+ 679 00ce 00BF     		.align	2
+ 680              	.L23:
+ 681 00d0 00000000 		.word	huart6
+ 682 00d4 00140140 		.word	1073812480
+ 683 00d8 00000000 		.word	hdma_usart6_rx
+ 684 00dc 00000000 		.word	.LANCHOR7
+ 685 00e0 40030000 		.word	.LANCHOR4+832
+ 686 00e4 00000000 		.word	.LANCHOR3
+ 687 00e8 00640240 		.word	1073898496
+ 688 00ec 80000000 		.word	.LANCHOR3+128
+ 689              		.cfi_endproc
+ 690              	.LFE136:
+ 692              		.global	data_leg
+ 693              		.global	data_motor
+ 694              		.global	leg
+ 695              		.section	.bss.data_leg,"aw",%nobits
+ 696              		.align	2
+ 697              		.set	.LANCHOR5,. + 0
+ 700              	data_leg:
+ 701 0000 00000000 		.space	544
+ 701      00000000 
+ 701      00000000 
+ 701      00000000 
+ 701      00000000 
+ 702              		.section	.bss.data_motor,"aw",%nobits
+ 703              		.align	2
+ 706              	data_motor:
+ 707 0000 00000000 		.space	1632
+ 707      00000000 
+ 707      00000000 
+ 707      00000000 
+ 707      00000000 
+ 708              		.section	.bss.leg,"aw",%nobits
+ 709              		.align	2
+ 710              		.set	.LANCHOR4,. + 0
+ 713              	leg:
+ 714 0000 00000000 		.space	1696
+ 714      00000000 
+ 714      00000000 
+ 714      00000000 
+ 714      00000000 
+ 715              		.section	.bss.sbus_rx_buf_LB,"aw",%nobits
+ARM GAS  /tmp/cc89wHiZ.s 			page 21
 
 
- 683 00d4 00440040 		.word	1073759232
- 684 00d8 00000000 		.word	hdma_usart2_rx
- 685 00dc 00000000 		.word	.LANCHOR7
- 686 00e0 40030000 		.word	.LANCHOR4+832
- 687 00e4 00000000 		.word	.LANCHOR1
- 688 00e8 00000000 		.word	hdma_usart6_rx
- 689 00ec 00640240 		.word	1073898496
- 690 00f0 80000000 		.word	.LANCHOR1+128
- 691              		.cfi_endproc
- 692              	.LFE136:
- 694              		.section	.text.USART3_IRQHandler,"ax",%progbits
- 695              		.align	1
- 696              		.global	USART3_IRQHandler
- 697              		.syntax unified
- 698              		.thumb
- 699              		.thumb_func
- 701              	USART3_IRQHandler:
- 702              	.LFB137:
- 182:Lib/Motor/Src/unitreeA1_recv.c **** 
- 703              		.loc 1 182 1 is_stmt 1 view -0
- 704              		.cfi_startproc
- 705              		@ args = 0, pretend = 0, frame = 8
- 706              		@ frame_needed = 0, uses_anonymous_args = 0
- 707 0000 00B5     		push	{lr}
- 708              		.cfi_def_cfa_offset 4
- 709              		.cfi_offset 14, -4
- 710 0002 83B0     		sub	sp, sp, #12
- 711              		.cfi_def_cfa_offset 16
- 184:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 712              		.loc 1 184 5 view .LVU223
- 184:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 713              		.loc 1 184 15 is_stmt 0 view .LVU224
- 714 0004 324B     		ldr	r3, .L30
- 715 0006 1B68     		ldr	r3, [r3]
- 184:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 716              		.loc 1 184 24 view .LVU225
- 717 0008 1A68     		ldr	r2, [r3]
- 184:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 718              		.loc 1 184 8 view .LVU226
- 719 000a 12F0200F 		tst	r2, #32
- 720 000e 09D0     		beq	.L26
- 186:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 721              		.loc 1 186 9 is_stmt 1 view .LVU227
- 722              	.LBB8:
- 186:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 723              		.loc 1 186 9 view .LVU228
- 724 0010 0022     		movs	r2, #0
- 725 0012 0092     		str	r2, [sp]
- 186:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 726              		.loc 1 186 9 view .LVU229
- 727 0014 1A68     		ldr	r2, [r3]
- 728 0016 0092     		str	r2, [sp]
- 186:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 729              		.loc 1 186 9 view .LVU230
- 730 0018 5B68     		ldr	r3, [r3, #4]
- 731 001a 0093     		str	r3, [sp]
- 186:Lib/Motor/Src/unitreeA1_recv.c ****     }
-ARM GAS  /tmp/cc0IYDZI.s 			page 24
+ 716              		.align	2
+ 717              		.set	.LANCHOR1,. + 0
+ 720              	sbus_rx_buf_LB:
+ 721 0000 00000000 		.space	256
+ 721      00000000 
+ 721      00000000 
+ 721      00000000 
+ 721      00000000 
+ 722              		.section	.bss.sbus_rx_buf_LF,"aw",%nobits
+ 723              		.align	2
+ 724              		.set	.LANCHOR0,. + 0
+ 727              	sbus_rx_buf_LF:
+ 728 0000 00000000 		.space	256
+ 728      00000000 
+ 728      00000000 
+ 728      00000000 
+ 728      00000000 
+ 729              		.section	.bss.sbus_rx_buf_RB,"aw",%nobits
+ 730              		.align	2
+ 731              		.set	.LANCHOR2,. + 0
+ 734              	sbus_rx_buf_RB:
+ 735 0000 00000000 		.space	256
+ 735      00000000 
+ 735      00000000 
+ 735      00000000 
+ 735      00000000 
+ 736              		.section	.bss.sbus_rx_buf_RF,"aw",%nobits
+ 737              		.align	2
+ 738              		.set	.LANCHOR3,. + 0
+ 741              	sbus_rx_buf_RF:
+ 742 0000 00000000 		.space	256
+ 742      00000000 
+ 742      00000000 
+ 742      00000000 
+ 742      00000000 
+ 743              		.section	.bss.this_time_rx_len.0,"aw",%nobits
+ 744              		.align	1
+ 745              		.set	.LANCHOR7,. + 0
+ 748              	this_time_rx_len.0:
+ 749 0000 0000     		.space	2
+ 750              		.section	.bss.this_time_rx_len.1,"aw",%nobits
+ 751              		.align	1
+ 752              		.set	.LANCHOR6,. + 0
+ 755              	this_time_rx_len.1:
+ 756 0000 0000     		.space	2
+ 757              		.text
+ 758              	.Letext0:
+ 759              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
+ 760              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
+ 761              		.file 4 "Lib/Motor/Inc/unitreeA1_msg.h"
+ 762              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f405xx.h"
+ 763              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
+ 764              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
+ 765              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
+ 766              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
+ 767              		.file 10 "Core/Inc/usart.h"
+ 768              		.file 11 "Lib/SPI_Bus/Inc/data_def.h"
+ARM GAS  /tmp/cc89wHiZ.s 			page 22
 
 
- 732              		.loc 1 186 9 view .LVU231
- 733 001c 009B     		ldr	r3, [sp]
- 734              	.LBE8:
- 186:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 735              		.loc 1 186 9 view .LVU232
- 736              	.L25:
- 255:Lib/Motor/Src/unitreeA1_recv.c **** 
- 737              		.loc 1 255 1 is_stmt 0 view .LVU233
- 738 001e 03B0     		add	sp, sp, #12
- 739              		.cfi_remember_state
- 740              		.cfi_def_cfa_offset 4
- 741              		@ sp needed
- 742 0020 5DF804FB 		ldr	pc, [sp], #4
- 743              	.L26:
- 744              		.cfi_restore_state
- 188:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 745              		.loc 1 188 10 is_stmt 1 view .LVU234
- 188:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 746              		.loc 1 188 20 is_stmt 0 view .LVU235
- 747 0024 2B4A     		ldr	r2, .L30+4
- 748 0026 1268     		ldr	r2, [r2]
- 188:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 749              		.loc 1 188 13 view .LVU236
- 750 0028 12F0100F 		tst	r2, #16
- 751 002c F7D0     		beq	.L25
- 752              	.LBB9:
- 190:Lib/Motor/Src/unitreeA1_recv.c **** 
- 753              		.loc 1 190 9 is_stmt 1 view .LVU237
- 192:Lib/Motor/Src/unitreeA1_recv.c **** 
- 754              		.loc 1 192 9 view .LVU238
- 755              	.LBB10:
- 192:Lib/Motor/Src/unitreeA1_recv.c **** 
- 756              		.loc 1 192 9 view .LVU239
- 757 002e 0022     		movs	r2, #0
- 758 0030 0192     		str	r2, [sp, #4]
- 192:Lib/Motor/Src/unitreeA1_recv.c **** 
- 759              		.loc 1 192 9 view .LVU240
- 760 0032 1A68     		ldr	r2, [r3]
- 761 0034 0192     		str	r2, [sp, #4]
- 192:Lib/Motor/Src/unitreeA1_recv.c **** 
- 762              		.loc 1 192 9 view .LVU241
- 763 0036 5B68     		ldr	r3, [r3, #4]
- 764 0038 0193     		str	r3, [sp, #4]
- 192:Lib/Motor/Src/unitreeA1_recv.c **** 
- 765              		.loc 1 192 9 view .LVU242
- 766 003a 019B     		ldr	r3, [sp, #4]
- 767              	.LBE10:
- 192:Lib/Motor/Src/unitreeA1_recv.c **** 
- 768              		.loc 1 192 9 view .LVU243
- 194:Lib/Motor/Src/unitreeA1_recv.c ****         {
- 769              		.loc 1 194 9 view .LVU244
- 194:Lib/Motor/Src/unitreeA1_recv.c ****         {
- 770              		.loc 1 194 28 is_stmt 0 view .LVU245
- 771 003c 264B     		ldr	r3, .L30+8
- 772 003e 1B68     		ldr	r3, [r3]
- 194:Lib/Motor/Src/unitreeA1_recv.c ****         {
- 773              		.loc 1 194 37 view .LVU246
-ARM GAS  /tmp/cc0IYDZI.s 			page 25
-
-
- 774 0040 1A68     		ldr	r2, [r3]
- 194:Lib/Motor/Src/unitreeA1_recv.c ****         {
- 775              		.loc 1 194 12 view .LVU247
- 776 0042 12F4002F 		tst	r2, #524288
- 777 0046 20D1     		bne	.L28
- 200:Lib/Motor/Src/unitreeA1_recv.c **** 
- 778              		.loc 1 200 13 is_stmt 1 view .LVU248
- 779 0048 1A68     		ldr	r2, [r3]
- 780 004a 22F00102 		bic	r2, r2, #1
- 781 004e 1A60     		str	r2, [r3]
- 204:Lib/Motor/Src/unitreeA1_recv.c **** 
- 782              		.loc 1 204 13 view .LVU249
- 204:Lib/Motor/Src/unitreeA1_recv.c **** 
- 783              		.loc 1 204 64 is_stmt 0 view .LVU250
- 784 0050 2148     		ldr	r0, .L30+8
- 785 0052 0268     		ldr	r2, [r0]
- 204:Lib/Motor/Src/unitreeA1_recv.c **** 
- 786              		.loc 1 204 73 view .LVU251
- 787 0054 5368     		ldr	r3, [r2, #4]
- 204:Lib/Motor/Src/unitreeA1_recv.c **** 
- 788              		.loc 1 204 48 view .LVU252
- 789 0056 C3F18003 		rsb	r3, r3, #128
- 790 005a 9BB2     		uxth	r3, r3
- 204:Lib/Motor/Src/unitreeA1_recv.c **** 
- 791              		.loc 1 204 30 view .LVU253
- 792 005c 1F49     		ldr	r1, .L30+12
- 793 005e 0B80     		strh	r3, [r1]	@ movhi
- 208:Lib/Motor/Src/unitreeA1_recv.c **** 
- 794              		.loc 1 208 13 is_stmt 1 view .LVU254
- 208:Lib/Motor/Src/unitreeA1_recv.c **** 
- 795              		.loc 1 208 43 is_stmt 0 view .LVU255
- 796 0060 8021     		movs	r1, #128
- 797 0062 5160     		str	r1, [r2, #4]
- 212:Lib/Motor/Src/unitreeA1_recv.c **** 
- 798              		.loc 1 212 13 is_stmt 1 view .LVU256
- 212:Lib/Motor/Src/unitreeA1_recv.c **** 
- 799              		.loc 1 212 41 is_stmt 0 view .LVU257
- 800 0064 1168     		ldr	r1, [r2]
- 801 0066 41F40021 		orr	r1, r1, #524288
- 802 006a 1160     		str	r1, [r2]
- 216:Lib/Motor/Src/unitreeA1_recv.c **** 
- 803              		.loc 1 216 13 is_stmt 1 view .LVU258
- 804 006c 0168     		ldr	r1, [r0]
- 805 006e 0A68     		ldr	r2, [r1]
- 806 0070 42F00102 		orr	r2, r2, #1
- 807 0074 0A60     		str	r2, [r1]
- 218:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 808              		.loc 1 218 13 view .LVU259
- 218:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 809              		.loc 1 218 16 is_stmt 0 view .LVU260
- 810 0076 4E2B     		cmp	r3, #78
- 811 0078 D1D1     		bne	.L25
- 220:Lib/Motor/Src/unitreeA1_recv.c ****                 unitreeA1_rx(3);
- 812              		.loc 1 220 17 is_stmt 1 view .LVU261
- 813 007a 1949     		ldr	r1, .L30+16
- 814 007c 1948     		ldr	r0, .L30+20
- 815 007e FFF7FEFF 		bl	sbus_to_rc
-ARM GAS  /tmp/cc0IYDZI.s 			page 26
-
-
- 816              	.LVL17:
- 221:Lib/Motor/Src/unitreeA1_recv.c ****             }
- 817              		.loc 1 221 17 view .LVU262
- 818 0082 0320     		movs	r0, #3
- 819 0084 FFF7FEFF 		bl	unitreeA1_rx
- 820              	.LVL18:
- 821 0088 C9E7     		b	.L25
- 822              	.L28:
- 229:Lib/Motor/Src/unitreeA1_recv.c **** 
- 823              		.loc 1 229 13 view .LVU263
- 824 008a 174B     		ldr	r3, .L30+24
- 825 008c 1968     		ldr	r1, [r3]
- 826 008e 0A68     		ldr	r2, [r1]
- 827 0090 22F00102 		bic	r2, r2, #1
- 828 0094 0A60     		str	r2, [r1]
- 233:Lib/Motor/Src/unitreeA1_recv.c **** 
- 829              		.loc 1 233 13 view .LVU264
- 233:Lib/Motor/Src/unitreeA1_recv.c **** 
- 830              		.loc 1 233 64 is_stmt 0 view .LVU265
- 831 0096 1868     		ldr	r0, [r3]
- 233:Lib/Motor/Src/unitreeA1_recv.c **** 
- 832              		.loc 1 233 73 view .LVU266
- 833 0098 4268     		ldr	r2, [r0, #4]
- 233:Lib/Motor/Src/unitreeA1_recv.c **** 
- 834              		.loc 1 233 48 view .LVU267
- 835 009a C2F18002 		rsb	r2, r2, #128
- 233:Lib/Motor/Src/unitreeA1_recv.c **** 
- 836              		.loc 1 233 30 view .LVU268
- 837 009e 0F49     		ldr	r1, .L30+12
- 838 00a0 0A80     		strh	r2, [r1]	@ movhi
- 237:Lib/Motor/Src/unitreeA1_recv.c **** 
- 839              		.loc 1 237 13 is_stmt 1 view .LVU269
- 237:Lib/Motor/Src/unitreeA1_recv.c **** 
- 840              		.loc 1 237 43 is_stmt 0 view .LVU270
- 841 00a2 8022     		movs	r2, #128
- 842 00a4 4260     		str	r2, [r0, #4]
- 241:Lib/Motor/Src/unitreeA1_recv.c **** 
- 843              		.loc 1 241 13 is_stmt 1 view .LVU271
- 241:Lib/Motor/Src/unitreeA1_recv.c **** 
- 844              		.loc 1 241 30 is_stmt 0 view .LVU272
- 845 00a6 1148     		ldr	r0, .L30+28
- 846 00a8 826A     		ldr	r2, [r0, #40]
- 847 00aa 22F40022 		bic	r2, r2, #524288
- 848 00ae 8262     		str	r2, [r0, #40]
- 245:Lib/Motor/Src/unitreeA1_recv.c **** 
- 849              		.loc 1 245 13 is_stmt 1 view .LVU273
- 850 00b0 1A68     		ldr	r2, [r3]
- 851 00b2 1368     		ldr	r3, [r2]
- 852 00b4 43F00103 		orr	r3, r3, #1
- 853 00b8 1360     		str	r3, [r2]
- 247:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 854              		.loc 1 247 13 view .LVU274
- 247:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 855              		.loc 1 247 34 is_stmt 0 view .LVU275
- 856 00ba 0B88     		ldrh	r3, [r1]
- 247:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 857              		.loc 1 247 16 view .LVU276
-ARM GAS  /tmp/cc0IYDZI.s 			page 27
-
-
- 858 00bc 4E2B     		cmp	r3, #78
- 859 00be AED1     		bne	.L25
- 250:Lib/Motor/Src/unitreeA1_recv.c ****                 unitreeA1_rx(3);
- 860              		.loc 1 250 17 is_stmt 1 view .LVU277
- 861 00c0 0749     		ldr	r1, .L30+16
- 862 00c2 0B48     		ldr	r0, .L30+32
- 863 00c4 FFF7FEFF 		bl	sbus_to_rc
- 864              	.LVL19:
- 251:Lib/Motor/Src/unitreeA1_recv.c ****             }
- 865              		.loc 1 251 17 view .LVU278
- 866 00c8 0320     		movs	r0, #3
- 867 00ca FFF7FEFF 		bl	unitreeA1_rx
- 868              	.LVL20:
- 869              	.LBE9:
- 255:Lib/Motor/Src/unitreeA1_recv.c **** 
- 870              		.loc 1 255 1 is_stmt 0 view .LVU279
- 871 00ce A6E7     		b	.L25
- 872              	.L31:
- 873              		.align	2
- 874              	.L30:
- 875 00d0 00000000 		.word	huart3
- 876 00d4 00480040 		.word	1073760256
- 877 00d8 00000000 		.word	hdma_usart3_rx
- 878 00dc 00000000 		.word	.LANCHOR8
- 879 00e0 90060000 		.word	.LANCHOR4+1680
- 880 00e4 00000000 		.word	.LANCHOR2
- 881 00e8 00000000 		.word	hdma_usart6_rx
- 882 00ec 00640240 		.word	1073898496
- 883 00f0 80000000 		.word	.LANCHOR2+128
- 884              		.cfi_endproc
- 885              	.LFE137:
- 887              		.section	.text.USART6_IRQHandler,"ax",%progbits
- 888              		.align	1
- 889              		.global	USART6_IRQHandler
- 890              		.syntax unified
- 891              		.thumb
- 892              		.thumb_func
- 894              	USART6_IRQHandler:
- 895              	.LFB138:
- 258:Lib/Motor/Src/unitreeA1_recv.c **** 
- 896              		.loc 1 258 1 is_stmt 1 view -0
- 897              		.cfi_startproc
- 898              		@ args = 0, pretend = 0, frame = 8
- 899              		@ frame_needed = 0, uses_anonymous_args = 0
- 900 0000 00B5     		push	{lr}
- 901              		.cfi_def_cfa_offset 4
- 902              		.cfi_offset 14, -4
- 903 0002 83B0     		sub	sp, sp, #12
- 904              		.cfi_def_cfa_offset 16
- 260:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 905              		.loc 1 260 5 view .LVU281
- 260:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 906              		.loc 1 260 15 is_stmt 0 view .LVU282
- 907 0004 324B     		ldr	r3, .L37
- 908 0006 1B68     		ldr	r3, [r3]
- 260:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 909              		.loc 1 260 24 view .LVU283
-ARM GAS  /tmp/cc0IYDZI.s 			page 28
-
-
- 910 0008 1A68     		ldr	r2, [r3]
- 260:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 911              		.loc 1 260 8 view .LVU284
- 912 000a 12F0200F 		tst	r2, #32
- 913 000e 09D0     		beq	.L33
- 262:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 914              		.loc 1 262 9 is_stmt 1 view .LVU285
- 915              	.LBB11:
- 262:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 916              		.loc 1 262 9 view .LVU286
- 917 0010 0022     		movs	r2, #0
- 918 0012 0092     		str	r2, [sp]
- 262:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 919              		.loc 1 262 9 view .LVU287
- 920 0014 1A68     		ldr	r2, [r3]
- 921 0016 0092     		str	r2, [sp]
- 262:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 922              		.loc 1 262 9 view .LVU288
- 923 0018 5B68     		ldr	r3, [r3, #4]
- 924 001a 0093     		str	r3, [sp]
- 262:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 925              		.loc 1 262 9 view .LVU289
- 926 001c 009B     		ldr	r3, [sp]
- 927              	.LBE11:
- 262:Lib/Motor/Src/unitreeA1_recv.c ****     }
- 928              		.loc 1 262 9 view .LVU290
- 929              	.L32:
- 331:Lib/Motor/Src/unitreeA1_recv.c **** 
- 930              		.loc 1 331 1 is_stmt 0 view .LVU291
- 931 001e 03B0     		add	sp, sp, #12
- 932              		.cfi_remember_state
- 933              		.cfi_def_cfa_offset 4
- 934              		@ sp needed
- 935 0020 5DF804FB 		ldr	pc, [sp], #4
- 936              	.L33:
- 937              		.cfi_restore_state
- 264:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 938              		.loc 1 264 10 is_stmt 1 view .LVU292
- 264:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 939              		.loc 1 264 20 is_stmt 0 view .LVU293
- 940 0024 2B4A     		ldr	r2, .L37+4
- 941 0026 1268     		ldr	r2, [r2]
- 264:Lib/Motor/Src/unitreeA1_recv.c ****     {
- 942              		.loc 1 264 13 view .LVU294
- 943 0028 12F0100F 		tst	r2, #16
- 944 002c F7D0     		beq	.L32
- 945              	.LBB12:
- 266:Lib/Motor/Src/unitreeA1_recv.c **** 
- 946              		.loc 1 266 9 is_stmt 1 view .LVU295
- 268:Lib/Motor/Src/unitreeA1_recv.c **** 
- 947              		.loc 1 268 9 view .LVU296
- 948              	.LBB13:
- 268:Lib/Motor/Src/unitreeA1_recv.c **** 
- 949              		.loc 1 268 9 view .LVU297
- 950 002e 0022     		movs	r2, #0
- 951 0030 0192     		str	r2, [sp, #4]
- 268:Lib/Motor/Src/unitreeA1_recv.c **** 
-ARM GAS  /tmp/cc0IYDZI.s 			page 29
-
-
- 952              		.loc 1 268 9 view .LVU298
- 953 0032 1A68     		ldr	r2, [r3]
- 954 0034 0192     		str	r2, [sp, #4]
- 268:Lib/Motor/Src/unitreeA1_recv.c **** 
- 955              		.loc 1 268 9 view .LVU299
- 956 0036 5B68     		ldr	r3, [r3, #4]
- 957 0038 0193     		str	r3, [sp, #4]
- 268:Lib/Motor/Src/unitreeA1_recv.c **** 
- 958              		.loc 1 268 9 view .LVU300
- 959 003a 019B     		ldr	r3, [sp, #4]
- 960              	.LBE13:
- 268:Lib/Motor/Src/unitreeA1_recv.c **** 
- 961              		.loc 1 268 9 view .LVU301
- 270:Lib/Motor/Src/unitreeA1_recv.c ****         {
- 962              		.loc 1 270 9 view .LVU302
- 270:Lib/Motor/Src/unitreeA1_recv.c ****         {
- 963              		.loc 1 270 28 is_stmt 0 view .LVU303
- 964 003c 264B     		ldr	r3, .L37+8
- 965 003e 1B68     		ldr	r3, [r3]
- 270:Lib/Motor/Src/unitreeA1_recv.c ****         {
- 966              		.loc 1 270 37 view .LVU304
- 967 0040 1A68     		ldr	r2, [r3]
- 270:Lib/Motor/Src/unitreeA1_recv.c ****         {
- 968              		.loc 1 270 12 view .LVU305
- 969 0042 12F4002F 		tst	r2, #524288
- 970 0046 20D1     		bne	.L35
- 276:Lib/Motor/Src/unitreeA1_recv.c **** 
- 971              		.loc 1 276 13 is_stmt 1 view .LVU306
- 972 0048 1A68     		ldr	r2, [r3]
- 973 004a 22F00102 		bic	r2, r2, #1
- 974 004e 1A60     		str	r2, [r3]
- 280:Lib/Motor/Src/unitreeA1_recv.c **** 
- 975              		.loc 1 280 13 view .LVU307
- 280:Lib/Motor/Src/unitreeA1_recv.c **** 
- 976              		.loc 1 280 64 is_stmt 0 view .LVU308
- 977 0050 2148     		ldr	r0, .L37+8
- 978 0052 0268     		ldr	r2, [r0]
- 280:Lib/Motor/Src/unitreeA1_recv.c **** 
- 979              		.loc 1 280 73 view .LVU309
- 980 0054 5368     		ldr	r3, [r2, #4]
- 280:Lib/Motor/Src/unitreeA1_recv.c **** 
- 981              		.loc 1 280 48 view .LVU310
- 982 0056 C3F18003 		rsb	r3, r3, #128
- 983 005a 9BB2     		uxth	r3, r3
- 280:Lib/Motor/Src/unitreeA1_recv.c **** 
- 984              		.loc 1 280 30 view .LVU311
- 985 005c 1F49     		ldr	r1, .L37+12
- 986 005e 0B80     		strh	r3, [r1]	@ movhi
- 284:Lib/Motor/Src/unitreeA1_recv.c **** 
- 987              		.loc 1 284 13 is_stmt 1 view .LVU312
- 284:Lib/Motor/Src/unitreeA1_recv.c **** 
- 988              		.loc 1 284 43 is_stmt 0 view .LVU313
- 989 0060 8021     		movs	r1, #128
- 990 0062 5160     		str	r1, [r2, #4]
- 288:Lib/Motor/Src/unitreeA1_recv.c **** 
- 991              		.loc 1 288 13 is_stmt 1 view .LVU314
- 288:Lib/Motor/Src/unitreeA1_recv.c **** 
-ARM GAS  /tmp/cc0IYDZI.s 			page 30
-
-
- 992              		.loc 1 288 41 is_stmt 0 view .LVU315
- 993 0064 1168     		ldr	r1, [r2]
- 994 0066 41F40021 		orr	r1, r1, #524288
- 995 006a 1160     		str	r1, [r2]
- 292:Lib/Motor/Src/unitreeA1_recv.c **** 
- 996              		.loc 1 292 13 is_stmt 1 view .LVU316
- 997 006c 0168     		ldr	r1, [r0]
- 998 006e 0A68     		ldr	r2, [r1]
- 999 0070 42F00102 		orr	r2, r2, #1
- 1000 0074 0A60     		str	r2, [r1]
- 294:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 1001              		.loc 1 294 13 view .LVU317
- 294:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 1002              		.loc 1 294 16 is_stmt 0 view .LVU318
- 1003 0076 4E2B     		cmp	r3, #78
- 1004 0078 D1D1     		bne	.L32
- 296:Lib/Motor/Src/unitreeA1_recv.c ****                 unitreeA1_rx(2);
- 1005              		.loc 1 296 17 is_stmt 1 view .LVU319
- 1006 007a 1949     		ldr	r1, .L37+16
- 1007 007c 1948     		ldr	r0, .L37+20
- 1008 007e FFF7FEFF 		bl	sbus_to_rc
- 1009              	.LVL21:
- 297:Lib/Motor/Src/unitreeA1_recv.c ****             }
- 1010              		.loc 1 297 17 view .LVU320
- 1011 0082 0220     		movs	r0, #2
- 1012 0084 FFF7FEFF 		bl	unitreeA1_rx
- 1013              	.LVL22:
- 1014 0088 C9E7     		b	.L32
- 1015              	.L35:
- 305:Lib/Motor/Src/unitreeA1_recv.c **** 
- 1016              		.loc 1 305 13 view .LVU321
- 1017 008a 1A68     		ldr	r2, [r3]
- 1018 008c 22F00102 		bic	r2, r2, #1
- 1019 0090 1A60     		str	r2, [r3]
- 309:Lib/Motor/Src/unitreeA1_recv.c **** 
- 1020              		.loc 1 309 13 view .LVU322
- 309:Lib/Motor/Src/unitreeA1_recv.c **** 
- 1021              		.loc 1 309 64 is_stmt 0 view .LVU323
- 1022 0092 1149     		ldr	r1, .L37+8
- 1023 0094 0868     		ldr	r0, [r1]
- 309:Lib/Motor/Src/unitreeA1_recv.c **** 
- 1024              		.loc 1 309 73 view .LVU324
- 1025 0096 4368     		ldr	r3, [r0, #4]
- 309:Lib/Motor/Src/unitreeA1_recv.c **** 
- 1026              		.loc 1 309 48 view .LVU325
- 1027 0098 C3F18003 		rsb	r3, r3, #128
- 309:Lib/Motor/Src/unitreeA1_recv.c **** 
- 1028              		.loc 1 309 30 view .LVU326
- 1029 009c 0F4A     		ldr	r2, .L37+12
- 1030 009e 1380     		strh	r3, [r2]	@ movhi
- 313:Lib/Motor/Src/unitreeA1_recv.c **** 
- 1031              		.loc 1 313 13 is_stmt 1 view .LVU327
- 313:Lib/Motor/Src/unitreeA1_recv.c **** 
- 1032              		.loc 1 313 43 is_stmt 0 view .LVU328
- 1033 00a0 8023     		movs	r3, #128
- 1034 00a2 4360     		str	r3, [r0, #4]
- 317:Lib/Motor/Src/unitreeA1_recv.c **** 
-ARM GAS  /tmp/cc0IYDZI.s 			page 31
-
-
- 1035              		.loc 1 317 13 is_stmt 1 view .LVU329
- 317:Lib/Motor/Src/unitreeA1_recv.c **** 
- 1036              		.loc 1 317 30 is_stmt 0 view .LVU330
- 1037 00a4 1048     		ldr	r0, .L37+24
- 1038 00a6 836A     		ldr	r3, [r0, #40]
- 1039 00a8 23F40023 		bic	r3, r3, #524288
- 1040 00ac 8362     		str	r3, [r0, #40]
- 321:Lib/Motor/Src/unitreeA1_recv.c **** 
- 1041              		.loc 1 321 13 is_stmt 1 view .LVU331
- 1042 00ae 0968     		ldr	r1, [r1]
- 1043 00b0 0B68     		ldr	r3, [r1]
- 1044 00b2 43F00103 		orr	r3, r3, #1
- 1045 00b6 0B60     		str	r3, [r1]
- 323:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 1046              		.loc 1 323 13 view .LVU332
- 323:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 1047              		.loc 1 323 34 is_stmt 0 view .LVU333
- 1048 00b8 1388     		ldrh	r3, [r2]
- 323:Lib/Motor/Src/unitreeA1_recv.c ****             {
- 1049              		.loc 1 323 16 view .LVU334
- 1050 00ba 4E2B     		cmp	r3, #78
- 1051 00bc AFD1     		bne	.L32
- 326:Lib/Motor/Src/unitreeA1_recv.c ****                 unitreeA1_rx(2);
- 1052              		.loc 1 326 17 is_stmt 1 view .LVU335
- 1053 00be 0849     		ldr	r1, .L37+16
- 1054 00c0 0A48     		ldr	r0, .L37+28
- 1055 00c2 FFF7FEFF 		bl	sbus_to_rc
- 1056              	.LVL23:
- 327:Lib/Motor/Src/unitreeA1_recv.c ****             }
- 1057              		.loc 1 327 17 view .LVU336
- 1058 00c6 0220     		movs	r0, #2
- 1059 00c8 FFF7FEFF 		bl	unitreeA1_rx
- 1060              	.LVL24:
- 1061              	.LBE12:
- 331:Lib/Motor/Src/unitreeA1_recv.c **** 
- 1062              		.loc 1 331 1 is_stmt 0 view .LVU337
- 1063 00cc A7E7     		b	.L32
- 1064              	.L38:
- 1065 00ce 00BF     		.align	2
- 1066              	.L37:
- 1067 00d0 00000000 		.word	huart6
- 1068 00d4 00140140 		.word	1073812480
- 1069 00d8 00000000 		.word	hdma_usart6_rx
- 1070 00dc 00000000 		.word	.LANCHOR9
- 1071 00e0 E8040000 		.word	.LANCHOR4+1256
- 1072 00e4 00000000 		.word	.LANCHOR3
- 1073 00e8 00640240 		.word	1073898496
- 1074 00ec 80000000 		.word	.LANCHOR3+128
- 1075              		.cfi_endproc
- 1076              	.LFE138:
- 1078              		.global	data_leg
- 1079              		.global	data_motor
- 1080              		.global	leg
- 1081              		.section	.bss.data_leg,"aw",%nobits
- 1082              		.align	2
- 1083              		.set	.LANCHOR5,. + 0
- 1086              	data_leg:
-ARM GAS  /tmp/cc0IYDZI.s 			page 32
-
-
- 1087 0000 00000000 		.space	544
- 1087      00000000 
- 1087      00000000 
- 1087      00000000 
- 1087      00000000 
- 1088              		.section	.bss.data_motor,"aw",%nobits
- 1089              		.align	2
- 1092              	data_motor:
- 1093 0000 00000000 		.space	1632
- 1093      00000000 
- 1093      00000000 
- 1093      00000000 
- 1093      00000000 
- 1094              		.section	.bss.leg,"aw",%nobits
- 1095              		.align	2
- 1096              		.set	.LANCHOR4,. + 0
- 1099              	leg:
- 1100 0000 00000000 		.space	1696
- 1100      00000000 
- 1100      00000000 
- 1100      00000000 
- 1100      00000000 
- 1101              		.section	.bss.sbus_rx_buf_LB,"aw",%nobits
- 1102              		.align	2
- 1103              		.set	.LANCHOR1,. + 0
- 1106              	sbus_rx_buf_LB:
- 1107 0000 00000000 		.space	256
- 1107      00000000 
- 1107      00000000 
- 1107      00000000 
- 1107      00000000 
- 1108              		.section	.bss.sbus_rx_buf_LF,"aw",%nobits
- 1109              		.align	2
- 1110              		.set	.LANCHOR0,. + 0
- 1113              	sbus_rx_buf_LF:
- 1114 0000 00000000 		.space	256
- 1114      00000000 
- 1114      00000000 
- 1114      00000000 
- 1114      00000000 
- 1115              		.section	.bss.sbus_rx_buf_RB,"aw",%nobits
- 1116              		.align	2
- 1117              		.set	.LANCHOR2,. + 0
- 1120              	sbus_rx_buf_RB:
- 1121 0000 00000000 		.space	256
- 1121      00000000 
- 1121      00000000 
- 1121      00000000 
- 1121      00000000 
- 1122              		.section	.bss.sbus_rx_buf_RF,"aw",%nobits
- 1123              		.align	2
- 1124              		.set	.LANCHOR3,. + 0
- 1127              	sbus_rx_buf_RF:
- 1128 0000 00000000 		.space	256
- 1128      00000000 
- 1128      00000000 
- 1128      00000000 
-ARM GAS  /tmp/cc0IYDZI.s 			page 33
-
-
- 1128      00000000 
- 1129              		.section	.bss.this_time_rx_len.0,"aw",%nobits
- 1130              		.align	1
- 1131              		.set	.LANCHOR9,. + 0
- 1134              	this_time_rx_len.0:
- 1135 0000 0000     		.space	2
- 1136              		.section	.bss.this_time_rx_len.1,"aw",%nobits
- 1137              		.align	1
- 1138              		.set	.LANCHOR8,. + 0
- 1141              	this_time_rx_len.1:
- 1142 0000 0000     		.space	2
- 1143              		.section	.bss.this_time_rx_len.2,"aw",%nobits
- 1144              		.align	1
- 1145              		.set	.LANCHOR7,. + 0
- 1148              	this_time_rx_len.2:
- 1149 0000 0000     		.space	2
- 1150              		.section	.bss.this_time_rx_len.3,"aw",%nobits
- 1151              		.align	1
- 1152              		.set	.LANCHOR6,. + 0
- 1155              	this_time_rx_len.3:
- 1156 0000 0000     		.space	2
- 1157              		.text
- 1158              	.Letext0:
- 1159              		.file 2 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/machine/_default_types.h"
- 1160              		.file 3 "/usr/share/gcc-arm-none-eabi-10.3-2021.10/arm-none-eabi/include/sys/_stdint.h"
- 1161              		.file 4 "Lib/Motor/Inc/unitreeA1_msg.h"
- 1162              		.file 5 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f405xx.h"
- 1163              		.file 6 "Drivers/CMSIS/Device/ST/STM32F4xx/Include/stm32f4xx.h"
- 1164              		.file 7 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_def.h"
- 1165              		.file 8 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_dma.h"
- 1166              		.file 9 "Drivers/STM32F4xx_HAL_Driver/Inc/stm32f4xx_hal_uart.h"
- 1167              		.file 10 "Core/Inc/usart.h"
- 1168              		.file 11 "Lib/SPI_Bus/Inc/data_def.h"
- 1169              		.file 12 "Lib/SPI_Bus/Inc/spi_deal.h"
- 1170              		.file 13 "Lib/Motor/Inc/unitreeA1_cmd.h"
- 1171              		.file 14 "Lib/Motor/Inc/bsp_dma.h"
- 1172              		.file 15 "Lib/Motor/Inc/unitreeA1_recv.h"
-ARM GAS  /tmp/cc0IYDZI.s 			page 34
+ 769              		.file 12 "Lib/SPI_Bus/Inc/spi_deal.h"
+ 770              		.file 13 "Lib/Motor/Inc/unitreeA1_cmd.h"
+ 771              		.file 14 "Lib/Motor/Inc/bsp_dma.h"
+ 772              		.file 15 "Lib/Motor/Inc/unitreeA1_recv.h"
+ARM GAS  /tmp/cc89wHiZ.s 			page 23
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 unitreeA1_recv.c
-     /tmp/cc0IYDZI.s:20     .text.sbus_to_rc:0000000000000000 $t
-     /tmp/cc0IYDZI.s:25     .text.sbus_to_rc:0000000000000000 sbus_to_rc
-     /tmp/cc0IYDZI.s:112    .text.remote_control_init:0000000000000000 $t
-     /tmp/cc0IYDZI.s:118    .text.remote_control_init:0000000000000000 remote_control_init
-     /tmp/cc0IYDZI.s:157    .text.remote_control_init:000000000000002c $d
-     /tmp/cc0IYDZI.s:165    .text.unitreeA1_rx:0000000000000000 $t
-     /tmp/cc0IYDZI.s:171    .text.unitreeA1_rx:0000000000000000 unitreeA1_rx
-     /tmp/cc0IYDZI.s:304    .text.unitreeA1_rx:00000000000000ac $d
-     /tmp/cc0IYDZI.s:311    .text.USART1_IRQHandler:0000000000000000 $t
-     /tmp/cc0IYDZI.s:317    .text.USART1_IRQHandler:0000000000000000 USART1_IRQHandler
-     /tmp/cc0IYDZI.s:490    .text.USART1_IRQHandler:00000000000000d0 $d
-     /tmp/cc0IYDZI.s:502    .text.USART2_IRQHandler:0000000000000000 $t
-     /tmp/cc0IYDZI.s:508    .text.USART2_IRQHandler:0000000000000000 USART2_IRQHandler
-     /tmp/cc0IYDZI.s:682    .text.USART2_IRQHandler:00000000000000d0 $d
-     /tmp/cc0IYDZI.s:695    .text.USART3_IRQHandler:0000000000000000 $t
-     /tmp/cc0IYDZI.s:701    .text.USART3_IRQHandler:0000000000000000 USART3_IRQHandler
-     /tmp/cc0IYDZI.s:875    .text.USART3_IRQHandler:00000000000000d0 $d
-     /tmp/cc0IYDZI.s:888    .text.USART6_IRQHandler:0000000000000000 $t
-     /tmp/cc0IYDZI.s:894    .text.USART6_IRQHandler:0000000000000000 USART6_IRQHandler
-     /tmp/cc0IYDZI.s:1067   .text.USART6_IRQHandler:00000000000000d0 $d
-     /tmp/cc0IYDZI.s:1086   .bss.data_leg:0000000000000000 data_leg
-     /tmp/cc0IYDZI.s:1092   .bss.data_motor:0000000000000000 data_motor
-     /tmp/cc0IYDZI.s:1099   .bss.leg:0000000000000000 leg
-     /tmp/cc0IYDZI.s:1082   .bss.data_leg:0000000000000000 $d
-     /tmp/cc0IYDZI.s:1089   .bss.data_motor:0000000000000000 $d
-     /tmp/cc0IYDZI.s:1095   .bss.leg:0000000000000000 $d
-     /tmp/cc0IYDZI.s:1102   .bss.sbus_rx_buf_LB:0000000000000000 $d
-     /tmp/cc0IYDZI.s:1106   .bss.sbus_rx_buf_LB:0000000000000000 sbus_rx_buf_LB
-     /tmp/cc0IYDZI.s:1109   .bss.sbus_rx_buf_LF:0000000000000000 $d
-     /tmp/cc0IYDZI.s:1113   .bss.sbus_rx_buf_LF:0000000000000000 sbus_rx_buf_LF
-     /tmp/cc0IYDZI.s:1116   .bss.sbus_rx_buf_RB:0000000000000000 $d
-     /tmp/cc0IYDZI.s:1120   .bss.sbus_rx_buf_RB:0000000000000000 sbus_rx_buf_RB
-     /tmp/cc0IYDZI.s:1123   .bss.sbus_rx_buf_RF:0000000000000000 $d
-     /tmp/cc0IYDZI.s:1127   .bss.sbus_rx_buf_RF:0000000000000000 sbus_rx_buf_RF
-     /tmp/cc0IYDZI.s:1130   .bss.this_time_rx_len.0:0000000000000000 $d
-     /tmp/cc0IYDZI.s:1134   .bss.this_time_rx_len.0:0000000000000000 this_time_rx_len.0
-     /tmp/cc0IYDZI.s:1137   .bss.this_time_rx_len.1:0000000000000000 $d
-     /tmp/cc0IYDZI.s:1141   .bss.this_time_rx_len.1:0000000000000000 this_time_rx_len.1
-     /tmp/cc0IYDZI.s:1144   .bss.this_time_rx_len.2:0000000000000000 $d
-     /tmp/cc0IYDZI.s:1148   .bss.this_time_rx_len.2:0000000000000000 this_time_rx_len.2
-     /tmp/cc0IYDZI.s:1151   .bss.this_time_rx_len.3:0000000000000000 $d
-     /tmp/cc0IYDZI.s:1155   .bss.this_time_rx_len.3:0000000000000000 this_time_rx_len.3
+     /tmp/cc89wHiZ.s:20     .text.sbus_to_rc:0000000000000000 $t
+     /tmp/cc89wHiZ.s:25     .text.sbus_to_rc:0000000000000000 sbus_to_rc
+     /tmp/cc89wHiZ.s:112    .text.remote_control_init:0000000000000000 $t
+     /tmp/cc89wHiZ.s:118    .text.remote_control_init:0000000000000000 remote_control_init
+     /tmp/cc89wHiZ.s:157    .text.remote_control_init:000000000000002c $d
+     /tmp/cc89wHiZ.s:165    .text.unitreeA1_rx:0000000000000000 $t
+     /tmp/cc89wHiZ.s:171    .text.unitreeA1_rx:0000000000000000 unitreeA1_rx
+     /tmp/cc89wHiZ.s:304    .text.unitreeA1_rx:00000000000000ac $d
+     /tmp/cc89wHiZ.s:311    .text.USART1_IRQHandler:0000000000000000 $t
+     /tmp/cc89wHiZ.s:317    .text.USART1_IRQHandler:0000000000000000 USART1_IRQHandler
+     /tmp/cc89wHiZ.s:490    .text.USART1_IRQHandler:00000000000000d0 $d
+     /tmp/cc89wHiZ.s:502    .text.USART6_IRQHandler:0000000000000000 $t
+     /tmp/cc89wHiZ.s:508    .text.USART6_IRQHandler:0000000000000000 USART6_IRQHandler
+     /tmp/cc89wHiZ.s:681    .text.USART6_IRQHandler:00000000000000d0 $d
+     /tmp/cc89wHiZ.s:700    .bss.data_leg:0000000000000000 data_leg
+     /tmp/cc89wHiZ.s:706    .bss.data_motor:0000000000000000 data_motor
+     /tmp/cc89wHiZ.s:713    .bss.leg:0000000000000000 leg
+     /tmp/cc89wHiZ.s:696    .bss.data_leg:0000000000000000 $d
+     /tmp/cc89wHiZ.s:703    .bss.data_motor:0000000000000000 $d
+     /tmp/cc89wHiZ.s:709    .bss.leg:0000000000000000 $d
+     /tmp/cc89wHiZ.s:716    .bss.sbus_rx_buf_LB:0000000000000000 $d
+     /tmp/cc89wHiZ.s:720    .bss.sbus_rx_buf_LB:0000000000000000 sbus_rx_buf_LB
+     /tmp/cc89wHiZ.s:723    .bss.sbus_rx_buf_LF:0000000000000000 $d
+     /tmp/cc89wHiZ.s:727    .bss.sbus_rx_buf_LF:0000000000000000 sbus_rx_buf_LF
+     /tmp/cc89wHiZ.s:730    .bss.sbus_rx_buf_RB:0000000000000000 $d
+     /tmp/cc89wHiZ.s:734    .bss.sbus_rx_buf_RB:0000000000000000 sbus_rx_buf_RB
+     /tmp/cc89wHiZ.s:737    .bss.sbus_rx_buf_RF:0000000000000000 $d
+     /tmp/cc89wHiZ.s:741    .bss.sbus_rx_buf_RF:0000000000000000 sbus_rx_buf_RF
+     /tmp/cc89wHiZ.s:744    .bss.this_time_rx_len.0:0000000000000000 $d
+     /tmp/cc89wHiZ.s:748    .bss.this_time_rx_len.0:0000000000000000 this_time_rx_len.0
+     /tmp/cc89wHiZ.s:751    .bss.this_time_rx_len.1:0000000000000000 $d
+     /tmp/cc89wHiZ.s:755    .bss.this_time_rx_len.1:0000000000000000 this_time_rx_len.1
 
 UNDEFINED SYMBOLS
 RC1_init
@@ -2014,12 +1311,5 @@ RC6_init
 spi_tx_data
 huart1
 hdma_usart1_rx
-huart2
-hdma_usart2_rx
-hdma_usart6_rx
-huart3
-ARM GAS  /tmp/cc0IYDZI.s 			page 35
-
-
-hdma_usart3_rx
 huart6
+hdma_usart6_rx

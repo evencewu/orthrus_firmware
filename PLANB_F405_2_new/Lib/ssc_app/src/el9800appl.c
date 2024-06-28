@@ -529,15 +529,16 @@ void APPL_Application(void)
     } while (can2_finish || can2_select_time >= 20);
     */
     //---------------------
+#define IF_PCB_2_IMU
 
-    /*
+#ifdef IF_PCB_2_IMU
+
     int can_enable_array[6] = {7,
                                8,
                                9,
                                10,
                                11,
                                12};
-
     if (can2_loop < 5)
     {
         can2_loop++;
@@ -547,8 +548,7 @@ void APPL_Application(void)
         can2_loop = 0;
     }
     
-    */
-   
+#else
     int can_enable_array[12] = {1,
                                2,
                                3,
@@ -570,7 +570,7 @@ void APPL_Application(void)
     {
         can2_loop = 0;
     }
-
+#endif
     
 
     sAIInputs.can2_h0 = Can2_RxBalance[can_enable_array[can2_loop]].StdId;
