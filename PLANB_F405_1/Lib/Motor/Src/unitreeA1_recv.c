@@ -202,29 +202,6 @@ void unitreeA1_rx(int leg_id)
     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Acc = data_leg[leg_id].motor_recv_data.Mdata.Acc;
     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].Pos = data_leg[leg_id].motor_recv_data.Mdata.Pos;
     spi_tx_data[leg_id][data_leg[leg_id].motor_recv_data.head.motorID].SumCheck = 0xd2 + 0xfe + leg_id + data_leg[leg_id].motor_recv_data.head.motorID + data_leg[leg_id].motor_recv_data.Mdata.mode + data_leg[leg_id].motor_recv_data.Mdata.Temp + data_leg[leg_id].motor_recv_data.Mdata.T + data_leg[leg_id].motor_recv_data.Mdata.W + data_leg[leg_id].motor_recv_data.Mdata.Acc + data_leg[leg_id].motor_recv_data.Mdata.Pos + data_leg[leg_id].motor_recv_data.Mdata.MError;
-
-    /*
-        data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
-        data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
-        data_leg[leg_id].T = data_leg[leg_id].motor_recv_data.Mdata.T;
-        data_leg[leg_id].W = data_leg[leg_id].motor_recv_data.Mdata.W;
-        data_leg[leg_id].Acc = data_leg[leg_id].motor_recv_data.Mdata.Acc;
-        data_leg[leg_id].Pos = data_leg[leg_id].motor_recv_data.Mdata.Pos;
-
-        data_leg[leg_id].motor_id = data_leg[leg_id].motor_recv_data.head.motorID;
-        data_leg[leg_id].MError = data_leg[leg_id].motor_recv_data.Mdata.MError;
-        data_leg[leg_id].T = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.T / 256.0f);
-        data_leg[leg_id].W = (float)((int32_t)data_leg[leg_id].motor_recv_data.Mdata.W / 128.0f);
-        data_leg[leg_id].Acc = (float)data_leg[leg_id].motor_recv_data.Mdata.Acc;
-        data_leg[leg_id].Pos = (float)((data_leg[leg_id].motor_recv_data.Mdata.Pos / 16384.0f) * 6.2832f);
-
-        data_motor[leg_id][data_leg[leg_id].motor_id].motor_id = data_leg[leg_id].motor_id;
-        data_motor[leg_id][data_leg[leg_id].motor_id].MError = data_leg[leg_id].MError;
-        data_motor[leg_id][data_leg[leg_id].motor_id].T = data_leg[leg_id].T;
-        data_motor[leg_id][data_leg[leg_id].motor_id].W = data_leg[leg_id].W;
-        data_motor[leg_id][data_leg[leg_id].motor_id].Acc = data_leg[leg_id].Acc;
-        data_motor[leg_id][data_leg[leg_id].motor_id].Pos = data_leg[leg_id].Pos;
-    */
 }
 
 // dma接收赋值函数
@@ -235,14 +212,21 @@ static void sbus_to_rc(volatile const uint8_t *sbus_buf, A1_buf *a1_buf)
         return;
     }
 
-    a1_buf->motorID = sbus_buf[2];
-    a1_buf->mode = sbus_buf[4];
-    a1_buf->Temp = sbus_buf[6];
-    a1_buf->MError = sbus_buf[7];
-    a1_buf->T = sbus_buf[13] << 8 | sbus_buf[12];
-    a1_buf->W = sbus_buf[15] << 8 | sbus_buf[14];
-    a1_buf->Acc = sbus_buf[28] << 8 | sbus_buf[27];
-    a1_buf->Pos = sbus_buf[33] << 24 | sbus_buf[32] << 16 | sbus_buf[31] << 8 | sbus_buf[30];
+    a1_buf->crc = sbus_buf[77] << 24 | sbus_buf[76] << 16 | sbus_buf[75] << 8 | sbus_buf[74];
+    
+    uint32_t crc = crc32_core((uint32_t *)sbus_buf, 18);
+
+    if (crc == a1_buf->crc)
+    {
+        a1_buf->motorID = sbus_buf[2];
+        a1_buf->mode = sbus_buf[4];
+        a1_buf->Temp = sbus_buf[6];
+        a1_buf->MError = sbus_buf[7]; 
+        a1_buf->T = sbus_buf[13] << 8 | sbus_buf[12];
+        a1_buf->W = sbus_buf[15] << 8 | sbus_buf[14];
+        a1_buf->Acc = sbus_buf[28] << 8 | sbus_buf[27];
+        a1_buf->Pos = sbus_buf[33] << 24 | sbus_buf[32] << 16 | sbus_buf[31] << 8 | sbus_buf[30];
+    };
 }
 /*
 // 电机发送数据缓冲存储区域

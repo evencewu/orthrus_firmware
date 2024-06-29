@@ -22,6 +22,7 @@ typedef __packed struct
 	uint16_t Acc;
 	uint32_t Pos;
 
+    uint32_t crc;
 } A1_buf;//17
 
 typedef struct MotorCan 
