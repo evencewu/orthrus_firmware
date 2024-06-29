@@ -529,7 +529,7 @@ void APPL_Application(void)
     } while (can2_finish || can2_select_time >= 20);
     */
     //---------------------
-#define IF_PCB_2_IMU
+//#define IF_PCB_2_IMU
 
 #ifdef IF_PCB_2_IMU
 
